@@ -9,13 +9,15 @@
         <ui:composition template="./../../WEB-INF/template.xhtml">
 
             <ui:define name="content">
-                <h1>Order</h1>
+                <h1>Order's header</h1>
                 <h:form>
                     <h:panelGrid columns="2">
                         <h:outputLabel value="Number" />
-                        <h:inputText  value="" required="true" style="width:5em"/>
+                        <h:inputText  value="" style="width:5em"  onclick="return $this.val().trim()"/>
                         <h:outputLabel value="Customer"/>
-                        <h:inputText maxlength="150" value="" required="true" style="width:350px"/>
+                        <h:inputText maxlength="150" value="" style="width:350px"/>
+                        <h:commandButton value="Cancel" action="/index"/>
+                        <h:commandButton value="Lines" action="lines"/>
                     </h:panelGrid>
                 </h:form>
             </ui:define>

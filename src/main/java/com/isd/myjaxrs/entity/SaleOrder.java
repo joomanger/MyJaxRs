@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -59,6 +60,7 @@ public class SaleOrder implements Serializable {
         this.customer = customer;
     }
 
+    @XmlTransient
     public List<SaleOrderLine> getLines() {
         return lines;
     }
