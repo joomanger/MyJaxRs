@@ -25,6 +25,7 @@ public class SaleOrderLine implements Serializable {
     @GeneratedValue(generator = "order_line_sq")
     private long line_id;
     private String item;
+    private short line_num;
     private Double quantity;
     private Double price;
 
@@ -34,6 +35,14 @@ public class SaleOrderLine implements Serializable {
 
     public void setLine_id(long line_id) {
         this.line_id = line_id;
+    }
+
+    public short getLine_num() {
+        return line_num;
+    }
+
+    public void setLine_num(short line_num) {
+        this.line_num = line_num;
     }
 
     public String getItem() {
@@ -59,5 +68,7 @@ public class SaleOrderLine implements Serializable {
     public void setPrice(Double price) {
         this.price = price;
     }
+    
+    
 
 }

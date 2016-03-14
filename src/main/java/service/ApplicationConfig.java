@@ -31,8 +31,10 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(json.item.ItemClientBean.class);
         resources.add(json.item2.ItemClientBean2.class);
+        resources.add(json.saleorder.SaleOrderBean.class);
         resources.add(service.Item2FacadeREST.class);
         resources.add(service.ItemFacadeREST.class);
+        resources.add(service.SaleOrderFacadeREST.class);
         resources.add(service.saleorder.SaleOrderFacadeREST.class);
     }
     

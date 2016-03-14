@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+                <h1>New Item</h1>
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Item"/>
+                        <h:inputText value="#{createSaleOrderLineFlow.item}" required="true"/>
+                        <h:outputLabel value="Quantity"/>
+                        <h:inputText value="#{createSaleOrderLineFlow.quantity}" required="true"/>
+                        <h:outputLabel value="Price"/>
+                        <h:inputText value="#{createSaleOrderLineFlow.price}" required="true"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="3">
+                        <h:commandButton value="Back" action="order" immediate="true"/>
+                        <h:commandButton value="Cancel" action="goHome" immediate="true"/>
+                        <h:commandButton value="Add" action="#{createSaleOrderLineFlow.addLine()}"/>
+                    </h:panelGrid>
+                </h:form>    
+                <br/>
+                <h1>Order Header</h1>
+                <p>Order number: #{createSaleOrderFlow.order_number}</p>
+                <p>Customer: #{createSaleOrderFlow.customer}</p>
+                <br/>
+                <h1>Order Lines</h1>
+                <h:form>
+                    <h:selectOneRadio value="#{createSaleOrderLineFlow.selected_line_num}"
+                                      layout="pageDirection" required="true">
+                        <f:selectItems value="#{createSaleOrderLineFlow.lines}"
+                                       var="m" itemValue="#{m.line_num}"
+                                       itemLabel="#{m.line_num} #{m.item} #{m.price} #{m.quantity}"/>
+                    </h:selectOneRadio>
+                    <h:panelGrid columns="4">
+                        <h:commandButton value="Back" action="order" immediate="true"/>
+                        <h:commandButton value="Cancel" action="goHome" immediate="true"/>
+                        <h:commandButton value="Delete" action="#{createSaleOrderLineFlow.delItem()}"/>
+                        <h:commandButton value="Save Order" action="#{saleOrderBean.addItem()}" immediate="true"/>
+                    </h:panelGrid>
+                </h:form>
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
