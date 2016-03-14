@@ -35,7 +35,6 @@ public class ApplicationConfig extends Application {
         resources.add(service.Item2FacadeREST.class);
         resources.add(service.ItemFacadeREST.class);
         resources.add(service.SaleOrderFacadeREST.class);
-        resources.add(service.saleorder.SaleOrderFacadeREST.class);
     }
     
 }

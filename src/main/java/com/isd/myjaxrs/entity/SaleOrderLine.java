@@ -6,10 +6,14 @@
 package com.isd.myjaxrs.entity;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -28,6 +32,25 @@ public class SaleOrderLine implements Serializable {
     private short line_num;
     private Double quantity;
     private Double price;
+    private boolean bool=true;
+    @Temporal(TemporalType.DATE)
+    private Date dt=Calendar.getInstance().getTime();
+
+    public Date getDt() {
+        return dt;
+    }
+
+    public void setDt(Date dt) {
+        this.dt = dt;
+    }
+
+    public boolean isBool() {
+        return bool;
+    }
+
+    public void setBool(boolean bool) {
+        this.bool = bool;
+    }
 
     public long getLine_id() {
         return line_id;

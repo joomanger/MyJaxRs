@@ -12,12 +12,18 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
+
 import javax.json.stream.JsonGenerator;
 import javax.json.stream.JsonParser;
+import javax.json.stream.JsonParser.Event;
+import static javax.json.stream.JsonParser.Event.END_ARRAY;
+import static javax.json.stream.JsonParser.Event.START_ARRAY;
+import static javax.json.stream.JsonParser.Event.START_OBJECT;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
@@ -119,7 +125,7 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
                     switch (parser.next()) {
                         case KEY_NAME:
                             String key = parser.getString();
-                            parser.next();
+                            Event e = parser.next();
 
                             for (Method mm : m) {
                                 if ((mm.getName().startsWith("set"))) {
@@ -131,9 +137,7 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
                                     }
 
                                     String tp = mm.getParameters()[0].getParameterizedType().toString();
-
                                     try {
-//                                        System.out.println("json.generic.RestProviderWR.readFrom().tp=" + tp);
                                         if (fieldName.equals(key)) {
                                             if ((tp.endsWith("java.lang.String")) || (tp.endsWith("java.lang.Boolean")) || (tp.endsWith("java.util.Date")) || (tp.endsWith("boolean"))) {
                                                 mm.invoke(t, parser.getString());
@@ -149,9 +153,79 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
                                                 mm.invoke(t, Integer.valueOf(parser.getString()));
                                             } else if ((tp.endsWith("java.lang.Long")) || (tp.endsWith("long"))) {
                                                 mm.invoke(t, Long.valueOf(parser.getString()));
-                                            } else if(tp.startsWith("java.util.List")){
-                                                System.out.println(tp);
-                                                
+                                            } else if (tp.startsWith("java.util.List<")) {
+                                                if (e == START_ARRAY) {
+                                                    String str = tp;
+                                                    str = str.replace("java.util.List<", "");
+                                                    str = str.substring(0, str.length() - 1);
+//                                                    System.out.println("!!!!!!!!!!!!!START_ARRAY!!!!!!!!!!!!!!");
+                                                    List l = new ArrayList();
+                                                    while (e != END_ARRAY) {
+                                                        e = parser.next();
+                                                        if (e == START_OBJECT) {
+                                                            Class cl;
+                                                            try {
+                                                                cl = Class.forName(str);
+                                                                Object obj = cl.newInstance();
+                                                                while (e != Event.END_OBJECT) {
+                                                                    e = parser.next();
+                                                                    switch (e) {
+                                                                        case KEY_NAME:
+//                                                                            System.out.println("KEY_NAME=" + parser.getString());
+                                                                            String v = parser.getString();
+                                                                            e = parser.next();
+                                                                            for (Method pp : cl.getDeclaredMethods()) {
+                                                                                if (pp.getName().startsWith("set")) {
+                                                                                    if (pp.getName().replaceFirst("set", "").toLowerCase().equals(v)) {
+                                                                                        String tp2 = pp.getParameters()[0].getParameterizedType().toString();
+//                                                                                        System.out.println(e.toString());
+
+                                                                                        switch (e) {
+                                                                                            case VALUE_STRING:
+                                                                                                pp.invoke(obj, parser.getString());
+                                                                                                break;
+                                                                                            case VALUE_NUMBER:
+                                                                                                if ((tp2.endsWith("java.lang.Double")) || (tp2.endsWith("double"))) {
+                                                                                                    pp.invoke(obj, Double.valueOf(parser.getString()));
+                                                                                                } else if ((tp2.endsWith("java.lang.Float")) || (tp2.endsWith("float"))) {
+                                                                                                    pp.invoke(obj, Float.valueOf(parser.getString()));
+                                                                                                } else if ((tp2.endsWith("java.lang.Short")) || (tp2.endsWith("short"))) {
+                                                                                                    pp.invoke(obj, Short.valueOf(parser.getString()));
+                                                                                                } else if ((tp2.endsWith("java.lang.Byte")) || (tp2.endsWith("byte"))) {
+                                                                                                    pp.invoke(obj, Byte.valueOf(parser.getString()));
+                                                                                                } else if ((tp2.endsWith("java.lang.Integer")) || (tp2.endsWith("int"))) {
+                                                                                                    pp.invoke(obj, Integer.valueOf(parser.getString()));
+                                                                                                } else if ((tp2.endsWith("java.lang.Long")) || (tp2.endsWith("long"))) {
+                                                                                                    pp.invoke(obj, Long.valueOf(parser.getString()));
+                                                                                                }
+                                                                                                break;
+                                                                                            case VALUE_TRUE:
+                                                                                                pp.invoke(obj, Boolean.TRUE);
+                                                                                                break;
+                                                                                            case VALUE_FALSE:
+                                                                                                pp.invoke(obj, Boolean.FALSE);
+                                                                                                break;
+                                                                                            default:
+                                                                                                break;
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            break;
+                                                                    }
+                                                                }
+                                                                l.add(obj);
+
+                                                            } catch (ClassNotFoundException ex) {
+                                                                Logger.getLogger(RestProviderWR.class.getName()).log(Level.SEVERE, null, ex);
+                                                                throw new WebApplicationException("Class is not found");
+                                                            }
+
+                                                        }
+
+                                                    }
+                                                    mm.invoke(t, l);
+                                                }
                                             }
                                         }
                                     } catch (IllegalAccessException | InvocationTargetException ex) {
