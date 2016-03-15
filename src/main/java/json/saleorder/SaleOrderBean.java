@@ -70,7 +70,7 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
                 .register(this)
                 .request()
                 .post(Entity.entity(order, MediaType.APPLICATION_JSON));
-        
+
         return "goHome";
     }
 

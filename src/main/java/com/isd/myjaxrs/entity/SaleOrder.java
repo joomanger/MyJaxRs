@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -31,10 +32,22 @@ public class SaleOrder implements Serializable {
     private long header_id;
     private int order_number;
     private String customer;
-
+    
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="soa_fk")
+    private SaleOrderAdditional soa=new SaleOrderAdditional();
+    
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "header_id")
     private List<SaleOrderLine> lines;
+
+    public SaleOrderAdditional getSoa() {
+        return soa;
+    }
+
+    public void setSoa(SaleOrderAdditional soa) {
+        this.soa = soa;
+    }
 
     public long getHeader_id() {
         return header_id;

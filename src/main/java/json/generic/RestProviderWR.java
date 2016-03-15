@@ -5,8 +5,11 @@
  */
 package json.generic;
 
+import com.google.gson.Gson;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -70,42 +73,15 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
         } else if (rez instanceof Byte) {
             gen.write(fieldName, Byte.parseByte(rez.toString()));
         }
+
         return gen;
     }
 
     @Override
     public void writeTo(T ob, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream) throws IOException, WebApplicationException {
-        JsonGenerator gen = Json.createGenerator(entityStream);
-        gen.writeStartObject();
-        Object rez;
-        for (Method mm : getObj().getDeclaredMethods()) {
-            if ((mm.getName().startsWith("get")) || (mm.getName().startsWith("is"))) {
-                try {
-                    rez = getObj().getDeclaredMethod(mm.getName()).invoke(ob);
-                    gen = writeSimpleType(gen, mm.getName(), rez);
-                    if (rez instanceof List) {
-                        gen.writeStartArray(mm.getName().substring(3).toLowerCase());
-                        for (Object item : ((List) rez)) {
-                            gen.writeStartObject();
-                            for (Method m : ((List) rez).get(0).getClass().getDeclaredMethods()) {
-                                if ((m.getName().startsWith("get")) || (m.getName().startsWith("is"))) {
-                                    gen = writeSimpleType(gen, m.getName(), item.getClass().getDeclaredMethod(m.getName()).invoke(item));
-                                }
-                            }
-                            gen.writeEnd();
-                        }
-                        gen.writeEnd();
-                        System.out.println(((List) rez).size());
-                    }
-
-                } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException ex) {
-                    System.out.println("json.item.ItemWriterGen.writeTo().Exception: " + ex.getMessage());
-                }
-            }
-        }
-        gen.writeEnd();
-        gen.flush();
-        gen.close();
+        Gson gson = new Gson();
+        String json = gson.toJson(ob);
+        entityStream.write(json.getBytes());
     }
 
     @Override
@@ -116,131 +92,10 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
     @Override
     public T readFrom(Class<T> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, String> httpHeaders, InputStream entityStream) throws IOException, WebApplicationException {
         T t;
-
-        try {
-            t = type.newInstance();
-            Method[] m = t.getClass().getDeclaredMethods();
-            try (JsonParser parser = Json.createParser(entityStream)) {
-                while (parser.hasNext()) {
-                    switch (parser.next()) {
-                        case KEY_NAME:
-                            String key = parser.getString();
-                            Event e = parser.next();
-
-                            for (Method mm : m) {
-                                if ((mm.getName().startsWith("set"))) {
-
-                                    String fieldName = mm.getName().substring(3).toLowerCase();
-
-                                    if (mm.getParameterCount() > 1) {
-                                        throw new WebApplicationException("XX: More one parameter into setter method");
-                                    }
-
-                                    String tp = mm.getParameters()[0].getParameterizedType().toString();
-                                    try {
-                                        if (fieldName.equals(key)) {
-                                            if ((tp.endsWith("java.lang.String")) || (tp.endsWith("java.lang.Boolean")) || (tp.endsWith("java.util.Date")) || (tp.endsWith("boolean"))) {
-                                                mm.invoke(t, parser.getString());
-                                            } else if ((tp.endsWith("java.lang.Double")) || (tp.endsWith("double"))) {
-                                                mm.invoke(t, Double.valueOf(parser.getString()));
-                                            } else if ((tp.endsWith("java.lang.Float")) || (tp.endsWith("float"))) {
-                                                mm.invoke(t, Float.valueOf(parser.getString()));
-                                            } else if ((tp.endsWith("java.lang.Short")) || (tp.endsWith("short"))) {
-                                                mm.invoke(t, Short.valueOf(parser.getString()));
-                                            } else if ((tp.endsWith("java.lang.Byte")) || (tp.endsWith("byte"))) {
-                                                mm.invoke(t, Byte.valueOf(parser.getString()));
-                                            } else if ((tp.endsWith("java.lang.Integer")) || (tp.endsWith("int"))) {
-                                                mm.invoke(t, Integer.valueOf(parser.getString()));
-                                            } else if ((tp.endsWith("java.lang.Long")) || (tp.endsWith("long"))) {
-                                                mm.invoke(t, Long.valueOf(parser.getString()));
-                                            } else if (tp.startsWith("java.util.List<")) {
-                                                if (e == START_ARRAY) {
-                                                    String str = tp;
-                                                    str = str.replace("java.util.List<", "");
-                                                    str = str.substring(0, str.length() - 1);
-//                                                    System.out.println("!!!!!!!!!!!!!START_ARRAY!!!!!!!!!!!!!!");
-                                                    List l = new ArrayList();
-                                                    while (e != END_ARRAY) {
-                                                        e = parser.next();
-                                                        if (e == START_OBJECT) {
-                                                            Class cl;
-                                                            try {
-                                                                cl = Class.forName(str);
-                                                                Object obj = cl.newInstance();
-                                                                while (e != Event.END_OBJECT) {
-                                                                    e = parser.next();
-                                                                    switch (e) {
-                                                                        case KEY_NAME:
-//                                                                            System.out.println("KEY_NAME=" + parser.getString());
-                                                                            String v = parser.getString();
-                                                                            e = parser.next();
-                                                                            for (Method pp : cl.getDeclaredMethods()) {
-                                                                                if (pp.getName().startsWith("set")) {
-                                                                                    if (pp.getName().replaceFirst("set", "").toLowerCase().equals(v)) {
-                                                                                        String tp2 = pp.getParameters()[0].getParameterizedType().toString();
-//                                                                                        System.out.println(e.toString());
-
-                                                                                        switch (e) {
-                                                                                            case VALUE_STRING:
-                                                                                                pp.invoke(obj, parser.getString());
-                                                                                                break;
-                                                                                            case VALUE_NUMBER:
-                                                                                                if ((tp2.endsWith("java.lang.Double")) || (tp2.endsWith("double"))) {
-                                                                                                    pp.invoke(obj, Double.valueOf(parser.getString()));
-                                                                                                } else if ((tp2.endsWith("java.lang.Float")) || (tp2.endsWith("float"))) {
-                                                                                                    pp.invoke(obj, Float.valueOf(parser.getString()));
-                                                                                                } else if ((tp2.endsWith("java.lang.Short")) || (tp2.endsWith("short"))) {
-                                                                                                    pp.invoke(obj, Short.valueOf(parser.getString()));
-                                                                                                } else if ((tp2.endsWith("java.lang.Byte")) || (tp2.endsWith("byte"))) {
-                                                                                                    pp.invoke(obj, Byte.valueOf(parser.getString()));
-                                                                                                } else if ((tp2.endsWith("java.lang.Integer")) || (tp2.endsWith("int"))) {
-                                                                                                    pp.invoke(obj, Integer.valueOf(parser.getString()));
-                                                                                                } else if ((tp2.endsWith("java.lang.Long")) || (tp2.endsWith("long"))) {
-                                                                                                    pp.invoke(obj, Long.valueOf(parser.getString()));
-                                                                                                }
-                                                                                                break;
-                                                                                            case VALUE_TRUE:
-                                                                                                pp.invoke(obj, Boolean.TRUE);
-                                                                                                break;
-                                                                                            case VALUE_FALSE:
-                                                                                                pp.invoke(obj, Boolean.FALSE);
-                                                                                                break;
-                                                                                            default:
-                                                                                                break;
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                            break;
-                                                                    }
-                                                                }
-                                                                l.add(obj);
-
-                                                            } catch (ClassNotFoundException ex) {
-                                                                Logger.getLogger(RestProviderWR.class.getName()).log(Level.SEVERE, null, ex);
-                                                                throw new WebApplicationException("Class is not found");
-                                                            }
-
-                                                        }
-
-                                                    }
-                                                    mm.invoke(t, l);
-                                                }
-                                            }
-                                        }
-                                    } catch (IllegalAccessException | InvocationTargetException ex) {
-                                        throw new WebApplicationException("XX: Invoking error the getter method");
-                                    }
-                                }
-                            }
-                    }
-                }
-            }
-            return t;
-        } catch (InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(RestProviderWR.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+        Gson gson = new Gson();
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(entityStream));
+        t = gson.fromJson(reader, type);
+        return t;
     }
 
 }
