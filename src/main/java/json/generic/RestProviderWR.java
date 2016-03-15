@@ -49,7 +49,7 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
         return -1; //To change body of generated methods, choose Tools | Templates.
     }
 
-    private JsonGenerator genz(JsonGenerator gena, String getMethodName, Object rez) {
+    private JsonGenerator writeSimpleType(JsonGenerator gena, String getMethodName, Object rez) {
         JsonGenerator gen = gena;
         String fieldName = getMethodName.substring(3).toLowerCase();
         if (rez instanceof Integer) {
@@ -82,14 +82,14 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
             if ((mm.getName().startsWith("get")) || (mm.getName().startsWith("is"))) {
                 try {
                     rez = getObj().getDeclaredMethod(mm.getName()).invoke(ob);
-                    gen = genz(gen, mm.getName(), rez);
+                    gen = writeSimpleType(gen, mm.getName(), rez);
                     if (rez instanceof List) {
-                        gen.writeStartArray("lines");
+                        gen.writeStartArray(mm.getName().substring(3).toLowerCase());
                         for (Object item : ((List) rez)) {
                             gen.writeStartObject();
                             for (Method m : ((List) rez).get(0).getClass().getDeclaredMethods()) {
                                 if ((m.getName().startsWith("get")) || (m.getName().startsWith("is"))) {
-                                    gen = genz(gen, m.getName(), item.getClass().getDeclaredMethod(m.getName()).invoke(item));
+                                    gen = writeSimpleType(gen, m.getName(), item.getClass().getDeclaredMethod(m.getName()).invoke(item));
                                 }
                             }
                             gen.writeEnd();
