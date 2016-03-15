@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import javax.ejb.Stateless;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Named;
 
@@ -21,7 +20,6 @@ import javax.inject.Named;
  * @author savin
  */
 @Named
-@Stateless
 @FlowScoped("order")
 public class CreateSaleOrderLineFlow implements Serializable {
 

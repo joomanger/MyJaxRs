@@ -1,7 +1,5 @@
 package json.saleorder;
 
-import json.item2.*;
-import com.isd.myjaxrs.entity.Item2;
 import com.isd.myjaxrs.entity.SaleOrder;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
