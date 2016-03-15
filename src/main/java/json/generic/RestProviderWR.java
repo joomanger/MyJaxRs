@@ -52,11 +52,9 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
 
     @Override
     public T readFrom(Class<T> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, String> httpHeaders, InputStream entityStream) throws IOException, WebApplicationException {
-        T t;
         Gson gson = new Gson();
         final BufferedReader reader = new BufferedReader(new InputStreamReader(entityStream));
-        t = gson.fromJson(reader, type);
-        return t;
+        return gson.fromJson(reader, type);
     }
 
 }
