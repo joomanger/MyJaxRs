@@ -1,6 +1,7 @@
 package json.saleorder;
 
 import com.isd.myjaxrs.entity.SaleOrder;
+import filters.ClientLoggingFilter;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
@@ -43,6 +44,7 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
     @PostConstruct
     private void init() {
         client = ClientBuilder.newClient();
+        client.register(ClientLoggingFilter.class);
         target = client.target("http://localhost:8080/MyJaxRs/webresources/saleorder/");
     }
 
