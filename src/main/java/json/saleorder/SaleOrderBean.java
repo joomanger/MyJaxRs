@@ -7,6 +7,7 @@ import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.OrderBy;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
@@ -17,11 +18,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.Provider;
 import json.generic.RestProviderWR;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
  * @author savin
@@ -37,6 +33,8 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
     private CreateSaleOrderFlow orderHeader;
     @Inject
     private CreateSaleOrderLineFlow orderLines;
+    @Inject
+    private SaleOrderBackingBean sob;
 
     private Client client;
     private WebTarget target;
@@ -44,7 +42,7 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
     @PostConstruct
     private void init() {
         client = ClientBuilder.newClient();
-        client.register(ClientLoggingFilter.class);
+//        client.register(ClientLoggingFilter.class);
         target = client.target("http://localhost:8080/MyJaxRs/webresources/saleorder/");
     }
 
@@ -54,7 +52,7 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
     }
 
     public SaleOrder getItem() {
-        return target.path("{item}").resolveTemplate("item", orderHeader.getHeader_id()).request().get(SaleOrder.class);
+        return target.path("{item}").resolveTemplate("item", sob.getId()).request().get(SaleOrder.class);
     }
 
     public SaleOrder[] getItems() {
@@ -70,14 +68,13 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
                 .register(this)
                 .request()
                 .post(Entity.entity(order, MediaType.APPLICATION_JSON));
-
         return "goHome";
     }
 
     public void deleteItem() {
         target
                 .path("{itemId}")
-                .resolveTemplate("itemId", orderHeader.getHeader_id())
+                .resolveTemplate("itemId", sob.getId())
                 .request()
                 .delete();
     }

@@ -13,7 +13,7 @@
                 <h:form>
                     <h:panelGrid columns="2">
                         <h:outputLabel value="Number" />
-                        <h:inputText  maxlength="9" value="#{createSaleOrderFlow.order_number}" required="true" style="width:5em"/>
+                        <h:inputText readonly="true" value="#{createSaleOrderFlow.order_number}" required="true" style="width:5em"/>
                         <h:outputLabel value="Customer"/>
                         <h:inputText maxlength="150" value="#{createSaleOrderFlow.customer}" required="true" style="width:350px"/>
                         <h:commandButton value="Lines" action="lines"/>

@@ -6,8 +6,12 @@
 package json.saleorder;
 
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -16,9 +20,18 @@ import javax.inject.Named;
 @Named
 @FlowScoped("order")
 public class CreateSaleOrderFlow implements Serializable {
+
     private long header_id;
-    private int order_number;
+    private long order_number;
     private String customer;
+
+    @PersistenceContext(unitName = "myjaxrs")
+    private EntityManager em;
+
+    @PostConstruct
+    private void init() {
+        order_number = (Long) em.createNativeQuery("select nextval('order_header_number_sq')").getSingleResult();
+    }
 
     public long getHeader_id() {
         return header_id;
@@ -28,11 +41,11 @@ public class CreateSaleOrderFlow implements Serializable {
         this.header_id = header_id;
     }
 
-    public int getOrder_number() {
+    public long getOrder_number() {
         return order_number;
     }
 
-    public void setOrder_number(int order_number) {
+    public void setOrder_number(long order_number) {
         this.order_number = order_number;
     }
 
@@ -43,6 +56,5 @@ public class CreateSaleOrderFlow implements Serializable {
     public void setCustomer(String customer) {
         this.customer = customer;
     }
-    
-    
+
 }

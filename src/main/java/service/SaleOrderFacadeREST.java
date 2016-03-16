@@ -9,6 +9,7 @@ import com.isd.myjaxrs.entity.SaleOrder;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.OrderBy;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -65,6 +66,7 @@ public class SaleOrderFacadeREST extends AbstractFacade<SaleOrder> {
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @OrderBy("order_number desc")
     public List<SaleOrder> findAll() {
         return super.findAll();
     }

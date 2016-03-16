@@ -23,7 +23,9 @@
                     <h:panelGrid columns="3">
                         <h:commandButton value="Back" action="order" immediate="true"/>
                         <h:commandButton value="Cancel" action="goHome" immediate="true"/>
-                        <h:commandButton value="Add" action="#{createSaleOrderLineFlow.addLine()}"/>
+                        <h:commandButton value="Add" action="#{createSaleOrderLineFlow.addLine()}" >
+                            <f:ajax execute="@form" render="flines"/>
+                        </h:commandButton>    
                     </h:panelGrid>
                 </h:form>    
                 <br/>
@@ -32,25 +34,23 @@
                 <p>Customer: #{createSaleOrderFlow.customer}</p>
                 <br/>
                 <h1>Order Lines</h1>
-                <h:form>
+                <h:form id="flines" prependId="false">
                     <h:selectOneRadio value="#{createSaleOrderLineFlow.selected_line_num}"
                                       layout="pageDirection" required="true">
-                        <f:selectItems value="#{createSaleOrderLineFlow.lines}"
+                        <f:selectItems id="items" value="#{createSaleOrderLineFlow.lines}"
                                        var="m" itemValue="#{m.line_num}"
                                        itemLabel="#{m.line_num} #{m.item} #{m.price} #{m.quantity}"/>
                     </h:selectOneRadio>
                     <h:panelGrid columns="4">
                         <h:commandButton value="Back" action="order" immediate="true"/>
                         <h:commandButton value="Cancel" action="goHome" immediate="true"/>
-                        <h:commandButton value="Delete" action="#{createSaleOrderLineFlow.delItem()}"/>
+                        <h:commandButton value="Delete" action="#{createSaleOrderLineFlow.delItem()}">
+                            <f:ajax execute="@form" render="flines"/>
+                        </h:commandButton>
                         <h:commandButton value="Save Order" action="#{saleOrderBean.addItem()}" immediate="true"/>
                     </h:panelGrid>
                 </h:form>
-
-
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>

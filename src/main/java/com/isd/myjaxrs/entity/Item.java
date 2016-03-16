@@ -8,10 +8,13 @@ package com.isd.myjaxrs.entity;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -36,8 +39,8 @@ public class Item implements Serializable {
     private short shorter=434;
     private int inter=555;
     private float floater=111.11f;
-    
-    private Date dt=Calendar.getInstance().getTime();
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dt=Calendar.getInstance(Locale.ENGLISH).getTime();
 
     public Date getDt() {
         return dt;
