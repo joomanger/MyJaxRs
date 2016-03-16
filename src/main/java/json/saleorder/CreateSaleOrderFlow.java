@@ -7,7 +7,6 @@ package json.saleorder;
 
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
