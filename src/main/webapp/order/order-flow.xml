@@ -5,7 +5,7 @@
    http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd" > 
     <flow-definition id="order">  
         <flow-return id="goHome">
-            <from-outcome>/index</from-outcome>
+            <from-outcome>/order/orders</from-outcome>
         </flow-return>
     </flow-definition>
 </faces-config>
