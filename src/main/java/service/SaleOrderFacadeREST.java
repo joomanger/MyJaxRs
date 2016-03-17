@@ -66,7 +66,7 @@ public class SaleOrderFacadeREST extends AbstractFacade<SaleOrder> {
     }
     
     @GET
-    @Path("/list/{header_id}")
+    @Path("/{header_id}/lines")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<SaleOrderLine> getOrderLines(@PathParam("header_id") Long id) {
         TypedQuery<SaleOrderLine> tq= em.createNamedQuery(SaleOrderLine.FIND_BY_HEADER_ID, SaleOrderLine.class).setParameter("p_header_id", id);

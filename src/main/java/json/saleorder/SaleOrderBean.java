@@ -62,7 +62,7 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
     
     public List<SaleOrderLine> getLines() {
         //return em.createNamedQuery(SaleOrderLine.FIND_BY_HEADER_ID, SaleOrderLine.class).setParameter("p_header_id", sob.getId()).getResultList();
-        return target.path("/list/{item}").resolveTemplate("item", sob.getId()).request().get(new GenericType<List<SaleOrderLine>>(){});
+        return target.path("/{item}/lines").resolveTemplate("item", sob.getId()).request().get(new GenericType<List<SaleOrderLine>>(){});
     }
     
     public String addItem() throws Exception {

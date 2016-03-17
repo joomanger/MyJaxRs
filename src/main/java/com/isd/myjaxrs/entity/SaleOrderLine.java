@@ -23,9 +23,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-@NamedQuery(name = SaleOrderLine.FIND_BY_HEADER_ID,query = "select b from SaleOrderLine b where b.header_id=:p_header_id")
+@NamedQuery(name = SaleOrderLine.FIND_BY_HEADER_ID, query = "select b from SaleOrderLine b where b.header_id=:p_header_id")
 public class SaleOrderLine implements Serializable {
-    public static final String FIND_BY_HEADER_ID="FBHI";
+
+    public static final String FIND_BY_HEADER_ID = "FBHI";
     @Id
     @SequenceGenerator(name = "order_line_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "order_line_sq")
@@ -102,6 +103,5 @@ public class SaleOrderLine implements Serializable {
     public void setHeader_id(Long header_id) {
         this.header_id = header_id;
     }
-    
-    
+
 }
