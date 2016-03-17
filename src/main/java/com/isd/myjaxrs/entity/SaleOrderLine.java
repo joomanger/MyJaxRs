@@ -23,7 +23,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-@NamedQuery(name = SaleOrderLine.FIND_BY_HEADER_ID, query = "select l from SaleOrderLine l where header_id=:p_header_id")
 public class SaleOrderLine implements Serializable {
     public static final String FIND_BY_HEADER_ID="FBHI";
     @Id
