@@ -20,7 +20,7 @@
                     <h:outputLabel value="Item"/>
                     <h:outputText value="Qty"/>
                     <h:outputText value="Price"/>
-                    <c:forEach var="ord" items="#{saleOrderBean.item.lines}">
+                    <c:forEach var="ord" items="#{saleOrderBean.lines}">
                         <h:outputText value="#{ord.line_num}"/>
                         <h:outputText value="#{ord.item}"/>
                         <h:outputText value="#{ord.quantity}"/>

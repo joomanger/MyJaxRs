@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -32,12 +33,12 @@ public class SaleOrder implements Serializable {
     private long header_id;
     private long order_number;
     private String customer;
-    
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
-    @JoinColumn(name="soa_fk")
-    private SaleOrderAdditional soa=new SaleOrderAdditional();
-    
-    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinColumn(name = "soa_fk")
+    private SaleOrderAdditional soa = new SaleOrderAdditional();
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "header_id")
     private List<SaleOrderLine> lines;
 

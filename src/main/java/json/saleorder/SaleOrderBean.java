@@ -2,6 +2,7 @@ package json.saleorder;
 
 import com.isd.myjaxrs.entity.SaleOrder;
 import com.isd.myjaxrs.entity.SaleOrderLine;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
@@ -13,6 +14,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.Provider;
 import json.generic.RestProviderWR;
@@ -56,6 +58,11 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
 
     public SaleOrder[] getItems() {
         return target.request().get(SaleOrder[].class);
+    }
+    
+    public List<SaleOrderLine> getLines() {
+        //return em.createNamedQuery(SaleOrderLine.FIND_BY_HEADER_ID, SaleOrderLine.class).setParameter("p_header_id", sob.getId()).getResultList();
+        return target.path("/list/{item}").resolveTemplate("item", sob.getId()).request().get(new GenericType<List<SaleOrderLine>>(){});
     }
     
     public String addItem() throws Exception {

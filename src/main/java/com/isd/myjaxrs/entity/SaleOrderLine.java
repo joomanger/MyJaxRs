@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,6 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
+@NamedQuery(name = SaleOrderLine.FIND_BY_HEADER_ID,query = "select b from SaleOrderLine b where b.header_id=:p_header_id")
 public class SaleOrderLine implements Serializable {
     public static final String FIND_BY_HEADER_ID="FBHI";
     @Id
@@ -32,6 +34,7 @@ public class SaleOrderLine implements Serializable {
     private short line_num;
     private Double quantity;
     private Double price;
+    private Long header_id;
     private boolean bool = true;
     @Temporal(TemporalType.DATE)
     private Date dt = Calendar.getInstance().getTime();
@@ -92,4 +95,13 @@ public class SaleOrderLine implements Serializable {
         this.price = price;
     }
 
+    public Long getHeader_id() {
+        return header_id;
+    }
+
+    public void setHeader_id(Long header_id) {
+        this.header_id = header_id;
+    }
+    
+    
 }
