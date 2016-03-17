@@ -20,7 +20,7 @@ import javax.inject.Named;
  * @author savin
  */
 @Named
-@FlowScoped("order")
+@FlowScoped("newOrder")
 public class CreateSaleOrderLineFlow implements Serializable {
 
     private short line_num = 0;

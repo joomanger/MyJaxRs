@@ -1,13 +1,12 @@
 package json.saleorder;
 
 import com.isd.myjaxrs.entity.SaleOrder;
-import filters.ClientLoggingFilter;
+import com.isd.myjaxrs.entity.SaleOrderLine;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.OrderBy;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
@@ -58,7 +57,7 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
     public SaleOrder[] getItems() {
         return target.request().get(SaleOrder[].class);
     }
-
+    
     public String addItem() throws Exception {
         SaleOrder order = new SaleOrder();
         order.setOrder_number(orderHeader.getOrder_number());

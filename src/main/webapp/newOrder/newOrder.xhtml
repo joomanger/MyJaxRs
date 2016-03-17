@@ -11,12 +11,12 @@
             <ui:define name="content">
                 <h1>Order</h1>
                 <h:form>
-                    <h:panelGrid columns="2">
+                    <h:panelGrid columns="2" cellpadding="5" cellspacing="5">
                         <h:outputLabel value="Number" />
-                        <h:inputText readonly="true" value="#{createSaleOrderFlow.order_number}" required="true" style="width:5em"/>
+                        <h:inputText readonly="true"  value="#{createSaleOrderFlow.order_number}" required="true" style="width:5em;text-align: right "/>
                         <h:outputLabel value="Customer"/>
                         <h:inputText maxlength="150" value="#{createSaleOrderFlow.customer}" required="true" style="width:350px"/>
-                        <h:commandButton value="Lines" action="lines"/>
+                        <h:commandButton value="Lines" action="newOrderLines"/>
                         <h:commandButton id="back" value="Cancel" action="goHome" immediate="true"/>
                     </h:panelGrid>
                 </h:form>

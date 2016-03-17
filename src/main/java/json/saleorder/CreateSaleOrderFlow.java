@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
  * @author savin
  */
 @Named
-@FlowScoped("order")
+@FlowScoped("newOrder")
 public class CreateSaleOrderFlow implements Serializable {
 
     private long header_id;
