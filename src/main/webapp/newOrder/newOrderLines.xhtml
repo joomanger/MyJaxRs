@@ -21,7 +21,7 @@
                         <h:inputText value="#{createSaleOrderLineFlow.price}" required="true"/>
                     </h:panelGrid>
                     <h:panelGrid columns="3">
-                        <h:commandButton value="Back" action="order" immediate="true"/>
+                        <h:commandButton value="Back" action="newOrder" immediate="true"/>
                         <h:commandButton value="Cancel" action="goHome" immediate="true"/>
                         <h:commandButton value="Add" action="#{createSaleOrderLineFlow.addLine()}" >
                             <f:ajax execute="@form" render="flines"/>
@@ -42,7 +42,7 @@
                                        itemLabel="#{m.line_num} #{m.item} #{m.price} #{m.quantity}"/>
                     </h:selectOneRadio>
                     <h:panelGrid columns="4">
-                        <h:commandButton value="Back" action="order" immediate="true"/>
+                        <h:commandButton value="Back" action="newOrder" immediate="true"/>
                         <h:commandButton value="Cancel" action="goHome" immediate="true"/>
                         <h:commandButton value="Delete" action="#{createSaleOrderLineFlow.delItem()}">
                             <f:ajax execute="@form" render="flines"/>

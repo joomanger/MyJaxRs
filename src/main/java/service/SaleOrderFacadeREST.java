@@ -94,6 +94,13 @@ public class SaleOrderFacadeREST extends AbstractFacade<SaleOrder> {
     public String countREST() {
         return String.valueOf(super.count());
     }
+    
+    @GET
+    @Path("newOrderNumber")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Long orderNumber() {
+        return (Long) em.createNativeQuery("select nextval('order_header_number_sq')").getSingleResult();
+    }
 
     @Override
     protected EntityManager getEntityManager() {

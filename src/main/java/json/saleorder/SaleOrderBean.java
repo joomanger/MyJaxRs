@@ -60,6 +60,10 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
         return target.request().get(SaleOrder[].class);
     }
     
+    public Long getNewOrderNumber(){
+        return target.path("/newOrderNumber").request().get(Long.class);
+    }
+    
     public List<SaleOrderLine> getLines() {
         //return em.createNamedQuery(SaleOrderLine.FIND_BY_HEADER_ID, SaleOrderLine.class).setParameter("p_header_id", sob.getId()).getResultList();
         return target.path("/{item}/lines").resolveTemplate("item", sob.getId()).request().get(new GenericType<List<SaleOrderLine>>(){});
