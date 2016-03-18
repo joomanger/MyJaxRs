@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package json.saleorder;
+package saleorder.flows;
 
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import saleorder.beans.SaleOrderBean;
 
 /**
  *

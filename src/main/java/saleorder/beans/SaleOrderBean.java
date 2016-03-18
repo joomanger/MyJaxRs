@@ -1,5 +1,7 @@
-package json.saleorder;
+package saleorder.beans;
 
+import saleorder.flows.CreateSaleOrderFlow;
+import saleorder.flows.CreateSaleOrderLineFlow;
 import com.isd.myjaxrs.entity.SaleOrder;
 import com.isd.myjaxrs.entity.SaleOrderLine;
 import java.util.List;
@@ -17,7 +19,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.Provider;
-import json.generic.RestProviderWR;
+import utils.RestProviderWR;
 
 /**
  *

@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
@@ -15,18 +15,40 @@
                 <p>Customer: #{saleOrderBean.item.customer}</p>
                 <br/>
                 <h1>Order Lines</h1>
-                <h:panelGrid columns="4" cellpadding="5" cellspacing="5">
-                    <h:outputLabel value="Line#" />
-                    <h:outputLabel value="Item"/>
-                    <h:outputText value="Qty"/>
-                    <h:outputText value="Price"/>
-                    <c:forEach var="ord" items="#{saleOrderBean.lines}">
-                        <h:outputText value="#{ord.line_num}"/>
-                        <h:outputText value="#{ord.item}"/>
-                        <h:outputText value="#{ord.quantity}"/>
-                        <h:outputText value="#{ord.price}"/>
-                    </c:forEach>
-                </h:panelGrid>
+
+                <p:dataTable scrollable="true" scrollHeight="550" var="ord" value="#{saleOrderBean.lines}">
+                    <p:column headerText="Line" width="20px">
+                        <h:outputText value="#{ord.line_num}" />
+                    </p:column>
+
+                    <p:column headerText="Item">
+                        <h:outputText value="#{ord.item}" />
+                    </p:column>
+
+                    <p:column headerText="Quantity">
+                        <h:outputText value="#{ord.quantity}" />
+                    </p:column>
+
+                    <p:column headerText="Price">
+                        <h:outputText value="#{ord.price}" />
+                    </p:column>
+                </p:dataTable>
+
+
+                <!--                <h:panelGrid columns="5" cellpadding="5" cellspacing="5">
+                                    <h:outputLabel value="Line#" />
+                                    <h:outputLabel value="Item"/>
+                                    <h:outputText value="Qty"/>
+                                    <h:outputText value="Price"/>
+                                    <h:outputText value=""/>
+                                    <c:forEach var="ord" items="#{saleOrderBean.lines}">
+                                        <h:outputText value="#{ord.line_num}"/>
+                                        <h:outputText value="#{ord.item}"/>
+                                        <h:outputText value="#{ord.quantity}"/>
+                                        <h:outputText value="#{ord.price}"/>
+                                        <h:button value="E" />
+                                    </c:forEach>
+                                </h:panelGrid>-->
             </ui:define>
 
         </ui:composition>

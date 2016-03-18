@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package json.saleorder;
+package saleorder.flows;
 
 import com.isd.myjaxrs.entity.SaleOrderLine;
 import java.io.Serializable;
