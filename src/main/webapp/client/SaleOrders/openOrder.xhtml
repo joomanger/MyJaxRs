@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -11,47 +12,42 @@
 
             <ui:define name="content">
                 <h1>Order Header</h1>
-                <p>Order number: #{saleOrderBean.item.order_number}</p>
-                <p>Customer: #{saleOrderBean.item.customer}</p>
+                <p>Order number: #{saleOrderView.order.order_number}</p>
+                <p>Customer: #{saleOrderView.order.customer}</p>
                 <br/>
                 <h1>Order Lines</h1>
+                <h:form id="form"> 
+                    <p:growl id="msgs" showDetail="false"/>
 
-                <p:dataTable scrollable="true" scrollHeight="550" var="ord" value="#{saleOrderBean.lines}">
-                    <p:column headerText="Line" width="20px">
-                        <h:outputText value="#{ord.line_num}" />
-                    </p:column>
+                    <p:dataTable scrollable="true" reflow="true" rows="25" paginator="true" editable="true" var="ord" value="#{saleOrderView.orderLines}" style="width: 30%;margin-top:20px">
 
-                    <p:column headerText="Item">
-                        <h:outputText value="#{ord.item}" />
-                    </p:column>
+                        <p:ajax event="rowEdit" listener="#{saleOrderView.onRowEdit}" update=":form:msgs" />
+                        <p:ajax event="rowEditCancel"  listener="#{saleOrderView.onRowCancel}" update=":form:msgs" />
 
-                    <p:column headerText="Quantity">
-                        <h:outputText value="#{ord.quantity}" />
-                    </p:column>
-
-                    <p:column headerText="Price">
-                        <h:outputText value="#{ord.price}" />
-                    </p:column>
-                </p:dataTable>
-
-
-                <!--                <h:panelGrid columns="5" cellpadding="5" cellspacing="5">
-                                    <h:outputLabel value="Line#" />
-                                    <h:outputLabel value="Item"/>
-                                    <h:outputText value="Qty"/>
-                                    <h:outputText value="Price"/>
-                                    <h:outputText value=""/>
-                                    <c:forEach var="ord" items="#{saleOrderBean.lines}">
-                                        <h:outputText value="#{ord.line_num}"/>
-                                        <h:outputText value="#{ord.item}"/>
-                                        <h:outputText value="#{ord.quantity}"/>
-                                        <h:outputText value="#{ord.price}"/>
-                                        <h:button value="E" />
-                                    </c:forEach>
-                                </h:panelGrid>-->
+                        <p:column style="width:32px">
+                            <p:rowEditor  />
+                        </p:column>
+                        <p:column headerText="Line" style="width:52px; text-align: center"  sortBy="#{ord.line_num}">
+                            <h:outputText value="#{ord.line_num}" />
+                        </p:column>
+                        <p:column headerText="Item" style="width:100%;text-align: center" sortBy="#{ord.item}">
+                            <h:outputText value="#{ord.item}" />
+                        </p:column>
+                        <p:column headerText="Quantity" style="width:80px; text-align: right" sortBy="#{ord.quantity}">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{ord.quantity}" /></f:facet>
+                                <f:facet name="input"><p:inputText id="qtyInput" value="#{ord.quantity}" /></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="Price" style="width:60px; text-align: right" sortBy="#{ord.price}"> 
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{ord.price}" /></f:facet>
+                                <f:facet name="input"><p:inputText id="priceInput" value="#{ord.price}" /></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>

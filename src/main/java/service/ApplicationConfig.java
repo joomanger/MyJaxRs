@@ -32,7 +32,9 @@ public class ApplicationConfig extends Application {
         resources.add(json.item.ItemClientBean.class);
         resources.add(json.item2.ItemClientBean2.class);
         resources.add(saleorder.RESTS.SaleOrderFacadeREST.class);
+        resources.add(saleorder.RESTS.SaleOrderLineFacadeREST.class);
         resources.add(saleorder.beans.SaleOrderBean.class);
+        resources.add(saleorderline.beans.SaleOrderLineBean.class);
         resources.add(service.Item2FacadeREST.class);
         resources.add(service.ItemFacadeREST.class);
     }

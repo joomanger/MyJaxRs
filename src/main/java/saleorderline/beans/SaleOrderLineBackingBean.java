@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package saleorder.beans;
+package saleorderline.beans;
 
+import com.isd.myjaxrs.entity.SaleOrderLine;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
@@ -14,16 +15,15 @@ import javax.inject.Named;
  */
 @Named
 @ApplicationScoped
-public class SaleOrderBackingBean {
-    private long id;
+public class SaleOrderLineBackingBean {
+    private SaleOrderLine line;
 
-    public long getId() {
-        return id;
+    public SaleOrderLine getLine() {
+        return line;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setLine(SaleOrderLine line) {
+        this.line = line;
     }
-    
     
 }
