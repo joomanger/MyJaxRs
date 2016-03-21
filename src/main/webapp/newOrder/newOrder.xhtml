@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
@@ -11,13 +12,13 @@
             <ui:define name="content">
                 <h1>Order</h1>
                 <h:form>
-                    <h:panelGrid columns="2" cellpadding="5" cellspacing="5">
-                        <h:outputLabel value="Number" />
-                        <h:inputText id="orderNumber" readonly="true"  value="#{createSaleOrderFlow.order_number}" required="true" style="width:5em;text-align: right "/>
-                        <h:outputLabel value="Customer"/>
-                        <h:inputText maxlength="150" value="#{createSaleOrderFlow.customer}" required="true" style="width:350px"/>
-                        <h:commandButton value="Lines" action="newOrderLines"/>
-                        <h:commandButton id="back" value="Cancel" action="goHome" immediate="true"/>
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <p:outputLabel value="Number" />
+                        <p:inputText id="orderNumber" readonly="true"  value="#{createSaleOrderFlow.order_number}" required="true" style="width:5em;text-align: right "/>
+                        <p:outputLabel value="Customer"/>
+                        <p:inputText maxlength="150" value="#{createSaleOrderFlow.customer}" required="true" style="width:350px"/>
+                        <p:commandButton value="Lines" action="newOrderLines"/>
+                        <p:commandButton id="back" value="Cancel" action="goHome" immediate="true"/>
                     </h:panelGrid>
                 </h:form>
             </ui:define>
