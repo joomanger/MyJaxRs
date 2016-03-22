@@ -11,6 +11,7 @@ import javax.faces.flow.FlowScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import saleorder.beans.SaleOrderBean;
+import saleorder.beans.SaleOrderBean;
 
 /**
  *

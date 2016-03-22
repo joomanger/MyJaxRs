@@ -1,6 +1,9 @@
 package json.item;
 
+import com.isd.myjaxrs.entity.Item;
+import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /*
@@ -14,7 +17,7 @@ import javax.inject.Named;
  */
 @Named
 @RequestScoped
-public class ItemBackingBean{
+public class ItemBackingBean {
 
     private long id;
     private String name;

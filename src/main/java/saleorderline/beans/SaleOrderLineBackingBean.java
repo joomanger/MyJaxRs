@@ -6,7 +6,8 @@
 package saleorderline.beans;
 
 import com.isd.myjaxrs.entity.SaleOrderLine;
-import javax.enterprise.context.ApplicationScoped;
+import java.io.Serializable;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
@@ -14,8 +15,8 @@ import javax.inject.Named;
  * @author savin
  */
 @Named
-@ApplicationScoped
-public class SaleOrderLineBackingBean {
+@ViewScoped
+public class SaleOrderLineBackingBean implements Serializable{
     private SaleOrderLine line;
 
     public SaleOrderLine getLine() {

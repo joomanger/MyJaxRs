@@ -12,6 +12,22 @@
 
             <ui:define name="content">
                 <h1>Order Header</h1>
+                <h:form id="orderHeader" prependId="false"> 
+                    <h:panelGrid columns="4" cellpadding="5" cellspacing="5">
+                        <h:outputLabel value="Order number" style="font-weight: bold"/>
+                        <h:outputText value="#{saleOrderView.order.order_number}"/>
+                        <h:outputLabel value="Customer" style="font-weight: bold"/>
+                        <p:inputText value="#{saleOrderView.order.customer}"/>
+
+                        <p:autoComplete id="item" value="#{saleOrderView.item}" completeMethod="#{saleOrderView.completeItem}"
+                                        var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true">
+                            <p:ajax event="itemSelect" listener="#{saleOrderView.onItemSelect}" update="tst" />
+                        </p:autoComplete>
+                        
+                        <h:outputText id="tst" value="#{itemBackingBean.id}"/>
+
+                    </h:panelGrid>
+                </h:form>   
                 <p>Order number: #{saleOrderView.order.order_number}</p>
                 <p>Customer: #{saleOrderView.order.customer}</p>
                 <br/>

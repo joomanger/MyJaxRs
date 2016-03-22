@@ -46,7 +46,7 @@ public class SaleOrderLineBean extends RestProviderWR<SaleOrderLine> {
 
     public void edit() {
         //target.path("{itemId}").resolveTemplate("itemId", sob.getLine().getLine_id()).request().put(Entity.entity(sob.getLine(), MediaType.APPLICATION_JSON));
-        System.out.println("EDIT:"+sob.getLine().getLine_num()+" qty="+sob.getLine().getQuantity());
+        //System.out.println("EDIT:"+sob.getLine().getLine_num()+" qty="+sob.getLine().getQuantity());
          target
                 .register(this)
                 .request()

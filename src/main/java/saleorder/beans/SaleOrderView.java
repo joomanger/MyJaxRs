@@ -5,9 +5,11 @@
  */
 package saleorder.beans;
 
+import com.isd.myjaxrs.entity.Item;
 import com.isd.myjaxrs.entity.SaleOrder;
 import com.isd.myjaxrs.entity.SaleOrderLine;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -15,7 +17,10 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import json.item.ItemBackingBean;
+import json.item.ItemClientBean;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.SelectEvent;
 import saleorderline.beans.SaleOrderLineBackingBean;
 import saleorderline.beans.SaleOrderLineBean;
 
@@ -31,6 +36,12 @@ public class SaleOrderView implements Serializable {
     private SaleOrderBean sob;
 
     @Inject
+    private ItemClientBean itemClient;
+    
+    @Inject
+    private ItemBackingBean itemBacking;
+
+    @Inject
     private SaleOrderLineBackingBean sol;
 
     @Inject
@@ -39,6 +50,8 @@ public class SaleOrderView implements Serializable {
     private List<SaleOrderLine> lines = null;
 
     private SaleOrder order;
+    
+    private Item item;
 
     @PostConstruct
     private void init() {
@@ -54,19 +67,42 @@ public class SaleOrderView implements Serializable {
     }
 
     public void onRowCancel(RowEditEvent event) {
-//        FacesMessage msg = new FacesMessage("Line Edited", String.valueOf(((SaleOrderLine) event.getObject()).getLine_num()));
-//        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+    
+    public void onItemSelect(SelectEvent event) {
+        System.out.println("saleorder.beans.SaleOrderView.onItemSelect()"+itemBacking.getId());
+//       itemBacking.setId(((Item)event.getObject()).getId());
     }
 
     public List<SaleOrderLine> getOrderLines() {
-        return lines;//sob.getLines();
+        return lines;
     }
 
     public SaleOrder getOrder() {
         return order;
     }
 
-//    public SaleOrder[] getOrders() {
-//        return sob.getItems();
-//    }
+    public List<Item> completeItem(String query) {
+        Item[] allItems = itemClient.getItems();
+        List<Item> filteredItems = new ArrayList<>();
+
+        for(Item item:allItems) {
+            if (item.getName().toLowerCase().contains(query.toLowerCase())) {
+                filteredItems.add(item);
+            }
+        }
+
+        return filteredItems;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+    
+    
+
 }

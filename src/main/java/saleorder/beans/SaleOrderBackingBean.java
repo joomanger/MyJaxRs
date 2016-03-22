@@ -5,7 +5,8 @@
  */
 package saleorder.beans;
 
-import javax.enterprise.context.ApplicationScoped;
+import java.io.Serializable;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
@@ -13,8 +14,8 @@ import javax.inject.Named;
  * @author savin
  */
 @Named
-@ApplicationScoped
-public class SaleOrderBackingBean {
+@SessionScoped
+public class SaleOrderBackingBean implements Serializable{
     private long id;
 
     public long getId() {
