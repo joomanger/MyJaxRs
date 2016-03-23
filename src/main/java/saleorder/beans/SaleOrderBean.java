@@ -37,7 +37,7 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
     @Inject
     private CreateSaleOrderLineFlow orderLines;
     @Inject
-    private SaleOrderBackingBean sob;
+    private FindSaleOrderBackingBean sob;
 
     private Client client;
     private WebTarget target;

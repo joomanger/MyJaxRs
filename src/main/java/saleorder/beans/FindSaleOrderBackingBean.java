@@ -15,7 +15,7 @@ import javax.inject.Named;
  */
 @Named
 @SessionScoped
-public class SaleOrderBackingBean implements Serializable{
+public class FindSaleOrderBackingBean implements Serializable{
     private long id;
 
     public long getId() {

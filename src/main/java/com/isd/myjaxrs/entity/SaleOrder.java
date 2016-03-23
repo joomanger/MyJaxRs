@@ -42,6 +42,8 @@ public class SaleOrder implements Serializable {
     @JoinColumn(name = "header_id")
     private List<SaleOrderLine> lines;
 
+    private long itemId;
+
     public SaleOrderAdditional getSoa() {
         return soa;
     }
@@ -81,6 +83,14 @@ public class SaleOrder implements Serializable {
 
     public void setLines(List<SaleOrderLine> lines) {
         this.lines = lines;
+    }
+
+    public long getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(long itemId) {
+        this.itemId = itemId;
     }
 
 }

@@ -7,14 +7,11 @@ package saleorder.facesconverters;
 
 import com.isd.myjaxrs.entity.Item;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
-import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 import json.item.ItemBackingBean;
@@ -36,7 +33,7 @@ private ItemClientBean cb;
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if (value != null && value.trim().length() > 0) {
             try {
-                System.out.println("saleorder.facesconverters.ItemConverter.getAsObject()");
+//                System.out.println("saleorder.facesconverters.ItemConverter.getAsObject()");
                 bb.setId(Long.parseLong(value));
                 return cb.getItem();
 
@@ -50,7 +47,7 @@ private ItemClientBean cb;
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        System.out.println("saleorder.facesconverters.ItemConverter.getAsString()");
+//        System.out.println("saleorder.facesconverters.ItemConverter.getAsString()");
         if (value != null) {
             return String.valueOf(((Item) value).getId());
         } else {
