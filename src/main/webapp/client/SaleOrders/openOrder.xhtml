@@ -5,61 +5,30 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
     <body>
-
-
         <ui:composition template="./../../WEB-INF/template.xhtml">
-
             <ui:define name="content">
+                <script src="${facesContext.externalContext.requestContextPath}/resources/js/locker_el.js"/>
                 <h1>Order Header</h1>
-                <h:panelGrid columns="2">
-                    <div>
-                        <h:form id="orderHeader" prependId="false"> 
-                            <h:panelGrid id="head" columns="4" cellpadding="5" cellspacing="5">
-                                <h:outputLabel value="Order number" style="font-weight: bold"/>
-                                <h:outputText value="#{saleOrderView.order.order_number}"/>
-                                <h:outputLabel  value="Customer" style="font-weight: bold"/>
-                                <p:inputText class="inputText" value="#{saleOrderView.order.customer}" readonly="true"/>
+                <h:panelGrid columns="2" style="margin-bottom: 5px">
+                    <p id="lock_el"/>
+                    <h:form id="orderHeader" prependId="false"> 
+                        <h:panelGrid id="head" columns="4" cellpadding="5" cellspacing="5">
+                            <h:outputLabel value="Order number" style="font-weight: bold"/>
+                            <h:outputText value="#{saleOrderView.order.order_number}"/>
+                            <h:outputLabel  value="Customer" style="font-weight: bold"/>
+                            <p:inputText class="inputText" value="#{saleOrderView.order.customer}" required="true"/>
+                            <h:outputLabel  value="Item" style="font-weight: bold"/>
+                            <p:autoComplete required="true" class="inputTextAC" value="#{saleOrderView.item}" completeMethod="#{saleOrderView.completeItem}"
+                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" >
+                                <p:ajax event="itemSelect" listener="#{saleOrderView.onItemSelect}" update="tst" />
+                            </p:autoComplete>
 
-                                <p:autoComplete readonly="true" class="inputText" value="#{saleOrderView.item}" completeMethod="#{saleOrderView.completeItem}"
-                                                var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true">
-                                    <p:ajax event="itemSelect" listener="#{saleOrderView.onItemSelect}" update="tst" />
-                                </p:autoComplete>
+                            <h:outputText id="tst" value="#{saleOrderView.item.id}"/>
 
-                                <h:outputText id="tst" value="#{saleOrderView.item.id}"/>
-
-                            </h:panelGrid>
-                        </h:form>   
-                    </div>
-                    <div>
-                        <img id="locker" src="${facesContext.externalContext.requestContextPath}/resources/images/locked.png" onclick="javascript:locking()">
-                            <script type="text/javascript">
-                                function locking() {
-                                    var v = '${facesContext.externalContext.requestContextPath}/resources/images/';
-                                    var unlock = v + 'unlocked.png';
-                                    var lock = v + 'locked.png';
-                                    var elems = document.getElementsByClassName('inputText');
-                                    
-                                    if (document.getElementById('locker').getAttribute('src') === unlock) {
-                                        document.getElementById('locker').setAttribute('src', lock);
-                                        alert(elems.length);
-                                        for (var i = 0; i &lt; elems.length; i++) {
-                                            alert(elems[i].);
-                                        }
-
-
-                                    } else {
-                                        document.getElementById('locker').setAttribute('src', unlock);
-                                    }
-                                }
-                            </script>
-                        </img>
-                    </div>
+                        </h:panelGrid>
+                    </h:form> 
                 </h:panelGrid>
-                <p>Order number: #{saleOrderView.order.order_number}</p>
-                <p>Customer: #{saleOrderView.order.customer}</p>
-                <br/>
                 <h1>Order Lines</h1>
                 <h:form id="form"> 
                     <p:growl id="msgs" showDetail="false"/>
