@@ -29,8 +29,8 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(json.item.ItemClientBean.class);
-        resources.add(json.item2.ItemClientBean2.class);
+        resources.add(item.beans.ItemClientBean.class);
+        resources.add(item2.beans.ItemClientBean2.class);
         resources.add(saleorder.RESTS.SaleOrderFacadeREST.class);
         resources.add(saleorder.RESTS.SaleOrderLineFacadeREST.class);
         resources.add(saleorder.beans.SaleOrderBean.class);

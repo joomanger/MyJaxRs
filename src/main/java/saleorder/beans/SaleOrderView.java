@@ -8,17 +8,18 @@ package saleorder.beans;
 import com.isd.myjaxrs.entity.Item;
 import com.isd.myjaxrs.entity.SaleOrder;
 import com.isd.myjaxrs.entity.SaleOrderLine;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import json.item.ItemBackingBean;
-import json.item.ItemClientBean;
+import item.beans.ItemBackingBean;
+import item.beans.ItemClientBean;
+import javax.enterprise.context.RequestScoped;
+
+
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import saleorderline.beans.SaleOrderLineBackingBean;
@@ -29,8 +30,8 @@ import saleorderline.beans.SaleOrderLineBean;
  * @author savin
  */
 @Named
-@ViewScoped
-public class SaleOrderView implements Serializable {
+@RequestScoped
+public class SaleOrderView {
 
     @Inject
     private SaleOrderBean sob;
@@ -46,19 +47,16 @@ public class SaleOrderView implements Serializable {
 
     @Inject
     private SaleOrderLineBean solb;
-
-    private List<SaleOrderLine> lines = null;
-
+    
+    private List<SaleOrderLine> lines;
     private SaleOrder order;
     
-    private Item item;
-
     @PostConstruct
-    private void init() {
-        lines = sob.getLines();
-        order = sob.getItem();
+    private void init(){
+        lines=sob.getLines();
+        order=sob.getItem();
     }
-
+   
     public void onRowEdit(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("Строка " + String.valueOf(((SaleOrderLine) event.getObject()).getLine_num()) + " изменена");
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -94,14 +92,13 @@ public class SaleOrderView implements Serializable {
 
         return filteredItems;
     }
-
-    public Item getItem() {
-        return item;
+    
+    public void saveHeader(){
+        System.out.println("saleorder.beans.SaleOrderView.saveHeader()");
+        sob.editItem();
     }
 
-    public void setItem(Item item) {
-        this.item = item;
-    }
+    
     
     
 

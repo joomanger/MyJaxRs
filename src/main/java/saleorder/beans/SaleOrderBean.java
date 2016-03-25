@@ -38,6 +38,9 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
     private CreateSaleOrderLineFlow orderLines;
     @Inject
     private FindSaleOrderBackingBean sob;
+    @Inject
+    private SaleOrderView sov;
+    
 
     private Client client;
     private WebTarget target;
@@ -89,6 +92,12 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
                 .resolveTemplate("itemId", sob.getId())
                 .request()
                 .delete();
+    }
+    public void editItem() {
+         target
+                .register(this)
+                .request()
+                .put(Entity.entity(sov.getOrder(), MediaType.APPLICATION_JSON));
     }
 
     @Override

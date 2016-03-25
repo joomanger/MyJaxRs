@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -41,8 +42,10 @@ public class SaleOrder implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "header_id")
     private List<SaleOrderLine> lines;
-
-    private long itemId;
+    
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="item_id")
+    private Item item;  
 
     public SaleOrderAdditional getSoa() {
         return soa;
@@ -85,12 +88,12 @@ public class SaleOrder implements Serializable {
         this.lines = lines;
     }
 
-    public long getItemId() {
-        return itemId;
+    public Item getItem() {
+        return item;
     }
 
-    public void setItemId(long itemId) {
-        this.itemId = itemId;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
 }
