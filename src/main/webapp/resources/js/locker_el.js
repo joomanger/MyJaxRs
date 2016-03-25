@@ -48,6 +48,7 @@ function lock_off() {
 function locking() {
     if (locker.getAttribute('src') === unlock) {
         locker.setAttribute('src', lock);
+        document.getElementById('ttt').click();
         lock_on();
     } else {
         locker.setAttribute('src', unlock);
