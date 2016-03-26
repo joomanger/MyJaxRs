@@ -8,17 +8,17 @@ package saleorder.beans;
 import com.isd.myjaxrs.entity.Item;
 import com.isd.myjaxrs.entity.SaleOrder;
 import com.isd.myjaxrs.entity.SaleOrderLine;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import json.item.ItemBackingBean;
-import json.item.ItemClientBean;
+import item.beans.ItemBackingBean;
+import item.beans.ItemClientBean;
+import javax.enterprise.context.RequestScoped;
+
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 import saleorderline.beans.SaleOrderLineBackingBean;
@@ -29,15 +29,15 @@ import saleorderline.beans.SaleOrderLineBean;
  * @author savin
  */
 @Named
-@ViewScoped
-public class SaleOrderView implements Serializable {
+@RequestScoped
+public class SaleOrderView {
 
     @Inject
     private SaleOrderBean sob;
 
     @Inject
     private ItemClientBean itemClient;
-    
+
     @Inject
     private ItemBackingBean itemBacking;
 
@@ -47,16 +47,14 @@ public class SaleOrderView implements Serializable {
     @Inject
     private SaleOrderLineBean solb;
 
-    private List<SaleOrderLine> lines = null;
-
+    private List<SaleOrderLine> lines;
     private SaleOrder order;
-    
-    private Item item;
 
     @PostConstruct
     private void init() {
         lines = sob.getLines();
         order = sob.getItem();
+        order.setLines(lines);
     }
 
     public void onRowEdit(RowEditEvent event) {
@@ -68,10 +66,9 @@ public class SaleOrderView implements Serializable {
 
     public void onRowCancel(RowEditEvent event) {
     }
-    
+
     public void onItemSelect(SelectEvent event) {
-        System.out.println("saleorder.beans.SaleOrderView.onItemSelect()"+itemBacking.getId());
-//       itemBacking.setId(((Item)event.getObject()).getId());
+
     }
 
     public List<SaleOrderLine> getOrderLines() {
@@ -86,7 +83,7 @@ public class SaleOrderView implements Serializable {
         Item[] allItems = itemClient.getItems();
         List<Item> filteredItems = new ArrayList<>();
 
-        for(Item item:allItems) {
+        for (Item item : allItems) {
             if (item.getName().toLowerCase().contains(query.toLowerCase())) {
                 filteredItems.add(item);
             }
@@ -94,15 +91,5 @@ public class SaleOrderView implements Serializable {
 
         return filteredItems;
     }
-
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
-    }
-    
-    
 
 }

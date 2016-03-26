@@ -47,9 +47,8 @@ public class SaleOrderFacadeREST extends AbstractFacade<SaleOrder> {
     }
 
     @PUT
-    @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, SaleOrder entity) {
+    public void edit(SaleOrder entity) {
         super.edit(entity);
     }
 

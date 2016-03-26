@@ -6,7 +6,6 @@
 package saleorder.facesconverters;
 
 import com.isd.myjaxrs.entity.Item;
-import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -14,8 +13,9 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.inject.Inject;
 import javax.inject.Named;
-import json.item.ItemBackingBean;
-import json.item.ItemClientBean;
+import item.beans.ItemBackingBean;
+import item.beans.ItemClientBean;
+import javax.enterprise.context.RequestScoped;
 
 /**
  *
@@ -23,7 +23,7 @@ import json.item.ItemClientBean;
  */
 //@FacesConverter("itemConverter")
 @Named
-@ApplicationScoped
+@RequestScoped
 public class ItemConverter implements Converter {
 @Inject
 private ItemBackingBean bb;

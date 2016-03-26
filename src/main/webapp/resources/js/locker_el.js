@@ -1,11 +1,11 @@
-var o = document.createElement('img');
-var unlock = "http://localhost:8080/MyJaxRs/resources/images/unlocked.png";
-var lock = "http://localhost:8080/MyJaxRs/resources/images/locked.png";
+var o;
+var unlock ="http://"+window.location.host+"/MyJaxRs/resources/images/unlocked.png";
+var lock = "http://"+window.location.host+"/MyJaxRs/resources/images/locked.png";
 var locker;
 var elems1 = document.getElementsByClassName('inputText');
 var elems2 = document.getElementsByClassName('inputTextAC');
 window.onload = function (e) {
-    console.log("window.onload");
+    o=document.createElement('img'); 
     o.setAttribute('src', lock);
     o.setAttribute('onclick', "javascript:locking()");
     o.setAttribute('id', "locker");
@@ -48,6 +48,7 @@ function lock_off() {
 function locking() {
     if (locker.getAttribute('src') === unlock) {
         locker.setAttribute('src', lock);
+        document.getElementById('hiddenCB').click();
         lock_on();
     } else {
         locker.setAttribute('src', unlock);

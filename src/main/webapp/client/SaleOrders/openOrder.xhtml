@@ -12,20 +12,23 @@
                 <h1>Order Header</h1>
                 <h:panelGrid columns="2" style="margin-bottom: 5px">
                     <p id="lock_el"/>
-                    <h:form id="orderHeader" prependId="false"> 
+                    <h:form id="orderHeader" prependId="false" > 
+                        <p:growl id="msgHeader" showDetail="false"/>
                         <h:panelGrid id="head" columns="4" cellpadding="3" cellspacing="3">
                             <h:outputLabel value="Order number" style="font-weight: bold"/>
                             <h:outputText value="#{saleOrderView.order.order_number}"/>
                             <h:outputLabel  value="Customer" style="font-weight: bold"/>
                             <p:inputText class="inputText" value="#{saleOrderView.order.customer}" required="true" style="background: highlight "/>
                             <h:outputLabel  value="Item" style="font-weight: bold"/>
-                            <p:autoComplete required="true" class="inputTextAC" value="#{saleOrderView.item}" completeMethod="#{saleOrderView.completeItem}"
+                            <p:autoComplete required="true" class="inputTextAC" value="#{saleOrderView.order.item}" completeMethod="#{saleOrderView.completeItem}"
                                             var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" >
                                 <p:ajax event="itemSelect" listener="#{saleOrderView.onItemSelect}" update="tst" />
                             </p:autoComplete>
-
-                            <h:outputText id="tst" value="#{saleOrderView.order.itemId}"/>
-
+                            <h:outputText id="tst" value="#{saleOrderView.order.item.id}"/>
+                            <p:commandButton id="hiddenCB" actionListener="#{saleOrderBean.editItem()}" style="position: absolute; left: -9999px" tabindex="-1" update="msgHeader" >
+                                <f:ajax execute="@form" render="@this"/>
+                            </p:commandButton>
+                                
                         </h:panelGrid>
                     </h:form> 
                 </h:panelGrid>

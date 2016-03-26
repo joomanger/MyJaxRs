@@ -1,4 +1,4 @@
-package json.item;
+package item.beans;
 
 import com.isd.myjaxrs.entity.Item;
 import javax.annotation.PostConstruct;

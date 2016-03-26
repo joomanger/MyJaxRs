@@ -8,6 +8,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.Consumes;
@@ -38,6 +40,8 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
     private CreateSaleOrderLineFlow orderLines;
     @Inject
     private FindSaleOrderBackingBean sob;
+    @Inject
+    private SaleOrderView sov;
 
     private Client client;
     private WebTarget target;
@@ -89,6 +93,17 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
                 .resolveTemplate("itemId", sob.getId())
                 .request()
                 .delete();
+    }
+
+    public void editItem() {
+        SaleOrder order = new SaleOrder();
+        order = sov.getOrder();
+        target
+                .register(this)
+                .request()
+                .put(Entity.entity(order, MediaType.APPLICATION_JSON));
+        FacesMessage msgHeader = new FacesMessage("Заказ № " +order.getOrder_number()+ " изменен");
+        FacesContext.getCurrentInstance().addMessage(null, msgHeader);
     }
 
     @Override

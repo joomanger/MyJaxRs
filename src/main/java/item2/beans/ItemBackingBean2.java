@@ -1,4 +1,4 @@
-package json.item2;
+package item2.beans;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
