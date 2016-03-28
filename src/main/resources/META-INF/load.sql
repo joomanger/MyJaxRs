@@ -1,6 +1,6 @@
-INSERT INTO ITEM(id,name, description) VALUES (1,'ITEM1', 'DESC1')
-INSERT INTO ITEM(id,name, description) VALUES (2,'ITEM2', 'DESC2')
-INSERT INTO ITEM(id,name, description) VALUES (3,'ITEM3', 'DESC3')
-INSERT INTO ITEM(id,name, description) VALUES (4,'ITEM4', 'DESC4')
-INSERT INTO ITEM(id,name, description) VALUES (5,'ITEM5', 'DESC5')
+INSERT INTO ITEM(id,name, description) VALUES (1,'ЛИСТ', 'ПРОКАТ ТОЛСТОЛИСТОВОЙ')
+INSERT INTO ITEM(id,name, description) VALUES (2,'УГОЛОК', 'УГОЛОК')
+INSERT INTO ITEM(id,name, description) VALUES (3,'ШВЕЛЛЕР', 'ШВЕЛЛЕР')
+INSERT INTO ITEM(id,name, description) VALUES (4,'БАЛКА', 'БАЛКА ДВУТАВРОВАЯ')
+INSERT INTO ITEM(id,name, description) VALUES (5,'КАТАНКА', 'КАТАНКА ИЗ УГЛЕРОДИСТОЙ СТАЛИ ОБЫКНОВЕННОГО КАЧЕСТВА')
 
