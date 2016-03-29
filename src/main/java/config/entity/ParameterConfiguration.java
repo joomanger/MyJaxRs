@@ -3,6 +3,7 @@ package config.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -31,6 +32,7 @@ public class ParameterConfiguration implements Serializable {
     @SequenceGenerator(name = "parameterConfiguration_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "parameterConfiguration_sq")
     private long parameter_id;
+    @Column(unique=true)
     private String name;
     private String description;
     private ParameterType parameterType;

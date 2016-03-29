@@ -3,18 +3,23 @@ package config.beans;
 import config.entity.ParameterConfiguration;
 import config.entity.ParameterConfigurationValues;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import utils.RestProviderWR;
 
@@ -28,11 +33,12 @@ import utils.RestProviderWR;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ParameterClientBean extends RestProviderWR<ParameterConfiguration> {
-    @Inject
-    private NewParameterView paramView;
-    
+
     private Client client;
     private WebTarget target;
+
+    @Inject
+    private NewParameterView npv;
 
     @PostConstruct
     private void init() {
@@ -64,6 +70,21 @@ public class ParameterClientBean extends RestProviderWR<ParameterConfiguration> 
                 .resolveTemplate("itemId", 1)
                 .request()
                 .delete();
+    }
+
+    public void addItem() {
+        ParameterConfiguration p = npv.getParamConfig();
+        Response t
+                = target
+                .register(this)
+                .request()
+                .post(Entity.entity(p, MediaType.APPLICATION_JSON));
+        if (t.getStatus() == 200) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Параметр " + p.getName() + " добавлен успешно"));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка добавления", ""));
+        }
+
     }
 
     @Override

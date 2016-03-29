@@ -3,24 +3,41 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
         <ui:composition template="./../../../WEB-INF/template.xhtml">
 
             <ui:define name="content">
-                <h1>Заголовок</h1>
                 <h:form id="paramHeader" prependId="false">
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <p:outputLabel value="Имя"/>
-                        <p:inputText maxlength="50" value="#{newParameterView.paramConfig.name}"/>
-                        <p:outputLabel value="Описание"/>
-                        <p:inputText maxlength="50" value="#{newParameterView.paramConfig.description}"/>
-                        <p:outputLabel value="Тип данных"/>
-                        <p:inputText maxlength="50" value="#{newParameterView.paramConfig.parameterType}"/>
-                    </h:panelGrid>
+                    <p:growl id="msg"  showDetail="true"/>
+                    <p:fieldset legend="Новый параметр" style="width: 150px; margin-bottom: 10px"> 
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <p:outputLabel value="Имя"/>
+                            <p:inputText maxlength="50" value="#{newParameterView.paramConfig.name}" required="true"/>
+                            <p:outputLabel value="Описание"/>
+                            <p:inputText maxlength="50" value="#{newParameterView.paramConfig.description}"/>
+                            <p:outputLabel value="Тип данных"/>
+                            <p:selectOneMenu value="#{newParameterView.paramConfig.parameterType}" style="width:150px" required="true">
+                                <p:ajax update='hsElements'/>
+                                <f:selectItems value="#{newParameterView.paramTypes}" />
+                            </p:selectOneMenu>
+                            <p:commandButton value="Сохранить" actionListener="#{parameterClientBean.addItem}" update="msg"/>
+                        </h:panelGrid>
+                    </p:fieldset>  
                 </h:form>
+                <p:fieldset id='hsElements' style="border: 0">
+                    <h1 style="width: 330px;display: #{(newParameterView.onSelectedType)?'':'none'}">Список значений</h1>
+                    <h:form prependId="false" >
+                        <h:panelGrid columns="3" cellpadding="3">
+                            <p:outputLabel value="Описание" rendered="#{newParameterView.onSelectedType}"/>
+                            <p:inputText rendered="#{newParameterView.onSelectedType}"/>
+                            <p:commandButton value="Добавить" rendered="#{newParameterView.onSelectedType}"/>
+                        </h:panelGrid>
+                    </h:form> 
+                </p:fieldset>
             </ui:define>
 
         </ui:composition>

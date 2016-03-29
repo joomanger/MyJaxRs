@@ -7,6 +7,7 @@ package service;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -25,6 +26,11 @@ public abstract class AbstractFacade<T> {
 
     public void create(T entity) {
         getEntityManager().persist(entity);
+    }
+    
+     public Response createR(T entity){
+         getEntityManager().persist(entity);
+         return Response.ok(entity).build();
     }
 
     public void edit(T entity) {
