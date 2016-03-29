@@ -5,8 +5,6 @@ import saleorder.flows.CreateSaleOrderLineFlow;
 import com.isd.myjaxrs.entity.SaleOrder;
 import com.isd.myjaxrs.entity.SaleOrderLine;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -14,10 +12,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.Provider;
@@ -43,72 +37,51 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
     @Inject
     private SaleOrderView sov;
 
-    private Client client;
-    private WebTarget target;
-
-    @PostConstruct
-    private void init() {
-        client = ClientBuilder.newClient();
-//        client.register(ClientLoggingFilter.class);
-        target = client.target("http://localhost:8080/MyJaxRs/webresources/saleorder/");
-    }
-
-    @PreDestroy
-    public void destroy() {
-        client.close();
+    @Override
+    protected String getPath() {
+        return ("http://localhost:8080/MyJaxRs/webresources/saleorder/");
     }
 
     public SaleOrder getItem() {
-        return target.path("{item}").resolveTemplate("item", sob.getId()).request().get(SaleOrder.class);
+        return super.getItem(SaleOrder.class,sob.getId());
     }
 
     public SaleOrder[] getItems() {
-        return target.request().get(SaleOrder[].class);
+        return super.getItems(SaleOrder[].class);
     }
 
     public Long getNewOrderNumber() {
-        return target.path("/newOrderNumber").request().get(Long.class);
+        return getTarget().path("/newOrderNumber").request().get(Long.class);
     }
 
     public List<SaleOrderLine> getLines() {
-        return target.path("/{item}/lines").resolveTemplate("item", sob.getId()).request().get(new GenericType<List<SaleOrderLine>>() {
+        return getTarget().path("/{item}/lines").resolveTemplate("item", sob.getId()).request().get(new GenericType<List<SaleOrderLine>>() {
         });
     }
 
-    public String addItem() throws Exception {
+    public String addItem(){
         SaleOrder order = new SaleOrder();
         order.setOrder_number(orderHeader.getOrder_number());
         order.setCustomer(orderHeader.getCustomer());
         order.setLines(orderLines.getLines());
-        target
-                .register(this)
-                .request()
-                .post(Entity.entity(order, MediaType.APPLICATION_JSON));
+        super.addItem(order, "Заказ №"+orderHeader.getOrder_number()+" добавлен успешно");
+//        getTarget()
+//                .register(this)
+//                .request()
+//                .post(Entity.entity(order, MediaType.APPLICATION_JSON));
         return "goHome";
     }
 
     public void deleteItem() {
-        target
-                .path("{itemId}")
-                .resolveTemplate("itemId", sob.getId())
-                .request()
-                .delete();
+        super.deleteItem(sob.getId());
     }
 
     public void editItem() {
-        SaleOrder order = new SaleOrder();
-        order = sov.getOrder();
-        target
-                .register(this)
-                .request()
-                .put(Entity.entity(order, MediaType.APPLICATION_JSON));
-        FacesMessage msgHeader = new FacesMessage("Заказ № " +order.getOrder_number()+ " изменен");
+       SaleOrder order = sov.getOrder();
+        super.editItem(order);
+        
+        FacesMessage msgHeader = new FacesMessage("Заказ № " + order.getOrder_number() + " изменен");
         FacesContext.getCurrentInstance().addMessage(null, msgHeader);
-    }
-
-    @Override
-    protected Class<SaleOrder> getObj() {
-        return SaleOrder.class;
     }
 
 }

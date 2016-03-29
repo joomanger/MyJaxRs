@@ -16,6 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import service.AbstractFacade;
 
 /**
@@ -36,8 +37,8 @@ public class ParameterConfigurationValuesFacadeREST extends AbstractFacade<Param
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(ParameterConfigurationValues entity) {
-        super.create(entity);
+    public Response create(ParameterConfigurationValues entity) {
+        return super.create(entity);
     }
 
     @PUT
@@ -85,5 +86,5 @@ public class ParameterConfigurationValuesFacadeREST extends AbstractFacade<Param
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

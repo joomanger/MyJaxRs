@@ -37,8 +37,8 @@ public class ParameterConfigurationFacadeREST extends AbstractFacade<ParameterCo
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response createR(ParameterConfiguration entity) {
-            return super.createR(entity);
+    public Response create(ParameterConfiguration entity) {
+            return super.create(entity);
     }
 
     @PUT

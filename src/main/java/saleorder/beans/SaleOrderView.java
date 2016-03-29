@@ -68,7 +68,7 @@ public class SaleOrderView {
     }
 
     public void onItemSelect(SelectEvent event) {
-
+        
     }
 
     public List<SaleOrderLine> getOrderLines() {

@@ -4,7 +4,7 @@ var lock = "http://" + window.location.host + "/MyJaxRs/resources/images/locked.
 var locker;
 var elems1 = document.getElementsByClassName('inputText');
 var elems2 = document.getElementsByClassName('inputTextAC');
-var elems3 = document.getElementsByClassName('mmm');
+
 window.onload = function (e) {
     o = document.createElement('img');
     o.setAttribute('src', lock);
@@ -29,9 +29,6 @@ function lock_on() {
             }
         }
     }
-    for (var i = 0; i < elems3.length; i++) {
-        elems3[i].setAttribute('editable', 'false');
-    }
 }
 ;
 function lock_off() {
@@ -48,9 +45,6 @@ function lock_off() {
                 ac[i].setAttribute('style', 'background: highlight');
             }
         }
-    }
-    for (var i = 0; i < elems3.length; i++) {
-        elems3[i].setAttribute('editable', 'true');
     }
 }
 ;

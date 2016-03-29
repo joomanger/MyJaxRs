@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package utils;
 
 import com.google.gson.Gson;
@@ -13,9 +8,18 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.MessageBodyWriter;
 
@@ -24,18 +28,36 @@ import javax.ws.rs.ext.MessageBodyWriter;
  * @author savin
  * @param <T>
  */
-public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, MessageBodyReader<T> {
+public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, MessageBodyReader<T>, ClientOperations<T> {
 
-    protected abstract Class<T> getObj();
+    private Client client;
+    private WebTarget target;
+
+    protected abstract String getPath();
+
+    @PostConstruct
+    private void init() {
+        client = ClientBuilder.newClient();
+        target = client.target(getPath());
+    }
+
+    @PreDestroy
+    public void destroy() {
+        client.close();
+    }
+
+    public WebTarget getTarget() {
+        return target;
+    }
 
     @Override
     public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-        return getObj().isAssignableFrom(type); //To change body of generated methods, choose Tools | Templates.
+        return type.isAssignableFrom(type);
     }
 
     @Override
     public long getSize(T t, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-        return -1; //To change body of generated methods, choose Tools | Templates.
+        return -1;
     }
 
     @Override
@@ -47,7 +69,7 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
 
     @Override
     public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-        return getObj().isAssignableFrom(type);
+        return type.isAssignableFrom(type);
     }
 
     @Override
@@ -55,6 +77,48 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
         Gson gson = new Gson();
         final BufferedReader reader = new BufferedReader(new InputStreamReader(entityStream));
         return gson.fromJson(reader, type);
+    }
+
+    @Override
+    public void editItem(Object obj) {
+        getTarget()
+                .register(this)
+                .request()
+                .put(Entity.entity(obj, MediaType.APPLICATION_JSON));
+    }
+
+    @Override
+    public void deleteItem(Object obj) {
+        getTarget()
+                .path("{itemId}")
+                .resolveTemplate("itemId", obj)
+                .request()
+                .delete();
+    }
+
+    @Override
+    public T getItem(Class<T> type, Object value) {
+        return getTarget().path("{item}").resolveTemplate("item", value).request().get(type);
+    }
+
+    @Override
+    public T[] getItems(Class<?> type) {
+        return (T[]) getTarget().request().get(type);
+    }
+
+    @Override
+    public void addItem(Object obj, String success_msg) {
+        Response t
+                = getTarget()
+                .register(this)
+                .request()
+                .post(Entity.entity(obj, MediaType.APPLICATION_JSON));
+        if (t.getStatus() == 200) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(success_msg, ""));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка вставки", ""));
+        }
+
     }
 
 }

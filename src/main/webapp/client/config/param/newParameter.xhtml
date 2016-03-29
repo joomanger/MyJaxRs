@@ -21,10 +21,10 @@
                             <p:inputText maxlength="50" value="#{newParameterView.paramConfig.description}"/>
                             <p:outputLabel value="Тип данных"/>
                             <p:selectOneMenu value="#{newParameterView.paramConfig.parameterType}" style="width:150px" required="true">
-                                <p:ajax update='hsElements'/>
+<!--                                <p:ajax update='hsElements'/>-->
                                 <f:selectItems value="#{newParameterView.paramTypes}" />
                             </p:selectOneMenu>
-                            <p:commandButton value="Сохранить" actionListener="#{parameterClientBean.addItem}" update="msg"/>
+                            <p:commandButton value="Сохранить" actionListener="#{parameterClientBean.addItem}" update="msg hsElements"/>
                         </h:panelGrid>
                     </p:fieldset>  
                 </h:form>

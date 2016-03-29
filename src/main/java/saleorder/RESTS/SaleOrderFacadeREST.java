@@ -22,6 +22,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import service.AbstractFacade;
 
 /**
@@ -42,8 +43,8 @@ public class SaleOrderFacadeREST extends AbstractFacade<SaleOrder> {
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(SaleOrder entity) {
-        super.create(entity);
+    public Response create(SaleOrder entity) {
+        return super.create(entity);
     }
 
     @PUT
