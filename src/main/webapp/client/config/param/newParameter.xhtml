@@ -12,19 +12,18 @@
 
             <ui:define name="content">
                 <h:form id="paramHeader" prependId="false">
-                    <p:growl id="msg"  showDetail="true"/>
+                    <p:growl id="msg"/>
                     <p:fieldset legend="Новый параметр" style="width: 150px; margin-bottom: 10px"> 
-                        <h:panelGrid columns="2" cellpadding="5">
+                        <h:panelGrid id="yyy" columns="2" cellpadding="5">
                             <p:outputLabel value="Имя"/>
                             <p:inputText maxlength="50" value="#{newParameterView.paramConfig.name}" required="true"/>
                             <p:outputLabel value="Описание"/>
                             <p:inputText maxlength="50" value="#{newParameterView.paramConfig.description}"/>
                             <p:outputLabel value="Тип данных"/>
                             <p:selectOneMenu value="#{newParameterView.paramConfig.parameterType}" style="width:150px" required="true">
-<!--                                <p:ajax update='hsElements'/>-->
                                 <f:selectItems value="#{newParameterView.paramTypes}" />
                             </p:selectOneMenu>
-                            <p:commandButton value="Сохранить" actionListener="#{parameterClientBean.addItem}" update="msg hsElements"/>
+                            <p:commandButton id="btnSaveHeader" value="Сохранить"  disabled="#{newParameterView.disabledCB}" actionListener="#{parameterClientBean.addItem}" update="msg hsElements @this"/>
                         </h:panelGrid>
                     </p:fieldset>  
                 </h:form>
@@ -37,6 +36,8 @@
                             <p:commandButton value="Добавить" rendered="#{newParameterView.onSelectedType}"/>
                         </h:panelGrid>
                     </h:form> 
+                    <p:dataTable rendered="#{newParameterView.onSelectedType}" editable="true" id="dTable" scrollable="true" reflow="true" rows="20" paginator="true" var="ord" value="#{newParameterView.paramTypes}" style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                    </p:dataTable>
                 </p:fieldset>
             </ui:define>
 

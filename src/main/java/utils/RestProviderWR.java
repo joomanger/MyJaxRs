@@ -107,18 +107,18 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
     }
 
     @Override
-    public void addItem(Object obj, String success_msg) {
+    public Response addItem(Object obj, String success_msg) {
         Response t
                 = getTarget()
                 .register(this)
                 .request()
                 .post(Entity.entity(obj, MediaType.APPLICATION_JSON));
         if (t.getStatus() == 200) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(success_msg, ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(success_msg, null));
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка вставки", ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка вставки", null));
         }
-
+        return t;
     }
 
 }

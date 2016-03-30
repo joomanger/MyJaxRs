@@ -1,5 +1,7 @@
 package utils;
 
+import javax.ws.rs.core.Response;
+
 /**
  *
  * @author savin
@@ -13,7 +15,7 @@ public interface ClientOperations<T> {
 
     public void editItem(Object obj);
 
-    public void addItem(Object obj, String success_msg);
+    public Response addItem(Object obj, String success_msg);
 
     public void deleteItem(Object obj);
 

@@ -17,6 +17,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.postgresql.util.PSQLException;
 import service.AbstractFacade;
 
 /**
@@ -37,8 +38,8 @@ public class ParameterConfigurationFacadeREST extends AbstractFacade<ParameterCo
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response create(ParameterConfiguration entity) {
-            return super.create(entity);
+    public Response create(ParameterConfiguration entity){
+        return super.create(entity);
     }
 
     @PUT

@@ -14,7 +14,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
+import org.postgresql.util.PSQLException;
 import utils.RestProviderWR;
 
 /**
@@ -43,7 +45,7 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
     }
 
     public SaleOrder getItem() {
-        return super.getItem(SaleOrder.class,sob.getId());
+        return super.getItem(SaleOrder.class, sob.getId());
     }
 
     public SaleOrder[] getItems() {
@@ -59,16 +61,13 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
         });
     }
 
-    public String addItem(){
+    public String addItem() {
+
         SaleOrder order = new SaleOrder();
         order.setOrder_number(orderHeader.getOrder_number());
         order.setCustomer(orderHeader.getCustomer());
         order.setLines(orderLines.getLines());
-        super.addItem(order, "Заказ №"+orderHeader.getOrder_number()+" добавлен успешно");
-//        getTarget()
-//                .register(this)
-//                .request()
-//                .post(Entity.entity(order, MediaType.APPLICATION_JSON));
+        Response t = super.addItem(order, "Заказ №" + orderHeader.getOrder_number() + " добавлен успешно");
         return "goHome";
     }
 
@@ -77,9 +76,9 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
     }
 
     public void editItem() {
-       SaleOrder order = sov.getOrder();
+        SaleOrder order = sov.getOrder();
         super.editItem(order);
-        
+
         FacesMessage msgHeader = new FacesMessage("Заказ № " + order.getOrder_number() + " изменен");
         FacesContext.getCurrentInstance().addMessage(null, msgHeader);
     }

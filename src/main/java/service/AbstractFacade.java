@@ -8,6 +8,7 @@ package service;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.ws.rs.core.Response;
+import org.postgresql.util.PSQLException;
 
 /**
  *
@@ -24,16 +25,10 @@ public abstract class AbstractFacade<T> {
 
     protected abstract EntityManager getEntityManager();
 
-    public Response create(T entity) {
-//        getEntityManager().persist(entity);
+    public Response create(T entity)  {
         getEntityManager().persist(entity);
         return Response.ok(entity).build();
     }
-
-//    public Response createR(T entity) {
-//        getEntityManager().persist(entity);
-//        return Response.ok(entity).build();
-//    }
 
     public void edit(T entity) {
         getEntityManager().merge(entity);

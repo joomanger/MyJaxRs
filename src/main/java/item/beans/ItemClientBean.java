@@ -44,7 +44,7 @@ public class ItemClientBean extends RestProviderWR<Item> {
         return super.getItems(Item[].class);
     }
 
-    public void addItem() throws Exception {
+    public void addItem() {
         Item m = new Item();
         m.setId(bean.getId());
         m.setName(bean.getName());

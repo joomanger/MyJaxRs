@@ -20,6 +20,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.postgresql.util.PSQLException;
 
 /**
  *
@@ -39,7 +40,7 @@ public class Item2FacadeREST extends AbstractFacade<Item2> {
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response create(Item2 entity) {
+    public Response create(Item2 entity){
         return super.create(entity);
     }
 

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 
 import javax.inject.Named;
@@ -15,23 +15,23 @@ import javax.inject.Named;
  * @author savin
  */
 @Named
-@RequestScoped
+@ViewScoped
 public class NewParameterView implements Serializable {
 
     private ParameterConfiguration paramConfig = new ParameterConfiguration();
     private List<String> paramTypes;
     private boolean onSelectedType;
-    
+    private boolean disabledCB = false;
+
     @Inject
     private ParameterClientBean client;
 
     @PostConstruct
     private void init() {
         paramTypes = new ArrayList<>();
-        paramTypes.add("DIGIT");
-        paramTypes.add("STRING");
-        paramTypes.add("TABLE");
-        
+        for(Enum e:ParameterConfiguration.ParameterType.values()){
+            paramTypes.add(e.name());
+        }
     }
 
     public ParameterConfiguration getParamConfig() {
@@ -72,5 +72,21 @@ public class NewParameterView implements Serializable {
     public void setOnSelectedType(boolean onSelectedType) {
         this.onSelectedType = onSelectedType;
     }
-   
+
+    public boolean isDisabledCB() {
+        return disabledCB;
+    }
+
+    public void setDisabledCB(boolean disabledCB) {
+        this.disabledCB = disabledCB;
+    }
+
+    public ParameterClientBean getClient() {
+        return client;
+    }
+
+    public void setClient(ParameterClientBean client) {
+        this.client = client;
+    }
+
 }

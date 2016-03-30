@@ -4,13 +4,10 @@ import config.entity.ParameterConfiguration;
 import config.entity.ParameterConfigurationValues;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -50,22 +47,20 @@ public class ParameterClientBean extends RestProviderWR<ParameterConfiguration> 
     }
 
     public void deleteItem() {
-       
+
     }
 
     public void addItem() {
-        ParameterConfiguration p = npv.getParamConfig();
-        Response t
-                = getTarget()
-                .register(this)
-                .request()
-                .post(Entity.entity(p, MediaType.APPLICATION_JSON));
-        if (t.getStatus() == 200) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Параметр " + p.getName() + " добавлен успешно"));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка добавления", ""));
-        }
-
+            ParameterConfiguration p = npv.getParamConfig();
+            Response t = super.addItem(p, "Параметр " + p.getName() + " добавлен успешно");
+            if(p.getParameterType()==ParameterConfiguration.ParameterType.TABLE){
+                System.out.println("need disable button");
+                npv.setDisabledCB(true);
+            }
+            if (t.getStatus() != 200) {
+                System.out.println("djopa!");
+                npv.setDisabledCB(true);
+            }
     }
 
 }
