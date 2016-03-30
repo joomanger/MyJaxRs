@@ -1,13 +1,13 @@
 package config.beans;
 
 import config.entity.ParameterConfiguration;
+import config.entity.ParameterConfigurationValues;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
-
 import javax.inject.Named;
 
 /**
@@ -23,15 +23,39 @@ public class NewParameterView implements Serializable {
     private boolean onSelectedType;
     private boolean disabledCB = false;
 
+    private List<ParameterConfigurationValues> values;
+    private int line_num;
+
+    private String value;
+
     @Inject
     private ParameterClientBean client;
 
     @PostConstruct
     private void init() {
         paramTypes = new ArrayList<>();
-        for(Enum e:ParameterConfiguration.ParameterType.values()){
+        for (Enum e : ParameterConfiguration.ParameterType.values()) {
             paramTypes.add(e.name());
         }
+        values = new ArrayList<>();
+        line_num = 0;
+    }
+
+    public void addValue() {
+        line_num++;
+        ParameterConfigurationValues pcv = new ParameterConfigurationValues();
+        pcv.setLine_num(line_num);
+        pcv.setParameterValue(getValue());
+        values.add(pcv);
+    }
+
+    public void complete() {
+        paramConfig.setValues(values);
+        client.updateItem();
+    }
+
+    public List<ParameterConfigurationValues> getValues() {
+        return values;
     }
 
     public ParameterConfiguration getParamConfig() {
@@ -48,16 +72,6 @@ public class NewParameterView implements Serializable {
 
     public void setParamTypes(List<String> paramTypes) {
         this.paramTypes = paramTypes;
-    }
-
-    public void selT() {
-        try {
-
-            System.out.println(onSelectedType);
-        } catch (java.lang.NullPointerException e) {
-            System.out.println(e.getMessage());
-            onSelectedType = false;
-        }
     }
 
     public boolean isOnSelectedType() {
@@ -87,6 +101,14 @@ public class NewParameterView implements Serializable {
 
     public void setClient(ParameterClientBean client) {
         this.client = client;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
 }

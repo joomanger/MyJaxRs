@@ -46,21 +46,25 @@ public class ParameterClientBean extends RestProviderWR<ParameterConfiguration> 
         });
     }
 
+    public void updateItem() {
+        super.editItem(npv.getParamConfig());
+    }
+
     public void deleteItem() {
 
     }
 
     public void addItem() {
-            ParameterConfiguration p = npv.getParamConfig();
+        ParameterConfiguration p = npv.getParamConfig();
+        if (p.getParameterType() != ParameterConfiguration.ParameterType.TABLE) {
             Response t = super.addItem(p, "Параметр " + p.getName() + " добавлен успешно");
-            if(p.getParameterType()==ParameterConfiguration.ParameterType.TABLE){
-                System.out.println("need disable button");
-                npv.setDisabledCB(true);
-            }
             if (t.getStatus() != 200) {
                 System.out.println("djopa!");
-                npv.setDisabledCB(true);
             }
+        } else {
+            npv.setDisabledCB(true);
+        }
+
     }
 
 }

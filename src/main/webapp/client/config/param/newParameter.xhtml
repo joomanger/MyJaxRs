@@ -32,12 +32,25 @@
                     <h:form prependId="false" >
                         <h:panelGrid columns="3" cellpadding="3">
                             <p:outputLabel value="Описание" rendered="#{newParameterView.onSelectedType}"/>
-                            <p:inputText rendered="#{newParameterView.onSelectedType}"/>
-                            <p:commandButton value="Добавить" rendered="#{newParameterView.onSelectedType}"/>
+                            <p:inputText value="#{newParameterView.value}" rendered="#{newParameterView.onSelectedType}"/>
+                            <p:commandButton value="Добавить"  actionListener="#{newParameterView.addValue}" rendered="#{newParameterView.onSelectedType}" update="dTable"/>
                         </h:panelGrid>
                     </h:form> 
-                    <p:dataTable rendered="#{newParameterView.onSelectedType}" editable="true" id="dTable" scrollable="true" reflow="true" rows="20" paginator="true" var="ord" value="#{newParameterView.paramTypes}" style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+
+                    <p:dataTable rendered="#{newParameterView.onSelectedType}" editable="true" id="dTable" scrollable="true" reflow="true" rows="20" paginator="true" var="ord" value="#{newParameterView.values}" style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                        <p:column style="width:32px">
+                            <p:rowEditor />
+                        </p:column>
+                        <p:column headerText="Line" style="width:52px; text-align: center"  sortBy="#{ord.line_num}">
+                            <h:outputText value="#{ord.line_num}" />
+                        </p:column>
+                        <p:column headerText="Item" style="width:100%;text-align: center">
+                            <h:outputText value="#{ord.parameterValue}" />
+                        </p:column>
                     </p:dataTable>
+                    <h:form>
+                        <p:commandButton value="Завершить" actionListener="#{newParameterView.complete}" action="/index"/>
+                    </h:form>
                 </p:fieldset>
             </ui:define>
 

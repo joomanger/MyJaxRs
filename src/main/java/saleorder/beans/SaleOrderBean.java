@@ -16,7 +16,6 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
-import org.postgresql.util.PSQLException;
 import utils.RestProviderWR;
 
 /**
