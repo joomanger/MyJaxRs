@@ -28,6 +28,7 @@ public class OpenParameterView implements Serializable {
     }
 
     public ParameterConfiguration getParam() {
+        param.setValues(getValues());
         return param;
     }
 

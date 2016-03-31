@@ -1,7 +1,7 @@
 package config.beans;
 
 import java.io.Serializable;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
@@ -9,7 +9,7 @@ import javax.inject.Named;
  * @author savin
  */
 @Named
-@RequestScoped
+@SessionScoped
 public class FindParameterRequest implements Serializable {
 
     private Long paramID;
