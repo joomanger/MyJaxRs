@@ -41,7 +41,6 @@
                                 <p:column headerText="Type">
                                     <h:outputText value="#{v.parameterType}"/>
                                 </p:column>
-
                             </p:dataTable>
                             <p:commandButton oncomplete="PF('multiCarDialog').hide()" immediate="true" value='No'/>
                             <p:commandButton value="Yes" actionListener="#{findParameterView.deleteItems}" oncomplete="PF('multiCarDialog').hide()" update="dTable mainMSG" />
