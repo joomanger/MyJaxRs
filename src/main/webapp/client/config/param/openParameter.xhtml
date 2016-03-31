@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+        <ui:composition template="./../../../WEB-INF/template.xhtml">
+            <ui:define name="content">
+                <h:form  prependId="false">
+                    <p:growl id="msg"/>
+                    <p:fieldset id="paramHeader" legend="Параметр конфигурации" style="width: 150px; margin-bottom: 10px"> 
+                        <h:panelGrid id="yyy" columns="2" cellpadding="5">
+                            <p:outputLabel value="Имя"/>
+                            <p:inputText maxlength="50" value="#{openParameterView.param.name}" required="true"/>
+                            <p:outputLabel value="Описание"/>
+                            <p:inputText maxlength="50" value="#{openParameterView.param.description}"/>
+                            <p:outputLabel value="Тип данных"/>
+                            <p:outputLabel value="#{parameterClientBean.item.parameterType}"/>
+                            <p:commandButton action="params" value="Back" immediate="true"/>
+                            <p:commandButton action="#{parameterClientBean.editItem}" value="Save"/>
+                        </h:panelGrid>
+                    </p:fieldset>  
+                </h:form>
+                <h:form prependId="false">
+                    <p:dataTable rendered="#{openParameterView.tableType}" editable="true" id="dTable" scrollable="true" reflow="true" rows="20" paginator="true" var="ord" value="#{openParameterView.values}" style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                        <p:column style="width:32px">
+                            <p:rowEditor />
+                        </p:column>
+                        <p:column headerText="Line" style="width:52px; text-align: center" sortBy="#{ord.line_num}">
+                            <h:outputText value="#{ord.line_num}" />
+                        </p:column>
+                        <p:column headerText="Item" style="width:100%;text-align: center">
+                            <h:outputText value="#{ord.parameterValue}" />
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton value="Завершить" action="#{parameterClientBean.addItemTable()}" update="mainMSG"/>
+                        </f:facet>
+                    </p:dataTable>
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

@@ -22,7 +22,7 @@ public class ParameterConfigurationValues implements Serializable {
     @SequenceGenerator(name = "parameterConfigurationValues_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "parameterConfigurationValues_sq")
     private long paramater_value_id;
-    private long parameter_id;
+    private Long parameter_id;
     private int line_num;
     private String parameterValue;
 
@@ -34,11 +34,11 @@ public class ParameterConfigurationValues implements Serializable {
         this.paramater_value_id = paramater_value_id;
     }
 
-    public long getParameter_id() {
+    public Long getParameter_id() {
         return parameter_id;
     }
 
-    public void setParameter_id(long parameter_id) {
+    public void setParameter_id(Long parameter_id) {
         this.parameter_id = parameter_id;
     }
 

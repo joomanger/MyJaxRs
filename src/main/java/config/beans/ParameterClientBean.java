@@ -2,6 +2,8 @@ package config.beans;
 
 import config.entity.ParameterConfiguration;
 import config.entity.ParameterConfigurationValues;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -27,44 +29,70 @@ public class ParameterClientBean extends RestProviderWR<ParameterConfiguration> 
 
     @Inject
     private NewParameterView npv;
-
+    
+    @Inject
+    private FindParameterRequest fpv;
+    
+    @Inject
+    private OpenParameterView  opv;
+    
     @Override
     protected String getPath() {
         return ("http://localhost:8080/MyJaxRs/webresources/parameterconfiguration/");
     }
 
     public ParameterConfiguration getItem() {
-        return getTarget().path("{item}").resolveTemplate("item", 1).request().get(ParameterConfiguration.class);
+        return getTarget().path("{item}").resolveTemplate("item", fpv.getParamID()).request().get(ParameterConfiguration.class);
     }
 
     public ParameterConfiguration[] getItems() {
         return super.getItems(ParameterConfiguration[].class);
     }
+    
+    public List<ParameterConfiguration> getItemsList() {
+        List<ParameterConfiguration> list= new ArrayList<>();
+        list.addAll(Arrays.asList(super.getItems(ParameterConfiguration[].class))); 
+        return list;
+    }
 
     public List<ParameterConfigurationValues> getValues() {
-        return getTarget().path("/{item}/values").resolveTemplate("item", 1).request().get(new GenericType<List<ParameterConfigurationValues>>() {
+        return getTarget().path("/{header_id}/lines").resolveTemplate("header_id", fpv.getParamID()).request().get(new GenericType<List<ParameterConfigurationValues>>() {
         });
     }
 
-    public void updateItem() {
-        super.editItem(npv.getParamConfig());
+    public String editItem() {
+        ParameterConfiguration pc=opv.getParam();
+        System.out.println("opv.getParam().getName()="+opv.getParam().getName()+" id="+opv.getParam().getParameter_id());
+        super.editItem(pc);
+        return "params";
     }
 
-    public void deleteItem() {
-
-    }
-
-    public void addItem() {
+    public String addItem() {
         ParameterConfiguration p = npv.getParamConfig();
         if (p.getParameterType() != ParameterConfiguration.ParameterType.TABLE) {
             Response t = super.addItem(p, "Параметр " + p.getName() + " добавлен успешно");
             if (t.getStatus() != 200) {
                 System.out.println("djopa!");
+                return null;
+            }else
+            {
+                return "params";
             }
         } else {
             npv.setDisabledCB(true);
+            return null;
         }
 
+    }
+
+    public String addItemTable() {
+        ParameterConfiguration p = npv.getParamConfig();
+        p.setValues(npv.getValues());
+        Response t = super.addItem(p, "Параметр " + p.getName() + " добавлен успешно");
+        if (t.getStatus() != 200) {
+            System.out.println("djopa!");
+        }
+        return "params";
     }
 
 }

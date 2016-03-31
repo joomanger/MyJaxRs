@@ -17,6 +17,6 @@ public interface ClientOperations<T> {
 
     public Response addItem(Object obj, String success_msg);
 
-    public void deleteItem(Object obj);
+    public Response deleteItem(Object obj, String success_msg);
 
 }

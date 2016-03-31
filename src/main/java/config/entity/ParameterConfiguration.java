@@ -31,7 +31,7 @@ public class ParameterConfiguration implements Serializable {
     @Id
     @SequenceGenerator(name = "parameterConfiguration_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "parameterConfiguration_sq")
-    private long parameter_id;
+    private Long parameter_id;
     @Column(unique=true)
     private String name;
     private String description;

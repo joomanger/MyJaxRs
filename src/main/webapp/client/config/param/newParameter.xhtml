@@ -12,7 +12,6 @@
 
             <ui:define name="content">
                 <h:form id="paramHeader" prependId="false">
-                    <p:growl id="msg"/>
                     <p:fieldset legend="Новый параметр" style="width: 150px; margin-bottom: 10px"> 
                         <h:panelGrid id="yyy" columns="2" cellpadding="5">
                             <p:outputLabel value="Имя"/>
@@ -23,7 +22,9 @@
                             <p:selectOneMenu value="#{newParameterView.paramConfig.parameterType}" style="width:150px" required="true">
                                 <f:selectItems value="#{newParameterView.paramTypes}" />
                             </p:selectOneMenu>
-                            <p:commandButton id="btnSaveHeader" value="Сохранить"  disabled="#{newParameterView.disabledCB}" actionListener="#{parameterClientBean.addItem}" update="msg hsElements @this"/>
+                            <p:commandButton id="btnBack" value="Back" action="params" immediate="true"/>
+                            <p:commandButton id="btnSaveHeader" value="Save"  disabled="#{newParameterView.disabledCB}" action="#{parameterClientBean.addItem}" update="mainMSG hsElements @this"/>
+                            
                         </h:panelGrid>
                     </p:fieldset>  
                 </h:form>
@@ -36,20 +37,20 @@
                             <p:commandButton value="Добавить"  actionListener="#{newParameterView.addValue}" rendered="#{newParameterView.onSelectedType}" update="dTable"/>
                         </h:panelGrid>
                     </h:form> 
+                    <h:form prependId="false">
+                        <p:dataTable rendered="#{newParameterView.onSelectedType}" editable="true" id="dTable" scrollable="true" reflow="true" rows="20" paginator="true" var="ord" value="#{newParameterView.values}" style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                            <p:column style="width:32px">
+                                <p:rowEditor />
+                            </p:column>
+                            <p:column headerText="Line" style="width:52px; text-align: center" sortBy="#{ord.line_num}">
+                                <h:outputText value="#{ord.line_num}" />
+                            </p:column>
+                            <p:column headerText="Item" style="width:100%;text-align: center">
+                                <h:outputText value="#{ord.parameterValue}" />
+                            </p:column>
+                        </p:dataTable>
 
-                    <p:dataTable rendered="#{newParameterView.onSelectedType}" editable="true" id="dTable" scrollable="true" reflow="true" rows="20" paginator="true" var="ord" value="#{newParameterView.values}" style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
-                        <p:column style="width:32px">
-                            <p:rowEditor />
-                        </p:column>
-                        <p:column headerText="Line" style="width:52px; text-align: center"  sortBy="#{ord.line_num}">
-                            <h:outputText value="#{ord.line_num}" />
-                        </p:column>
-                        <p:column headerText="Item" style="width:100%;text-align: center">
-                            <h:outputText value="#{ord.parameterValue}" />
-                        </p:column>
-                    </p:dataTable>
-                    <h:form>
-                        <p:commandButton value="Завершить" actionListener="#{newParameterView.complete}" action="/index"/>
+                        <p:commandButton rendered="#{newParameterView.onSelectedType}" value="Завершить" action="#{parameterClientBean.addItemTable()}" update="mainMSG"/>
                     </h:form>
                 </p:fieldset>
             </ui:define>

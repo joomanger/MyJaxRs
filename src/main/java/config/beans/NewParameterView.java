@@ -28,9 +28,6 @@ public class NewParameterView implements Serializable {
 
     private String value;
 
-    @Inject
-    private ParameterClientBean client;
-
     @PostConstruct
     private void init() {
         paramTypes = new ArrayList<>();
@@ -47,11 +44,6 @@ public class NewParameterView implements Serializable {
         pcv.setLine_num(line_num);
         pcv.setParameterValue(getValue());
         values.add(pcv);
-    }
-
-    public void complete() {
-        paramConfig.setValues(values);
-        client.updateItem();
     }
 
     public List<ParameterConfigurationValues> getValues() {
@@ -93,14 +85,6 @@ public class NewParameterView implements Serializable {
 
     public void setDisabledCB(boolean disabledCB) {
         this.disabledCB = disabledCB;
-    }
-
-    public ParameterClientBean getClient() {
-        return client;
-    }
-
-    public void setClient(ParameterClientBean client) {
-        this.client = client;
     }
 
     public String getValue() {

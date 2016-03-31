@@ -2,11 +2,14 @@
  */
 package config.rests;
 
+import com.isd.myjaxrs.entity.SaleOrderLine;
 import config.entity.ParameterConfiguration;
+import config.entity.ParameterConfigurationValues;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -37,14 +40,14 @@ public class ParameterConfigurationFacadeREST extends AbstractFacade<ParameterCo
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response create(ParameterConfiguration entity){
+    public Response create(ParameterConfiguration entity) {
         return super.create(entity);
     }
 
     @PUT
-    @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, ParameterConfiguration entity) {
+    @Override
+    public void edit(ParameterConfiguration entity) {
         super.edit(entity);
     }
 
@@ -73,6 +76,14 @@ public class ParameterConfigurationFacadeREST extends AbstractFacade<ParameterCo
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<ParameterConfiguration> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
+    }
+    
+    @GET
+    @Path("/{header_id}/lines")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<ParameterConfigurationValues> getOrderLines(@PathParam("header_id") Long id) {
+        TypedQuery<ParameterConfigurationValues> tq= em.createNamedQuery(ParameterConfigurationValues.FIND_BY_HEADER_ID, ParameterConfigurationValues.class).setParameter("p_header_id", id);
+        return tq.getResultList();
     }
 
     @GET

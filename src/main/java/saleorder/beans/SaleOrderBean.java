@@ -56,7 +56,7 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
     }
 
     public List<SaleOrderLine> getLines() {
-        return getTarget().path("/{item}/lines").resolveTemplate("item", sob.getId()).request().get(new GenericType<List<SaleOrderLine>>() {
+        return getTarget().path("/{header_id}/lines").resolveTemplate("header_id", sob.getId()).request().get(new GenericType<List<SaleOrderLine>>() {
         });
     }
 
@@ -71,7 +71,7 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
     }
 
     public void deleteItem() {
-        super.deleteItem(sob.getId());
+        super.deleteItem(sob.getId(),"Заказ удален успешно");
     }
 
     public void editItem() {

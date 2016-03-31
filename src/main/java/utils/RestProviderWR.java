@@ -88,12 +88,18 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
     }
 
     @Override
-    public void deleteItem(Object obj) {
-        getTarget()
+    public Response deleteItem(Object obj, String success_msg) {
+        Response t = getTarget()
                 .path("{itemId}")
                 .resolveTemplate("itemId", obj)
                 .request()
                 .delete();
+        if (t.getStatus() == 204) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(success_msg, null));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка удаления "+t.getStatus(), null));
+        }
+        return t;
     }
 
     @Override

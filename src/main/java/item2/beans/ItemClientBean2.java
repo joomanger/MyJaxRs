@@ -55,6 +55,6 @@ public class ItemClientBean2 extends RestProviderWR<Item2> {
     }
 
     public void deleteItem() {
-        super.deleteItem(bean.getId());
+        super.deleteItem(bean.getId(),"Позиция удалена успешно");
     }
 }
