@@ -10,7 +10,7 @@ import javax.inject.Named;
  */
 @Named
 @SessionScoped
-public class FindParameterRequest implements Serializable {
+public class FindParameterSession implements Serializable {
 
     private Long paramID;
 

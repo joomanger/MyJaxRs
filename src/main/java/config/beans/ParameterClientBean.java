@@ -2,7 +2,6 @@ package config.beans;
 
 import config.entity.ParameterConfiguration;
 import config.entity.ParameterConfigurationValues;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -14,7 +13,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
-import utils.RestProviderWR;
+import service.RestProviderWR;
 
 /**
  *
@@ -29,30 +28,31 @@ public class ParameterClientBean extends RestProviderWR<ParameterConfiguration> 
 
     @Inject
     private NewParameterView npv;
-    
+
     @Inject
-    private FindParameterRequest fpv;
-    
+    private FindParameterSession fpv;
+
     @Inject
-    private OpenParameterView  opv;
+    private OpenParameterView opv;
+
     
+
     @Override
     protected String getPath() {
         return ("http://localhost:8080/MyJaxRs/webresources/parameterconfiguration/");
     }
 
     public ParameterConfiguration getItem() {
-        return getTarget().path("{item}").resolveTemplate("item", fpv.getParamID()).request().get(ParameterConfiguration.class);
+        return super.getItem(ParameterConfiguration.class, fpv.getParamID());
+        //return getTarget().path("{item}").resolveTemplate("item", fpv.getParamID()).request().get(ParameterConfiguration.class);
     }
 
     public ParameterConfiguration[] getItems() {
         return super.getItems(ParameterConfiguration[].class);
     }
-    
+
     public List<ParameterConfiguration> getItemsList() {
-        List<ParameterConfiguration> list= new ArrayList<>();
-        list.addAll(Arrays.asList(super.getItems(ParameterConfiguration[].class))); 
-        return list;
+        return Arrays.asList(super.getItems(ParameterConfiguration[].class));
     }
 
     public List<ParameterConfigurationValues> getValues() {
@@ -61,9 +61,8 @@ public class ParameterClientBean extends RestProviderWR<ParameterConfiguration> 
     }
 
     public String editItem() {
-        ParameterConfiguration pc=opv.getParam();
-        System.out.println("opv.getParam().getName()="+opv.getParam().getName()+" id="+opv.getParam().getParameter_id());
-        super.editItem(pc);
+        ParameterConfiguration pc = opv.getParam();
+        super.editItem(pc, "Параметр " + pc.getName() + " обновлен успешно");
         return "params";
     }
 
@@ -74,8 +73,7 @@ public class ParameterClientBean extends RestProviderWR<ParameterConfiguration> 
             if (t.getStatus() != 200) {
                 System.out.println("djopa!");
                 return null;
-            }else
-            {
+            } else {
                 return "params";
             }
         } else {
@@ -94,5 +92,5 @@ public class ParameterClientBean extends RestProviderWR<ParameterConfiguration> 
         }
         return "params";
     }
-
+   
 }

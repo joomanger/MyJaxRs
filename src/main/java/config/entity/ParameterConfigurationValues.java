@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -14,6 +16,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
+@Table(uniqueConstraints=
+           @UniqueConstraint(columnNames = {"parameter_id", "parameterValue"})) 
 @NamedQuery(name = ParameterConfigurationValues.FIND_BY_HEADER_ID, query = "select b from ParameterConfigurationValues b where b.parameter_id=:p_header_id order by b.line_num")
 public class ParameterConfigurationValues implements Serializable {
 

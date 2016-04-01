@@ -1,4 +1,4 @@
-package utils;
+package service;
 
 import javax.ws.rs.core.Response;
 
@@ -13,7 +13,7 @@ public interface ClientOperations<T> {
 
     public T[] getItems(Class<?> type);
 
-    public void editItem(Object obj);
+    public Response editItem(Object obj, String success_msg);
 
     public Response addItem(Object obj, String success_msg);
 

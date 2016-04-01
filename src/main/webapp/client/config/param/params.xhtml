@@ -9,13 +9,13 @@
         <ui:composition template="./../../../WEB-INF/template.xhtml">
             <ui:define name="content">
                 <h:form prependId="false">
-                    <h:inputHidden id="setHeaderId" value="#{findParameterRequest.paramID}"/>
-                    <p:dataTable id="dTable" rowKey="#{ord.parameter_id}" selection="#{findParameterView.params}" rows="20" paginator="true" var="ord" value="#{parameterClientBean.itemsList}" style="width: 600px;" rowsPerPageTemplate="20,40,100" lazy="true">
+                    <h:inputHidden id="setHeaderId" value="#{findParameterSession.paramID}"/>
+                    <p:dataTable id="dTable" rowKey="#{ord.parameter_id}" var="ord" value="#{findParameterView.params}" editable="true" reflow="true" selection="#{findParameterView.paramsDelete}" rows="20" paginator="true" style="width: 600px;" rowsPerPageTemplate="20,40,100" lazy="true">
                         <f:facet name="header">
                             Список параметров
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column headerText="Name" sortBy="#{ord.name}">
+                        <p:column headerText="Name">
                             <h:commandLink action="openParameter" value="#{ord.name}" onclick="document.getElementById('setHeaderId').value =#{ord.parameter_id}"/>
                         </p:column>
                         <p:column headerText="Description" style="width:200px;text-align: center">
@@ -31,7 +31,7 @@
                     </p:dataTable> 
                     <p:dialog header="Are you Sure?" widgetVar="multiCarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
                         <p:outputPanel id="selectedParams" style="text-align:center;">
-                            <p:dataTable value="#{findParameterView.params}" var="v">
+                            <p:dataTable value="#{findParameterView.paramsDelete}" var="v">
                                 <p:column headerText="Name">
                                     <h:outputText value="#{v.name}"/>
                                 </p:column>

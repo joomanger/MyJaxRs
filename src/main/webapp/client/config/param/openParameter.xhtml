@@ -19,26 +19,46 @@
                             <p:outputLabel value="Тип данных"/>
                             <p:outputLabel value="#{parameterClientBean.item.parameterType}"/>
                             <p:commandButton action="params" value="Back" immediate="true"/>
-                            <p:commandButton action="#{parameterClientBean.editItem}" value="Save"/>
+                            <p:commandButton action="#{parameterClientBean.editItem}" value="Save" update="mainMSG"/>
                         </h:panelGrid>
                     </p:fieldset>  
                 </h:form>
                 <h:form prependId="false">
-                    <p:dataTable rendered="#{openParameterView.tableType}" editable="true" id="dTable" scrollable="true" reflow="true" rows="20" paginator="true" var="ord" value="#{openParameterView.values}" style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
-                        <p:column style="width:32px">
+                    <p:dataTable rendered="#{openParameterView.tableType}" rowKey="#{ord.paramater_value_id}" selection="#{openParameterView.selectedValues}" editable="true" id="dTable" scrollable="true" reflow="true" rows="20" paginator="true" var="ord" value="#{openParameterView.values}" style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                        <p:ajax event="rowEdit" listener="#{openParameterView.onRowEdit}" update="mainMSG" />
+                        <p:ajax event="rowEditCancel"  listener="#{openParameterView.onRowCancel}" update="mainMSG" />
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        <p:column style="width:32px;text-align:center">
                             <p:rowEditor />
                         </p:column>
                         <p:column headerText="Line" style="width:52px; text-align: center" sortBy="#{ord.line_num}">
                             <h:outputText value="#{ord.line_num}" />
                         </p:column>
                         <p:column headerText="Item" style="width:100%;text-align: center">
-                            <h:outputText value="#{ord.parameterValue}" />
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{ord.parameterValue}" /></f:facet>
+                                <f:facet name="input"><p:inputText id="parameterValue" value="#{ord.parameterValue}" /></f:facet>
+                            </p:cellEditor>
                         </p:column>
-                        <f:facet name="footer">
-                            <p:commandButton value="Завершить" action="#{parameterClientBean.addItemTable()}" update="mainMSG"/>
+                        <f:facet name="footer" >
+                            <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('itemForDelete').show()" />
+                            <p:commandButton value="New" action="newParameter" immediate="true"/>
                         </f:facet>
                     </p:dataTable>
-
+                    <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                        <p:outputPanel id="selectedParams" style="text-align:center;">
+                            <p:dataTable value="#{openParameterView.selectedValues}" var="v">
+                                <p:column headerText="Line">
+                                    <h:outputText value="#{v.line_num}"/>
+                                </p:column>
+                                <p:column headerText="value">
+                                    <h:outputText value="#{v.parameterValue}"/>
+                                </p:column>
+                            </p:dataTable>
+                            <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>
+                            <p:commandButton value="Yes" actionListener="#{openParameterView.deleteItems}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
+                        </p:outputPanel>
+                    </p:dialog>
                 </h:form>
             </ui:define>
         </ui:composition>

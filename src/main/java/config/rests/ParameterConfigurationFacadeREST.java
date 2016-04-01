@@ -2,12 +2,12 @@
  */
 package config.rests;
 
-import com.isd.myjaxrs.entity.SaleOrderLine;
 import config.entity.ParameterConfiguration;
 import config.entity.ParameterConfigurationValues;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.OrderBy;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
@@ -42,6 +42,7 @@ public class ParameterConfigurationFacadeREST extends AbstractFacade<ParameterCo
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response create(ParameterConfiguration entity) {
         return super.create(entity);
+        
     }
 
     @PUT
@@ -67,6 +68,7 @@ public class ParameterConfigurationFacadeREST extends AbstractFacade<ParameterCo
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @OrderBy(value = "name")
     public List<ParameterConfiguration> findAll() {
         return super.findAll();
     }
@@ -81,7 +83,7 @@ public class ParameterConfigurationFacadeREST extends AbstractFacade<ParameterCo
     @GET
     @Path("/{header_id}/lines")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<ParameterConfigurationValues> getOrderLines(@PathParam("header_id") Long id) {
+    public List<ParameterConfigurationValues> getValues(@PathParam("header_id") Long id) {
         TypedQuery<ParameterConfigurationValues> tq= em.createNamedQuery(ParameterConfigurationValues.FIND_BY_HEADER_ID, ParameterConfigurationValues.class).setParameter("p_header_id", id);
         return tq.getResultList();
     }

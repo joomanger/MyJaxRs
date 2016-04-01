@@ -24,7 +24,7 @@
                             </p:selectOneMenu>
                             <p:commandButton id="btnBack" value="Back" action="params" immediate="true"/>
                             <p:commandButton id="btnSaveHeader" value="Save"  disabled="#{newParameterView.disabledCB}" action="#{parameterClientBean.addItem}" update="mainMSG hsElements @this"/>
-                            
+
                         </h:panelGrid>
                     </p:fieldset>  
                 </h:form>
@@ -48,9 +48,10 @@
                             <p:column headerText="Item" style="width:100%;text-align: center">
                                 <h:outputText value="#{ord.parameterValue}" />
                             </p:column>
+                            <f:facet name="footer" >
+                                <p:commandButton rendered="#{newParameterView.onSelectedType}" value="Завершить" action="#{parameterClientBean.addItemTable()}" update="mainMSG"/>
+                            </f:facet>
                         </p:dataTable>
-
-                        <p:commandButton rendered="#{newParameterView.onSelectedType}" value="Завершить" action="#{parameterClientBean.addItemTable()}" update="mainMSG"/>
                     </h:form>
                 </p:fieldset>
             </ui:define>

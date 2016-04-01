@@ -16,7 +16,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
-import utils.RestProviderWR;
+import service.RestProviderWR;
 
 /**
  *
@@ -76,10 +76,7 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
 
     public void editItem() {
         SaleOrder order = sov.getOrder();
-        super.editItem(order);
-
-        FacesMessage msgHeader = new FacesMessage("Заказ № " + order.getOrder_number() + " изменен");
-        FacesContext.getCurrentInstance().addMessage(null, msgHeader);
+        super.editItem(order,"Заказ № " + order.getOrder_number() + " изменен");
     }
 
 }

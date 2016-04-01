@@ -7,8 +7,9 @@ import javax.inject.Named;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
-import utils.RestProviderWR;
+import service.RestProviderWR;
 
 /**
  *
@@ -28,9 +29,9 @@ public class SaleOrderLineBean extends RestProviderWR<SaleOrderLine> {
     protected String getPath() {
         return ("http://localhost:8080/MyJaxRs/webresources/saleorderline/");
     }
-    
+
     public void edit() {
-        super.editItem(sob.getLine());
+       super.editItem(sob.getLine(), "Строка изменена успешно");
     }
 
 }

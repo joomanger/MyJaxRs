@@ -1,4 +1,4 @@
-package utils;
+package service;
 
 import com.google.gson.Gson;
 import java.io.BufferedReader;
@@ -80,11 +80,17 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
     }
 
     @Override
-    public void editItem(Object obj) {
-        getTarget()
+    public Response editItem(Object obj, String success_msg) {
+        Response t=getTarget()
                 .register(this)
                 .request()
                 .put(Entity.entity(obj, MediaType.APPLICATION_JSON));
+        if (t.getStatus() == 204) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(success_msg, null));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка обновления "+t.getStatusInfo(), null));
+        }
+        return t;
     }
 
     @Override
@@ -97,7 +103,7 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
         if (t.getStatus() == 204) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(success_msg, null));
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка удаления "+t.getStatus(), null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка удаления ", null));
         }
         return t;
     }

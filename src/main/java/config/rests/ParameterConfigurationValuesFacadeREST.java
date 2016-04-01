@@ -40,9 +40,9 @@ public class ParameterConfigurationValuesFacadeREST extends AbstractFacade<Param
     }
 
     @PUT
-    @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, ParameterConfigurationValues entity) {
+    @Override
+    public void edit( ParameterConfigurationValues entity) {
         super.edit(entity);
     }
 
