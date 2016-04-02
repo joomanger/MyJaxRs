@@ -87,6 +87,13 @@ public class ParameterConfigurationFacadeREST extends AbstractFacade<ParameterCo
         TypedQuery<ParameterConfigurationValues> tq= em.createNamedQuery(ParameterConfigurationValues.FIND_BY_HEADER_ID, ParameterConfigurationValues.class).setParameter("p_header_id", id);
         return tq.getResultList();
     }
+    @GET
+    @Path("/{header_id}/max_line_num")
+    @Produces({MediaType.TEXT_PLAIN})
+    public Integer getMaxLineNum(@PathParam("header_id") Long id) {
+        TypedQuery<Integer> tq= em.createNamedQuery(ParameterConfigurationValues.MAX_LINE_NUM_BY_HEADER_ID, Integer.class).setParameter("p_header_id", id);
+        return tq.getSingleResult();
+    }
 
     @GET
     @Path("count")

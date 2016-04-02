@@ -35,8 +35,6 @@ public class ParameterClientBean extends RestProviderWR<ParameterConfiguration> 
     @Inject
     private OpenParameterView opv;
 
-    
-
     @Override
     protected String getPath() {
         return ("http://localhost:8080/MyJaxRs/webresources/parameterconfiguration/");
@@ -58,6 +56,10 @@ public class ParameterClientBean extends RestProviderWR<ParameterConfiguration> 
     public List<ParameterConfigurationValues> getValues() {
         return getTarget().path("/{header_id}/lines").resolveTemplate("header_id", fpv.getParamID()).request().get(new GenericType<List<ParameterConfigurationValues>>() {
         });
+    }
+
+    public Integer getMaxLineNum() {
+        return getTarget().path("/{header_id}/max_line_num").resolveTemplate("header_id", fpv.getParamID()).request().get(Integer.class);
     }
 
     public String editItem() {
@@ -92,5 +94,5 @@ public class ParameterClientBean extends RestProviderWR<ParameterConfiguration> 
         }
         return "params";
     }
-   
+
 }

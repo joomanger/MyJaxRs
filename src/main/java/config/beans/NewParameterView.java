@@ -23,6 +23,7 @@ public class NewParameterView implements Serializable {
     private boolean disabledCB = false;
 
     private List<ParameterConfigurationValues> values;
+    private List<ParameterConfigurationValues> selectedValues;
     private int line_num;
 
     private String value;
@@ -38,11 +39,14 @@ public class NewParameterView implements Serializable {
     }
 
     public void addValue() {
-        line_num++;
-        ParameterConfigurationValues pcv = new ParameterConfigurationValues();
-        pcv.setLine_num(line_num);
-        pcv.setParameterValue(getValue());
-        values.add(pcv);
+        if (!value.trim().isEmpty()) {
+            line_num++;
+            ParameterConfigurationValues pcv = new ParameterConfigurationValues();
+            pcv.setLine_num(line_num);
+            pcv.setParameterValue(getValue());
+            values.add(pcv);
+            setValue(null);
+        }
     }
 
     public List<ParameterConfigurationValues> getValues() {
@@ -92,6 +96,22 @@ public class NewParameterView implements Serializable {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public List<ParameterConfigurationValues> getSelectedValues() {
+        return selectedValues;
+    }
+
+    public void setSelectedValues(List<ParameterConfigurationValues> selectedValues) {
+        this.selectedValues = selectedValues;
+    }
+
+    public void deleteItems() {
+        for (ParameterConfigurationValues p : selectedValues) {
+            System.out.println(p.getLine_num());
+            values.remove(p);
+        }
+        selectedValues.clear();
     }
 
 }

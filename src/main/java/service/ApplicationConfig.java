@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package service;
 
 import java.util.Set;
@@ -22,12 +17,6 @@ public class ApplicationConfig extends Application {
         return resources;
     }
 
-    /**
-     * Do not modify addRestResourceClasses() method.
-     * It is automatically populated with
-     * all resources defined in the project.
-     * If required, comment out calling this method in getClasses().
-     */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(config.beans.ParameterClientBean.class);
         resources.add(config.beans.ParameterValuesClientBean.class);
@@ -42,5 +31,5 @@ public class ApplicationConfig extends Application {
         resources.add(service.Item2FacadeREST.class);
         resources.add(service.ItemFacadeREST.class);
     }
-    
+
 }

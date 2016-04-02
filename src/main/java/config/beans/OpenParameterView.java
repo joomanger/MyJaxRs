@@ -6,9 +6,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
 /**
@@ -20,7 +23,7 @@ import org.primefaces.event.RowEditEvent;
 public class OpenParameterView implements Serializable {
 
     private ParameterConfiguration param;
-
+    private String newValue;
     private List<ParameterConfigurationValues> values = new ArrayList<>();
     private List<ParameterConfigurationValues> selectedValues = new ArrayList<>();
 
@@ -70,6 +73,15 @@ public class OpenParameterView implements Serializable {
 
     }
 
+    public void onCellEdit(CellEditEvent event) {
+        //Object oldValue = event.getOldValue();
+        System.out.println("config.beans.OpenParameterView.onCellEdit() " + event.getRowIndex());
+        ParameterConfigurationValues vvv = values.get(event.getRowIndex());
+        clientValues.editItem(vvv, "Строка обновлена");
+        values.clear();
+        values.addAll(client.getValues());
+    }
+
     public List<ParameterConfigurationValues> getSelectedValues() {
         return selectedValues;
     }
@@ -85,6 +97,25 @@ public class OpenParameterView implements Serializable {
         values.clear();
         values.addAll(client.getValues());
         selectedValues.clear();
+    }
+
+    public String getNewValue() {
+        return newValue;
+    }
+
+    public void setNewValue(String newValue) {
+        this.newValue = newValue;
+    }
+
+    public void addNewValue() {
+        ParameterConfigurationValues p = new ParameterConfigurationValues();
+        p.setParameter_id(param.getParameter_id());
+        p.setLine_num(client.getMaxLineNum() + 1);
+        p.setParameterValue(newValue);
+        clientValues.addItem(p, "Параметр добавлен успешно");
+        values.clear();
+        values.addAll(client.getValues());
+        newValue = null;
     }
 
 }

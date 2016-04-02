@@ -4,10 +4,12 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -16,18 +18,23 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-@Table(uniqueConstraints=
-           @UniqueConstraint(columnNames = {"parameter_id", "parameterValue"})) 
-@NamedQuery(name = ParameterConfigurationValues.FIND_BY_HEADER_ID, query = "select b from ParameterConfigurationValues b where b.parameter_id=:p_header_id order by b.line_num")
+@Table(uniqueConstraints
+        = @UniqueConstraint(columnNames = {"parameter_id", "parameterValue"}))
+@NamedQueries({
+    @NamedQuery(name = ParameterConfigurationValues.FIND_BY_HEADER_ID, query = "select b from ParameterConfigurationValues b where b.parameter_id=:p_header_id order by b.line_num"),
+    @NamedQuery(name = ParameterConfigurationValues.MAX_LINE_NUM_BY_HEADER_ID, query = "select max(b.line_num) from ParameterConfigurationValues b where b.parameter_id=:p_header_id")})
 public class ParameterConfigurationValues implements Serializable {
 
     public static final String FIND_BY_HEADER_ID = "PCFBHI";
+    public static final String MAX_LINE_NUM_BY_HEADER_ID = "MAX_LINE_NUM";
     @Id
     @SequenceGenerator(name = "parameterConfigurationValues_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "parameterConfigurationValues_sq")
     private long paramater_value_id;
     private Long parameter_id;
+    @NotNull
     private int line_num;
+    @NotNull
     private String parameterValue;
 
     public long getParamater_value_id() {
