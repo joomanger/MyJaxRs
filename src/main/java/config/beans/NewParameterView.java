@@ -21,6 +21,7 @@ public class NewParameterView implements Serializable {
     private List<String> paramTypes;
     private boolean onSelectedType;
     private boolean disabledCB = false;
+    
 
     private List<ParameterConfigurationValues> values;
     private List<ParameterConfigurationValues> selectedValues;

@@ -2,7 +2,6 @@ package config.beans;
 
 import config.entity.ParameterConfigurationValues;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -20,9 +19,7 @@ import service.RestProviderWR;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ParameterValuesClientBean extends RestProviderWR<ParameterConfigurationValues> {
-    @Inject
-    private ParameterValuesClientBean client;
-    
+
     private ParameterConfigurationValues value;
 
     public ParameterConfigurationValues getValue() {
@@ -32,15 +29,15 @@ public class ParameterValuesClientBean extends RestProviderWR<ParameterConfigura
     public void setValue(ParameterConfigurationValues value) {
         this.value = value;
     }
-    
+
     @Override
     protected String getPath() {
         return ("http://localhost:8080/MyJaxRs/webresources/parameterconfigurationvalues/");
     }
-    
-    public void editItem(){
+
+    public void editItem() {
         super.editItem(value, "Параметр обновлен успешно");
-        
+
     }
 
 }

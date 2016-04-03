@@ -42,7 +42,6 @@ public class ParameterClientBean extends RestProviderWR<ParameterConfiguration> 
 
     public ParameterConfiguration getItem() {
         return super.getItem(ParameterConfiguration.class, fpv.getParamID());
-        //return getTarget().path("{item}").resolveTemplate("item", fpv.getParamID()).request().get(ParameterConfiguration.class);
     }
 
     public ParameterConfiguration[] getItems() {
@@ -82,7 +81,6 @@ public class ParameterClientBean extends RestProviderWR<ParameterConfiguration> 
             npv.setDisabledCB(true);
             return null;
         }
-
     }
 
     public String addItemTable() {

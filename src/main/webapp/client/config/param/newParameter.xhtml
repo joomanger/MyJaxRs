@@ -15,46 +15,36 @@
                     <p:fieldset legend="Новый параметр" style="width: 150px; margin-bottom: 10px"> 
                         <h:panelGrid id="yyy" columns="2" cellpadding="5">
                             <p:outputLabel value="Имя"/>
-                            <p:inputText maxlength="50" value="#{newParameterView.paramConfig.name}" required="true"/>
+                            <p:inputText maxlength="50" value="#{newParameterView.paramConfig.name}" required="true" disabled="#{newParameterView.disabledCB}" />
                             <p:outputLabel value="Описание"/>
-                            <p:inputText maxlength="50" value="#{newParameterView.paramConfig.description}"/>
+                            <p:inputText maxlength="50" value="#{newParameterView.paramConfig.description}" disabled="#{newParameterView.disabledCB}" />
                             <p:outputLabel value="Тип данных"/>
-                            <p:selectOneMenu value="#{newParameterView.paramConfig.parameterType}" style="width:150px" required="true">
+                            <p:selectOneMenu value="#{newParameterView.paramConfig.parameterType}" style="width:150px" required="true" disabled="#{newParameterView.disabledCB}" >
                                 <f:selectItems value="#{newParameterView.paramTypes}" />
                             </p:selectOneMenu>
                             <p:commandButton id="btnBack" value="Back" action="params" immediate="true"/>
-                            <p:commandButton id="btnSaveHeader" value="Save"  disabled="#{newParameterView.disabledCB}" action="#{parameterClientBean.addItem}" update="mainMSG hsElements @this"/>
+                            <p:commandButton id="btnSaveHeader" value="Save"  disabled="#{newParameterView.disabledCB}" action="#{parameterClientBean.addItem}" update="mainMSG hsElements @this yyy"/>
                         </h:panelGrid>
                     </p:fieldset>  
                 </h:form>
                 <p:fieldset id='hsElements' style="border: 0">
                     <h1 style="width: 330px;display: #{(newParameterView.onSelectedType)?'':'none'}">Список значений</h1>
-
                     <h:form prependId="false">
                         <p:dataTable id="dTable" var="ord" value="#{newParameterView.values}" selection="#{newParameterView.selectedValues}" 
                                      rowSelectMode="checkbox" editMode="cell" rendered="#{newParameterView.onSelectedType}" editable="true" 
                                      scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.parameterValue}" 
                                      style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
-                            <!--                            <p:column style="width:32px">
-                                                            <p:rowEditor />
-                                                        </p:column>-->
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                             <p:column headerText="Line" style="width:52px; text-align: center" sortBy="#{ord.line_num}">
                                 <h:outputText value="#{ord.line_num}" />
                             </p:column>
-                            <!--                            <p:column headerText="Item" style="width:100%;text-align: center">
-                                                            <h:outputText value="#{ord.parameterValue}" />
-                                                        </p:column>-->
-
                             <p:column headerText="Item" style="width:100%;text-align: center">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{ord.parameterValue}" /></f:facet>
                                     <f:facet name="input"><p:inputText id="parameterValue" value="#{ord.parameterValue}" /></f:facet>
                                 </p:cellEditor>
                             </p:column>
-
                             <f:facet name="footer" >
-                                
                                 <p:inputText id="addTextItem" value="#{newParameterView.value}" rendered="#{newParameterView.onSelectedType}"/>
                                 <p:focus for="addTextItem"/>
                                 <p:commandButton value="Добавить"  actionListener="#{newParameterView.addValue}" rendered="#{newParameterView.onSelectedType}" update="dTable" />
