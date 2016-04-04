@@ -1,6 +1,6 @@
-package service;
+package config.rests;
 
-import com.isd.myjaxrs.entity.Item;
+import config.entity.Configuration;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -15,33 +15,33 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import service.AbstractFacade;
 
 /**
  *
  * @author savin
  */
 @Stateless
-@Path("item")
-public class ItemFacadeREST extends AbstractFacade<Item> {
+@Path("configuration")
+public class ConfigurationFacadeREST extends AbstractFacade<Configuration> {
 
     @PersistenceContext(unitName = "myjaxrs")
     private EntityManager em;
 
-    public ItemFacadeREST() {
-        super(Item.class);
+    public ConfigurationFacadeREST() {
+        super(Configuration.class);
     }
 
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response create(Item entity) {
+    public Response create(Configuration entity) {
         return super.create(entity);
     }
 
     @PUT
-    @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, Item entity) {
+    public void edit( Configuration entity) {
         super.edit(entity);
     }
 
@@ -54,21 +54,21 @@ public class ItemFacadeREST extends AbstractFacade<Item> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Item find(@PathParam("id") Long id) {
+    public Configuration find(@PathParam("id") Long id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Item> findAll() {
+    public List<Configuration> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Item> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Configuration> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

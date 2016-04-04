@@ -4,10 +4,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Test JAX-RS 2.0</title>
+        <title>Управление заказами BETA</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <link
             href="${facesContext.externalContext.requestContextPath}/resources/css/default.css"
@@ -37,10 +36,13 @@
                                 </p:submenu> 
                                 <p:submenu label="Заказы">
                                     <p:menuitem action="newOrder" value="Создать заказ"/>
-                                    <p:menuitem action="/client/SaleOrders/orders" value="Все заказы"/>
+                                    <p:menuitem action="/client/saleorders/orders" value="Заказы"/>
                                 </p:submenu>
                                 <p:submenu label="Конфигурация номенклатуры">
                                     <p:menuitem action="/client/config/param/params" value="Параметры конфигурации"/>
+                                    <p:menuitem action="/client/config/newConfig" value="Создать конфигурацию"/>
+                                    <p:menuitem action="/client/config/openConfig" value="Открыть конфигурацию"/>
+                                    <p:menuitem action="/client/config/configs" value="Конфигурации"/>
                                 </p:submenu>
                             </p:menu>
                         </h:form>

@@ -13,6 +13,7 @@ import javax.inject.Named;
 public class FindParameterSession implements Serializable {
 
     private Long paramID;
+    
 
     public Long getParamID() {
         return paramID;
