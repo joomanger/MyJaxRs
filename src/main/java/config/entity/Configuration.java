@@ -9,8 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -20,15 +24,20 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @XmlRootElement
+@Table(uniqueConstraints
+        = @UniqueConstraint(columnNames = {"item_id", "config_ver_num"}))
+@NamedQueries(
+        @NamedQuery(name = Configuration.FIND_LAST_VERSION_BY_ITEM, query = "select max(c.config_ver_num) from Configuration c where c.item.id=:p_item_id"))
 public class Configuration implements Serializable {
 
+    public static final String FIND_LAST_VERSION_BY_ITEM = "VBI";
     @Id
     @SequenceGenerator(name = "configuration_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "configuration_sq")
     private Long header_id;
     private String description;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "item_id")
     private Item item;
 

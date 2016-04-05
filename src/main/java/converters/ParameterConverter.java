@@ -1,6 +1,12 @@
-package saleorder.facesconverters;
+package converters;
 
 import com.isd.myjaxrs.entity.Item;
+import config.beans.FindParameterSession;
+import config.beans.ParameterClientBean;
+import config.entity.ParameterConfiguration;
+import java.util.ArrayList;
+import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -8,9 +14,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.inject.Inject;
 import javax.inject.Named;
-import item.beans.ItemBackingBean;
-import item.beans.ItemClientBean;
-import javax.enterprise.context.RequestScoped;
 
 /**
  *
@@ -18,17 +21,18 @@ import javax.enterprise.context.RequestScoped;
  */
 @Named
 @RequestScoped
-public class ItemConverter implements Converter {
-@Inject
-private ItemBackingBean bb;
-@Inject
-private ItemClientBean cb;
+public class ParameterConverter implements Converter{
+    @Inject
+    private FindParameterSession ps;
+    
+    @Inject
+    private ParameterClientBean cb;
+
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if (value != null && value.trim().length() > 0) {
             try {
-//                System.out.println("saleorder.facesconverters.ItemConverter.getAsObject()");
-                bb.setId(Long.parseLong(value));
+                ps.setParamID(Long.parseLong(value));
                 return cb.getItem();
 
             } catch (NumberFormatException e) {
@@ -41,12 +45,26 @@ private ItemClientBean cb;
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-//        System.out.println("saleorder.facesconverters.ItemConverter.getAsString()");
         if (value != null) {
-            return String.valueOf(((Item) value).getId());
+            return String.valueOf(((ParameterConfiguration) value).getParameter_id());
         } else {
             return null;
         }
     }
 
+    public List<ParameterConfiguration> completeParameter(String query) {
+        ParameterConfiguration[] allItems = cb.getItems();
+        List<ParameterConfiguration> filteredItems = new ArrayList<>();
+
+        for (ParameterConfiguration item : allItems) {
+            if (item.getName().toLowerCase().contains(query.toLowerCase())) {
+                filteredItems.add(item);
+            }
+        }
+
+        return filteredItems;
+    }
+    
+    
+    
 }

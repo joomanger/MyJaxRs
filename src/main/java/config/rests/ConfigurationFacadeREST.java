@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -40,8 +41,9 @@ public class ConfigurationFacadeREST extends AbstractFacade<Configuration> {
     }
 
     @PUT
+    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit( Configuration entity) {
+    public void edit(Configuration entity) {
         super.edit(entity);
     }
 
@@ -77,6 +79,14 @@ public class ConfigurationFacadeREST extends AbstractFacade<Configuration> {
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
         return String.valueOf(super.count());
+    }
+    
+    @GET
+    @Path("/version/{item_id}")
+    @Produces({MediaType.TEXT_PLAIN})
+    public Integer getOrderLines(@PathParam("item_id") Long id) {
+        TypedQuery<Integer> tq= em.createNamedQuery(Configuration.FIND_LAST_VERSION_BY_ITEM, Integer.class).setParameter("p_item_id", id);
+        return tq.getSingleResult();
     }
 
     @Override

@@ -1,17 +1,61 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
-
         <ui:composition template="./../../WEB-INF/template.xhtml">
-
             <ui:define name="content">
-                newConfig
+                <h:form id="paramHeader" prependId="false">
+                    <p:fieldset legend="Новая конфигурация" style="width: 150px; margin-bottom: 10px"> 
+                        <h:panelGrid id="yyy" columns="2" cellpadding="5">
+                            <p:outputLabel value="Позиция"/>
+                            <p:autoComplete disabled="#{newConfigView.disabledCB}" required="true"  class="inputTextAC" value="#{newConfigView.configuration.item}" completeMethod="#{itemConverter.completeItem}"
+                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" >
+                            </p:autoComplete>
+                            <p:outputLabel value="Описание"/>
+                            <p:inputText value="#{newConfigView.configuration.description}" disabled="#{newConfigView.disabledCB}" />
+                            <p:commandButton id="btnBack" value="Back" action="configs" immediate="true"/>
+                            <p:commandButton id="btnSaveHeader" value="Save"  disabled="#{newConfigView.disabledCB}" action="#{newConfigView.addHeader}" update="hsElements @this yyy"/>
+                        </h:panelGrid>
+                    </p:fieldset>  
+                </h:form>
+                <p:fieldset id='hsElements' style="border: 0">
+                    <h1 style="width: 330px;display: #{(newConfigView.showLines)?'':'none'}">Список значений</h1>
+                    <h:form prependId="false">
+                        <p:dataTable id="dTable" var="ord" value="#{newConfigView.lines}" selection="#{newConfigView.selectedLines}" 
+                                     rowSelectMode="checkbox" editMode="cell" rendered="#{newConfigView.showLines}" editable="true" 
+                                     scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.line_num}" 
+                                     style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                            <p:column headerText="Line" style="width:52px; text-align: center" sortBy="#{ord.line_num}">
+                                <h:outputText value="#{ord.line_num}" />
+                            </p:column>
+                            <p:column headerText="Item" style="width:100%;text-align: center">
+                                <p:autoComplete rendered="#{newConfigView.showLines}" required="true"  
+                                                class="inputTextAC" value="#{ord.parameter}" 
+                                                completeMethod="#{parameterConverter.completeParameter}"
+                                                var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{parameterConverter}" forceSelection="true" >
+                                </p:autoComplete>
+                            </p:column>
+                            <f:facet name="footer" >
+                                <p:autoComplete id="addTextItem" rendered="#{newConfigView.showLines}" 
+                                                class="inputTextAC" value="#{newConfigView.paramConfig}" 
+                                                completeMethod="#{parameterConverter.completeParameter}"
+                                                var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{parameterConverter}" forceSelection="true" >
+                                </p:autoComplete>
+                                <p:focus for="addTextItem"/>
+                                <p:commandButton value="Добавить"  actionListener="#{newConfigView.addParameter}" rendered="#{newConfigView.showLines}" update="dTable" />
+                                <p:commandButton value="Удалить"  actionListener="#{newConfigView.deleteItems}" rendered="#{newConfigView.showLines}" style="margin-left: 10px"  update="dTable" />
+                                <p:commandButton rendered="#{newConfigView.showLines}" value="Завершить" action="#{configClientBean.addItemTable}" immediate="true" style="margin-left: 40px" update="mainMSG"/>
+                            </f:facet>
+                        </p:dataTable>
+                    </h:form>
+                </p:fieldset>
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>

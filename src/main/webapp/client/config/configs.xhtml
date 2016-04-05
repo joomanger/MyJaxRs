@@ -1,14 +1,57 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
         <ui:composition template="./../../WEB-INF/template.xhtml">
 
             <ui:define name="content">
-                Configs
+                <h:form prependId="false">
+                    <h:inputHidden id="setHeaderId" value="#{findConfigSession.config_id}"/>
+                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.header_id}" var="ord" value="#{findConfigView.configs}" 
+                                 editable="true" reflow="true" selection="#{findConfigView.selectedConfigs}" rows="20" paginator="true" style="width: 600px;"
+                                 rowsPerPageTemplate="20,40,100" lazy="true">
+                        <f:facet name="header">
+                            Список конфигураций
+                        </f:facet>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        <p:column headerText="Name">
+                            <h:commandLink action="openParameter" value="#{ord.item.name}" onclick="document.getElementById('setHeaderId').value =#{ord.header_id}"/>
+                        </p:column>
+                        <p:column headerText="Description" style="width:200px;text-align: center">
+                            <p:outputLabel value="#{ord.description}" />
+                        </p:column>
+                        <p:column headerText="Version" style="width:65px;text-align: center">
+                            <p:outputLabel value="#{ord.config_ver_num}" />
+                        </p:column>
+                        <f:facet name="footer" >
+                            <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />
+                            <p:commandButton value="New" action="newConfig" immediate="true"/>
+                        </f:facet>
+                    </p:dataTable> 
+                    <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                        <p:outputPanel id="selectedParams" style="text-align:center;">
+                            <p:dataTable value="#{findConfigView.selectedConfigs}" var="v">
+                                <p:column headerText="Name">
+                                    <h:outputText value="#{v.item.name}"/>
+                                </p:column>
+                                <p:column headerText="Description">
+                                    <h:outputText value="#{v.description}"/>
+                                </p:column>
+                                <p:column headerText="Version">
+                                    <h:outputText value="#{v.config_ver_num}"/>
+                                </p:column>
+                            </p:dataTable>
+                            <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
+                            <p:commandButton value="Yes" actionListener="#{findConfigView.deleteConfigs}" oncomplete="PF('deleteDialog').hide()" update="dTable mainMSG" />
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
             </ui:define>
 
         </ui:composition>
