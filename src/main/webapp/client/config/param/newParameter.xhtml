@@ -12,20 +12,20 @@
 
             <ui:define name="content">
                 <h:form id="paramHeader" prependId="false">
-                    <p:fieldset legend="Новый параметр" style="width: 150px; margin-bottom: 10px"> 
-                        <h:panelGrid id="yyy" columns="2" cellpadding="5">
+                    <p:fieldset legend="Новый параметр" style="width: 150px; ">
+                        <h:panelGrid columns="2" cellpadding="5">
                             <p:outputLabel value="Имя"/>
-                            <p:inputText maxlength="50" value="#{newParameterView.paramConfig.name}" required="true" disabled="#{newParameterView.disabledCB}" />
+                            <p:inputText id="name" maxlength="50" required="true" value="#{newParameterView.paramConfig.name}"  disabled="#{newParameterView.disabledCB}" />
                             <p:outputLabel value="Описание"/>
-                            <p:inputText maxlength="50" value="#{newParameterView.paramConfig.description}" disabled="#{newParameterView.disabledCB}" />
+                            <p:inputText id="desc" maxlength="50" value="#{newParameterView.paramConfig.description}" disabled="#{newParameterView.disabledCB}" />
                             <p:outputLabel value="Тип данных"/>
-                            <p:selectOneMenu value="#{newParameterView.paramConfig.parameterType}" style="width:150px" required="true" disabled="#{newParameterView.disabledCB}" >
+                            <p:selectOneMenu id="typeData" value="#{newParameterView.paramConfig.parameterType}" style="width:150px" required="true" disabled="#{newParameterView.disabledCB}" >
                                 <f:selectItems value="#{newParameterView.paramTypes}" />
                             </p:selectOneMenu>
-                            <p:commandButton id="btnBack" value="Back" action="params" immediate="true"/>
-                            <p:commandButton id="btnSaveHeader" value="Save"  disabled="#{newParameterView.disabledCB}" action="#{parameterClientBean.addItem}" update="mainMSG hsElements @this yyy"/>
                         </h:panelGrid>
-                    </p:fieldset>  
+                        <p:commandButton id="btnBack" value="Back" action="params" immediate="true"/>
+                        <p:commandButton id="btnSaveHeader" value="Save"  disabled="#{newParameterView.disabledCB}" action="#{parameterClientBean.addItem}" update="mainMSG hsElements @this"/>
+                    </p:fieldset>
                 </h:form>
                 <p:fieldset id='hsElements' style="border: 0">
                     <h1 style="width: 330px;display: #{(newParameterView.onSelectedType)?'':'none'}">Список значений</h1>

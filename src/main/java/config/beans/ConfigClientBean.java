@@ -62,15 +62,8 @@ public class ConfigClientBean extends RestProviderWR<Configuration> {
         return getTarget().path("/{header_id}/max_line_num").resolveTemplate("header_id", findSession.getConfig_id()).request().get(Integer.class);
     }
 
-    public String editItem() {
-        Configuration config = /*openView.getParam()*/ null;
-        super.editItem(config, "Конфигурация " + config.getItem().getName() + " : " + config.getConfig_ver_num() + " обновлена успешно");
-        return "configs";
-    }
-
     public String addItemTable() {
-        Configuration config = new Configuration();
-        config = newView.getConfiguration();
+        Configuration config = newView.getConfiguration();
         config.setConfig_ver_num(getLastVersion() + 1);
         config.setLines(newView.getLines());
         Response t = super.editItem(config, "Конфигурация сохранена успешно");
@@ -80,6 +73,15 @@ public class ConfigClientBean extends RestProviderWR<Configuration> {
 
     public Integer getLastVersion() {
         Integer version = getTarget().path("/version/{item_id}").resolveTemplate("item_id", newView.getConfiguration().getItem().getId()).request().get(Integer.class);
+        if (version == null) {
+            return 0;
+        } else {
+            return version;
+        }
+    }
+    
+    public Integer getLastVersion(Long p_item_id) {
+        Integer version = getTarget().path("/version/{item_id}").resolveTemplate("item_id", p_item_id).request().get(Integer.class);
         if (version == null) {
             return 0;
         } else {

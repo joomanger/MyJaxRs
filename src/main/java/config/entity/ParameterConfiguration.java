@@ -2,6 +2,7 @@ package config.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.inject.Named;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -33,6 +35,7 @@ public class ParameterConfiguration implements Serializable {
     @GeneratedValue(generator = "parameterConfiguration_sq")
     private Long parameter_id;
     @Column(unique=true)
+    @NotNull(message = "Обязательно для заполнения")
     private String name;
     private String description;
     private ParameterType parameterType;

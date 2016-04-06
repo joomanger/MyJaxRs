@@ -84,7 +84,7 @@ public class ParameterConfigurationFacadeREST extends AbstractFacade<ParameterCo
     @Path("/{header_id}/lines")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<ParameterConfigurationValues> getValues(@PathParam("header_id") Long id) {
-        TypedQuery<ParameterConfigurationValues> tq= em.createNamedQuery(ParameterConfigurationValues.FIND_BY_HEADER_ID, ParameterConfigurationValues.class).setParameter("p_header_id", id);
+        TypedQuery<ParameterConfigurationValues> tq = em.createNamedQuery(ParameterConfigurationValues.FIND_BY_HEADER_ID, ParameterConfigurationValues.class).setParameter("p_header_id", id);
         return tq.getResultList();
     }
     @GET

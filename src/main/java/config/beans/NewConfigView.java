@@ -76,7 +76,7 @@ public class NewConfigView implements Serializable {
     }
 
     public void deleteItems() {
-        System.out.println("deleting "+selectedLines.size());
+        System.out.println("deleting " + selectedLines.size());
         for (ConfigurationLine c : selectedLines) {
             System.out.println(c.getLine_num());
             lines.remove(c);
@@ -93,12 +93,14 @@ public class NewConfigView implements Serializable {
     }
 
     public void addParameter() {
-        line_num++;
-        ConfigurationLine line = new ConfigurationLine();
-        line.setLine_num(line_num);
-        line.setParameter(paramConfig);
-        lines.add(line);
-        this.setParamConfig(null);
+        if (!paramConfig.getName().isEmpty()) {
+            line_num++;
+            ConfigurationLine line = new ConfigurationLine();
+            line.setLine_num(line_num);
+            line.setParameter(paramConfig);
+            lines.add(line);
+            this.setParamConfig(null);
+        }
 
     }
 

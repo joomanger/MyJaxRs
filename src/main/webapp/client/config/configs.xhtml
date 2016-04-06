@@ -21,7 +21,7 @@
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:column headerText="Name">
-                            <h:commandLink action="openParameter" value="#{ord.item.name}" onclick="document.getElementById('setHeaderId').value =#{ord.header_id}"/>
+                            <h:commandLink action="openConfig" value="#{ord.item.name}" onclick="document.getElementById('setHeaderId').value =#{ord.header_id}"/>
                         </p:column>
                         <p:column headerText="Description" style="width:200px;text-align: center">
                             <p:outputLabel value="#{ord.description}" />
@@ -31,7 +31,7 @@
                         </p:column>
                         <f:facet name="footer" >
                             <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />
-                            <p:commandButton value="New" action="newConfig" immediate="true"/>
+                            <p:commandButton value="New" action="newConfig" immediate="true" style="margin-left: 15px"/>
                         </f:facet>
                     </p:dataTable> 
                     <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">

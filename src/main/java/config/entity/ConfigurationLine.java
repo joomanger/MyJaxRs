@@ -1,12 +1,13 @@
 package config.entity;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -20,14 +21,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @Table(uniqueConstraints
         = @UniqueConstraint(columnNames = {"parameter_id", "header_id"}))
+@NamedQueries({
+    @NamedQuery(name = ConfigurationLine.FIND_BY_HEADER_ID, query = "select t from ConfigurationLine t where t.header_id=:p_header_id"),
+    @NamedQuery(name = ConfigurationLine.MAX_LINE_NUM_BY_HEADER_ID, query = "select max(t.line_num) from ConfigurationLine t where t.header_id=:p_header_id")}
+)
 public class ConfigurationLine implements Serializable {
 
+    public static final String FIND_BY_HEADER_ID = "BHI";
+    public static final String MAX_LINE_NUM_BY_HEADER_ID = "MBHI";
     @Id
     @SequenceGenerator(name = "configurationline_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "configurationline_sq")
     private Long line_id;
     private Integer line_num;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "parameter_id")
     private ParameterConfiguration parameter;
     private Long header_id;

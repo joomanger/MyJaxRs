@@ -1,14 +1,58 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
         <ui:composition template="./../../WEB-INF/template.xhtml">
 
             <ui:define name="content">
-                openConfig
+                <h:form  prependId="false">
+                    <p:fieldset id="paramHeader" legend="Параметр конфигурации" style="width: 150px; margin-bottom: 10px"> 
+                        <h:panelGrid id="yyy" columns="2" cellpadding="5">
+                            <p:outputLabel value="Позиция"/>
+                            <p:autoComplete disabled="true" required="true"  class="inputTextAC" value="#{openConfigView.configuration.item}" completeMethod="#{itemConverter.completeItem}"
+                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" >
+                            </p:autoComplete>
+                            <p:outputLabel value="Описание"/>
+                            <p:inputText value="#{openConfigView.configuration.description}"/>
+                            <p:outputLabel value="Версия"/>
+                            <p:inputText disabled="true" value="#{openConfigView.configuration.config_ver_num}"/>
+                            <p:commandButton id="btnBack" value="Back" action="configs" immediate="true"/>
+                            <p:commandButton id="btnSend" value="Send" style="display: none"/>
+                        </h:panelGrid>
+                    </p:fieldset> 
+                    <p:dataTable id="dTable" var="ord" value="#{openConfigView.lines}" selection="#{openConfigView.selectedLines}" 
+                                 rowSelectMode="checkbox" editMode="cell" editable="true" 
+                                 scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.line_num}" 
+                                 style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        <p:column headerText="Line" style="width:52px; text-align: center" sortBy="#{ord.line_num}">
+                            <h:outputText value="#{ord.line_num}" />
+                        </p:column>
+                        <p:column headerText="Item" style="width:100%;text-align: center">
+                            <p:autoComplete required="true" value="#{ord.parameter}" completeMethod="#{parameterConverter.completeParameter}"
+                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{parameterConverter}" forceSelection="true" >
+                            </p:autoComplete>
+                        </p:column>
+                        <f:facet name="footer" >
+                            <p:autoComplete id="addTextItem" 
+                                            value="#{openConfigView.paramConfig}" 
+                                            completeMethod="#{parameterConverter.completeParameter}"
+                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{parameterConverter}" forceSelection="true" >
+                            </p:autoComplete>
+                            <p:focus for="addTextItem"/>
+                            <p:commandButton value="Добавить" actionListener="#{openConfigView.addItem}" update="dTable" />
+                            <p:commandButton value="Удалить" actionListener="#{openConfigView.deleteItems}" style="margin-left: 10px" update="dTable mainMSG" />
+                        </f:facet>
+                    </p:dataTable>
+                    <p:commandButton value="Сохранить новую версию" action="#{openConfigView.newVersion}" onclick="document.getElementById('btnSend').click()" immediate="true" style="margin-left: 40px;margin-top: 10px" update="mainMSG"/>
+                </h:form>
+
             </ui:define>
 
         </ui:composition>

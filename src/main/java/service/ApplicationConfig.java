@@ -19,6 +19,7 @@ public class ApplicationConfig extends Application {
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(config.beans.ConfigClientBean.class);
+        resources.add(config.beans.ConfigLineClientBean.class);
         resources.add(config.beans.ParameterClientBean.class);
         resources.add(config.beans.ParameterValuesClientBean.class);
         resources.add(config.rests.ConfigurationFacadeREST.class);
