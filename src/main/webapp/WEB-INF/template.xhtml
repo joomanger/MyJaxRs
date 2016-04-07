@@ -37,6 +37,7 @@
                                 <p:submenu label="Заказы">
                                     <p:menuitem action="newOrder" value="Создать заказ"/>
                                     <p:menuitem action="/client/saleorders/orders" value="Заказы"/>
+                                    <p:menuitem action="/client/test/inputLines" value="Тест ввода строк заказа"/>
                                 </p:submenu>
                                 <p:submenu label="Конфигурация номенклатуры">
                                     <p:menuitem action="/client/config/param/params" value="Параметры конфигурации"/>
@@ -46,7 +47,7 @@
                         </h:form>
                     </ui:insert>
                 </div>
-                <div id="content" class="left_content">
+                <div id="content" class="left_content" style="position: absolute">
                     <ui:insert id="qqq" name="content">Content</ui:insert>
                 </div>
 

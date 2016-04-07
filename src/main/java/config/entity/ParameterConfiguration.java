@@ -25,9 +25,10 @@ import javax.xml.bind.annotation.XmlTransient;
 public class ParameterConfiguration implements Serializable {
 
     public enum ParameterType {
-        DIGIT,
+        INTEGER,
+        DOUBLE,
         STRING,
-        TABLE,
+        TABLE
     }
 
     @Id

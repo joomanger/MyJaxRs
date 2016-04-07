@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+                <h:form prependId="false">
+                    <p:panel header="Тест">
+                        <p:panelGrid columns="2" style="border: white">
+                            <p:outputLabel value="Позиция"/>
+                            <p:autoComplete required="true" value="#{viewBean.item}" completeMethod="#{itemConverter.completeItem}"
+                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" >
+                                <p:ajax event="itemSelect" update="dTable"/>
+                            </p:autoComplete>
+                        </p:panelGrid>
+                        <p:panelGrid id="dTable" columns="2" style="margin-top: 10px">
+                            <c:forEach items="#{viewBean.columnNames}" var="item">
+                                <p:outputLabel value="#{item.parameter.name}"/>
+                                <c:choose>
+                                    <c:when test="#{item.parameter.parameterType=='TABLE'}">
+                                        <p:inputText value="Список" />
+                                    </c:when>
+                                    <c:when test="#{item.parameter.parameterType=='INTEGER'}">
+                                        <p:inputText value="Целое" />
+                                    </c:when>
+                                    <c:when test="#{item.parameter.parameterType=='DOUBLE'}">
+                                        <p:inputText value="Десятичное" />
+                                    </c:when>
+                                    <c:when test="#{item.parameter.parameterType=='STRING'}">
+                                        <p:inputText value="Строковый" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <p:inputText value="ХЗ" />
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>    
+                        </p:panelGrid>
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

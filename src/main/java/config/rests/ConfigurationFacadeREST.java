@@ -2,7 +2,6 @@ package config.rests;
 
 import config.entity.Configuration;
 import config.entity.ConfigurationLine;
-import config.entity.ParameterConfigurationValues;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -92,18 +91,33 @@ public class ConfigurationFacadeREST extends AbstractFacade<Configuration> {
     }
 
     @GET
+    @Path("/{p_item_id}.{p_ver_num}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Configuration getConfig (@PathParam("p_item_id") Long p_item_id, @PathParam("p_ver_num") Integer p_ver_num) {
+        TypedQuery<Configuration> tq = em.createNamedQuery(Configuration.FIND_HEADER_ID_BY_LAST_VER_NUM_AND_ITEM_ID, Configuration.class)
+                .setParameter("p_item_id", p_item_id)
+                .setParameter("p_ver_num", p_ver_num);
+        try{
+        Configuration c= tq.getSingleResult();
+        return c;
+        }catch(javax.persistence.NoResultException ex){
+            return null;
+        }
+    }
+
+    @GET
     @Path("/version/{item_id}")
     @Produces({MediaType.TEXT_PLAIN})
     public Integer getLastVersion(@PathParam("item_id") Long id) {
         TypedQuery<Integer> tq = em.createNamedQuery(Configuration.FIND_LAST_VERSION_BY_ITEM, Integer.class).setParameter("p_item_id", id);
         return tq.getSingleResult();
     }
-    
+
     @GET
     @Path("/{header_id}/max_line_num")
     @Produces({MediaType.TEXT_PLAIN})
     public Integer getMaxLineNum(@PathParam("header_id") Long id) {
-        TypedQuery<Integer> tq= em.createNamedQuery(ConfigurationLine.MAX_LINE_NUM_BY_HEADER_ID, Integer.class).setParameter("p_header_id", id);
+        TypedQuery<Integer> tq = em.createNamedQuery(ConfigurationLine.MAX_LINE_NUM_BY_HEADER_ID, Integer.class).setParameter("p_header_id", id);
         return tq.getSingleResult();
     }
 

@@ -45,6 +45,11 @@ public class ConfigClientBean extends RestProviderWR<Configuration> {
         return super.getItem(Configuration.class, findSession.getConfig_id());
     }
 
+    public Configuration getItem(Long p_item_id, Integer p_ver_num) {
+        
+        return getTarget().path("/{p_item_id}.{p_ver_num}").resolveTemplate("p_item_id", p_item_id).resolveTemplate("p_ver_num", p_ver_num).request().get(Configuration.class);
+    }
+
     public Configuration[] getItems() {
         return super.getItems(ParameterConfiguration[].class);
     }
@@ -58,8 +63,17 @@ public class ConfigClientBean extends RestProviderWR<Configuration> {
         });
     }
 
+    public List<ConfigurationLine> getLines(Long p_config_id) {
+        return getTarget().path("/{header_id}/lines").resolveTemplate("header_id", p_config_id).request().get(new GenericType<List<ConfigurationLine>>() {
+        });
+    }
+
     public Integer getMaxLineNum() {
         return getTarget().path("/{header_id}/max_line_num").resolveTemplate("header_id", findSession.getConfig_id()).request().get(Integer.class);
+    }
+
+    public Integer getMaxLineNum(Long p_config_id) {
+        return getTarget().path("/{header_id}/max_line_num").resolveTemplate("header_id", p_config_id).request().get(Integer.class);
     }
 
     public String addItemTable() {
@@ -79,13 +93,17 @@ public class ConfigClientBean extends RestProviderWR<Configuration> {
             return version;
         }
     }
-    
+
     public Integer getLastVersion(Long p_item_id) {
-        Integer version = getTarget().path("/version/{item_id}").resolveTemplate("item_id", p_item_id).request().get(Integer.class);
-        if (version == null) {
-            return 0;
+        if (!p_item_id.equals(null)) {
+            Integer version = getTarget().path("/version/{item_id}").resolveTemplate("item_id", p_item_id).request().get(Integer.class);
+            if (version == null) {
+                return 0;
+            } else {
+                return version;
+            }
         } else {
-            return version;
+            return 0;
         }
     }
 
