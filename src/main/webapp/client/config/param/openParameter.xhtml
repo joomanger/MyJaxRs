@@ -23,7 +23,9 @@
                     </p:fieldset>  
                 </h:form>
                 <h:form prependId="false">
-                    <p:dataTable rowSelectMode="checkbox" editMode="cell" rendered="#{openParameterView.tableType}" rowKey="#{ord.paramater_value_id}" selection="#{openParameterView.selectedValues}" editable="true" id="dTable" scrollable="true" reflow="true" rows="20" paginator="true" var="ord" value="#{openParameterView.values}" style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                    <p:dataTable rowSelectMode="checkbox" editMode="cell" rendered="#{openParameterView.tableType}" rowKey="#{ord.paramater_value_id}" 
+                                 selection="#{openParameterView.selectedValues}" editable="true" id="dTable" scrollable="true" reflow="true" rows="20" paginator="true" 
+                                 var="ord" value="#{openParameterView.values}" style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
                         <p:ajax event="rowEdit" listener="#{openParameterView.onRowEdit}" update="mainMSG" />
                         <p:ajax event="rowEditCancel"  listener="#{openParameterView.onRowCancel}" update="mainMSG" />
                         <p:ajax event="cellEdit" listener="#{openParameterView.onCellEdit}" update="mainMSG" />

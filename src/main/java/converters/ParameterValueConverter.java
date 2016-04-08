@@ -1,8 +1,9 @@
 package converters;
 
-import config.beans.FindParameterSession;
+import aaa.viewBean;
 import config.beans.ParameterClientBean;
-import config.entity.ParameterConfiguration;
+import config.beans.ParameterValuesClientBean;
+import config.entity.ParameterConfigurationValues;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -20,19 +21,33 @@ import javax.inject.Named;
  */
 @Named
 @RequestScoped
-public class ParameterConverter implements Converter{
+public class ParameterValueConverter implements Converter {
+
     @Inject
-    private FindParameterSession ps;
+    private ParameterValuesClientBean cb;
+    
+    @Inject 
+    private ParameterClientBean pcb;
     
     @Inject
-    private ParameterClientBean cb;
+    private viewBean vb;
+
+    private Long parameter_id;
+
+    public Long getParameter_id() {
+        return parameter_id;
+    }
+
+    public void setParameter_id(Long parameter_id) {
+        this.parameter_id = parameter_id;
+    }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if (value != null && value.trim().length() > 0) {
             try {
-                ps.setParamID(Long.parseLong(value));
-                return cb.getItem();
+                //ps.setParamID(Long.parseLong(value));
+                return cb.getValue(Long.parseLong(value));
 
             } catch (NumberFormatException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Not a valid theme."));
@@ -45,25 +60,23 @@ public class ParameterConverter implements Converter{
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
-            return String.valueOf(((ParameterConfiguration) value).getParameter_id());
+            return String.valueOf(((ParameterConfigurationValues) value).getParamater_value_id());
         } else {
             return null;
         }
     }
 
-    public List<ParameterConfiguration> completeParameter(String query) {
-        ParameterConfiguration[] allItems = cb.getItems();
-        List<ParameterConfiguration> filteredItems = new ArrayList<>();
+    public List<ParameterConfigurationValues> completeValue(String query) {
+        List<ParameterConfigurationValues> allItems = pcb.getValues(vb.getHeader_id());
+        List<ParameterConfigurationValues> filteredItems = new ArrayList<>();
 
-        for (ParameterConfiguration item : allItems) {
-            if (item.getName().toLowerCase().contains(query.toLowerCase())) {
+        for (ParameterConfigurationValues item : allItems) {
+            if (item.getParameterValue().toLowerCase().contains(query.toLowerCase())) {
                 filteredItems.add(item);
             }
         }
 
         return filteredItems;
     }
-    
-    
-    
+
 }

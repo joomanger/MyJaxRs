@@ -3,9 +3,9 @@ package aaa;
 import com.isd.myjaxrs.entity.Item;
 import config.beans.ConfigClientBean;
 import config.entity.ConfigurationLine;
-import config.entity.ParameterConfiguration;
-import config.entity.ParameterConfiguration.ParameterType;
+import config.entity.ParameterConfigurationValues;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -25,6 +25,35 @@ public class viewBean implements Serializable {
     private Item item;
     private Integer lastVersion;
 
+    private Long header_id;
+
+    private List<ConfigurationLine> paramValues = new ArrayList<>();
+
+    private ParameterConfigurationValues value;
+
+    public void setHeader_id(Long header_id) {
+        System.out.println("viewBean:header_id=" + header_id);
+        this.header_id = header_id;
+    }
+
+    public Long getHeader_id() {
+        return header_id;
+    }
+
+    public ParameterConfigurationValues getValue() {
+        return value;
+    }
+
+    public void setValue(ParameterConfigurationValues value) {
+        try {
+            this.value=null;
+            System.out.println("aaa.viewBean.setValue() " + value.getParameterValue());
+        } catch (Exception e) {
+
+        }
+        this.value = value;
+    }
+
     public Item getItem() {
         return item;
     }
@@ -41,12 +70,21 @@ public class viewBean implements Serializable {
         this.lastVersion = lastVersion;
     }
 
-    public List<ConfigurationLine> getColumnNames() {
+    public List<ConfigurationLine> values() {
         try {
-            return configClient.getLines(configClient.getItem(item.getId(), configClient.getLastVersion(getItem().getId())).getHeader_id());
-        } catch (Exception ex) {
-            return null;
+            paramValues = configClient.getLines(configClient.getItem(item.getId(), configClient.getLastVersion(getItem().getId())).getHeader_id());
+        } catch (Exception e) {
+
         }
+        return paramValues;
+    }
+
+    public List<ConfigurationLine> getParamValues() {
+        return paramValues;
+    }
+
+    public void setParamValues(List<ConfigurationLine> paramValues) {
+        this.paramValues = paramValues;
     }
 
 }

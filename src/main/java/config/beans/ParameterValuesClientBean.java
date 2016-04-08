@@ -40,4 +40,8 @@ public class ParameterValuesClientBean extends RestProviderWR<ParameterConfigura
 
     }
 
+    public ParameterConfigurationValues getValue(Long p_header_id) {
+        return super.getItem(ParameterConfigurationValues.class, p_header_id);
+    }
+
 }

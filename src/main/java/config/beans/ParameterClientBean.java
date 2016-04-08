@@ -56,6 +56,11 @@ public class ParameterClientBean extends RestProviderWR<ParameterConfiguration> 
         return getTarget().path("/{header_id}/lines").resolveTemplate("header_id", fpv.getParamID()).request().get(new GenericType<List<ParameterConfigurationValues>>() {
         });
     }
+    
+    public List<ParameterConfigurationValues> getValues(Long p_header_id) {
+        return getTarget().path("/{header_id}/lines").resolveTemplate("header_id", p_header_id).request().get(new GenericType<List<ParameterConfigurationValues>>() {
+        });
+    }
 
     public Integer getMaxLineNum() {
         return getTarget().path("/{header_id}/max_line_num").resolveTemplate("header_id", fpv.getParamID()).request().get(Integer.class);

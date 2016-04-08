@@ -4,7 +4,6 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
@@ -21,12 +20,25 @@
                                 <p:ajax event="itemSelect" update="dTable"/>
                             </p:autoComplete>
                         </p:panelGrid>
-                        <p:panelGrid id="dTable" columns="2" style="margin-top: 10px">
-                            <c:forEach items="#{viewBean.columnNames}" var="item">
+                        <script>
+                            function test(e) {
+                                console.log(e);
+                                document.getElementById('hhh').value = e;
+                            }
+                        </script> 
+                        <p:panelGrid id="dTable" columns="3" style="margin-top: 10px">
+
+                            <c:forEach items="#{viewBean.values()}" var="item">
                                 <p:outputLabel value="#{item.parameter.name}"/>
                                 <c:choose>
                                     <c:when test="#{item.parameter.parameterType=='TABLE'}">
-                                        <p:inputText value="Список" />
+                                        <p:autoComplete id="ac"   
+                                                        value="#{viewBean.value}" 
+                                                        completeMethod="#{parameterValueConverter.completeValue}" 
+                                                        onclick="document.getElementById('hhh').value=#{item.parameter.parameter_id};document.getElementById('btnClick').click()"
+                                                        var="m" itemLabel="#{m.parameterValue}" itemValue="#{m}" converter="#{parameterValueConverter}" forceSelection="true">
+                                            <p:ajax update="dTable"/>
+                                        </p:autoComplete>
                                     </c:when>
                                     <c:when test="#{item.parameter.parameterType=='INTEGER'}">
                                         <p:inputText value="Целое" />
@@ -41,8 +53,11 @@
                                         <p:inputText value="ХЗ" />
                                     </c:otherwise>
                                 </c:choose>
+                                <p:inputText id="lll" value="#{item.parameter.parameter_id}"/>
                             </c:forEach>    
                         </p:panelGrid>
+                          <p:inputText id="hhh" value="#{viewBean.header_id}" />
+                          <p:commandButton id="btnClick" value="send"/>
                     </p:panel>
                 </h:form>
             </ui:define>
