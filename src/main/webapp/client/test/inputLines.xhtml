@@ -12,53 +12,53 @@
 
             <ui:define name="content">
                 <h:form prependId="false">
-                    <p:panel header="Тест">
-                        <p:panelGrid columns="2" style="border: white">
+                    <p:panel header="Тест" >
+                        <p:panelGrid columns="2" style="border: none !important">
                             <p:outputLabel value="Позиция"/>
                             <p:autoComplete required="true" value="#{viewBean.item}" completeMethod="#{itemConverter.completeItem}"
                                             var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" >
                                 <p:ajax event="itemSelect" update="dTable"/>
                             </p:autoComplete>
                         </p:panelGrid>
-                        <script>
-                            function test(e) {
-                                console.log(e);
-                                document.getElementById('hhh').value = e;
-                            }
-                        </script> 
-                        <p:panelGrid id="dTable" columns="3" style="margin-top: 10px">
-
+                        
+                        <p:panelGrid id="dTable" columns="2" style="margin-top: 10px">
                             <c:forEach items="#{viewBean.values()}" var="item">
                                 <p:outputLabel value="#{item.parameter.name}"/>
                                 <c:choose>
                                     <c:when test="#{item.parameter.parameterType=='TABLE'}">
-                                        <p:autoComplete id="ac"   
-                                                        value="#{viewBean.value}" 
+                                        <p:autoComplete id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}" class="inputAC"
+                                                        onclick="document.getElementById('hhh').value =#{item.parameter.parameter_id};
+                                                                document.getElementById('btnClick').click();
+                                                                this.select();"
                                                         completeMethod="#{parameterValueConverter.completeValue}" 
-                                                        onclick="document.getElementById('hhh').value=#{item.parameter.parameter_id};document.getElementById('btnClick').click()"
-                                                        var="m" itemLabel="#{m.parameterValue}" itemValue="#{m}" converter="#{parameterValueConverter}" forceSelection="true">
-                                            <p:ajax update="dTable"/>
+                                                        var="m" itemLabel="#{m.parameterValue}" itemValue="#{m}" 
+                                                        converter="#{parameterValueConverter}" forceSelection="true">
+
                                         </p:autoComplete>
                                     </c:when>
                                     <c:when test="#{item.parameter.parameterType=='INTEGER'}">
-                                        <p:inputText value="Целое" />
+                                        <p:inputText id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}" value="Целое" onclick="this.select();" />
                                     </c:when>
                                     <c:when test="#{item.parameter.parameterType=='DOUBLE'}">
-                                        <p:inputText value="Десятичное" />
+                                        <p:inputText id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}" value="Десятичное" onclick="this.select();"/>
                                     </c:when>
                                     <c:when test="#{item.parameter.parameterType=='STRING'}">
-                                        <p:inputText value="Строковый" />
+                                        <p:inputText id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}" value="Строковый" onclick="this.select();"/>
                                     </c:when>
                                     <c:otherwise>
                                         <p:inputText value="ХЗ" />
                                     </c:otherwise>
                                 </c:choose>
-                                <p:inputText id="lll" value="#{item.parameter.parameter_id}"/>
-                            </c:forEach>    
+                                
+                            </c:forEach>
+                            <p:commandButton id="btnSendParam" value="Пуск" action="#{testServlet.test}"  />
                         </p:panelGrid>
-                          <p:inputText id="hhh" value="#{viewBean.header_id}" />
-                          <p:commandButton id="btnClick" value="send"/>
                     </p:panel>
+                    
+                </h:form>
+                <h:form prependId="false">
+                    <h:inputHidden id="hhh" value="#{viewBean.header_id}" />
+                    <p:commandButton id="btnClick" value="send" style="position: absolute; left: -9999px "/>
                 </h:form>
             </ui:define>
 

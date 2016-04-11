@@ -32,7 +32,7 @@ public class viewBean implements Serializable {
     private ParameterConfigurationValues value;
 
     public void setHeader_id(Long header_id) {
-        System.out.println("viewBean:header_id=" + header_id);
+        //System.out.println("viewBean:header_id=" + header_id);
         this.header_id = header_id;
     }
 
@@ -45,12 +45,6 @@ public class viewBean implements Serializable {
     }
 
     public void setValue(ParameterConfigurationValues value) {
-        try {
-            this.value=null;
-            System.out.println("aaa.viewBean.setValue() " + value.getParameterValue());
-        } catch (Exception e) {
-
-        }
         this.value = value;
     }
 
@@ -86,5 +80,6 @@ public class viewBean implements Serializable {
     public void setParamValues(List<ConfigurationLine> paramValues) {
         this.paramValues = paramValues;
     }
+
 
 }
