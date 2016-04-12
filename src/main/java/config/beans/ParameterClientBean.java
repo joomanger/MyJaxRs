@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import service.RestProviderWR;
+import service.UtilClass;
 
 /**
  *
@@ -64,6 +65,11 @@ public class ParameterClientBean extends RestProviderWR<ParameterConfiguration> 
 
     public Integer getMaxLineNum() {
         return getTarget().path("/{header_id}/max_line_num").resolveTemplate("header_id", fpv.getParamID()).request().get(Integer.class);
+    }
+    
+    public List<String> getAttrColumn() {
+        UtilClass obj=getTarget().path("/attrColumns").request().get(UtilClass.class);
+        return obj.getColumns();
     }
 
     public String editItem() {
