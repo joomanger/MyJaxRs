@@ -17,6 +17,9 @@
                             <p:inputText maxlength="50" value="#{openParameterView.param.description}"/>
                             <p:outputLabel value="Тип данных"/>
                             <p:outputLabel value="#{parameterClientBean.item.parameterType}"/>
+                            <p:outputLabel value="Атрибут"/>
+                            <p:autoComplete id="attr" required="false" value="#{openParameterView.param.attribute}" completeMethod="#{parameterConverter.completeAttrParameter}"
+                                            forceSelection="true"/>
                             <p:commandButton action="params" value="Back" immediate="true"/>
                             <p:commandButton action="#{parameterClientBean.editItem}" value="Save" update="mainMSG"/>
                         </h:panelGrid>

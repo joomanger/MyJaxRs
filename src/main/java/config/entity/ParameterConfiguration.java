@@ -2,7 +2,6 @@ package config.entity;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.inject.Named;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,10 +34,11 @@ public class ParameterConfiguration implements Serializable {
     @SequenceGenerator(name = "parameterConfiguration_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "parameterConfiguration_sq")
     private Long parameter_id;
-    @Column(unique=true)
+    @Column(unique = true)
     @NotNull(message = "Обязательно для заполнения")
     private String name;
     private String description;
+    private String attribute;
     private ParameterType parameterType;
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "parameter_id")
@@ -83,6 +83,14 @@ public class ParameterConfiguration implements Serializable {
 
     public void setValues(List<ParameterConfigurationValues> values) {
         this.values = values;
+    }
+
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
     }
 
 }

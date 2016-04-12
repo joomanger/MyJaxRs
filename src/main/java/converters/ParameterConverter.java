@@ -20,10 +20,11 @@ import javax.inject.Named;
  */
 @Named
 @RequestScoped
-public class ParameterConverter implements Converter{
+public class ParameterConverter implements Converter {
+
     @Inject
     private FindParameterSession ps;
-    
+
     @Inject
     private ParameterClientBean cb;
 
@@ -63,7 +64,17 @@ public class ParameterConverter implements Converter{
 
         return filteredItems;
     }
-    
-    
-    
+
+    public List<String> completeAttrParameter(String query) {
+        List<String> allItems = cb.getAttrColumn();
+        List<String> filteredItems = new ArrayList<>();
+
+        for (String item : allItems) {
+            if (item.toLowerCase().contains(query.toLowerCase())) {
+                filteredItems.add(item);
+            }
+        }
+        return filteredItems;
+    }
+
 }

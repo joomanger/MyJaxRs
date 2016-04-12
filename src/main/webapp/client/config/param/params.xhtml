@@ -10,7 +10,10 @@
             <ui:define name="content">
                 <h:form prependId="false">
                     <h:inputHidden id="setHeaderId" value="#{findParameterSession.paramID}"/>
-                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.parameter_id}" var="ord" value="#{findParameterView.params}" editable="true" reflow="true" selection="#{findParameterView.paramsDelete}" rows="20" paginator="true" style="width: 600px;" rowsPerPageTemplate="20,40,100" lazy="true">
+                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.parameter_id}" 
+                                 var="ord" value="#{findParameterView.params}" editable="true" reflow="true" 
+                                 selection="#{findParameterView.paramsDelete}" rows="20" paginator="true" 
+                                 style="width: 600px;" rowsPerPageTemplate="20,40,100" lazy="true">
                         <f:facet name="header">
                             Список параметров
                         </f:facet>
@@ -23,6 +26,9 @@
                         </p:column>
                         <p:column headerText="Type" style="width:65px;text-align: center">
                             <p:outputLabel value="#{ord.parameterType}" />
+                        </p:column>
+                        <p:column headerText="Column" style="width:100px;text-align: center">
+                            <p:outputLabel value="#{ord.attribute}" />
                         </p:column>
                         <f:facet name="footer" >
                             <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('multiCarDialog').show()" />

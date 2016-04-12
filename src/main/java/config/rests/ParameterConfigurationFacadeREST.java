@@ -21,6 +21,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import service.AbstractFacade;
+import service.UtilClass;
 
 /**
  *
@@ -42,7 +43,7 @@ public class ParameterConfigurationFacadeREST extends AbstractFacade<ParameterCo
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response create(ParameterConfiguration entity) {
         return super.create(entity);
-        
+
     }
 
     @PUT
@@ -79,7 +80,7 @@ public class ParameterConfigurationFacadeREST extends AbstractFacade<ParameterCo
     public List<ParameterConfiguration> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
-    
+
     @GET
     @Path("/{header_id}/lines")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -87,12 +88,29 @@ public class ParameterConfigurationFacadeREST extends AbstractFacade<ParameterCo
         TypedQuery<ParameterConfigurationValues> tq = em.createNamedQuery(ParameterConfigurationValues.FIND_BY_HEADER_ID, ParameterConfigurationValues.class).setParameter("p_header_id", id);
         return tq.getResultList();
     }
+
     @GET
     @Path("/{header_id}/max_line_num")
     @Produces({MediaType.TEXT_PLAIN})
     public Integer getMaxLineNum(@PathParam("header_id") Long id) {
-        TypedQuery<Integer> tq= em.createNamedQuery(ParameterConfigurationValues.MAX_LINE_NUM_BY_HEADER_ID, Integer.class).setParameter("p_header_id", id);
+        TypedQuery<Integer> tq = em.createNamedQuery(ParameterConfigurationValues.MAX_LINE_NUM_BY_HEADER_ID, Integer.class).setParameter("p_header_id", id);
         return tq.getSingleResult();
+    }
+
+    @GET
+    @Path("/attrColumns")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public UtilClass getAttrColumns() {
+        List<String> tq = em.createNativeQuery("select upper(column_name) attr "
+                + "from information_schema.columns "
+                + "WHERE table_schema='public' "
+                + "  AND table_name='saleorderline' "
+                + "  and column_name like 'attribute%'"
+                + "  and not exists (select * from parameterconfiguration where upper(attribute)=upper(column_name)) "
+                + "order by to_number(replace(column_name,'attribute',''),'99')").getResultList();
+        UtilClass obj = new UtilClass();
+        obj.setColumns(tq);
+        return obj;
     }
 
     @GET

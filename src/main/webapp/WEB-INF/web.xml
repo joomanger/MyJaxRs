@@ -17,7 +17,6 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
-    
     <filter>
         <filter-name>CharsetEncodingFilter</filter-name>
         <filter-class>filters.CharsetEncodingFilter</filter-class>
@@ -32,6 +31,7 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
         <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
     </filter-mapping>
     <session-config>
         <session-timeout>
@@ -41,8 +41,8 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
-    <error-page> 
-        <exception-type>javax.faces.application.ViewExpiredException</exception-type> 
-        <location>/faces/errors/sessionExpired.xhtml</location> 
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/faces/errors/sessionExpired.xhtml</location>
     </error-page>
 </web-app>

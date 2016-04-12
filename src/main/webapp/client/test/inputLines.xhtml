@@ -11,13 +11,13 @@
         <ui:composition template="./../../WEB-INF/template.xhtml">
 
             <ui:define name="content">
-                <h:form prependId="false">
-                    <p:panel header="Тест" >
+                <h:form id="newLine" prependId="false">
+                    <p:panel header="Тест" style="margin-bottom:20px" >
                         <p:panelGrid columns="2" style="border: none !important">
                             <p:outputLabel value="Позиция"/>
-                            <p:autoComplete required="true" value="#{viewBean.item}" completeMethod="#{itemConverter.completeItem}"
+                            <p:autoComplete id="item" required="true" value="#{viewBean.item}" completeMethod="#{itemConverter.completeItem}"
                                             var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" >
-                                <p:ajax event="itemSelect" update="dTable"/>
+                                <p:ajax event="itemSelect" update="dTable" onsuccess=""/>
                             </p:autoComplete>
                         </p:panelGrid>
                         
@@ -26,7 +26,7 @@
                                 <p:outputLabel value="#{item.parameter.name}"/>
                                 <c:choose>
                                     <c:when test="#{item.parameter.parameterType=='TABLE'}">
-                                        <p:autoComplete id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}" class="inputAC"
+                                        <p:autoComplete id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}"
                                                         onclick="document.getElementById('hhh').value =#{item.parameter.parameter_id};
                                                                 document.getElementById('btnClick').click();
                                                                 this.select();"
@@ -37,13 +37,13 @@
                                         </p:autoComplete>
                                     </c:when>
                                     <c:when test="#{item.parameter.parameterType=='INTEGER'}">
-                                        <p:inputText id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}" value="Целое" onclick="this.select();" />
+                                        <p:inputText id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}" onclick="this.select();" />
                                     </c:when>
                                     <c:when test="#{item.parameter.parameterType=='DOUBLE'}">
-                                        <p:inputText id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}" value="Десятичное" onclick="this.select();"/>
+                                        <p:inputText id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}" onclick="this.select();"/>
                                     </c:when>
                                     <c:when test="#{item.parameter.parameterType=='STRING'}">
-                                        <p:inputText id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}" value="Строковый" onclick="this.select();"/>
+                                        <p:inputText id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}" onclick="this.select();"/>
                                     </c:when>
                                     <c:otherwise>
                                         <p:inputText value="ХЗ" />
@@ -51,7 +51,7 @@
                                 </c:choose>
                                 
                             </c:forEach>
-                            <p:commandButton id="btnSendParam" value="Пуск" action="#{testServlet.test}"  />
+                            <p:commandButton id="btnSendParam" value="Пуск" action="#{testNewOrderLine.test}"/>
                         </p:panelGrid>
                     </p:panel>
                     

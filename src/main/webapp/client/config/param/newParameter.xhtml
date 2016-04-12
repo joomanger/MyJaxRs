@@ -22,6 +22,11 @@
                             <p:selectOneMenu id="typeData" value="#{newParameterView.paramConfig.parameterType}" style="width:150px" required="true" disabled="#{newParameterView.disabledCB}" >
                                 <f:selectItems value="#{newParameterView.paramTypes}" />
                             </p:selectOneMenu>
+                            <p:outputLabel value="Атрибут"/>
+                            <p:autoComplete id="attr" required="true" value="#{newParameterView.paramConfig.attribute}" completeMethod="#{parameterConverter.completeAttrParameter}"
+                                            forceSelection="true" disabled="#{newParameterView.disabledCB}"/>
+
+
                         </h:panelGrid>
                         <p:commandButton id="btnBack" value="Back" action="params" immediate="true"/>
                         <p:commandButton id="btnSaveHeader" value="Save"  disabled="#{newParameterView.disabledCB}" action="#{parameterClientBean.addItem}" update="mainMSG hsElements @this"/>
