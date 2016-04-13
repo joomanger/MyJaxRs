@@ -1,12 +1,19 @@
 package aaa;
 
-import config.entity.ParameterConfiguration;
+import com.isd.myjaxrs.entity.SaleOrderLine;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Enumeration;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import saleorderline.beans.SaleOrderLineBean;
 
 /**
  *
@@ -14,32 +21,80 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Named
 @RequestScoped
-public class TestNewOrderLine{
-    
+public class TestNewOrderLine {
+
+    @Inject
+    private SaleOrderLineBean clientLine;
+
     public String test() {
         HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        //Соберем строку SO
+        SaleOrderLine line = new SaleOrderLine();
+        line.setHeader_id(792l);
+        line.setQuantity(321.000d);
+        line.setPrice(123.00d);
+        line.setLine_num(Short.valueOf("1"));
+
         String a;
+        //Формат ID параметра: ТИППАРАМЕТРА_PARAMETERHEADERID_COLUMNMAPPING_input(or not imput)
+        Pattern p = Pattern.compile("(TABLE|INTEGER|DOUBLE|STRING)_[0-9]+_(ATTRIBUTE)[0-9]+(_input|)");
+
+        //начинаем перебирать все параметры которые соответствуют нашему шаблону
         for (Enumeration e = req.getParameterNames(); e.hasMoreElements();) {
             a = e.nextElement().toString();
-            if (a.endsWith("_input")) {
-                System.out.print("parameter_id=" + a + "; value_name=" + req.getParameter(a));
-                String aa;
-                for (Enumeration ee = req.getParameterNames(); ee.hasMoreElements();) {
-                    aa = ee.nextElement().toString();
-                    if (aa.equals(a.replace("_input", "_hinput"))) {
-                        System.out.println("; value_id=" + req.getParameter(aa));
+            Matcher m = p.matcher(a);
+            boolean b = m.matches();
+
+            if (b) {
+                StringTokenizer st = new StringTokenizer(a, "_");
+                int i = 0;
+                String paramColumn = "";
+                while (st.hasMoreTokens()) {
+                    i++;
+                    switch (i) {
+                        case 3:
+                            paramColumn = st.nextToken();
+                            break;
+                        default:
+                            st.nextToken();
+                            break;
                     }
                 }
-            } else if (a.startsWith(ParameterConfiguration.ParameterType.INTEGER.name())) {
-                System.out.println("int parameter_id=" + a + "; value=" + req.getParameter(a));
-            } else if (a.startsWith(ParameterConfiguration.ParameterType.DOUBLE.name())) {
-                System.out.println("dbl parameter_id=" + a + "; value=" + req.getParameter(a));
-            } else if (a.startsWith(ParameterConfiguration.ParameterType.STRING.name())) {
-                System.out.println("str parameter_id=" + a + "; value=" + req.getParameter(a));
+                String value = "";
+                if (a.endsWith("_input")) {
+                    String aa;
+                    for (Enumeration ee = req.getParameterNames(); ee.hasMoreElements();) {
+                        aa = ee.nextElement().toString();
+                        if (aa.equals(a.replace("_input", "_hinput"))) {
+                            value = req.getParameter(aa);
+                        }
+                    }
+                } //                else if (a.startsWith(ParameterConfiguration.ParameterType.INTEGER.name())) {
+                //                    System.out.println("int parameter_id=" + a + "; value=" + req.getParameter(a));
+                //                } else if (a.startsWith(ParameterConfiguration.ParameterType.DOUBLE.name())) {
+                //                    System.out.println("dbl parameter_id=" + a + "; value=" + req.getParameter(a));
+                //                } else if (a.startsWith(ParameterConfiguration.ParameterType.STRING.name())) {
+                //                    System.out.println("str parameter_id=" + a + "; value=" + req.getParameter(a));
+                //                } 
+                else {
+                    value = req.getParameter(a);
+                }
+                for (Method met : line.getClass().getDeclaredMethods()) {
+                    if ((met.getName().replace("set", "").toUpperCase().equals(paramColumn.toUpperCase())) && (!value.isEmpty())) {
+                        System.out.println(met.getName());
+                        try {
+                            met.invoke(line, value);
+                        } catch (IllegalAccessException | InvocationTargetException ex) {
+                            System.out.println(ex.getMessage());
+                        }
+                    }
+                } 
             }
         }
-        
+
+        clientLine.addItem(line, "Строка успешно добавлена");
+
         UIViewRoot view = FacesContext.getCurrentInstance().getViewRoot();
-        return view.getViewId() + "?faces-redirect=true";
+        return view.getViewId() + "?faces-redirect=false";
     }
 }

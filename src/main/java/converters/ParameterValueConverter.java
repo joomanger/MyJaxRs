@@ -1,6 +1,6 @@
 package converters;
 
-import aaa.viewBean;
+import aaa.ViewBean;
 import config.beans.ParameterClientBean;
 import config.beans.ParameterValuesClientBean;
 import config.entity.ParameterConfigurationValues;
@@ -30,7 +30,7 @@ public class ParameterValueConverter implements Converter {
     private ParameterClientBean pcb;
     
     @Inject
-    private viewBean vb;
+    private ViewBean vb;
 
     private Long parameter_id;
 
