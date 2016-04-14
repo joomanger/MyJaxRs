@@ -17,7 +17,7 @@ import javax.inject.Named;
  */
 @Named
 @ViewScoped
-public class viewBean implements Serializable {
+public class ViewBean implements Serializable {
 
     @Inject
     private ConfigClientBean configClient;
