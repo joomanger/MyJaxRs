@@ -7,6 +7,7 @@ import config.entity.ParameterConfigurationValues;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,6 +25,8 @@ public class ViewBean implements Serializable {
 
     private Item item;
     private Integer lastVersion;
+    
+    private boolean disabledItem=false;
 
     private Long header_id;
 
@@ -32,7 +35,6 @@ public class ViewBean implements Serializable {
     private ParameterConfigurationValues value;
 
     public void setHeader_id(Long header_id) {
-        //System.out.println("viewBean:header_id=" + header_id);
         this.header_id = header_id;
     }
 
@@ -66,11 +68,10 @@ public class ViewBean implements Serializable {
 
     public List<ConfigurationLine> values() {
         try {
-            paramValues = configClient.getLines(configClient.getItem(item.getId(), configClient.getLastVersion(getItem().getId())).getHeader_id());
+           return configClient.getLines(configClient.getItem(item.getId(), configClient.getLastVersion(getItem().getId())).getHeader_id());
         } catch (Exception e) {
-
+           return null;
         }
-        return paramValues;
     }
 
     public List<ConfigurationLine> getParamValues() {
@@ -79,6 +80,18 @@ public class ViewBean implements Serializable {
 
     public void setParamValues(List<ConfigurationLine> paramValues) {
         this.paramValues = paramValues;
+    }
+
+    public boolean isDisabledItem() {
+        return disabledItem;
+    }
+
+    public void setDisabledItem(boolean disabledItem) {
+        this.disabledItem = disabledItem;
+    }
+    
+    public String getClearURL(){
+        return FacesContext.getCurrentInstance().getViewRoot().getViewId() + "?faces-redirect=true";
     }
 
 
