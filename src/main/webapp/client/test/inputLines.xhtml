@@ -30,7 +30,7 @@
                                     <c:when test="#{item.parameter.parameterType=='TABLE'}">
                                         <p:autoComplete id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}_#{item.parameter.attribute}"
                                                         onclick="this.select();"
-                                                        class="attribute"        
+                                                        minQueryLength="3"
                                                         completeMethod="#{parameterValueConverter.completeValue}" 
                                                         var="m" itemLabel="#{m.parameterValue}" itemValue="#{m}" 
                                                         converter="#{parameterValueConverter}" forceSelection="true">
