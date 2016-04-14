@@ -32,7 +32,7 @@ public class TestNewOrderLine {
         HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         //Соберем строку SO
         SaleOrderLine line = new SaleOrderLine();
-        line.setHeader_id(4l);
+        line.setHeader_id(1l);
         line.setQuantity(321.000d);
         line.setPrice(123.00d);
         line.setLine_num(Short.valueOf("1"));

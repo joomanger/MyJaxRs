@@ -31,3 +31,4 @@ INSERT INTO configurationline values(7,2,2,2);
 INSERT INTO configurationline values(8,2,3,3);
 INSERT INTO configurationline values(9,2,4,4);
 INSERT INTO configurationline values(10,2,5,5);
+insert into saleorder values(1,'customer',1000,null,null);

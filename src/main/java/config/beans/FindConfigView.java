@@ -21,6 +21,7 @@ public class FindConfigView implements Serializable {
     private ConfigClientBean clientBean;
     private List<Configuration> selectedConfigs;
     private List<Configuration> configs;
+    
 
     @PostConstruct
     public void init() {

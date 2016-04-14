@@ -111,7 +111,7 @@ public class ViewBean implements Serializable {
 
     public List<SaleOrderLine> order_lines() {
         try {
-            return sob.getLines(4L);
+            return sob.getLines(1L);
         } catch (Exception e) {
             return null;
         }
