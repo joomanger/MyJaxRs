@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -12,7 +13,7 @@
 
             <ui:define name="content">
                 <h:form id="newLine" prependId="false">
-                    
+
                     <p:panel header="Тест" style="margin-bottom:20px" >
                         <p:panelGrid columns="3">
                             <p:outputLabel value="Позиция"/>
@@ -22,6 +23,7 @@
                             </p:autoComplete>
                             <p:commandButton id="btnClear" value="Сбросить" action="#{viewBean.getClearURL}" immediate="true"/>
                         </p:panelGrid>
+
 
                         <p:panelGrid id="dTable" columns="2" style="margin-top: 10px">
                             <c:forEach items="#{viewBean.values()}" var="item">
@@ -35,8 +37,7 @@
                                                         var="m" itemLabel="#{m.parameterValue}" itemValue="#{m}" 
                                                         converter="#{parameterValueConverter}" forceSelection="true">
                                             <p:ajax event="click" oncomplete="document.getElementById('header_id').value =#{item.parameter.parameter_id};
-                                                                document.getElementById('btnClick').click();"/>
-
+                                                    document.getElementById('btnClick').click();"/>
                                         </p:autoComplete>
                                     </c:when>
                                     <c:when test="#{item.parameter.parameterType=='INTEGER'}">
@@ -61,6 +62,36 @@
                     <h:inputHidden id="header_id" value="#{viewBean.header_id}" />
                     <p:commandButton id="btnClick" value="send" style="position: absolute; left: -9999px "/>
                 </h:form>
+                
+                <h:form prependId="false">
+                    <p:dataTable editable="true" id="dLines" scrollable="true" reflow="true" rows="20" paginator="true" var="ord" value="#{viewBean.order_lines()}" style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+
+                        <p:ajax event="rowEdit" listener="#{saleOrderView.onRowEdit}" update="mainMSG" />
+                        <p:ajax event="rowEditCancel"  listener="#{saleOrderView.onRowCancel}" update="mainMSG" />
+
+                        <p:column style="width:32px">
+                            <p:rowEditor />
+                        </p:column>
+                        <p:column headerText="Line" style="width:52px; text-align: center"  sortBy="#{ord.line_num}">
+                            <h:outputText value="#{ord.line_num}" />
+                        </p:column>
+                        <p:column headerText="Item" style="width:100%;text-align: center" sortBy="#{ord.item}">
+                            <h:outputText value="#{ord.item}" />
+                        </p:column>
+                        <p:column headerText="Quantity" style="width:80px; text-align: right" sortBy="#{ord.quantity}">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{ord.quantity}" /></f:facet>
+                                <f:facet name="input"><p:inputText id="qtyInput" value="#{ord.quantity}" /></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="Price" style="width:60px; text-align: right" sortBy="#{ord.price}"> 
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{ord.price}" /></f:facet>
+                                <f:facet name="input"><p:inputText id="priceInput" value="#{ord.price}" /></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>                
             </ui:define>
 
         </ui:composition>

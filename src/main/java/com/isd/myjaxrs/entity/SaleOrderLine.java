@@ -23,6 +23,10 @@ public class SaleOrderLine implements Serializable {
     @GeneratedValue(generator = "order_line_sq")
     private long line_id;
     private String item;
+
+    private Long item_id;
+    private Integer config_ver_num;
+
     private short line_num;
     private Double quantity;
     private Double price;
@@ -94,6 +98,22 @@ public class SaleOrderLine implements Serializable {
 
     public void setItem(String item) {
         this.item = item;
+    }
+
+    public Long getItem_id() {
+        return item_id;
+    }
+
+    public void setItem_id(Long item_id) {
+        this.item_id = item_id;
+    }
+
+    public Integer getConfig_ver_num() {
+        return config_ver_num;
+    }
+
+    public void setConfig_ver_num(Integer config_ver_num) {
+        this.config_ver_num = config_ver_num;
     }
 
     public Double getQuantity() {

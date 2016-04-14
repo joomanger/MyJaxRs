@@ -59,6 +59,11 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
         return getTarget().path("/{header_id}/lines").resolveTemplate("header_id", sob.getId()).request().get(new GenericType<List<SaleOrderLine>>() {
         });
     }
+    
+    public List<SaleOrderLine> getLines(Long p_header_id) {
+        return getTarget().path("/{header_id}/lines").resolveTemplate("header_id", p_header_id).request().get(new GenericType<List<SaleOrderLine>>() {
+        });
+    }
 
     public String addItem() {
 

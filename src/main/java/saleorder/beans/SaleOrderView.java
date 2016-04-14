@@ -47,7 +47,7 @@ public class SaleOrderView {
     @Inject
     private SaleOrderLineBean solb;
 
-    private List<SaleOrderLine> lines;
+    private List<SaleOrderLine> lines=new ArrayList<>();
     private SaleOrder order;
 
     @PostConstruct

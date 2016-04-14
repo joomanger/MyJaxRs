@@ -25,15 +25,19 @@ public class TestNewOrderLine {
 
     @Inject
     private SaleOrderLineBean clientLine;
+    @Inject
+    private ViewBean viewBean;
 
     public String test() {
         HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         //Соберем строку SO
         SaleOrderLine line = new SaleOrderLine();
-        line.setHeader_id(792l);
+        line.setHeader_id(4l);
         line.setQuantity(321.000d);
         line.setPrice(123.00d);
         line.setLine_num(Short.valueOf("1"));
+        line.setItem_id(viewBean.getItem().getId());
+        line.setConfig_ver_num(viewBean.getLastConfigVersion());
 
         String a;
         //Формат ID параметра: ТИППАРАМЕТРА_PARAMETERHEADERID_COLUMNMAPPING_input(or not imput)

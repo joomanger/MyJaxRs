@@ -1,7 +1,9 @@
 package aaa;
 
 import com.isd.myjaxrs.entity.Item;
+import com.isd.myjaxrs.entity.SaleOrderLine;
 import config.beans.ConfigClientBean;
+import config.entity.Configuration;
 import config.entity.ConfigurationLine;
 import config.entity.ParameterConfigurationValues;
 import java.io.Serializable;
@@ -11,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import saleorder.beans.SaleOrderBean;
 
 /**
  *
@@ -23,14 +26,18 @@ public class ViewBean implements Serializable {
     @Inject
     private ConfigClientBean configClient;
 
+    @Inject
+    private SaleOrderBean sob;
+
     private Item item;
     private Integer lastVersion;
-    
-    private boolean disabledItem=false;
+
+    private boolean disabledItem = false;
 
     private Long header_id;
 
     private List<ConfigurationLine> paramValues = new ArrayList<>();
+    private List<SaleOrderLine> order_lines = new ArrayList<>();
 
     private ParameterConfigurationValues value;
 
@@ -68,10 +75,18 @@ public class ViewBean implements Serializable {
 
     public List<ConfigurationLine> values() {
         try {
-           return configClient.getLines(configClient.getItem(item.getId(), configClient.getLastVersion(getItem().getId())).getHeader_id());
+            return configClient.getLines(getConfiguration().getHeader_id());
         } catch (Exception e) {
-           return null;
+            return null;
         }
+    }
+
+    public Integer getLastConfigVersion() {
+        return configClient.getLastVersion(getItem().getId());
+    }
+
+    public Configuration getConfiguration() {
+        return configClient.getItem(item.getId(), getLastConfigVersion());
     }
 
     public List<ConfigurationLine> getParamValues() {
@@ -89,10 +104,17 @@ public class ViewBean implements Serializable {
     public void setDisabledItem(boolean disabledItem) {
         this.disabledItem = disabledItem;
     }
-    
-    public String getClearURL(){
+
+    public String getClearURL() {
         return FacesContext.getCurrentInstance().getViewRoot().getViewId() + "?faces-redirect=true";
     }
 
+    public List<SaleOrderLine> order_lines() {
+        try {
+            return sob.getLines(4L);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
 }

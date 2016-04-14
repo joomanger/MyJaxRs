@@ -1,6 +1,33 @@
-INSERT INTO ITEM(id,name, description) VALUES (1,'ЛИСТ', 'ПРОКАТ ТОЛСТОЛИСТОВОЙ')
-INSERT INTO ITEM(id,name, description) VALUES (2,'УГОЛОК', 'УГОЛОК')
-INSERT INTO ITEM(id,name, description) VALUES (3,'ШВЕЛЛЕР', 'ШВЕЛЛЕР')
-INSERT INTO ITEM(id,name, description) VALUES (4,'БАЛКА', 'БАЛКА ДВУТАВРОВАЯ')
-INSERT INTO ITEM(id,name, description) VALUES (5,'КАТАНКА', 'КАТАНКА ИЗ УГЛЕРОДИСТОЙ СТАЛИ ОБЫКНОВЕННОГО КАЧЕСТВА')
-
+CREATE SEQUENCE order_header_number_sq START 1000 increment 1 minvalue 1 maxvalue 4294967295
+INSERT INTO ITEM(id,name, description) VALUES (1,'ЛИСТ', 'ПРОКАТ ТОЛСТОЛИСТОВОЙ');
+INSERT INTO ITEM(id,name, description) VALUES (2,'УГОЛОК', 'УГОЛОК');
+INSERT INTO ITEM(id,name, description) VALUES (3,'ШВЕЛЛЕР', 'ШВЕЛЛЕР');
+INSERT INTO ITEM(id,name, description) VALUES (4,'БАЛКА', 'БАЛКА ДВУТАВРОВАЯ');
+INSERT INTO ITEM(id,name, description) VALUES (5,'КАТАНКА', 'КАТАНКА ИЗ УГЛЕРОДИСТОЙ СТАЛИ ОБЫКНОВЕННОГО КАЧЕСТВА');
+INSERT INTO parameterconfiguration values(1,'ATTRIBUTE1','AUTOLOAD','Длина, мм', 1);
+INSERT INTO parameterconfiguration values(2,'ATTRIBUTE2','AUTOLOAD','Толщина, мм', 1);
+INSERT INTO parameterconfiguration values(3,'ATTRIBUTE3','AUTOLOAD','Ширина, мм', 1);
+INSERT INTO parameterconfiguration values(4,'ATTRIBUTE4','AUTOLOAD','Марка стали', 3);
+INSERT INTO parameterconfiguration values(5,'ATTRIBUTE5','AUTOLOAD','Прокатный стан', 3);
+insert into parameterconfigurationvalues values(1,1,'Марка 1',4);
+insert into parameterconfigurationvalues values(2,2,'Марка 2',4);
+insert into parameterconfigurationvalues values(3,3,'Марка 3',4);
+insert into parameterconfigurationvalues values(4,4,'Марка 4',4);
+insert into parameterconfigurationvalues values(5,5,'Марка 5',4);
+insert into parameterconfigurationvalues values(6,1,'Стан 1',5);
+insert into parameterconfigurationvalues values(7,2,'Стан 2',5);
+insert into parameterconfigurationvalues values(8,3,'Стан 3',5);
+insert into parameterconfigurationvalues values(9,4,'Стан 4',5);
+insert into parameterconfigurationvalues values(10,5,'Стан 5',5);
+INSERT INTO CONFIGURATION values(1,1,'AUTOLOAD',1);
+INSERT INTO CONFIGURATION values(2,1,'AUTOLOAD',2);
+INSERT INTO configurationline values(1,1,1,1);
+INSERT INTO configurationline values(2,1,2,2);
+INSERT INTO configurationline values(3,1,3,3);
+INSERT INTO configurationline values(4,1,4,4);
+INSERT INTO configurationline values(5,1,5,5);
+INSERT INTO configurationline values(6,2,1,1);
+INSERT INTO configurationline values(7,2,2,2);
+INSERT INTO configurationline values(8,2,3,3);
+INSERT INTO configurationline values(9,2,4,4);
+INSERT INTO configurationline values(10,2,5,5);

@@ -95,7 +95,7 @@ public class ConfigClientBean extends RestProviderWR<Configuration> {
     }
 
     public Integer getLastVersion(Long p_item_id) {
-        if (!p_item_id.equals(null)) {
+        if (p_item_id != null) {
             Integer version = getTarget().path("/version/{item_id}").resolveTemplate("item_id", p_item_id).request().get(Integer.class);
             if (version == null) {
                 return 0;
