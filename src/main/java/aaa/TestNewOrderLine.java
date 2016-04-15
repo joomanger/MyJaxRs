@@ -31,12 +31,12 @@ public class TestNewOrderLine {
     public String test() {
         HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         //Соберем строку SO
-        SaleOrderLine line = new SaleOrderLine();
+        SaleOrderLine line = viewBean.getOrder_line();
         line.setHeader_id(1l);
-        line.setQuantity(321.000d);
-        line.setPrice(123.00d);
-        line.setLine_num(Short.valueOf("1"));
-        line.setItem_id(viewBean.getItem().getId());
+//        line.setQuantity(321.000d);
+//        line.setPrice(123.00d);
+//        line.setLine_num(Short.valueOf("1"));
+        line.setItem(viewBean.getItem());
         line.setConfig_ver_num(viewBean.getLastConfigVersion());
 
         String a;

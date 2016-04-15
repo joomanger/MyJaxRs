@@ -103,7 +103,7 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
         if (t.getStatus() == 204) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(success_msg, null));
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка удаления ", null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка удаления "+t.getStatus(), null));
         }
         return t;
     }

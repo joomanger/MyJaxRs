@@ -14,7 +14,7 @@
             <ui:define name="content">
                 <h:form id="newLine" prependId="false">
 
-                    <p:panel header="Тест" style="margin-bottom:20px" >
+                    <p:panel header="Новая позиция" style="margin-bottom:20px" >
                         <p:panelGrid columns="3">
                             <p:outputLabel value="Позиция"/>
                             <p:autoComplete id="item" required="true" value="#{viewBean.item}" completeMethod="#{itemConverter.completeItem}" 
@@ -23,8 +23,19 @@
                             </p:autoComplete>
                             <p:commandButton id="btnClear" value="Сбросить" action="#{viewBean.getClearURL}" immediate="true"/>
                         </p:panelGrid>
+                        <p:panelGrid id="dConstFields" columns="5" style="margin-top: 10px">
+                            <p:outputLabel value="Кол-во 1" style="width: 70px;text-align: center"/>
+                            <p:outputLabel value="ЕИ 1" style="width: 70px;text-align: center"/>
+                            <p:outputLabel value="Кол-во 2" style="width: 70px;text-align: center"/>
+                            <p:outputLabel value="ЕИ 2" style="width: 70px;text-align: center"/>
+                            <p:outputLabel value="Цена" style="width: 70px;text-align: center"/>
 
-
+                            <p:inputText value="#{viewBean.order_line.quantity}"  maxlength="10" style="width: 70px;text-align: right"/>
+                            <p:inputText value="#{viewBean.order_line.uom}" maxlength="4" style="width: 30px;text-align: center"/>
+                            <p:inputText value="#{viewBean.order_line.quantity2}" maxlength="10" style="width: 70px;text-align: right"/>
+                            <p:inputText value="#{viewBean.order_line.uom2}" maxlength="4" style="width: 30px;text-align: center"/>
+                            <p:inputText value="#{viewBean.order_line.price}" style="width: 70px;text-align: right"/>
+                        </p:panelGrid>
                         <p:panelGrid id="dTable" columns="2" style="margin-top: 10px">
                             <c:forEach items="#{viewBean.values()}" var="item">
                                 <p:outputLabel value="#{item.parameter.name}"/>
@@ -62,35 +73,70 @@
                     <h:inputHidden id="header_id" value="#{viewBean.header_id}" />
                     <p:commandButton id="btnClick" value="send" style="position: absolute; left: -9999px "/>
                 </h:form>
-                
-                <h:form prependId="false">
-                    <p:dataTable editable="true" id="dLines" scrollable="true" reflow="true" rows="20" paginator="true" var="ord" value="#{viewBean.order_lines()}" style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
 
+                <h:form prependId="false">
+                    <p:dataTable rowSelectMode="checkbox" rowKey="#{ord.line_id}" editable="true" id="dLines" scrollable="true" reflow="true" 
+                                 rows="20" paginator="true" var="ord" value="#{viewBean.order_lines}" selection="#{viewBean.selected_lines}"
+                                 style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                        <f:facet name="header">
+                            Список позиций
+                        </f:facet>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:ajax event="rowEdit" listener="#{saleOrderView.onRowEdit}" update="mainMSG" />
                         <p:ajax event="rowEditCancel"  listener="#{saleOrderView.onRowCancel}" update="mainMSG" />
 
-                        <p:column style="width:32px">
-                            <p:rowEditor />
-                        </p:column>
-                        <p:column headerText="Line" style="width:52px; text-align: center"  sortBy="#{ord.line_num}">
+                        <p:column headerText="Line" style="width:52px; text-align: center">
                             <h:outputText value="#{ord.line_num}" />
                         </p:column>
-                        <p:column headerText="Item" style="width:100%;text-align: center" sortBy="#{ord.item}">
-                            <h:outputText value="#{ord.item}" />
+                        <p:column headerText="Item" style="width:100%;text-align: center">
+                            <h:outputText value="#{ord.item.name}" />
                         </p:column>
-                        <p:column headerText="Quantity" style="width:80px; text-align: right" sortBy="#{ord.quantity}">
+                        <p:column headerText="Quantity" style="width:80px; text-align: right">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{ord.quantity}" /></f:facet>
-                                <f:facet name="input"><p:inputText id="qtyInput" value="#{ord.quantity}" /></f:facet>
+                                <f:facet name="input"><p:inputText  value="#{ord.quantity}" /></f:facet>
                             </p:cellEditor>
                         </p:column>
-                        <p:column headerText="Price" style="width:60px; text-align: right" sortBy="#{ord.price}"> 
+                        <p:column headerText="UOM" style="width:30px;text-align: center">
+                            <h:outputText value="#{ord.uom}" />
+                        </p:column>
+                         <p:column headerText="Quantity2" style="width:80px; text-align: right">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{ord.quantity2}" /></f:facet>
+                                <f:facet name="input"><p:inputText  value="#{ord.quantity2}" /></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="UOM2" style="width:30px;text-align: center">
+                            <h:outputText value="#{ord.uom2}" />
+                        </p:column>
+                        <p:column headerText="Price" style="width:60px; text-align: right"> 
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{ord.price}" /></f:facet>
                                 <f:facet name="input"><p:inputText id="priceInput" value="#{ord.price}" /></f:facet>
                             </p:cellEditor>
                         </p:column>
+                        <f:facet name="footer" >
+                            <p:commandButton process="dLines" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />
+                            <p:commandButton value="New" action="newConfig" immediate="true" style="margin-left: 15px"/>
+                        </f:facet>
                     </p:dataTable>
+                    <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                        <p:outputPanel id="selectedParams" style="text-align:center;">
+                            <p:dataTable value="#{viewBean.selected_lines}" var="v">
+                                <p:column headerText="Line">
+                                    <h:outputText value="#{v.line_num}"/>
+                                </p:column>
+                                <p:column headerText="Description">
+                                    <h:outputText value="#{v.item.name}"/>
+                                </p:column>
+                                <p:column headerText="Quantity">
+                                    <h:outputText value="#{v.quantity}"/>
+                                </p:column>
+                            </p:dataTable>
+                            <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
+                            <p:commandButton value="Yes" actionListener="#{viewBean.deleteLines}" oncomplete="PF('deleteDialog').hide()" update="dLines mainMSG" />
+                        </p:outputPanel>
+                    </p:dialog>
                 </h:form>                
             </ui:define>
 

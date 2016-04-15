@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -22,13 +24,20 @@ public class SaleOrderLine implements Serializable {
     @SequenceGenerator(name = "order_line_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "order_line_sq")
     private long line_id;
-    private String item;
+    
+//    private String item;
+    @ManyToOne
+    @JoinColumn(name = "item_id")
+    private Item item;
 
-    private Long item_id;
+//    private Long item_id;
     private Integer config_ver_num;
 
     private short line_num;
     private Double quantity;
+    private Double quantity2;
+    private String uom;
+    private String uom2;
     private Double price;
     private Long header_id;
     //Атрибуты конфигурации
@@ -92,21 +101,53 @@ public class SaleOrderLine implements Serializable {
         this.line_num = line_num;
     }
 
-    public String getItem() {
+    public Item getItem() {
         return item;
     }
 
-    public void setItem(String item) {
+    public void setItem(Item item) {
         this.item = item;
     }
 
-    public Long getItem_id() {
-        return item_id;
+    public Double getQuantity2() {
+        return quantity2;
     }
 
-    public void setItem_id(Long item_id) {
-        this.item_id = item_id;
+    public void setQuantity2(Double quantity2) {
+        this.quantity2 = quantity2;
     }
+
+    public String getUom() {
+        return uom;
+    }
+
+    public void setUom(String uom) {
+        this.uom = uom;
+    }
+
+    public String getUom2() {
+        return uom2;
+    }
+
+    public void setUom2(String uom2) {
+        this.uom2 = uom2;
+    }
+    
+//    public String getItem() {
+//        return item;
+//    }
+//
+//    public void setItem(String item) {
+//        this.item = item;
+//    }
+//
+//    public Long getItem_id() {
+//        return item_id;
+//    }
+//
+//    public void setItem_id(Long item_id) {
+//        this.item_id = item_id;
+//    }
 
     public Integer getConfig_ver_num() {
         return config_ver_num;

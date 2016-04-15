@@ -63,7 +63,7 @@ public class CreateSaleOrderLineFlow implements Serializable {
     public void addLine() {
         line_num++;
         SaleOrderLine line = new SaleOrderLine();
-        line.setItem(item);
+        //line.setItem(item);
         line.setPrice(price);
         line.setQuantity(quantity);
         line.setLine_num(line_num);
