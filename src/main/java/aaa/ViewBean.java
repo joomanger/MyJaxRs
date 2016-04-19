@@ -10,11 +10,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.core.Response;
+import org.primefaces.event.RowEditEvent;
 import saleorder.beans.SaleOrderBean;
 import saleorderline.beans.SaleOrderLineBean;
 
@@ -31,7 +33,7 @@ public class ViewBean implements Serializable {
 
     @Inject
     private SaleOrderBean sob;
-    
+
     @Inject
     private SaleOrderLineBean slb;
 
@@ -45,18 +47,31 @@ public class ViewBean implements Serializable {
     private List<ConfigurationLine> paramValues = new ArrayList<>();
     private List<SaleOrderLine> order_lines = new ArrayList<>();
     private List<SaleOrderLine> selected_lines = new ArrayList<>();
-    private SaleOrderLine order_line=new SaleOrderLine();
-    
+    private SaleOrderLine order_line = new SaleOrderLine();
 
     private ParameterConfigurationValues value;
 
     @PostConstruct
     private void init() {
+        updateListLines();
+    }
+
+    private void updateListLines() {
         try {
             this.order_lines = sob.getLines(1L);
         } catch (Exception ex) {
 
         }
+    }
+
+    public void onRowEdit(RowEditEvent event) {
+//        FacesMessage msg = new FacesMessage("Строка изменена успешно");
+//        FacesContext.getCurrentInstance().addMessage(null, msg);
+        slb.editItem((SaleOrderLine) event.getObject(), "ухты");
+        updateListLines();
+    }
+
+    public void onRowCancel(RowEditEvent event) {
     }
 
     public void setHeader_id(Long header_id) {
@@ -134,7 +149,6 @@ public class ViewBean implements Serializable {
 //            return null;
 //        }
 //    }
-
     public List<SaleOrderLine> getOrder_lines() {
         return order_lines;
     }
@@ -158,15 +172,15 @@ public class ViewBean implements Serializable {
     public void setOrder_line(SaleOrderLine order_line) {
         this.order_line = order_line;
     }
-    
-    public void deleteLines(){
-        Response t=null;
-       for(SaleOrderLine line:selected_lines){
-            t=slb.deleteItem(line.getLine_id(), "Позиция "+line.getLine_num()+" удалена успешно");
-       }
-       order_lines.removeAll(selected_lines);
-       selected_lines.clear();
-        
+
+    public void deleteLines() {
+        Response t = null;
+        for (SaleOrderLine line : selected_lines) {
+            t = slb.deleteItem(line.getLine_id(), "Позиция " + line.getLine_num() + " удалена успешно");
+        }
+        order_lines.removeAll(selected_lines);
+        selected_lines.clear();
+
     }
-    
+
 }
