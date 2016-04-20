@@ -176,6 +176,7 @@ public class ViewBean implements Serializable {
         }
         order_lines.removeAll(selected_lines);
         selected_lines.clear();
+        setParameters(getAllLinesAttributes());
 
     }
 
