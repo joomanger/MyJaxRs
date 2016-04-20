@@ -8,14 +8,12 @@ import config.entity.ConfigurationLine;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.StringTokenizer;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.enterprise.context.RequestScoped;
@@ -112,24 +110,5 @@ public class TestNewOrderLine {
 
         UIViewRoot view = FacesContext.getCurrentInstance().getViewRoot();
         return view.getViewId() + "?faces-redirect=true";
-    }
-
-    public List<String> getAllLinesAttributes() {
-
-        SortedSet<Byte> attrs = new TreeSet<>();
-        for (SaleOrderLine line : viewBean.getOrder_lines()) {
-            Configuration config = configBean.getItem(line.getItem().getId(), line.getConfig_ver_num()/*configBean.getLastVersion(line.getItem().getId())*/);
-            for (ConfigurationLine configLine : configBean.getLines(config.getHeader_id())) {
-                attrs.add(Byte.parseByte(configLine.getParameter().getAttribute().replace("ATTRIBUTE", "")));
-            }
-        }
-        Set<String> attrs2 = new LinkedHashSet<>();
-        for (Byte s : attrs) {
-            attrs2.add("ATTRIBUTE"+s);
-        }
-        
-        List<String> list=new ArrayList<>();
-        list.addAll(attrs2);
-        return list;
     }
 }

@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @XmlRootElement
-public class ParameterConfiguration implements Serializable {
+public class ParameterConfiguration implements Serializable, Comparable<ParameterConfiguration> {
 
     public enum ParameterType {
         INTEGER,
@@ -37,18 +37,18 @@ public class ParameterConfiguration implements Serializable {
     @Column(unique = true)
     @NotNull(message = "Обязательно для заполнения")
     private String name;
-    private String description;
+    private String columnName;
     private String attribute;
     private ParameterType parameterType;
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "parameter_id")
     private List<ParameterConfigurationValues> values;
 
-    public long getParameter_id() {
+    public Long getParameter_id() {
         return parameter_id;
     }
 
-    public void setParameter_id(long parameter_id) {
+    public void setParameter_id(Long parameter_id) {
         this.parameter_id = parameter_id;
     }
 
@@ -60,12 +60,12 @@ public class ParameterConfiguration implements Serializable {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getColumnName() {
+        return columnName;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setColumnName(String columnName) {
+        this.columnName = columnName;
     }
 
     public ParameterType getParameterType() {
@@ -92,5 +92,21 @@ public class ParameterConfiguration implements Serializable {
     public void setAttribute(String attribute) {
         this.attribute = attribute;
     }
+
+    @Override
+    public int compareTo(ParameterConfiguration p_parameter) {
+        Byte a = Byte.parseByte(this.getAttribute().replace("ATTRIBUTE", ""));
+        Byte b = Byte.parseByte(p_parameter.getAttribute().replace("ATTRIBUTE", ""));
+        if (a > b) {
+            return 1;
+        } else if (a == b) {
+            return 0;
+        } else {
+            return -1;
+        }
+
+    }
+    
+    
 
 }

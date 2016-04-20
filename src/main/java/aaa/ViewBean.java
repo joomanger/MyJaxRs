@@ -5,18 +5,21 @@ import com.isd.myjaxrs.entity.SaleOrderLine;
 import config.beans.ConfigClientBean;
 import config.entity.Configuration;
 import config.entity.ConfigurationLine;
+import config.entity.ParameterConfiguration;
 import config.entity.ParameterConfigurationValues;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.core.Response;
-import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.CellEditEvent;
 import saleorder.beans.SaleOrderBean;
 import saleorderline.beans.SaleOrderLineBean;
 
@@ -48,12 +51,18 @@ public class ViewBean implements Serializable {
     private List<SaleOrderLine> order_lines = new ArrayList<>();
     private List<SaleOrderLine> selected_lines = new ArrayList<>();
     private SaleOrderLine order_line = new SaleOrderLine();
+    private Set<Integer> linesForSave = new HashSet<>();
 
     private ParameterConfigurationValues value;
+
+    private List<ParameterConfiguration> parameters;
+
+    private Boolean disableSave = true;
 
     @PostConstruct
     private void init() {
         updateListLines();
+        setParameters(getAllLinesAttributes());
     }
 
     private void updateListLines() {
@@ -64,14 +73,8 @@ public class ViewBean implements Serializable {
         }
     }
 
-    public void onRowEdit(RowEditEvent event) {
-//        FacesMessage msg = new FacesMessage("Строка изменена успешно");
-//        FacesContext.getCurrentInstance().addMessage(null, msg);
-        slb.editItem((SaleOrderLine) event.getObject(), "ухты");
-        updateListLines();
-    }
-
-    public void onRowCancel(RowEditEvent event) {
+    public void onCellEdit(CellEditEvent event) {
+        linesForSave.add(event.getRowIndex());
     }
 
     public void setHeader_id(Long header_id) {
@@ -142,13 +145,6 @@ public class ViewBean implements Serializable {
         return FacesContext.getCurrentInstance().getViewRoot().getViewId() + "?faces-redirect=true";
     }
 
-//    public List<SaleOrderLine> order_lines() {
-//        try {
-//            return sob.getLines(1L);
-//        } catch (Exception e) {
-//            return null;
-//        }
-//    }
     public List<SaleOrderLine> getOrder_lines() {
         return order_lines;
     }
@@ -181,6 +177,58 @@ public class ViewBean implements Serializable {
         order_lines.removeAll(selected_lines);
         selected_lines.clear();
 
+    }
+
+    private List<ParameterConfiguration> getAllLinesAttributes() {
+        List<ParameterConfiguration> list = new ArrayList<>();
+        Set<String> attrs = new HashSet<>();
+        for (SaleOrderLine line : getOrder_lines()) {
+            Configuration config = configClient.getItem(line.getItem().getId(), line.getConfig_ver_num());
+            for (ConfigurationLine configLine : configClient.getLines(config.getHeader_id())) {
+                list.add(configLine.getParameter());
+                attrs.add(configLine.getParameter().getAttribute());
+            }
+        }
+
+        List<ParameterConfiguration> list2 = new ArrayList<>();
+        for (String s : attrs) {
+            for (ParameterConfiguration p : list) {
+                if (p.getAttribute().equals(s)) {
+                    list2.add(p);
+                    break;
+                }
+            }
+        }
+        Collections.sort(list2);
+        return list2;
+    }
+
+    public List<ParameterConfiguration> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(List<ParameterConfiguration> parameters) {
+        this.parameters = parameters;
+    }
+
+    public Boolean getDisableSave() {
+        return disableSave;
+    }
+
+    public void setDisableSave(Boolean disableSave) {
+        this.disableSave = disableSave;
+    }
+
+    public void saveLines() {
+        String message = "Сохранено успешно";
+        for (int a : linesForSave) {
+            Response t=slb.editItem(order_lines.get(a), null);
+            if(t.getStatus()!=204){
+                message=t.getStatusInfo().toString();
+            }
+        }
+        slb.sendMessage(message);
+        linesForSave.clear();
     }
 
 }

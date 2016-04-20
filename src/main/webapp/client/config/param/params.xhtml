@@ -21,8 +21,8 @@
                         <p:column headerText="Name">
                             <h:commandLink action="openParameter" value="#{ord.name}" onclick="document.getElementById('setHeaderId').value =#{ord.parameter_id}"/>
                         </p:column>
-                        <p:column headerText="Description" style="width:200px;text-align: center">
-                            <p:outputLabel value="#{ord.description}" />
+                        <p:column headerText="Column Name" style="width:200px;text-align: center">
+                            <p:outputLabel value="#{ord.columnName}" />
                         </p:column>
                         <p:column headerText="Type" style="width:65px;text-align: center">
                             <p:outputLabel value="#{ord.parameterType}" />
@@ -41,8 +41,8 @@
                                 <p:column headerText="Name">
                                     <h:outputText value="#{v.name}"/>
                                 </p:column>
-                                <p:column headerText="Description">
-                                    <h:outputText value="#{v.description}"/>
+                                <p:column headerText="ColumnName">
+                                    <h:outputText value="#{v.columnName}"/>
                                 </p:column>
                                 <p:column headerText="Type">
                                     <h:outputText value="#{v.parameterType}"/>

@@ -81,14 +81,16 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
 
     @Override
     public Response editItem(Object obj, String success_msg) {
-        Response t=getTarget()
+        Response t = getTarget()
                 .register(this)
                 .request()
                 .put(Entity.entity(obj, MediaType.APPLICATION_JSON));
         if (t.getStatus() == 204) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(success_msg, null));
+            if (!(success_msg == null)) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(success_msg, null));
+            }
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка обновления "+t.getStatusInfo(), null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка обновления " + t.getStatusInfo(), null));
         }
         return t;
     }
@@ -103,7 +105,7 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
         if (t.getStatus() == 204) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(success_msg, null));
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка удаления "+t.getStatus(), null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка удаления " + t.getStatus(), null));
         }
         return t;
     }
@@ -131,6 +133,10 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка вставки", null));
         }
         return t;
+    }
+    
+    public void sendMessage(String message){
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message, null));
     }
 
 }

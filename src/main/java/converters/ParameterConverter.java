@@ -34,7 +34,6 @@ public class ParameterConverter implements Converter {
             try {
                 ps.setParamID(Long.parseLong(value));
                 return cb.getItem();
-
             } catch (NumberFormatException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Not a valid theme."));
             }
