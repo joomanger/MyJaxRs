@@ -115,7 +115,34 @@
                         </p:column>
                         <c:forEach items="#{viewBean.parameters}" var="attrs">
                             <p:column headerText="#{attrs.columnName}" style="width:90px;text-align: center">
-                                <h:outputText value="" />
+                                <c:choose>
+                                    <c:when test="#{attrs.parameterType=='TABLE'}">
+                                        <p:autoComplete id="#{attrs.parameterType}_#{attrs.parameter_id}_#{attrs.attribute}"
+                                                        onclick="this.select();"
+                                                        minQueryLength="3"
+                                                        completeMethod="#{parameterValueConverter.completeValue}" 
+                                                        var="m" itemLabel="#{m.parameterValue}" itemValue="#{m}" 
+                                                        converter="#{parameterValueConverter}" forceSelection="true">
+                                            <p:ajax event="click"  oncomplete="document.getElementById('header_id').value =#{attrs.parameter_id};
+                                                    document.getElementById('btnClick').click();"/>
+                                        </p:autoComplete>
+                                    </c:when>
+                                    <c:when test="#{attrs.parameterType=='DOUBLE'}">
+                                        <p:cellEditor>
+                                            <f:facet name="output"><p:outputLabel binding="#{viewBean.getMyOutputLabel(attrs.attribute)}" /></f:facet>
+                                            <f:facet name="input"><p:inputText binding="#{viewBean.getMyInputText(attrs.attribute)}" /></f:facet>
+                                        </p:cellEditor>
+                                    </c:when>
+                                    <c:when test="#{attrs.parameterType=='STRING'}">
+                                        <p:cellEditor>
+                                            <f:facet name="output"><p:outputLabel binding="#{viewBean.getMyOutputLabel(attrs.attribute)}" /></f:facet>
+                                            <f:facet name="input"><p:inputText binding="#{viewBean.getMyInputText(attrs.attribute)}" /></f:facet>
+                                        </p:cellEditor>
+                                    </c:when>
+                                    <c:otherwise>
+
+                                    </c:otherwise>
+                                </c:choose>
                             </p:column>
                         </c:forEach>
                         <f:facet name="footer" >

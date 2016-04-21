@@ -10,15 +10,23 @@ import config.entity.ParameterConfigurationValues;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.annotation.PostConstruct;
+import javax.el.ELContext;
+import javax.el.ExpressionFactory;
+import javax.el.ValueExpression;
+import javax.faces.application.Application;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.core.Response;
+import org.primefaces.component.inputtext.InputText;
+import org.primefaces.component.outputlabel.OutputLabel;
 import org.primefaces.event.CellEditEvent;
 import saleorder.beans.SaleOrderBean;
 import saleorderline.beans.SaleOrderLineBean;
@@ -58,6 +66,9 @@ public class ViewBean implements Serializable {
     private List<ParameterConfiguration> parameters;
 
     private Boolean disableSave = true;
+
+    private Map<String, OutputLabel> labels = new HashMap<>();
+    private Map<String, InputText> texts = new HashMap<>();
 
     @PostConstruct
     private void init() {
@@ -207,9 +218,41 @@ public class ViewBean implements Serializable {
     public List<ParameterConfiguration> getParameters() {
         return parameters;
     }
+    
+    
+    //Вывести в синглетон с стартапом
+    public ValueExpression getValueExpression(String data) {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Application app = fc.getApplication();
+        ExpressionFactory elFactory = app.getExpressionFactory();
+        ELContext elContext = fc.getELContext();
+        ValueExpression valueExp = elFactory.createValueExpression(elContext, data, Object.class);
+        return valueExp;
+
+    }
 
     public void setParameters(List<ParameterConfiguration> parameters) {
         this.parameters = parameters;
+        labels.clear();
+        for (ParameterConfiguration p : parameters) {
+            if (p.getParameterType() != ParameterConfiguration.ParameterType.TABLE) {
+                System.out.println(p.getAttribute() + " " + "#{ord." + p.getAttribute().toLowerCase() + "}");
+                OutputLabel label = new OutputLabel();
+                InputText text=new InputText();
+                label.setValueExpression("value",getValueExpression("#{ord." + p.getAttribute().toLowerCase() + "}"));
+                text.setValueExpression("value", getValueExpression("#{ord." + p.getAttribute().toLowerCase() + "}"));
+                labels.put(p.getAttribute(), label);
+                texts.put(p.getAttribute(), text);
+            }
+        }
+    }
+
+    public OutputLabel getMyOutputLabel(String attr) {
+        return labels.get(attr);
+    }
+    
+    public InputText getMyInputText(String attr) {
+        return texts.get(attr);
     }
 
     public Boolean getDisableSave() {
@@ -223,13 +266,31 @@ public class ViewBean implements Serializable {
     public void saveLines() {
         String message = "Сохранено успешно";
         for (int a : linesForSave) {
-            Response t=slb.editItem(order_lines.get(a), null);
-            if(t.getStatus()!=204){
-                message=t.getStatusInfo().toString();
+            Response t = slb.editItem(order_lines.get(a), null);
+            if (t.getStatus() != 204) {
+                message = "Ошибка при сохранении: " + t.getStatusInfo().toString();
             }
         }
         slb.sendMessage(message);
         linesForSave.clear();
     }
+
+    public Map<String, OutputLabel> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(Map<String, OutputLabel> labels) {
+        this.labels = labels;
+    }
+
+    public Map<String, InputText> getTexts() {
+        return texts;
+    }
+
+    public void setTexts(Map<String, InputText> texts) {
+        this.texts = texts;
+    }
+    
+    
 
 }
