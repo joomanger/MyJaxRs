@@ -15,6 +15,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
@@ -70,10 +73,31 @@ public class ViewBean implements Serializable {
     private Map<String, OutputLabel> labels = new HashMap<>();
     private Map<String, InputText> texts = new HashMap<>();
 
+    private OutputLabel outputLable = new OutputLabel();
+    private InputText inputText = new InputText();
+
     @PostConstruct
     private void init() {
         updateListLines();
+
+        labels.clear();
+        texts.clear();
+        for (ParameterConfiguration p : getAllLinesAttributes()) {
+            if (p.getParameterType() != ParameterConfiguration.ParameterType.TABLE) {
+                OutputLabel label = new OutputLabel();
+                InputText text = new InputText();
+                label.setValueExpression("value", getValueExpression("#{ord." + p.getAttribute().toLowerCase() + "}"));
+                // setOutputLable(label);
+                text.setValueExpression("value", getValueExpression("#{ord." + p.getAttribute().toLowerCase() + "}"));
+                //setInputText(text);
+                System.out.println(p.getAttribute() + " value=" + label.getValueExpression("value"));
+                labels.put(p.getAttribute(), label);
+                texts.put(p.getAttribute(), text);
+            }
+        }
         setParameters(getAllLinesAttributes());
+        //(getAllLinesAttributes());
+        //parameters=getAllLinesAttributes();
     }
 
     private void updateListLines() {
@@ -187,11 +211,11 @@ public class ViewBean implements Serializable {
         }
         order_lines.removeAll(selected_lines);
         selected_lines.clear();
-        setParameters(getAllLinesAttributes());
+        // setParameters(getAllLinesAttributes());
 
     }
 
-    private List<ParameterConfiguration> getAllLinesAttributes() {
+    public List<ParameterConfiguration> getAllLinesAttributes() {
         List<ParameterConfiguration> list = new ArrayList<>();
         Set<String> attrs = new HashSet<>();
         for (SaleOrderLine line : getOrder_lines()) {
@@ -218,8 +242,7 @@ public class ViewBean implements Serializable {
     public List<ParameterConfiguration> getParameters() {
         return parameters;
     }
-    
-    
+
     //Вывести в синглетон с стартапом
     public ValueExpression getValueExpression(String data) {
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -233,24 +256,32 @@ public class ViewBean implements Serializable {
 
     public void setParameters(List<ParameterConfiguration> parameters) {
         this.parameters = parameters;
-        labels.clear();
-        for (ParameterConfiguration p : parameters) {
-            if (p.getParameterType() != ParameterConfiguration.ParameterType.TABLE) {
-                System.out.println(p.getAttribute() + " " + "#{ord." + p.getAttribute().toLowerCase() + "}");
-                OutputLabel label = new OutputLabel();
-                InputText text=new InputText();
-                label.setValueExpression("value",getValueExpression("#{ord." + p.getAttribute().toLowerCase() + "}"));
-                text.setValueExpression("value", getValueExpression("#{ord." + p.getAttribute().toLowerCase() + "}"));
-                labels.put(p.getAttribute(), label);
-                texts.put(p.getAttribute(), text);
-            }
-        }
+    }
+
+    public OutputLabel getOutputLable() {
+        System.out.println("get id=" + this.outputLable.getId());
+        return labels.get(outputLable.getId());
+    }
+
+    public void setOutputLable(OutputLabel outputLable) {
+        //this.outputLable = outputLable;
+        labels.put(outputLable.getId(), outputLable);
+        System.out.println("set id=" + this.outputLable.getId());
+    }
+
+    public InputText getInputText() {
+        System.out.println(inputText.getId());
+        return inputText;
+    }
+
+    public void setInputText(InputText inputText) {
+        this.inputText = inputText;
     }
 
     public OutputLabel getMyOutputLabel(String attr) {
         return labels.get(attr);
     }
-    
+
     public InputText getMyInputText(String attr) {
         return texts.get(attr);
     }
@@ -282,15 +313,9 @@ public class ViewBean implements Serializable {
     public void setLabels(Map<String, OutputLabel> labels) {
         this.labels = labels;
     }
-
-    public Map<String, InputText> getTexts() {
-        return texts;
-    }
-
-    public void setTexts(Map<String, InputText> texts) {
-        this.texts = texts;
-    }
     
-    
+    public void Test(String t){
+        System.out.println("t="+t);
+    }
 
 }
