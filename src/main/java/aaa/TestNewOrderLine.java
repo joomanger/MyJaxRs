@@ -88,7 +88,7 @@ public class TestNewOrderLine {
                 }
                 for (Method met : line.getClass().getDeclaredMethods()) {
                     if ((met.getName().replace("set", "").toUpperCase().equals(paramColumn.toUpperCase())) && (!value.isEmpty())) {
-                        System.out.println(met.getName());
+                        //System.out.println(met.getName());
                         try {
                             met.invoke(line, value);
                         } catch (IllegalAccessException | InvocationTargetException ex) {

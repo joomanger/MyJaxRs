@@ -10,14 +10,9 @@ import config.entity.ParameterConfigurationValues;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
@@ -28,8 +23,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.core.Response;
-import org.primefaces.component.inputtext.InputText;
-import org.primefaces.component.outputlabel.OutputLabel;
 import org.primefaces.event.CellEditEvent;
 import saleorder.beans.SaleOrderBean;
 import saleorderline.beans.SaleOrderLineBean;
@@ -53,51 +46,36 @@ public class ViewBean implements Serializable {
 
     private Item item;
     private Integer lastVersion;
-
     private boolean disabledItem = false;
-
     private Long header_id;
-
     private List<ConfigurationLine> paramValues = new ArrayList<>();
     private List<SaleOrderLine> order_lines = new ArrayList<>();
     private List<SaleOrderLine> selected_lines = new ArrayList<>();
     private SaleOrderLine order_line = new SaleOrderLine();
     private Set<Integer> linesForSave = new HashSet<>();
-
     private ParameterConfigurationValues value;
-
     private List<ParameterConfiguration> parameters;
-
     private Boolean disableSave = true;
-
-    private Map<String, OutputLabel> labels = new HashMap<>();
-    private Map<String, InputText> texts = new HashMap<>();
-
-    private OutputLabel outputLable = new OutputLabel();
-    private InputText inputText = new InputText();
+    private List<ParameterConfiguration> list;
+    private Set<String> attrs;
+    private FacesContext fc;
+    private Application app;
+    private ExpressionFactory elFactory;
+    private ELContext elContext;
 
     @PostConstruct
     private void init() {
-        updateListLines();
+        fc = FacesContext.getCurrentInstance();
+        app = fc.getApplication();
+        elFactory = app.getExpressionFactory();
+        elContext = fc.getELContext();
 
-        labels.clear();
-        texts.clear();
-        for (ParameterConfiguration p : getAllLinesAttributes()) {
-            if (p.getParameterType() != ParameterConfiguration.ParameterType.TABLE) {
-                OutputLabel label = new OutputLabel();
-                InputText text = new InputText();
-                label.setValueExpression("value", getValueExpression("#{ord." + p.getAttribute().toLowerCase() + "}"));
-                // setOutputLable(label);
-                text.setValueExpression("value", getValueExpression("#{ord." + p.getAttribute().toLowerCase() + "}"));
-                //setInputText(text);
-                System.out.println(p.getAttribute() + " value=" + label.getValueExpression("value"));
-                labels.put(p.getAttribute(), label);
-                texts.put(p.getAttribute(), text);
-            }
-        }
+        updateListLines();
         setParameters(getAllLinesAttributes());
-        //(getAllLinesAttributes());
-        //parameters=getAllLinesAttributes();
+    }
+
+    public ValueExpression getValueExpression(String data) {
+        return elFactory.createValueExpression(elContext, data, Object.class);
     }
 
     private void updateListLines() {
@@ -211,13 +189,12 @@ public class ViewBean implements Serializable {
         }
         order_lines.removeAll(selected_lines);
         selected_lines.clear();
-        // setParameters(getAllLinesAttributes());
-
+        setParameters(getAllLinesAttributes());
     }
 
     public List<ParameterConfiguration> getAllLinesAttributes() {
-        List<ParameterConfiguration> list = new ArrayList<>();
-        Set<String> attrs = new HashSet<>();
+        list = new ArrayList<>();
+        attrs = new HashSet<>();
         for (SaleOrderLine line : getOrder_lines()) {
             Configuration config = configClient.getItem(line.getItem().getId(), line.getConfig_ver_num());
             for (ConfigurationLine configLine : configClient.getLines(config.getHeader_id())) {
@@ -230,6 +207,7 @@ public class ViewBean implements Serializable {
         for (String s : attrs) {
             for (ParameterConfiguration p : list) {
                 if (p.getAttribute().equals(s)) {
+                    p.setAttribute(s.toLowerCase());
                     list2.add(p);
                     break;
                 }
@@ -243,47 +221,8 @@ public class ViewBean implements Serializable {
         return parameters;
     }
 
-    //Вывести в синглетон с стартапом
-    public ValueExpression getValueExpression(String data) {
-        FacesContext fc = FacesContext.getCurrentInstance();
-        Application app = fc.getApplication();
-        ExpressionFactory elFactory = app.getExpressionFactory();
-        ELContext elContext = fc.getELContext();
-        ValueExpression valueExp = elFactory.createValueExpression(elContext, data, Object.class);
-        return valueExp;
-
-    }
-
     public void setParameters(List<ParameterConfiguration> parameters) {
         this.parameters = parameters;
-    }
-
-    public OutputLabel getOutputLable() {
-        System.out.println("get id=" + this.outputLable.getId());
-        return labels.get(outputLable.getId());
-    }
-
-    public void setOutputLable(OutputLabel outputLable) {
-        //this.outputLable = outputLable;
-        labels.put(outputLable.getId(), outputLable);
-        System.out.println("set id=" + this.outputLable.getId());
-    }
-
-    public InputText getInputText() {
-        System.out.println(inputText.getId());
-        return inputText;
-    }
-
-    public void setInputText(InputText inputText) {
-        this.inputText = inputText;
-    }
-
-    public OutputLabel getMyOutputLabel(String attr) {
-        return labels.get(attr);
-    }
-
-    public InputText getMyInputText(String attr) {
-        return texts.get(attr);
     }
 
     public Boolean getDisableSave() {
@@ -304,18 +243,6 @@ public class ViewBean implements Serializable {
         }
         slb.sendMessage(message);
         linesForSave.clear();
-    }
-
-    public Map<String, OutputLabel> getLabels() {
-        return labels;
-    }
-
-    public void setLabels(Map<String, OutputLabel> labels) {
-        this.labels = labels;
-    }
-    
-    public void Test(String t){
-        System.out.println("t="+t);
     }
 
 }

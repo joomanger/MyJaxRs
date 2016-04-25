@@ -95,8 +95,8 @@ public class ParameterConfiguration implements Serializable, Comparable<Paramete
 
     @Override
     public int compareTo(ParameterConfiguration p_parameter) {
-        Byte a = Byte.parseByte(this.getAttribute().replace("ATTRIBUTE", ""));
-        Byte b = Byte.parseByte(p_parameter.getAttribute().replace("ATTRIBUTE", ""));
+        Byte a = Byte.parseByte(this.getAttribute().toLowerCase().replace("attribute", ""));
+        Byte b = Byte.parseByte(p_parameter.getAttribute().toLowerCase().replace("attribute", ""));
         if (a > b) {
             return 1;
         } else if (a == b) {
