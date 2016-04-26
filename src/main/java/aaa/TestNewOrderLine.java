@@ -99,9 +99,10 @@ public class TestNewOrderLine {
             }
         }
 
-        clientLine.addItem(line, "Строка успешно добавлена");
-
+          clientLine.addItem(line, "Строка успешно добавлена");
+        
         UIViewRoot view = FacesContext.getCurrentInstance().getViewRoot();
         return view.getViewId() + "?faces-redirect=true";
+
     }
 }

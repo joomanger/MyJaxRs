@@ -43,12 +43,11 @@
                                     <c:when test="#{item.parameter.parameterType=='TABLE'}">
                                         <p:autoComplete id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}_#{item.parameter.attribute}"
                                                         onclick="this.select();"
-                                                        minQueryLength="3"
-                                                        completeMethod="#{parameterValueConverter.completeValue}" 
-                                                        var="m" itemLabel="#{m.parameterValue}" itemValue="#{m}" 
-                                                        converter="#{parameterValueConverter}" forceSelection="true">
-                                            <p:ajax event="click" oncomplete="document.getElementById('header_id').value =#{item.parameter.parameter_id};
-                                                    document.getElementById('btnClick').click();"/>
+                                                        maxResults="10"
+                                                        completeMethod="#{parameterValueConverter.completeValue2}" 
+                                                        var="m" itemValue="#{m}" itemLabel="#{m}"
+                                                        forceSelection="true">
+                                            <p:ajax event="keypress"  listener="#{viewBean.setHeader_id(item.parameter.parameter_id)}" />
                                         </p:autoComplete>
                                     </c:when>
                                     <c:when test="#{item.parameter.parameterType=='INTEGER'}">
@@ -61,11 +60,11 @@
                                         <p:inputText class="attribute" id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}_#{item.parameter.attribute}" onclick="this.select();"/>
                                     </c:when>
                                     <c:otherwise>
-                                        <p:inputText value="ХЗ" />
+                                        <p:inputText value="Неверный тип данных" />
                                     </c:otherwise>
                                 </c:choose>
                             </c:forEach>
-                            <p:commandButton id="btnSendParam" value="Добавить" action="#{testNewOrderLine.test}"/>
+                            <p:commandButton id="btnSendParam" value="Добавить" action="#{testNewOrderLine.test}" update="mainMSG"/>
                         </p:panelGrid>
                     </p:panel>
                 </h:form>
@@ -76,14 +75,14 @@
 
                 <h:form prependId="false">
                     <p:dataTable id="dLines" editMode="cell" rowSelectMode="checkbox" rowKey="#{ord.line_id}" editable="true" scrollable="true"  reflow="true" 
-                                 rows="20" paginator="true" var="ord" value="#{viewBean.order_lines}" selection="#{viewBean.selected_lines}"
+                                 rows="20" paginator="true" var="ord" value="#{viewBean.order_lines}" selection="#{viewBean.selected_lines}" 
                                  style="width: 1500px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
                         <f:facet name="header">
                             Список позиций
                         </f:facet>
-                        <p:ajax event="cellEdit" listener="#{viewBean.onCellEdit}" update="mainMSG" />
+                        <p:ajax event="cellEdit"  listener="#{viewBean.onCellEdit}"/>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column headerText="Line" style="width:52px; text-align: center">
+                        <p:column  style="width:12px; text-align: center">
                             <h:outputText value="#{ord.line_num}" />
                         </p:column>
                         <p:column headerText="Item" style="width:100px;text-align: center">
@@ -114,18 +113,23 @@
                             </p:cellEditor>
                         </p:column>
                         <c:forEach items="#{viewBean.parameters}" var="attrs">
-                            <p:column headerText="#{attrs.columnName}" style="width:90px;text-align: center">
+                            <p:column headerText="#{attrs.columnName}" style="width:90px;text-align: center"  >
                                 <c:choose>
                                     <c:when test="#{attrs.parameterType=='TABLE'}">
-                                       
-                                                <p:autoComplete  id="#{attrs.parameterType}_#{attrs.parameter_id}_#{attrs.attribute}"
-                                                                 onclick="this.select();"
-                                                                 minQueryLength="3"
-                                                                 completeMethod="#{parameterValueConverter.completeValue}" 
-                                                                 var="m" itemLabel="#{m.parameterValue}" itemValue="#{m}" 
-                                                                 converter="#{parameterValueConverter}" forceSelection="true">
-                                                    
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <p:outputLabel value="#{ord[attrs.attribute]}" />
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:autoComplete  value="#{ord[attrs.attribute]}" 
+                                                                 completeMethod="#{parameterValueConverter.completeValue2}" 
+                                                                 maxResults="10"
+                                                                 forceSelection="true">
+                                                    <p:ajax event="keypress"  listener="#{viewBean.setHeader_id(attrs.parameter_id)}" />
                                                 </p:autoComplete>
+                                            </f:facet>
+                                        </p:cellEditor>
+
                                     </c:when>
                                     <c:when test="#{attrs.parameterType=='DOUBLE'}">
                                         <p:cellEditor>

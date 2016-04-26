@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.core.Response;
 import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 import saleorder.beans.SaleOrderBean;
 import saleorderline.beans.SaleOrderLineBean;
 
@@ -87,7 +88,12 @@ public class ViewBean implements Serializable {
     }
 
     public void onCellEdit(CellEditEvent event) {
+        System.out.println("colKey=" + event.getColumn().getColumnKey());
         linesForSave.add(event.getRowIndex());
+    }
+
+    public void onRowEditInit(RowEditEvent event) {
+        System.out.println("rowedit " + event.getObject());
     }
 
     public void setHeader_id(Long header_id) {
@@ -190,6 +196,21 @@ public class ViewBean implements Serializable {
         order_lines.removeAll(selected_lines);
         selected_lines.clear();
         setParameters(getAllLinesAttributes());
+    }
+
+    public List<ParameterConfiguration> getAllItemAttributes() {
+        try{
+        list = new ArrayList<>();
+        for (ConfigurationLine line : values()) {
+            ParameterConfiguration p = line.getParameter();
+            p.setAttribute(p.getAttribute().toLowerCase());
+            list.add(p);
+        }
+        Collections.sort(list);
+        return list;
+        }catch(Exception ex){
+            return null;
+        }
     }
 
     public List<ParameterConfiguration> getAllLinesAttributes() {
