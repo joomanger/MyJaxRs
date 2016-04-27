@@ -6,6 +6,8 @@ import config.beans.ConfigLineClientBean;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
+import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -69,21 +71,20 @@ public class TestNewOrderLine {
                 }
                 String value = "";
                 if (a.endsWith("_input")) {
-                    String aa;
-                    for (Enumeration ee = req.getParameterNames(); ee.hasMoreElements();) {
-                        aa = ee.nextElement().toString();
-                        if (aa.equals(a.replace("_input", "_hinput"))) {
-                            value = req.getParameter(aa);
+                    if (viewBean.getParamMap().containsKey(paramColumn)) {
+                        for (String val : viewBean.getParamMap().get(paramColumn)) {
+                            value += val + ";";
+                        }
+                    } else {
+                        String aa;
+                        for (Enumeration ee = req.getParameterNames(); ee.hasMoreElements();) {
+                            aa = ee.nextElement().toString();
+                            if (aa.equals(a.replace("_input", "_hinput"))) {
+                                value = req.getParameter(aa);
+                            }
                         }
                     }
-                } //                else if (a.startsWith(ParameterConfiguration.ParameterType.INTEGER.name())) {
-                //                    System.out.println("int parameter_id=" + a + "; value=" + req.getParameter(a));
-                //                } else if (a.startsWith(ParameterConfiguration.ParameterType.DOUBLE.name())) {
-                //                    System.out.println("dbl parameter_id=" + a + "; value=" + req.getParameter(a));
-                //                } else if (a.startsWith(ParameterConfiguration.ParameterType.STRING.name())) {
-                //                    System.out.println("str parameter_id=" + a + "; value=" + req.getParameter(a));
-                //                } 
-                else {
+                } else {
                     value = req.getParameter(a);
                 }
                 for (Method met : line.getClass().getDeclaredMethods()) {
@@ -99,8 +100,7 @@ public class TestNewOrderLine {
             }
         }
 
-          clientLine.addItem(line, "Строка успешно добавлена");
-        
+        clientLine.addItem(line, "Строка успешно добавлена");
         UIViewRoot view = FacesContext.getCurrentInstance().getViewRoot();
         return view.getViewId() + "?faces-redirect=true";
 

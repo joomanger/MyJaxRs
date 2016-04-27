@@ -43,21 +43,27 @@
                                     <c:when test="#{item.parameter.parameterType=='TABLE'}">
                                         <p:autoComplete id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}_#{item.parameter.attribute}"
                                                         onclick="this.select();"
+                                                        multiple="true"
+                                                        value="#{viewBean.selectedItems}"
                                                         maxResults="10"
                                                         completeMethod="#{parameterValueConverter.completeValue2}" 
                                                         var="m" itemValue="#{m}" itemLabel="#{m}"
                                                         forceSelection="true">
                                             <p:ajax event="keypress"  listener="#{viewBean.setHeader_id(item.parameter.parameter_id)}" />
+                                            <p:ajax event="blur"  listener="#{viewBean.test(item.parameter.attribute)}" />
                                         </p:autoComplete>
                                     </c:when>
                                     <c:when test="#{item.parameter.parameterType=='INTEGER'}">
-                                        <p:inputText class="attribute" id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}_#{item.parameter.attribute}" onclick="this.select();"  />
+                                        <p:inputText class="attribute" id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}_#{item.parameter.attribute}" onclick="this.select();"  >
+                                        </p:inputText>
                                     </c:when>
                                     <c:when test="#{item.parameter.parameterType=='DOUBLE'}">
-                                        <p:inputText class="attribute" id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}_#{item.parameter.attribute}" onclick="this.select();"/>
+                                        <p:inputText class="attribute" id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}_#{item.parameter.attribute}" onclick="this.select();">
+                                        </p:inputText>
                                     </c:when>
                                     <c:when test="#{item.parameter.parameterType=='STRING'}">
-                                        <p:inputText class="attribute" id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}_#{item.parameter.attribute}" onclick="this.select();"/>
+                                        <p:inputText class="attribute" id="#{item.parameter.parameterType}_#{item.parameter.parameter_id}_#{item.parameter.attribute}" onclick="this.select();">
+                                        </p:inputText>
                                     </c:when>
                                     <c:otherwise>
                                         <p:inputText value="Неверный тип данных" />

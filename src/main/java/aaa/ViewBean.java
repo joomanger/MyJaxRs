@@ -10,8 +10,10 @@ import config.entity.ParameterConfigurationValues;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.el.ELContext;
@@ -63,6 +65,9 @@ public class ViewBean implements Serializable {
     private Application app;
     private ExpressionFactory elFactory;
     private ELContext elContext;
+    private List<String> selectedItems = new ArrayList<String>();
+
+    private Map<String, Set<String>> paramMap = new HashMap<>();
 
     @PostConstruct
     private void init() {
@@ -199,16 +204,16 @@ public class ViewBean implements Serializable {
     }
 
     public List<ParameterConfiguration> getAllItemAttributes() {
-        try{
-        list = new ArrayList<>();
-        for (ConfigurationLine line : values()) {
-            ParameterConfiguration p = line.getParameter();
-            p.setAttribute(p.getAttribute().toLowerCase());
-            list.add(p);
-        }
-        Collections.sort(list);
-        return list;
-        }catch(Exception ex){
+        try {
+            list = new ArrayList<>();
+            for (ConfigurationLine line : values()) {
+                ParameterConfiguration p = line.getParameter();
+                p.setAttribute(p.getAttribute().toLowerCase());
+                list.add(p);
+            }
+            Collections.sort(list);
+            return list;
+        } catch (Exception ex) {
             return null;
         }
     }
@@ -265,5 +270,38 @@ public class ViewBean implements Serializable {
         slb.sendMessage(message);
         linesForSave.clear();
     }
+
+    public List<String> getSelectedItems() {
+        return selectedItems;
+    }
+
+    public void setSelectedItems(List<String> selectedItems) {
+        this.selectedItems = selectedItems;
+    }
+
+    public void test(String attr) {
+        if(selectedItems==null){
+            paramMap.remove(attr);
+        }
+        if (selectedItems != null) {
+            Set<String> st = new HashSet<>();
+            for (String s : selectedItems) {
+                st.add(s);
+            }
+            paramMap.put(attr, st);
+        }
+
+        
+    }
+
+    public Map<String, Set<String>> getParamMap() {
+        return paramMap;
+    }
+
+    public void setParamMap(Map<String, Set<String>> paramMap) {
+        this.paramMap = paramMap;
+    }
+    
+    
 
 }

@@ -25,14 +25,24 @@ public class ParameterValueConverter implements Converter {
 
     @Inject
     private ParameterValuesClientBean cb;
-    
-    @Inject 
+
+    @Inject
     private ParameterClientBean pcb;
-    
+
     @Inject
     private ViewBean vb;
 
     private Long parameter_id;
+
+    private List<String> selectedItems = new ArrayList<>();
+
+    public List<String> getSelectedItems() {
+        return selectedItems;
+    }
+
+    public void setSelectedItems(List<String> selectedItems) {
+        this.selectedItems = selectedItems;
+    }
 
     public Long getParameter_id() {
         return parameter_id;
@@ -78,6 +88,7 @@ public class ParameterValueConverter implements Converter {
 
         return filteredItems;
     }
+
     public List<String> completeValue2(String query) {
         List<ParameterConfigurationValues> allItems = pcb.getValues(vb.getHeader_id());
         List<String> filteredItems = new ArrayList<>();
@@ -90,5 +101,7 @@ public class ParameterValueConverter implements Converter {
 
         return filteredItems;
     }
-   
+
+    
+
 }
