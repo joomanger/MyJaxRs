@@ -3,6 +3,7 @@ package converters;
 import aaa.ViewBean;
 import config.beans.ParameterClientBean;
 import config.beans.ParameterValuesClientBean;
+import config.entity.ParameterConfiguration;
 import config.entity.ParameterConfigurationValues;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +78,7 @@ public class ParameterValueConverter implements Converter {
     }
 
     public List<ParameterConfigurationValues> completeValue(String query) {
+
         List<ParameterConfigurationValues> allItems = pcb.getValues(vb.getHeader_id());
         List<ParameterConfigurationValues> filteredItems = new ArrayList<>();
 
@@ -101,7 +103,5 @@ public class ParameterValueConverter implements Converter {
 
         return filteredItems;
     }
-
-    
 
 }

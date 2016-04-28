@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -39,6 +40,8 @@ public class ParameterConfiguration implements Serializable, Comparable<Paramete
     private String name;
     private String columnName;
     private String attribute;
+    @Transient
+    private String lattribute;
     private ParameterType parameterType;
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "parameter_id")
@@ -106,6 +109,12 @@ public class ParameterConfiguration implements Serializable, Comparable<Paramete
         }
 
     }
+
+    public String getLattribute() {
+        return 'l'+attribute;
+    }
+    
+    
     
     
 

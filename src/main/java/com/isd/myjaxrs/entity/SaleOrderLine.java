@@ -1,6 +1,9 @@
 package com.isd.myjaxrs.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -24,7 +28,7 @@ public class SaleOrderLine implements Serializable {
     @SequenceGenerator(name = "order_line_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "order_line_sq")
     private long line_id;
-    
+
 //    private String item;
     @ManyToOne
     @JoinColumn(name = "item_id")
@@ -51,7 +55,6 @@ public class SaleOrderLine implements Serializable {
     private String attribute8;
     private String attribute9;
     private String attribute10;
-
     private String attribute11;
     private String attribute12;
     private String attribute13;
@@ -62,7 +65,6 @@ public class SaleOrderLine implements Serializable {
     private String attribute18;
     private String attribute19;
     private String attribute20;
-
     private String attribute21;
     private String attribute22;
     private String attribute23;
@@ -73,7 +75,6 @@ public class SaleOrderLine implements Serializable {
     private String attribute28;
     private String attribute29;
     private String attribute30;
-
     private String attribute31;
     private String attribute32;
     private String attribute33;
@@ -84,6 +85,86 @@ public class SaleOrderLine implements Serializable {
     private String attribute38;
     private String attribute39;
     private String attribute40;
+    @Transient
+    private List<String> lattribute1;
+    @Transient
+    private List<String> lattribute2;
+    @Transient
+    private List<String> lattribute3;
+    @Transient
+    private List<String> lattribute4;
+    @Transient
+    private List<String> lattribute5;
+    @Transient
+    private List<String> lattribute6;
+    @Transient
+    private List<String> lattribute7;
+    @Transient
+    private List<String> lattribute8;
+    @Transient
+    private List<String> lattribute9;
+    @Transient
+    private List<String> lattribute10;
+    @Transient
+    private List<String> lattribute11;
+    @Transient
+    private List<String> lattribute12;
+    @Transient
+    private List<String> lattribute13;
+    @Transient
+    private List<String> lattribute14;
+    @Transient
+    private List<String> lattribute15;
+    @Transient
+    private List<String> lattribute16;
+    @Transient
+    private List<String> lattribute17;
+    @Transient
+    private List<String> lattribute18;
+    @Transient
+    private List<String> lattribute19;
+    @Transient
+    private List<String> lattribute20;
+    @Transient
+    private List<String> lattribute21;
+    @Transient
+    private List<String> lattribute22;
+    @Transient
+    private List<String> lattribute23;
+    @Transient
+    private List<String> lattribute24;
+    @Transient
+    private List<String> lattribute25;
+    @Transient
+    private List<String> lattribute26;
+    @Transient
+    private List<String> lattribute27;
+    @Transient
+    private List<String> lattribute28;
+    @Transient
+    private List<String> lattribute29;
+    @Transient
+    private List<String> lattribute30;
+    @Transient
+    private List<String> lattribute31;
+    @Transient
+    private List<String> lattribute32;
+    @Transient
+    private List<String> lattribute33;
+    @Transient
+    private List<String> lattribute34;
+    @Transient
+    private List<String> lattribute35;
+    @Transient
+    private List<String> lattribute36;
+    @Transient
+    private List<String> lattribute37;
+    @Transient
+    private List<String> lattribute38;
+    @Transient
+    private List<String> lattribute39;
+    @Transient
+    private List<String> lattribute40;
 
     public long getLine_id() {
         return line_id;
@@ -132,7 +213,7 @@ public class SaleOrderLine implements Serializable {
     public void setUom2(String uom2) {
         this.uom2 = uom2;
     }
-    
+
 //    public String getItem() {
 //        return item;
 //    }
@@ -148,7 +229,6 @@ public class SaleOrderLine implements Serializable {
 //    public void setItem_id(Long item_id) {
 //        this.item_id = item_id;
 //    }
-
     public Integer getConfig_ver_num() {
         return config_ver_num;
     }
@@ -502,4 +582,403 @@ public class SaleOrderLine implements Serializable {
         this.attribute40 = attribute40;
     }
 
+    //////////////////////////////////
+    private List<String> getLattribute(String attribute, List<String> lattribute) {
+        if (attribute != null) {
+            StringTokenizer st = new StringTokenizer(attribute, ";");
+            lattribute = new ArrayList<>();
+            while (st.hasMoreTokens()) {
+                lattribute.add(st.nextToken());
+            }
+        }
+        return lattribute;
+    }
+
+    private String setLattribute(List<String> lattribute) {
+        String attr = "";
+        if (lattribute != null) {
+            for (String s : lattribute) {
+                attr += s + ";";
+            }
+        }
+        return attr;
+    }
+
+//    public List<String> getLattribute4() {
+//        return getLattribute(attribute4, lattribute4);
+//    }
+//
+//    public void setLattribute4(List<String> lattribute4) {
+//        setAttribute4(setLattribute(lattribute4));
+//        this.lattribute4 = lattribute4;
+//
+//    }
+//
+//    public List<String> getLattribute5() {
+//         return getLattribute(attribute5, lattribute5);
+//    }
+//
+//    public void setLattribute5(List<String> lattribute5) {
+//        setAttribute5(setLattribute(lattribute5));
+//        this.lattribute5 = lattribute5;
+//    }
+    public List<String> getLattribute1() {
+        return getLattribute(attribute1, lattribute1);
+    }
+
+    public List<String> getLattribute2() {
+        return getLattribute(attribute2, lattribute2);
+    }
+
+    public List<String> getLattribute3() {
+        return getLattribute(attribute3, lattribute3);
+    }
+
+    public List<String> getLattribute4() {
+        return getLattribute(attribute4, lattribute4);
+    }
+
+    public List<String> getLattribute5() {
+        return getLattribute(attribute5, lattribute5);
+    }
+
+    public List<String> getLattribute6() {
+        return getLattribute(attribute6, lattribute6);
+    }
+
+    public List<String> getLattribute7() {
+        return getLattribute(attribute7, lattribute7);
+    }
+
+    public List<String> getLattribute8() {
+        return getLattribute(attribute8, lattribute8);
+    }
+
+    public List<String> getLattribute9() {
+        return getLattribute(attribute9, lattribute9);
+    }
+
+    public List<String> getLattribute10() {
+        return getLattribute(attribute10, lattribute10);
+    }
+
+    public List<String> getLattribute11() {
+        return getLattribute(attribute11, lattribute11);
+    }
+
+    public List<String> getLattribute12() {
+        return getLattribute(attribute12, lattribute12);
+    }
+
+    public List<String> getLattribute13() {
+        return getLattribute(attribute13, lattribute13);
+    }
+
+    public List<String> getLattribute14() {
+        return getLattribute(attribute14, lattribute14);
+    }
+
+    public List<String> getLattribute15() {
+        return getLattribute(attribute15, lattribute15);
+    }
+
+    public List<String> getLattribute16() {
+        return getLattribute(attribute16, lattribute16);
+    }
+
+    public List<String> getLattribute17() {
+        return getLattribute(attribute17, lattribute17);
+    }
+
+    public List<String> getLattribute18() {
+        return getLattribute(attribute18, lattribute18);
+    }
+
+    public List<String> getLattribute19() {
+        return getLattribute(attribute19, lattribute19);
+    }
+
+    public List<String> getLattribute20() {
+        return getLattribute(attribute20, lattribute20);
+    }
+
+    public List<String> getLattribute21() {
+        return getLattribute(attribute21, lattribute21);
+    }
+
+    public List<String> getLattribute22() {
+        return getLattribute(attribute22, lattribute22);
+    }
+
+    public List<String> getLattribute23() {
+        return getLattribute(attribute23, lattribute23);
+    }
+
+    public List<String> getLattribute24() {
+        return getLattribute(attribute24, lattribute24);
+    }
+
+    public List<String> getLattribute25() {
+        return getLattribute(attribute25, lattribute25);
+    }
+
+    public List<String> getLattribute26() {
+        return getLattribute(attribute26, lattribute26);
+    }
+
+    public List<String> getLattribute27() {
+        return getLattribute(attribute27, lattribute27);
+    }
+
+    public List<String> getLattribute28() {
+        return getLattribute(attribute28, lattribute28);
+    }
+
+    public List<String> getLattribute29() {
+        return getLattribute(attribute29, lattribute29);
+    }
+
+    public List<String> getLattribute30() {
+        return getLattribute(attribute30, lattribute30);
+    }
+
+    public List<String> getLattribute31() {
+        return getLattribute(attribute31, lattribute31);
+    }
+
+    public List<String> getLattribute32() {
+        return getLattribute(attribute32, lattribute32);
+    }
+
+    public List<String> getLattribute33() {
+        return getLattribute(attribute33, lattribute33);
+    }
+
+    public List<String> getLattribute34() {
+        return getLattribute(attribute34, lattribute34);
+    }
+
+    public List<String> getLattribute35() {
+        return getLattribute(attribute35, lattribute35);
+    }
+
+    public List<String> getLattribute36() {
+        return getLattribute(attribute36, lattribute36);
+    }
+
+    public List<String> getLattribute37() {
+        return getLattribute(attribute37, lattribute37);
+    }
+
+    public List<String> getLattribute38() {
+        return getLattribute(attribute38, lattribute38);
+    }
+
+    public List<String> getLattribute39() {
+        return getLattribute(attribute39, lattribute39);
+    }
+
+    public List<String> getLattribute40() {
+        return getLattribute(attribute40, lattribute40);
+    }
+
+    public void setLattribute1(List<String> lattribute1) {
+        setAttribute1(setLattribute(lattribute1));
+        this.lattribute1 = lattribute1;
+    }
+
+    public void setLattribute2(List<String> lattribute2) {
+        setAttribute2(setLattribute(lattribute2));
+        this.lattribute2 = lattribute2;
+    }
+
+    public void setLattribute3(List<String> lattribute3) {
+        setAttribute3(setLattribute(lattribute3));
+        this.lattribute3 = lattribute3;
+    }
+
+    public void setLattribute4(List<String> lattribute4) {
+        setAttribute4(setLattribute(lattribute4));
+        this.lattribute4 = lattribute4;
+    }
+
+    public void setLattribute5(List<String> lattribute5) {
+        setAttribute5(setLattribute(lattribute5));
+        this.lattribute5 = lattribute5;
+    }
+
+    public void setLattribute6(List<String> lattribute6) {
+        setAttribute6(setLattribute(lattribute6));
+        this.lattribute6 = lattribute6;
+    }
+
+    public void setLattribute7(List<String> lattribute7) {
+        setAttribute7(setLattribute(lattribute7));
+        this.lattribute7 = lattribute7;
+    }
+
+    public void setLattribute8(List<String> lattribute8) {
+        setAttribute8(setLattribute(lattribute8));
+        this.lattribute8 = lattribute8;
+    }
+
+    public void setLattribute9(List<String> lattribute9) {
+        setAttribute9(setLattribute(lattribute9));
+        this.lattribute9 = lattribute9;
+    }
+
+    public void setLattribute10(List<String> lattribute10) {
+        setAttribute10(setLattribute(lattribute10));
+        this.lattribute10 = lattribute10;
+    }
+
+    public void setLattribute11(List<String> lattribute11) {
+        setAttribute11(setLattribute(lattribute11));
+        this.lattribute11 = lattribute11;
+    }
+
+    public void setLattribute12(List<String> lattribute12) {
+        setAttribute12(setLattribute(lattribute12));
+        this.lattribute12 = lattribute12;
+    }
+
+    public void setLattribute13(List<String> lattribute13) {
+        setAttribute13(setLattribute(lattribute13));
+        this.lattribute13 = lattribute13;
+    }
+
+    public void setLattribute14(List<String> lattribute14) {
+        setAttribute14(setLattribute(lattribute14));
+        this.lattribute14 = lattribute14;
+    }
+
+    public void setLattribute15(List<String> lattribute15) {
+        setAttribute15(setLattribute(lattribute15));
+        this.lattribute15 = lattribute15;
+    }
+
+    public void setLattribute16(List<String> lattribute16) {
+        setAttribute16(setLattribute(lattribute16));
+        this.lattribute16 = lattribute16;
+    }
+
+    public void setLattribute17(List<String> lattribute17) {
+        setAttribute17(setLattribute(lattribute17));
+        this.lattribute17 = lattribute17;
+    }
+
+    public void setLattribute18(List<String> lattribute18) {
+        setAttribute18(setLattribute(lattribute18));
+        this.lattribute18 = lattribute18;
+    }
+
+    public void setLattribute19(List<String> lattribute19) {
+        setAttribute19(setLattribute(lattribute19));
+        this.lattribute19 = lattribute19;
+    }
+
+    public void setLattribute20(List<String> lattribute20) {
+        setAttribute20(setLattribute(lattribute20));
+        this.lattribute20 = lattribute20;
+    }
+
+    public void setLattribute21(List<String> lattribute21) {
+        setAttribute21(setLattribute(lattribute21));
+        this.lattribute21 = lattribute21;
+    }
+
+    public void setLattribute22(List<String> lattribute22) {
+        setAttribute22(setLattribute(lattribute22));
+        this.lattribute22 = lattribute22;
+    }
+
+    public void setLattribute23(List<String> lattribute23) {
+        setAttribute23(setLattribute(lattribute23));
+        this.lattribute23 = lattribute23;
+    }
+
+    public void setLattribute24(List<String> lattribute24) {
+        setAttribute24(setLattribute(lattribute24));
+        this.lattribute24 = lattribute24;
+    }
+
+    public void setLattribute25(List<String> lattribute25) {
+        setAttribute25(setLattribute(lattribute25));
+        this.lattribute25 = lattribute25;
+    }
+
+    public void setLattribute26(List<String> lattribute26) {
+        setAttribute26(setLattribute(lattribute26));
+        this.lattribute26 = lattribute26;
+    }
+
+    public void setLattribute27(List<String> lattribute27) {
+        setAttribute27(setLattribute(lattribute27));
+        this.lattribute27 = lattribute27;
+    }
+
+    public void setLattribute28(List<String> lattribute28) {
+        setAttribute28(setLattribute(lattribute28));
+        this.lattribute28 = lattribute28;
+    }
+
+    public void setLattribute29(List<String> lattribute29) {
+        setAttribute29(setLattribute(lattribute29));
+        this.lattribute29 = lattribute29;
+    }
+
+    public void setLattribute30(List<String> lattribute30) {
+        setAttribute30(setLattribute(lattribute30));
+        this.lattribute30 = lattribute30;
+    }
+
+    public void setLattribute31(List<String> lattribute31) {
+        setAttribute31(setLattribute(lattribute31));
+        this.lattribute31 = lattribute31;
+    }
+
+    public void setLattribute32(List<String> lattribute32) {
+        setAttribute32(setLattribute(lattribute32));
+        this.lattribute32 = lattribute32;
+    }
+
+    public void setLattribute33(List<String> lattribute33) {
+        setAttribute33(setLattribute(lattribute33));
+        this.lattribute33 = lattribute33;
+    }
+
+    public void setLattribute34(List<String> lattribute34) {
+        setAttribute34(setLattribute(lattribute34));
+        this.lattribute34 = lattribute34;
+    }
+
+    public void setLattribute35(List<String> lattribute35) {
+        setAttribute35(setLattribute(lattribute35));
+        this.lattribute35 = lattribute35;
+    }
+
+    public void setLattribute36(List<String> lattribute36) {
+        setAttribute36(setLattribute(lattribute36));
+        this.lattribute36 = lattribute36;
+    }
+
+    public void setLattribute37(List<String> lattribute37) {
+        setAttribute37(setLattribute(lattribute37));
+        this.lattribute37 = lattribute37;
+    }
+
+    public void setLattribute38(List<String> lattribute38) {
+        setAttribute38(setLattribute(lattribute38));
+        this.lattribute38 = lattribute38;
+    }
+
+    public void setLattribute39(List<String> lattribute39) {
+        setAttribute39(setLattribute(lattribute39));
+        this.lattribute39 = lattribute39;
+    }
+
+    public void setLattribute40(List<String> lattribute40) {
+        setAttribute40(setLattribute(lattribute40));
+        this.lattribute40 = lattribute40;
+    }
 }
