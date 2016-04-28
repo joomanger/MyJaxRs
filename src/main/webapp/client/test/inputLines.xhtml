@@ -63,7 +63,7 @@
                             </p:cellEditor>
                         </p:column>
                         <c:forEach items="#{viewBean.parameters}" var="attrs">
-                            <p:column headerText="#{attrs.columnName}" >
+                            <p:column headerText="#{attrs.columnName}" style="width: 300px">
                                 <c:choose>
                                     <c:when test="#{attrs.parameterType=='TABLE'}">
                                         <p:cellEditor>
