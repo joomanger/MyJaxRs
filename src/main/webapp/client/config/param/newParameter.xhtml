@@ -25,6 +25,8 @@
                             <p:outputLabel value="Атрибут"/>
                             <p:autoComplete id="attr" required="true" value="#{newParameterView.paramConfig.attribute}" completeMethod="#{parameterConverter.completeAttrParameter}"
                                             forceSelection="true" disabled="#{newParameterView.disabledCB}"/>
+                            <p:outputLabel value="Ширина, px"/>
+                            <p:inputText id="size" maxlength="3" required="true" value="#{newParameterView.paramConfig.size}" disabled="#{newParameterView.disabledCB}" style="width: 25px;text-align: center" />
 
 
                         </h:panelGrid>

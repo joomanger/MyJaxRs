@@ -27,8 +27,11 @@
                         <p:column headerText="Type" style="width:65px;text-align: center">
                             <p:outputLabel value="#{ord.parameterType}" />
                         </p:column>
-                        <p:column headerText="Column" style="width:100px;text-align: center">
+                        <p:column headerText="Column" style="width:80px;text-align: center">
                             <p:outputLabel value="#{ord.attribute}" />
+                        </p:column>
+                        <p:column headerText="Size" style="width:25px;text-align: center">
+                            <p:outputLabel value="#{ord.size}" />
                         </p:column>
                         <f:facet name="footer" >
                             <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('multiCarDialog').show()" />

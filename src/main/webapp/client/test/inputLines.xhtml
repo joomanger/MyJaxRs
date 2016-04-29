@@ -63,18 +63,18 @@
                             </p:cellEditor>
                         </p:column>
                         <c:forEach items="#{viewBean.parameters}" var="attrs">
-                            <p:column headerText="#{attrs.columnName}" style="width: 300px">
+                            <p:column headerText="#{attrs.columnName}" style="width: #{attrs.size}px">
                                 <c:choose>
                                     <c:when test="#{attrs.parameterType=='TABLE'}">
                                         <p:cellEditor>
-                                            <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" /></f:facet>
+                                            <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" style="text-align: center" /></f:facet>
                                             <f:facet name="input">
                                                 <p:autoComplete  value="#{ord[attrs.lattribute]}" 
                                                                  completeMethod="#{parameterValueConverter.completeValue2}" 
                                                                  multiple="true" 
                                                                  maxResults="10"
                                                                  forceSelection="true"
-                                                                 style="text-align: left">
+                                                                 style="text-align: center">
                                                     <p:ajax event="keypress"  listener="#{viewBean.setHeader_id(attrs.parameter_id)}" />
                                                     <p:ajax event="itemSelect"/>
                                                     <p:ajax event="itemUnselect"/>

@@ -20,6 +20,8 @@
                             <p:outputLabel value="Атрибут"/>
                             <p:autoComplete id="attr" required="false" value="#{openParameterView.param.attribute}" completeMethod="#{parameterConverter.completeAttrParameter}"
                                             forceSelection="true"/>
+                            <p:outputLabel value="Ширина, px"/>
+                            <p:inputText id="size" maxlength="3" required="true" value="#{openParameterView.param.size}" style="width: 25px;text-align: center" />
                             <p:commandButton action="params" value="Back" immediate="true"/>
                             <p:commandButton action="#{parameterClientBean.editItem}" value="Save" update="mainMSG"/>
                         </h:panelGrid>
