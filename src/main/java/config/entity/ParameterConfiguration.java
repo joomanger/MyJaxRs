@@ -43,8 +43,10 @@ public class ParameterConfiguration implements Serializable, Comparable<Paramete
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "parameter_id")
     private List<ParameterConfigurationValues> values;
-    
+       
     private Short size;
+    
+    private Boolean multiple;
 
     public Long getParameter_id() {
         return parameter_id;
@@ -120,9 +122,13 @@ public class ParameterConfiguration implements Serializable, Comparable<Paramete
     public String getLattribute() {
         return 'l'+attribute;
     }
-    
-    
-    
-    
 
+    public Boolean getMultiple() {
+        return multiple;
+    }
+
+    public void setMultiple(Boolean multiple) {
+        this.multiple = multiple;
+    }
+    
 }

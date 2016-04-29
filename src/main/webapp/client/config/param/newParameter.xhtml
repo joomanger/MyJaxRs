@@ -27,8 +27,8 @@
                                             forceSelection="true" disabled="#{newParameterView.disabledCB}"/>
                             <p:outputLabel value="Ширина, px"/>
                             <p:inputText id="size" maxlength="3" required="true" value="#{newParameterView.paramConfig.size}" disabled="#{newParameterView.disabledCB}" style="width: 25px;text-align: center" />
-
-
+                            <p:outputLabel value="Multiple"/>
+                            <p:selectBooleanCheckbox value="#{newParameterView.paramConfig.multiple}" />
                         </h:panelGrid>
                         <p:commandButton id="btnBack" value="Back" action="params" immediate="true"/>
                         <p:commandButton id="btnSaveHeader" value="Save"  disabled="#{newParameterView.disabledCB}" action="#{parameterClientBean.addItem}" update="mainMSG hsElements @this"/>
