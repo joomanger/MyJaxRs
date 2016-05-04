@@ -63,9 +63,9 @@
                             </p:cellEditor>
                         </p:column>
                         <c:forEach items="#{viewBean.parameters}" var="attrs">
-                            <p:column headerText="#{attrs.columnName}" style="width: #{attrs.size}px">
-                                <c:choose>
-                                    <c:when test="#{attrs.parameterType=='TABLE'}">
+                            <c:choose>
+                                <c:when test="#{attrs.parameterType=='TABLE'}">
+                                    <p:column headerText="#{attrs.columnName}" style="width: #{attrs.size}px; text-align: center">
                                         <p:cellEditor>
                                             <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" style="text-align: center" /></f:facet>
                                             <f:facet name="input">
@@ -82,7 +82,7 @@
                                                     </p:autoComplete>
                                                 </c:if>   
                                                 <c:if test="#{!attrs.multiple}"> 
-                                                    <p:autoComplete  value="#{ord[attrs.lattribute]}" 
+                                                    <p:autoComplete  value="#{ord[attrs.attribute]}" 
                                                                      completeMethod="#{parameterValueConverter.completeValue2}" 
                                                                      maxResults="10"
                                                                      forceSelection="true"
@@ -92,28 +92,35 @@
                                                 </c:if>
                                             </f:facet>
                                         </p:cellEditor>
-                                    </c:when>
-                                    <c:when test="#{attrs.parameterType=='DOUBLE'}">
+                                    </p:column>  
+                                </c:when>
+                                <c:when test="#{attrs.parameterType=='DOUBLE'}">
+                                    <p:column headerText="#{attrs.columnName}" style="width: #{attrs.size}px; text-align: right">
                                         <p:cellEditor>
                                             <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" /></f:facet>
                                             <f:facet name="input"><p:inputText value="#{ord[attrs.attribute]}" /></f:facet>
                                         </p:cellEditor>
-                                    </c:when>
-                                    <c:when test="#{attrs.parameterType=='INTEGER'}">
+                                    </p:column>
+                                </c:when>
+                                <c:when test="#{attrs.parameterType=='INTEGER'}">
+                                    <p:column headerText="#{attrs.columnName}" style="width: #{attrs.size}px; text-align: right">
                                         <p:cellEditor>
                                             <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" /></f:facet>
                                             <f:facet name="input"><p:inputText value="#{ord[attrs.attribute]}" /></f:facet>
                                         </p:cellEditor>
-                                    </c:when>
-                                    <c:when test="#{attrs.parameterType=='STRING'}">
+                                    </p:column>
+                                </c:when>
+                                <c:when test="#{attrs.parameterType=='STRING'}">
+                                    <p:column headerText="#{attrs.columnName}" style="width: #{attrs.size}px; text-align: center">
                                         <p:cellEditor>
                                             <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" /></f:facet>
                                             <f:facet name="input"><p:inputText value="#{ord[attrs.attribute]}" /></f:facet>
                                         </p:cellEditor>
-                                    </c:when>
-                                    <c:otherwise/>
-                                </c:choose>
-                            </p:column>
+                                    </p:column>   
+                                </c:when>
+                                <c:otherwise/>
+                            </c:choose>
+
                         </c:forEach>
                         <f:facet name="footer" >
                             <p:commandButton process="dLines" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />

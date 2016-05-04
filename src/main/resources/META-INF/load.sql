@@ -4,11 +4,11 @@ INSERT INTO ITEM(id,name, description) VALUES (2,'УГОЛОК', 'УГОЛОК')
 INSERT INTO ITEM(id,name, description) VALUES (3,'ШВЕЛЛЕР', 'ШВЕЛЛЕР');
 INSERT INTO ITEM(id,name, description) VALUES (4,'БАЛКА', 'БАЛКА ДВУТАВРОВАЯ');
 INSERT INTO ITEM(id,name, description) VALUES (5,'КАТАНКА', 'КАТАНКА ИЗ УГЛЕРОДИСТОЙ СТАЛИ ОБЫКНОВЕННОГО КАЧЕСТВА');
-INSERT INTO parameterconfiguration values(1,'ATTRIBUTE1','L,mm','Длина, мм', 1);
-INSERT INTO parameterconfiguration values(2,'ATTRIBUTE2','T,mm','Толщина, мм', 1);
-INSERT INTO parameterconfiguration values(3,'ATTRIBUTE3','W,mm','Ширина, мм', 1);
-INSERT INTO parameterconfiguration values(4,'ATTRIBUTE4','Марка','Марка стали', 3);
-INSERT INTO parameterconfiguration values(5,'ATTRIBUTE5','Стан','Прокатный стан', 3);
+INSERT INTO parameterconfiguration values(1,'ATTRIBUTE1','L,mm',false,'Длина, мм', 1,35);
+INSERT INTO parameterconfiguration values(2,'ATTRIBUTE2','T,mm',false,'Толщина, мм', 1,35);
+INSERT INTO parameterconfiguration values(3,'ATTRIBUTE3','W,mm',false,'Ширина, мм', 1,35);
+INSERT INTO parameterconfiguration values(4,'ATTRIBUTE4','Марка',true,'Марка стали', 3,300);
+INSERT INTO parameterconfiguration values(5,'ATTRIBUTE5','Стан',false,'Прокатный стан', 3,60);
 insert into parameterconfigurationvalues values(1,1,'Марка 1',4);
 insert into parameterconfigurationvalues values(2,2,'Марка 2',4);
 insert into parameterconfigurationvalues values(3,3,'Марка 3',4);

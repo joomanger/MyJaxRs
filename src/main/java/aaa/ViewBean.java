@@ -49,7 +49,7 @@ public class ViewBean implements Serializable {
 
     private Item item;
     private Integer lastVersion;
-    private boolean disabledItem = false;
+   // private boolean disabledItem = false;
     private Long header_id;
     private List<ConfigurationLine> paramValues = new ArrayList<>();
     private List<SaleOrderLine> order_lines = new ArrayList<>();
@@ -60,7 +60,6 @@ public class ViewBean implements Serializable {
     private List<ParameterConfiguration> parameters;
     private Boolean disableSave = true;
     private List<ParameterConfiguration> list;
-    private Set<String> attrs;
     private FacesContext fc;
     private Application app;
     private ExpressionFactory elFactory;
@@ -143,7 +142,7 @@ public class ViewBean implements Serializable {
     public Integer getLastConfigVersion() {
         return configClient.getLastVersion(getItem().getId());
     }
-    
+
     public Integer getLastConfigVersion(Long p_item_id) {
         return configClient.getLastVersion(p_item_id);
     }
@@ -160,17 +159,13 @@ public class ViewBean implements Serializable {
         this.paramValues = paramValues;
     }
 
-    public boolean isDisabledItem() {
-        return disabledItem;
-    }
-
-    public void setDisabledItem(boolean disabledItem) {
-        this.disabledItem = disabledItem;
-    }
-
-    public String getClearURL() {
-        return FacesContext.getCurrentInstance().getViewRoot().getViewId() + "?faces-redirect=true";
-    }
+//    public boolean isDisabledItem() {
+//        return disabledItem;
+//    }
+//
+//    public void setDisabledItem(boolean disabledItem) {
+//        this.disabledItem = disabledItem;
+//    }
 
     public List<SaleOrderLine> getOrder_lines() {
         return order_lines;
@@ -224,27 +219,16 @@ public class ViewBean implements Serializable {
     public List<ParameterConfiguration> getAllLinesAttributes() {
         try {
             list = new ArrayList<>();
-            attrs = new HashSet<>();
             for (SaleOrderLine line : getOrder_lines()) {
                 Configuration config = configClient.getItem(line.getItem().getId(), getLastConfigVersion(line.getItem().getId())/*line.getConfig_ver_num()*/);
                 for (ConfigurationLine configLine : configClient.getLines(config.getHeader_id())) {
-                    list.add(configLine.getParameter());
-                    attrs.add(configLine.getParameter().getAttribute());
-                }
-            }
+                    ParameterConfiguration pc = configLine.getParameter();
+                    pc.setAttribute(configLine.getParameter().getAttribute().toLowerCase());
+                    list.add(pc);
 
-            List<ParameterConfiguration> list2 = new ArrayList<>();
-            for (String s : attrs) {
-                for (ParameterConfiguration p : list) {
-                    if (p.getAttribute().equals(s)) {
-                        p.setAttribute(s.toLowerCase());
-                        list2.add(p);
-                        break;
-                    }
                 }
             }
-            Collections.sort(list2);
-            return list2;
+            return list;
         } catch (Exception ex) {
             return null;
         }
@@ -269,7 +253,7 @@ public class ViewBean implements Serializable {
     public void saveLines() {
         String message = "Сохранено успешно";
         for (int a : linesForSave) {
-            SaleOrderLine sl=order_lines.get(a);
+            SaleOrderLine sl = order_lines.get(a);
             sl.setConfig_ver_num(getLastConfigVersion(sl.getItem().getId()));
             Response t = slb.editItem(sl, null);
             if (t.getStatus() != 204) {

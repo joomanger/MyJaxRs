@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(uniqueConstraints
         = @UniqueConstraint(columnNames = {"parameter_id", "header_id"}))
 @NamedQueries({
-    @NamedQuery(name = ConfigurationLine.FIND_BY_HEADER_ID, query = "select t from ConfigurationLine t where t.header_id=:p_header_id"),
+    @NamedQuery(name = ConfigurationLine.FIND_BY_HEADER_ID, query = "select t from ConfigurationLine t where t.header_id=:p_header_id order by t.line_num"),
     @NamedQuery(name = ConfigurationLine.MAX_LINE_NUM_BY_HEADER_ID, query = "select max(t.line_num) from ConfigurationLine t where t.header_id=:p_header_id")}
 )
 public class ConfigurationLine implements Serializable {
