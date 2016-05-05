@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = ConfigurationLine.FIND_BY_HEADER_ID, query = "select t from ConfigurationLine t where t.header_id=:p_header_id order by t.line_num"),
     @NamedQuery(name = ConfigurationLine.MAX_LINE_NUM_BY_HEADER_ID, query = "select max(t.line_num) from ConfigurationLine t where t.header_id=:p_header_id")}
 )
-public class ConfigurationLine implements Serializable {
+public class ConfigurationLine implements Serializable, Comparable<ConfigurationLine> {
 
     public static final String FIND_BY_HEADER_ID = "BHI";
     public static final String MAX_LINE_NUM_BY_HEADER_ID = "MBHI";
@@ -69,6 +69,17 @@ public class ConfigurationLine implements Serializable {
 
     public void setHeader_id(Long header_id) {
         this.header_id = header_id;
+    }
+
+    @Override
+    public int compareTo(ConfigurationLine o) {
+        if (this.line_num > o.getLine_num()) {
+            return 1;
+        } else if (this.line_num < o.getLine_num()) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 
 }

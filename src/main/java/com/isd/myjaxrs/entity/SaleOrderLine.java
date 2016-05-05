@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
@@ -20,10 +21,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-@NamedQuery(name = SaleOrderLine.FIND_BY_HEADER_ID, query = "select b from SaleOrderLine b where b.header_id=:p_header_id order by b.line_num")
+@NamedQueries({
+    @NamedQuery(name = SaleOrderLine.FIND_BY_HEADER_ID, query = "select b from SaleOrderLine b where b.header_id=:p_header_id order by b.line_num"),
+    @NamedQuery(name = SaleOrderLine.MAX_LINE_NUM_BY_HEADER_ID, query = "select max(b.line_num) from SaleOrderLine b where b.header_id=:p_header_id")}
+)
 public class SaleOrderLine implements Serializable {
 
     public static final String FIND_BY_HEADER_ID = "FBHI";
+    public static final String MAX_LINE_NUM_BY_HEADER_ID = "MALBHI";
     @Id
     @SequenceGenerator(name = "order_line_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "order_line_sq")

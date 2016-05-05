@@ -2,6 +2,7 @@ package saleorder.rests;
 
 import com.isd.myjaxrs.entity.SaleOrder;
 import com.isd.myjaxrs.entity.SaleOrderLine;
+import config.entity.ConfigurationLine;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -101,6 +102,14 @@ public class SaleOrderFacadeREST extends AbstractFacade<SaleOrder> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    @GET
+    @Path("/{header_id}/max_line_num")
+    @Produces({MediaType.TEXT_PLAIN})
+    public Short getMaxLineNum(@PathParam("header_id") Long id) {
+        TypedQuery<Short> tq = em.createNamedQuery(SaleOrderLine.MAX_LINE_NUM_BY_HEADER_ID, Short.class).setParameter("p_header_id", id);
+        return tq.getSingleResult();
     }
     
 }

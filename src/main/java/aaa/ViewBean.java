@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -49,7 +50,7 @@ public class ViewBean implements Serializable {
 
     private Item item;
     private Integer lastVersion;
-   // private boolean disabledItem = false;
+    // private boolean disabledItem = false;
     private Long header_id;
     private List<ConfigurationLine> paramValues = new ArrayList<>();
     private List<SaleOrderLine> order_lines = new ArrayList<>();
@@ -59,12 +60,13 @@ public class ViewBean implements Serializable {
     private ParameterConfigurationValues value;
     private List<ParameterConfiguration> parameters;
     private Boolean disableSave = true;
-    private List<ParameterConfiguration> list;
     private FacesContext fc;
     private Application app;
     private ExpressionFactory elFactory;
     private ELContext elContext;
     private List<String> selectedItems = new ArrayList<>();
+
+    private Map<String, Boolean> editableCells = new HashMap<>();
 
     //карта мульти параметров со значениями
     private Map<String, Set<String>> paramMap = new HashMap<>();
@@ -159,14 +161,6 @@ public class ViewBean implements Serializable {
         this.paramValues = paramValues;
     }
 
-//    public boolean isDisabledItem() {
-//        return disabledItem;
-//    }
-//
-//    public void setDisabledItem(boolean disabledItem) {
-//        this.disabledItem = disabledItem;
-//    }
-
     public List<SaleOrderLine> getOrder_lines() {
         return order_lines;
     }
@@ -192,43 +186,44 @@ public class ViewBean implements Serializable {
     }
 
     public void deleteLines() {
-        Response t = null;
+        Response t;
         for (SaleOrderLine line : selected_lines) {
             t = slb.deleteItem(line.getLine_id(), "Позиция " + line.getLine_num() + " удалена успешно");
         }
         order_lines.removeAll(selected_lines);
         selected_lines.clear();
+        updateListLines();
         setParameters(getAllLinesAttributes());
     }
 
-    public List<ParameterConfiguration> getAllItemAttributes() {
+    private List<ParameterConfiguration> getAllLinesAttributes() {
         try {
-            list = new ArrayList<>();
-            for (ConfigurationLine line : values()) {
-                ParameterConfiguration p = line.getParameter();
-                p.setAttribute(p.getAttribute().toLowerCase());
-                list.add(p);
-            }
-            Collections.sort(list);
-            return list;
-        } catch (Exception ex) {
-            return null;
-        }
-    }
+            List<ParameterConfiguration> list2 = new ArrayList<>();
+            List<ConfigurationLine> cl = new ArrayList<>();
 
-    public List<ParameterConfiguration> getAllLinesAttributes() {
-        try {
-            list = new ArrayList<>();
+            Set<String> set = new LinkedHashSet<>();
             for (SaleOrderLine line : getOrder_lines()) {
-                Configuration config = configClient.getItem(line.getItem().getId(), getLastConfigVersion(line.getItem().getId())/*line.getConfig_ver_num()*/);
+                Configuration config = configClient.getItem(line.getItem().getId(), getLastConfigVersion(line.getItem().getId()));
                 for (ConfigurationLine configLine : configClient.getLines(config.getHeader_id())) {
                     ParameterConfiguration pc = configLine.getParameter();
                     pc.setAttribute(configLine.getParameter().getAttribute().toLowerCase());
-                    list.add(pc);
-
+                    cl.add(configLine);
                 }
             }
-            return list;
+
+            Collections.sort(cl);
+            for (ConfigurationLine l : cl) {
+                set.add(l.getParameter().getAttribute());
+            }
+            for (String l : set) {
+                for (ConfigurationLine ll : cl) {
+                    if (ll.getParameter().getAttribute().equals(l)) {
+                        list2.add(ll.getParameter());
+                        break;
+                    }
+                }
+            }
+            return list2;
         } catch (Exception ex) {
             return null;
         }
@@ -298,10 +293,32 @@ public class ViewBean implements Serializable {
         SaleOrderLine line = new SaleOrderLine();
         line.setHeader_id(1l);
         line.setItem(getItem());
+        Short next_num=sob.getMaxLineNum(1l);
+        next_num++;
+        line.setLine_num(next_num);
         line.setConfig_ver_num(getLastConfigVersion());
         slb.addItem(line, "Строка успешно добавлена");
         updateListLines();
         setParameters(getAllLinesAttributes());
     }
 
+    public boolean isEditableCell(Long item_id, String attribute) {
+
+        if (editableCells.containsKey(item_id + attribute)) {
+            return editableCells.get(item_id + attribute);
+        } else {
+            boolean res = false;
+            Configuration config = configClient.getItem(item_id, getLastConfigVersion(item_id));
+
+            for (ConfigurationLine cl : configClient.getLines(config.getHeader_id())) {
+                if (cl.getParameter().getAttribute().equals(attribute.toUpperCase())) {
+                    res = true;
+                }
+            }
+
+            editableCells.put(item_id + attribute, res);
+            return res;
+        }
+
+    }
 }

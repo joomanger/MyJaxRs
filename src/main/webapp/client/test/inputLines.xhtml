@@ -62,12 +62,13 @@
                                 <f:facet name="input"><p:inputText id="priceInput" value="#{ord.price}" /></f:facet>
                             </p:cellEditor>
                         </p:column>
+
                         <c:forEach items="#{viewBean.parameters}" var="attrs">
-                            <c:choose>
-                                <c:when test="#{attrs.parameterType=='TABLE'}">
-                                    <p:column headerText="#{attrs.columnName}" style="width: #{attrs.size}px; text-align: center">
-                                        <p:cellEditor>
-                                            <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" style="text-align: center" /></f:facet>
+                            <p:column headerText="#{attrs.columnName}" style="width: #{attrs.size}px; text-align: #{attrs.parameterType=='TABLE'?'Center':'Right'}">
+                                <c:choose>
+                                    <c:when test="#{attrs.parameterType=='TABLE'}">
+                                        <p:cellEditor rendered="#{viewBean.isEditableCell(ord.item.id,attrs.attribute)}">
+                                            <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}"/></f:facet>
                                             <f:facet name="input">
                                                 <c:if test="#{attrs.multiple}"> 
                                                     <p:autoComplete  value="#{ord[attrs.lattribute]}" 
@@ -75,7 +76,7 @@
                                                                      multiple="true" 
                                                                      maxResults="10"
                                                                      forceSelection="true"
-                                                                     style="text-align: center">
+                                                                     >
                                                         <p:ajax event="keypress"  listener="#{viewBean.setHeader_id(attrs.parameter_id)}" />
                                                         <p:ajax event="itemSelect"/>
                                                         <p:ajax event="itemUnselect"/>
@@ -86,45 +87,38 @@
                                                                      completeMethod="#{parameterValueConverter.completeValue2}" 
                                                                      maxResults="10"
                                                                      forceSelection="true"
-                                                                     style="text-align: center">
+                                                                     >
                                                         <p:ajax event="keypress"  listener="#{viewBean.setHeader_id(attrs.parameter_id)}" />
                                                     </p:autoComplete>
                                                 </c:if>
                                             </f:facet>
                                         </p:cellEditor>
-                                    </p:column>  
-                                </c:when>
-                                <c:when test="#{attrs.parameterType=='DOUBLE'}">
-                                    <p:column headerText="#{attrs.columnName}" style="width: #{attrs.size}px; text-align: right">
-                                        <p:cellEditor>
+                                    </c:when>
+                                    <c:when test="#{attrs.parameterType=='DOUBLE'}">
+                                        <p:cellEditor rendered="#{viewBean.isEditableCell(ord.item.id,attrs.attribute)}">
+                                            <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}"/></f:facet>
+                                            <f:facet name="input"><p:inputText value="#{ord[attrs.attribute]}" /></f:facet>
+                                        </p:cellEditor>
+                                    </c:when>
+                                    <c:when test="#{attrs.parameterType=='INTEGER'}">
+                                        <p:cellEditor rendered="#{viewBean.isEditableCell(ord.item.id,attrs.attribute)}">
                                             <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" /></f:facet>
                                             <f:facet name="input"><p:inputText value="#{ord[attrs.attribute]}" /></f:facet>
                                         </p:cellEditor>
-                                    </p:column>
-                                </c:when>
-                                <c:when test="#{attrs.parameterType=='INTEGER'}">
-                                    <p:column headerText="#{attrs.columnName}" style="width: #{attrs.size}px; text-align: right">
-                                        <p:cellEditor>
+                                    </c:when>
+                                    <c:when test="#{attrs.parameterType=='STRING'}">
+                                        <p:cellEditor rendered="#{viewBean.isEditableCell(ord.item.id,attrs.attribute)}">
                                             <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" /></f:facet>
                                             <f:facet name="input"><p:inputText value="#{ord[attrs.attribute]}" /></f:facet>
                                         </p:cellEditor>
-                                    </p:column>
-                                </c:when>
-                                <c:when test="#{attrs.parameterType=='STRING'}">
-                                    <p:column headerText="#{attrs.columnName}" style="width: #{attrs.size}px; text-align: center">
-                                        <p:cellEditor>
-                                            <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" /></f:facet>
-                                            <f:facet name="input"><p:inputText value="#{ord[attrs.attribute]}" /></f:facet>
-                                        </p:cellEditor>
-                                    </p:column>   
-                                </c:when>
-                                <c:otherwise/>
-                            </c:choose>
-
+                                    </c:when>
+                                    <c:otherwise/>
+                                </c:choose>
+                            </p:column>
                         </c:forEach>
                         <f:facet name="footer" >
                             <p:commandButton process="dLines" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />
-                            <p:commandButton id="btnSaveLine" value="Save" actionListener="#{viewBean.saveLines()}" immediate="true" style="margin-left: 15px" update="mainMSG"/>
+                            <p:commandButton id="btnSaveLine" value="Save" actionListener="#{viewBean.saveLines()}" style="margin-left: 15px" update="mainMSG"/>
                         </f:facet>
                     </p:dataTable>
                     <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
@@ -141,7 +135,7 @@
                                 </p:column>
                             </p:dataTable>
                             <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
-                            <p:commandButton value="Yes" actionListener="#{viewBean.deleteLines}" oncomplete="PF('deleteDialog').hide()" update="dLines mainMSG" />
+                            <p:commandButton value="Yes" actionListener="#{viewBean.deleteLines}" onclick="document.getElementById('btnUpdate').click()" oncomplete="PF('deleteDialog').hide()" update="dLines mainMSG" />
                         </p:outputPanel>
                     </p:dialog>
                 </h:form>                

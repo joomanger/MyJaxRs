@@ -81,5 +81,9 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
         SaleOrder order = sov.getOrder();
         super.editItem(order,"Заказ № " + order.getOrder_number() + " изменен");
     }
+    
+    public Short getMaxLineNum(Long p_header_id) {
+        return getTarget().path("/{header_id}/max_line_num").resolveTemplate("header_id", p_header_id).request().get(Short.class);
+    }
 
 }
