@@ -27,7 +27,7 @@
                     </p:fieldset> 
                     <p:dataTable id="dTable" var="ord" value="#{openConfigView.lines}" selection="#{openConfigView.selectedLines}" 
                                  rowSelectMode="checkbox" editMode="cell" editable="true"
-                                 scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.line_id}" 
+                                 scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.line_num}" 
                                  style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:ajax event="cellEdit"  listener="#{openConfigView.onCellEdit}"/>

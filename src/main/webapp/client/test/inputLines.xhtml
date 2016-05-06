@@ -24,9 +24,10 @@
                 </h:form>
 
                 <h:form prependId="false">
-                    <p:dataTable id="dLines" editMode="cell" rowSelectMode="checkbox" rowKey="#{ord.line_id}" editable="true" scrollable="true"  reflow="true" 
-                                 rows="20" paginator="true" var="ord" value="#{viewBean.order_lines}" selection="#{viewBean.selected_lines}" 
-                                 style="width: auto;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                    <p:dataTable id="dLines" editMode="cell" rowSelectMode="checkbox" rowKey="#{ord.line_id}" editable="true" 
+                                 scrollable="true" rows="20" paginator="true" var="ord" value="#{viewBean.order_lines}" selection="#{viewBean.selected_lines}" 
+                                 style="width: 1500px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true"
+                                 >
                         <f:facet name="header">
                             Список позиций
                         </f:facet>
