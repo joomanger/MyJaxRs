@@ -25,11 +25,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.ws.rs.core.Response;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
-import saleorder.beans.SaleOrderBean;
-import saleorderline.beans.SaleOrderLineBean;
+import saleorder.beans.SaleOrderCBean;
+import saleorderline.beans.SaleOrderLineCBean;
 
 /**
  *
@@ -43,14 +42,13 @@ public class ViewBean implements Serializable {
     private ConfigClientBean configClient;
 
     @Inject
-    private SaleOrderBean sob;
+    private SaleOrderCBean sob;
 
     @Inject
-    private SaleOrderLineBean slb;
+    private SaleOrderLineCBean slb;
 
     private Item item;
     private Integer lastVersion;
-    // private boolean disabledItem = false;
     private Long header_id;
     private List<ConfigurationLine> paramValues = new ArrayList<>();
     private List<SaleOrderLine> order_lines = new ArrayList<>();
@@ -66,7 +64,7 @@ public class ViewBean implements Serializable {
     private ELContext elContext;
     private List<String> selectedItems = new ArrayList<>();
 
-    private Map<String, Boolean> editableCells = new HashMap<>();
+    private final Map<String, Boolean> editableCells = new HashMap<>();
 
     //карта мульти параметров со значениями
     private Map<String, Set<String>> paramMap = new HashMap<>();
@@ -186,9 +184,8 @@ public class ViewBean implements Serializable {
     }
 
     public void deleteLines() {
-        Response t;
         for (SaleOrderLine line : selected_lines) {
-            t = slb.deleteItem(line.getLine_id(), "Позиция " + line.getLine_num() + " удалена успешно");
+            slb.delete(line.getLine_id(), "Позиция " + line.getLine_num() + " удалена успешно");
         }
         order_lines.removeAll(selected_lines);
         selected_lines.clear();
@@ -246,16 +243,11 @@ public class ViewBean implements Serializable {
     }
 
     public void saveLines() {
-        String message = "Сохранено успешно";
         for (int a : linesForSave) {
             SaleOrderLine sl = order_lines.get(a);
             sl.setConfig_ver_num(getLastConfigVersion(sl.getItem().getId()));
-            Response t = slb.editItem(sl, null);
-            if (t.getStatus() != 204) {
-                message = "Ошибка при сохранении: " + t.getStatusInfo().toString();
-            }
+            slb.edit(sl, "Строка " + sl.getLine_num() + " сохранена успешно");
         }
-        slb.sendMessage(message);
         linesForSave.clear();
     }
 
@@ -278,7 +270,6 @@ public class ViewBean implements Serializable {
             }
             paramMap.put(attr, st);
         }
-
     }
 
     public Map<String, Set<String>> getParamMap() {
@@ -293,17 +284,16 @@ public class ViewBean implements Serializable {
         SaleOrderLine line = new SaleOrderLine();
         line.setHeader_id(1l);
         line.setItem(getItem());
-        Short next_num=sob.getMaxLineNum(1l);
+        Short next_num = sob.getMaxLineNum(1l);
         next_num++;
         line.setLine_num(next_num);
         line.setConfig_ver_num(getLastConfigVersion());
-        slb.addItem(line, "Строка успешно добавлена");
+        slb.create(line, "Строка успешно добавлена");
         updateListLines();
         setParameters(getAllLinesAttributes());
     }
 
     public boolean isEditableCell(Long item_id, String attribute) {
-
         if (editableCells.containsKey(item_id + attribute)) {
             return editableCells.get(item_id + attribute);
         } else {
@@ -315,7 +305,6 @@ public class ViewBean implements Serializable {
                     res = true;
                 }
             }
-
             editableCells.put(item_id + attribute, res);
             return res;
         }
