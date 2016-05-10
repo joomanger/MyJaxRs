@@ -23,7 +23,7 @@
                             <p:outputLabel value="Ширина, px"/>
                             <p:inputText id="size" maxlength="3" required="true" value="#{openParameterView.param.size}" style="width: 25px;text-align: center" />
                             <p:outputLabel value="Multiple"/>
-                            <p:selectBooleanCheckbox value="#{openParameterView.param.multiple}" />
+                            <p:inputSwitch value="#{openParameterView.param.multiple}" />
                             <p:commandButton action="params" value="Back" immediate="true"/>
                             <p:commandButton action="#{parameterClientBean.editItem}" value="Save" update="mainMSG"/>
                         </h:panelGrid>

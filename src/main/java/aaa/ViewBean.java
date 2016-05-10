@@ -27,6 +27,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
+import saleorder.beans.FindSaleOrderBackingBean;
 import saleorder.beans.SaleOrderCBean;
 import saleorderline.beans.SaleOrderLineCBean;
 
@@ -46,6 +47,9 @@ public class ViewBean implements Serializable {
 
     @Inject
     private SaleOrderLineCBean slb;
+    
+    @Inject
+    private FindSaleOrderBackingBean sessionBean;
 
     private Item item;
     private Integer lastVersion;
@@ -85,7 +89,7 @@ public class ViewBean implements Serializable {
 
     private void updateListLines() {
         try {
-            this.order_lines = sob.getLines(1L);
+            this.order_lines = sob.getLines(sessionBean.getId());
         } catch (Exception ex) {
 
         }
@@ -282,9 +286,9 @@ public class ViewBean implements Serializable {
 
     public void addLine() {
         SaleOrderLine line = new SaleOrderLine();
-        line.setHeader_id(1l);
+        line.setHeader_id(sessionBean.getId());
         line.setItem(getItem());
-        Short next_num = sob.getMaxLineNum(1l);
+        Short next_num = sob.getMaxLineNum(sessionBean.getId());
         next_num++;
         line.setLine_num(next_num);
         line.setConfig_ver_num(getLastConfigVersion());

@@ -10,7 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import saleorder.beans.SaleOrderBean;
+import saleorder.beans.SaleOrderCBean;
 
 /**
  *
@@ -21,7 +21,7 @@ import saleorder.beans.SaleOrderBean;
 public class CreateSaleOrderFlow implements Serializable {
 
     @Inject
-    private SaleOrderBean sob;
+    private SaleOrderCBean sob;
 
     private long header_id;
     private long order_number;
