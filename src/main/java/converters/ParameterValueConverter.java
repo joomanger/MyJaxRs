@@ -1,10 +1,8 @@
 package converters;
 
-import aaa.ViewBean;
-import config.beans.ParameterClientBean;
-import config.beans.ParameterValuesClientBean;
-import config.entity.ParameterConfiguration;
-import config.entity.ParameterConfigurationValues;
+import so.config.beans.ParameterClientBean;
+import so.config.beans.ParameterValuesClientBean;
+import so.config.entity.ParameterConfigurationValues;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -15,6 +13,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.inject.Inject;
 import javax.inject.Named;
+import so.saleorder.beans.OpenSaleOrderView;
 
 /**
  *
@@ -31,7 +30,7 @@ public class ParameterValueConverter implements Converter {
     private ParameterClientBean pcb;
 
     @Inject
-    private ViewBean vb;
+    private OpenSaleOrderView vb;
 
     private Long parameter_id;
 

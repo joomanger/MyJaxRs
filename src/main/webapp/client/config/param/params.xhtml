@@ -52,7 +52,7 @@
                                 </p:column>
                             </p:dataTable>
                             <p:commandButton oncomplete="PF('multiCarDialog').hide()" immediate="true" value='No'/>
-                            <p:commandButton value="Yes" actionListener="#{findParameterView.deleteItems}" oncomplete="PF('multiCarDialog').hide()" update="dTable mainMSG" />
+                            <p:commandButton value="Yes" actionListener="#{parameterCBean.deleteItems}" oncomplete="PF('multiCarDialog').hide()" update="dTable mainMSG" />
                         </p:outputPanel>
                     </p:dialog>
                 </h:form>

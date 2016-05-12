@@ -1,6 +1,6 @@
-package service;
+package ws.so;
 
-import entities.Item2;
+import so.entities.SaleOrderLine;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -15,33 +15,34 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import service.AbstractFacade;
 
 /**
  *
  * @author savin
  */
 @Stateless
-@Path("item2")
-public class Item2FacadeREST extends AbstractFacade<Item2> {
-
+@Path("saleorderline")
+public class SaleOrderLineFacadeREST extends AbstractFacade<SaleOrderLine> {
+        
     @PersistenceContext(unitName = "myjaxrs")
     private EntityManager em;
 
-    public Item2FacadeREST() {
-        super(Item2.class);
+    public SaleOrderLineFacadeREST() {
+        super(SaleOrderLine.class);
     }
 
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response create(Item2 entity){
+    public Response create(SaleOrderLine entity) {
         return super.create(entity);
     }
 
     @PUT
-    @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, Item2 entity) {
+    @Override
+    public void edit( SaleOrderLine entity) {
         super.edit(entity);
     }
 
@@ -54,21 +55,21 @@ public class Item2FacadeREST extends AbstractFacade<Item2> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Item2 find(@PathParam("id") Long id) {
+    public SaleOrderLine find(@PathParam("id") Long id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Item2> findAll() {
+    public List<SaleOrderLine> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Item2> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<SaleOrderLine> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

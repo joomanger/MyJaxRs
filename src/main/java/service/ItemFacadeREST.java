@@ -1,6 +1,6 @@
 package service;
 
-import com.isd.myjaxrs.entity.Item;
+import entities.Item;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

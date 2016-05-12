@@ -11,39 +11,34 @@
             <ui:define name="content">
                 <script src="${facesContext.externalContext.requestContextPath}/resources/js/locker_el.js"/>
                 <h1>Order Header</h1>
-                <h:panelGrid columns="2" style="margin-bottom: 10px; margin-top: 10px;">
-                    <p id="lock_el"/>
-                    <h:form id="orderHeader" prependId="false" > 
-                        <p:growl id="msgHeader" showDetail="false"/>
+                <h:form id="orderHeader" prependId="false" > 
+                    <h:panelGrid columns="2" style="margin-bottom: 10px; margin-top: 10px;">
+                        <p id="lock_el"/>
+
                         <h:panelGrid id="head" columns="4" cellpadding="3" cellspacing="3">
                             <h:outputLabel value="Order number" style="font-weight: bold"/>
-                            <h:outputText value="#{saleOrderView.order.order_number}"/>
+                            <h:outputText value="#{openSaleOrderView.order.order_number}"/>
                             <h:outputLabel  value="Customer" style="font-weight: bold"/>
-                            <p:inputText class="inputText" value="#{saleOrderView.order.customer}" required="true" style="background: highlight "/>
-                            <h:outputLabel  value="Item" style="font-weight: bold"/>
-                            <p:autoComplete required="true"  class="inputTextAC" value="#{saleOrderView.order.item}" completeMethod="#{saleOrderView.completeItem}"
-                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" >
-                            </p:autoComplete>
-                            <p:commandButton id="hiddenCB" actionListener="#{saleOrderBean.editItem()}" style="position: absolute; left: -9999px" tabindex="-1" update="msgHeader" >
-                                <f:ajax execute="@form" render="@this"/>
+                            <p:inputText class="inputText" value="#{openSaleOrderView.order.customer}" required="true" style="background: highlight "/>
+                            <p:commandButton id="hiddenCB" actionListener="#{saleOrderCBean.editItem()}" style="position: absolute; left: -9999px" tabindex="-1">
+                                <f:ajax execute="@form" render="@this dLines"/>
                             </p:commandButton>
                         </h:panelGrid>
-                    </h:form> 
-                </h:panelGrid>
-                <h1>Order Lines</h1>
-                <h:form prependId="false">
-                    <p:dataTable id="dLines" editMode="cell" rowSelectMode="checkbox" rowKey="#{ord.line_id}" editable="true" 
-                                 scrollable="true" rows="20" paginator="true" var="ord" value="#{viewBean.order_lines}" selection="#{viewBean.selected_lines}" 
-                                 style="width: 1500px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true"
+                    </h:panelGrid>
+                    
+                    <h:inputHidden id="tableEditable" value="#{openSaleOrderView.tableEditable}"  />
+                    <p:dataTable id="dLines" editMode="cell" rowSelectMode="checkbox" rowKey="#{ord.line_id}" editable="#{openSaleOrderView.tableEditable}" 
+                                 scrollable="true" rows="20" paginator="true" var="ord" value="#{openSaleOrderView.order_lines}" selection="#{openSaleOrderView.selected_lines}" 
+                                 style="width: 1500px;margin-top:20px;" rowsPerPageTemplate="20,40,100" lazy="true"  
                                  >
                         <f:facet name="header">
                             <p:outputLabel value="Новая позиция: "/>
-                            <p:autoComplete id="item" value="#{viewBean.item}" completeMethod="#{itemConverter.completeItem}" 
+                            <p:autoComplete id="item" value="#{openSaleOrderView.item}" completeMethod="#{itemConverter.completeItem}" disabled="#{!openSaleOrderView.tableEditable}"
                                             var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" dropdown="true" style="margin-right: 40px"/>
-                            <p:commandButton id="btnSendParam" value="Добавить" actionListener="#{viewBean.addLine()}" update="dLines mainMSG"/>
+                            <p:commandButton id="btnSendParam" value="Добавить" actionListener="#{saleOrderCBean.addLine()}" update="dLines mainMSG" disabled="#{!openSaleOrderView.tableEditable}"/>
                         </f:facet>
-                        
-                        <p:ajax event="cellEdit"  listener="#{viewBean.onCellEdit}"/>
+
+                        <p:ajax event="cellEdit"  listener="#{openSaleOrderView.onCellEdit}"/>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:column  style="width:12px; text-align: center">
                             <h:outputText value="#{ord.line_num}" />
@@ -76,11 +71,11 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <c:forEach items="#{viewBean.parameters}" var="attrs">
+                        <c:forEach items="#{openSaleOrderView.parameters}" var="attrs">
                             <p:column headerText="#{attrs.columnName}" style="width: #{attrs.size}px; text-align: #{attrs.parameterType=='TABLE'?'Center':'Right'}">
                                 <c:choose>
                                     <c:when test="#{attrs.parameterType=='TABLE'}">
-                                        <p:cellEditor rendered="#{viewBean.isEditableCell(ord.item.id,attrs.attribute)}">
+                                        <p:cellEditor rendered="#{openSaleOrderView.isEditableCell(ord.item.id,attrs.attribute)}">
                                             <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}"/></f:facet>
                                             <f:facet name="input">
                                                 <c:if test="#{attrs.multiple}"> 
@@ -90,7 +85,7 @@
                                                                      maxResults="10"
                                                                      forceSelection="true"
                                                                      >
-                                                        <p:ajax event="keypress"  listener="#{viewBean.setHeader_id(attrs.parameter_id)}" />
+                                                        <p:ajax event="keypress"  listener="#{openSaleOrderView.setHeader_id(attrs.parameter_id)}" />
                                                         <p:ajax event="itemSelect"/>
                                                         <p:ajax event="itemUnselect"/>
                                                     </p:autoComplete>
@@ -101,26 +96,26 @@
                                                                      maxResults="10"
                                                                      forceSelection="true"
                                                                      >
-                                                        <p:ajax event="keypress"  listener="#{viewBean.setHeader_id(attrs.parameter_id)}" />
+                                                        <p:ajax event="keypress"  listener="#{openSaleOrderView.setHeader_id(attrs.parameter_id)}" />
                                                     </p:autoComplete>
                                                 </c:if>
                                             </f:facet>
                                         </p:cellEditor>
                                     </c:when>
                                     <c:when test="#{attrs.parameterType=='DOUBLE'}">
-                                        <p:cellEditor rendered="#{viewBean.isEditableCell(ord.item.id,attrs.attribute)}">
+                                        <p:cellEditor rendered="#{openSaleOrderView.isEditableCell(ord.item.id,attrs.attribute)}">
                                             <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}"/></f:facet>
                                             <f:facet name="input"><p:inputText value="#{ord[attrs.attribute]}" /></f:facet>
                                         </p:cellEditor>
                                     </c:when>
                                     <c:when test="#{attrs.parameterType=='INTEGER'}">
-                                        <p:cellEditor rendered="#{viewBean.isEditableCell(ord.item.id,attrs.attribute)}">
+                                        <p:cellEditor rendered="#{openSaleOrderView.isEditableCell(ord.item.id,attrs.attribute)}">
                                             <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" /></f:facet>
                                             <f:facet name="input"><p:inputText value="#{ord[attrs.attribute]}" /></f:facet>
                                         </p:cellEditor>
                                     </c:when>
                                     <c:when test="#{attrs.parameterType=='STRING'}">
-                                        <p:cellEditor rendered="#{viewBean.isEditableCell(ord.item.id,attrs.attribute)}">
+                                        <p:cellEditor rendered="#{openSaleOrderView.isEditableCell(ord.item.id,attrs.attribute)}">
                                             <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" /></f:facet>
                                             <f:facet name="input"><p:inputText value="#{ord[attrs.attribute]}" /></f:facet>
                                         </p:cellEditor>
@@ -130,13 +125,12 @@
                             </p:column>
                         </c:forEach>
                         <f:facet name="footer" >
-                            <p:commandButton process="dLines" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />
-                            <p:commandButton id="btnSaveLine" value="Save" actionListener="#{viewBean.saveLines()}" style="margin-left: 15px" update="mainMSG"/>
+                            <p:commandButton process="dLines" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" disabled="#{!openSaleOrderView.tableEditable}"/>
                         </f:facet>
                     </p:dataTable>
                     <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
                         <p:outputPanel id="selectedParams" style="text-align:center;">
-                            <p:dataTable value="#{viewBean.selected_lines}" var="v">
+                            <p:dataTable value="#{openSaleOrderView.selected_lines}" var="v">
                                 <p:column headerText="Line">
                                     <h:outputText value="#{v.line_num}"/>
                                 </p:column>
@@ -148,7 +142,7 @@
                                 </p:column>
                             </p:dataTable>
                             <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
-                            <p:commandButton value="Yes" actionListener="#{viewBean.deleteLines}" onclick="document.getElementById('btnUpdate').click()" oncomplete="PF('deleteDialog').hide()" update="dLines mainMSG" />
+                            <p:commandButton value="Yes" actionListener="#{saleOrderCBean.deleteLines}" oncomplete="PF('deleteDialog').hide()" update="dLines mainMSG" />
                         </p:outputPanel>
                     </p:dialog>
                 </h:form> 

@@ -1,6 +1,6 @@
 package converters;
 
-import com.isd.myjaxrs.entity.Item;
+import entities.Item;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

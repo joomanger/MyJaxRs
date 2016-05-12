@@ -1,6 +1,6 @@
 package item.beans;
 
-import com.isd.myjaxrs.entity.Item;
+import entities.Item;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;

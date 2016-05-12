@@ -29,6 +29,7 @@ function lock_on() {
             }
         }
     }
+    
 }
 ;
 function lock_off() {
@@ -46,15 +47,19 @@ function lock_off() {
             }
         }
     }
+    
 }
 ;
 function locking() {
     if (locker.getAttribute('src') === unlock) {
         locker.setAttribute('src', lock);
+        document.getElementById('tableEditable').setAttribute('value','false');
         document.getElementById('hiddenCB').click();
         lock_on();
     } else {
         locker.setAttribute('src', unlock);
+        document.getElementById('tableEditable').setAttribute('value','true');
+        document.getElementById('hiddenCB').click();
         lock_off();
     }
 }

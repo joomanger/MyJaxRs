@@ -1,6 +1,6 @@
-package service;
+package ws.so;
 
-import entities.Item2;
+import so.config.entity.ConfigurationLine;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -15,33 +15,34 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import service.AbstractFacade;
 
 /**
  *
  * @author savin
  */
 @Stateless
-@Path("item2")
-public class Item2FacadeREST extends AbstractFacade<Item2> {
+@Path("configurationline")
+public class ConfigurationLineFacadeREST extends AbstractFacade<ConfigurationLine> {
 
     @PersistenceContext(unitName = "myjaxrs")
     private EntityManager em;
 
-    public Item2FacadeREST() {
-        super(Item2.class);
+    public ConfigurationLineFacadeREST() {
+        super(ConfigurationLine.class);
     }
 
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response create(Item2 entity){
+    public Response create(ConfigurationLine entity) {
         return super.create(entity);
     }
 
     @PUT
-    @Path("{id}")
+    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Long id, Item2 entity) {
+    public void edit(ConfigurationLine entity) {
         super.edit(entity);
     }
 
@@ -54,21 +55,21 @@ public class Item2FacadeREST extends AbstractFacade<Item2> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Item2 find(@PathParam("id") Long id) {
+    public ConfigurationLine find(@PathParam("id") Long id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Item2> findAll() {
+    public List<ConfigurationLine> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Item2> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<ConfigurationLine> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

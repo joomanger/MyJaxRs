@@ -1,8 +1,8 @@
 package converters;
 
-import config.beans.FindParameterSession;
-import config.beans.ParameterClientBean;
-import config.entity.ParameterConfiguration;
+import so.config.beans.FindParameterSession;
+import so.config.beans.ParameterClientBean;
+import so.config.entity.ParameterConfiguration;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;

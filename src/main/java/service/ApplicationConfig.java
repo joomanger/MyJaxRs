@@ -18,22 +18,22 @@ public class ApplicationConfig extends Application {
     }
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(config.beans.ConfigClientBean.class);
-        resources.add(config.beans.ConfigLineClientBean.class);
-        resources.add(config.beans.ParameterClientBean.class);
-        resources.add(config.beans.ParameterValuesClientBean.class);
-        resources.add(config.rests.ConfigurationFacadeREST.class);
-        resources.add(config.rests.ConfigurationLineFacadeREST.class);
-        resources.add(config.rests.ParameterConfigurationFacadeREST.class);
-        resources.add(config.rests.ParameterConfigurationValuesFacadeREST.class);
         resources.add(item.beans.ItemClientBean.class);
         resources.add(item2.beans.ItemClientBean2.class);
-        resources.add(saleorder.beans.SaleOrderBean.class);
-        resources.add(saleorder.rests.SaleOrderFacadeREST.class);
-        resources.add(saleorder.rests.SaleOrderLineFacadeREST.class);
-        resources.add(saleorderline.beans.SaleOrderLineBean.class);
         resources.add(service.Item2FacadeREST.class);
         resources.add(service.ItemFacadeREST.class);
+        resources.add(so.config.beans.ConfigClientBean.class);
+        resources.add(so.config.beans.ConfigLineClientBean.class);
+        resources.add(so.config.beans.ParameterClientBean.class);
+        resources.add(so.config.beans.ParameterValuesClientBean.class);
+        resources.add(ws.so.ConfigurationFacadeREST.class);
+        resources.add(ws.so.ConfigurationLineFacadeREST.class);
+        resources.add(ws.so.ParameterConfigurationFacadeREST.class);
+        resources.add(ws.so.ParameterConfigurationValuesFacadeREST.class);
+        resources.add(ws.so.SaleOrderBean.class);
+        resources.add(ws.so.SaleOrderFacadeREST.class);
+        resources.add(ws.so.SaleOrderLineBean.class);
+        resources.add(ws.so.SaleOrderLineFacadeREST.class);
     }
 
 }
