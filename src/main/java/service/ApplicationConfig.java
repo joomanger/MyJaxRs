@@ -24,12 +24,8 @@ public class ApplicationConfig extends Application {
         resources.add(service.ItemFacadeREST.class);
         resources.add(so.config.beans.ConfigClientBean.class);
         resources.add(so.config.beans.ConfigLineClientBean.class);
-        resources.add(so.config.beans.ParameterClientBean.class);
-        resources.add(so.config.beans.ParameterValuesClientBean.class);
         resources.add(ws.so.ConfigurationFacadeREST.class);
         resources.add(ws.so.ConfigurationLineFacadeREST.class);
-        resources.add(ws.so.ParameterConfigurationFacadeREST.class);
-        resources.add(ws.so.ParameterConfigurationValuesFacadeREST.class);
         resources.add(ws.so.SaleOrderBean.class);
         resources.add(ws.so.SaleOrderFacadeREST.class);
         resources.add(ws.so.SaleOrderLineBean.class);

@@ -31,7 +31,7 @@
                             <p:selectBooleanCheckbox value="#{newParameterView.paramConfig.multiple}" />
                         </h:panelGrid>
                         <p:commandButton id="btnBack" value="Back" action="params" immediate="true"/>
-                        <p:commandButton id="btnSaveHeader" value="Save"  disabled="#{newParameterView.disabledCB}" action="#{parameterClientBean.addItem}" update="mainMSG hsElements @this"/>
+                        <p:commandButton id="btnSaveHeader" value="Save"  disabled="#{newParameterView.disabledCB}" action="#{parameterCBean.addItem}" update="mainMSG hsElements @this"/>
                     </p:fieldset>
                 </h:form>
                 <p:fieldset id='hsElements' style="border: 0">
@@ -52,11 +52,11 @@
                                 </p:cellEditor>
                             </p:column>
                             <f:facet name="footer" >
-                                <p:inputText id="addTextItem" value="#{newParameterView.value}" rendered="#{newParameterView.onSelectedType}"/>
+                                <p:inputText id="addTextItem" value="#{newParameterView.parameterValue}" rendered="#{newParameterView.onSelectedType}"/>
                                 <p:focus for="addTextItem"/>
-                                <p:commandButton value="Добавить"  actionListener="#{newParameterView.addValue}" rendered="#{newParameterView.onSelectedType}" update="dTable" />
-                                <p:commandButton value="Удалить"  actionListener="#{newParameterView.deleteItems}" rendered="#{newParameterView.onSelectedType}" style="margin-left: 10px"  update="dTable" />
-                                <p:commandButton rendered="#{newParameterView.onSelectedType}" value="Завершить" action="#{parameterClientBean.addItemTable()}" style="margin-left: 40px" update="mainMSG"/>
+                                <p:commandButton value="Добавить"  actionListener="#{parameterCBean.addParameterValue()}" rendered="#{newParameterView.onSelectedType}" update="dTable" />
+                                <p:commandButton value="Удалить"  actionListener="#{parameterCBean.deleteParameterValues()}" rendered="#{newParameterView.onSelectedType}" style="margin-left: 10px"  update="dTable" />
+                                <p:commandButton rendered="#{newParameterView.onSelectedType}" value="Завершить" action="#{parameterCBean.addItemTable()}" style="margin-left: 40px" update="mainMSG"/>
                             </f:facet>
                         </p:dataTable>
                     </h:form>

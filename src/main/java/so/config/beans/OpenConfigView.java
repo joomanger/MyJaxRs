@@ -24,15 +24,15 @@ import org.primefaces.event.CellEditEvent;
 public class OpenConfigView implements Serializable {
 
     @Inject
-    private ConfigClientBean client;
+    private ConfigCBean client;
 
     @Inject
-    private ConfigLineClientBean clientLine;
+    private ConfigLineCBean clientLine;
 
     private Configuration configuration = new Configuration();
     private List<ConfigurationLine> lines = new ArrayList<>();
     private List<ConfigurationLine> selectedLines = new ArrayList<>();
-    private final Set<Integer> linesForSave = new HashSet<>();
+    private Set<Integer> linesForSave = new HashSet<>();
     private Integer lastLineNum;
 
     private ParameterConfiguration paramConfig;
@@ -133,4 +133,13 @@ public class OpenConfigView implements Serializable {
         lines.addAll(client.getLines());
 
     }
+
+    public Set<Integer> getLinesForSave() {
+        return linesForSave;
+    }
+
+    public void setLinesForSave(Set<Integer> linesForSave) {
+        this.linesForSave = linesForSave;
+    }
+    
 }

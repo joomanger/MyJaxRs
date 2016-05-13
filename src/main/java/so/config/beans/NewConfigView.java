@@ -27,6 +27,14 @@ public class NewConfigView implements Serializable {
     private int line_num = 0;
     private ParameterConfiguration paramConfig;
 
+    public int getLine_num() {
+        return line_num;
+    }
+
+    public void setLine_num(int line_num) {
+        this.line_num = line_num;
+    }
+
     public Configuration getConfiguration() {
         return configuration;
     }
@@ -75,14 +83,14 @@ public class NewConfigView implements Serializable {
         this.line = line;
     }
 
-    public void deleteItems() {
-        System.out.println("deleting " + selectedLines.size());
-        for (ConfigurationLine c : selectedLines) {
-            System.out.println(c.getLine_num());
-            lines.remove(c);
-        }
-        selectedLines.clear();
-    }
+//    public void deleteItems() {
+//        System.out.println("deleting " + selectedLines.size());
+//        for (ConfigurationLine c : selectedLines) {
+//            System.out.println(c.getLine_num());
+//            lines.remove(c);
+//        }
+//        selectedLines.clear();
+//    }
 
     public ParameterConfiguration getParamConfig() {
         return paramConfig;
@@ -92,17 +100,17 @@ public class NewConfigView implements Serializable {
         this.paramConfig = paramConfig;
     }
 
-    public void addParameter() {
-        if (!paramConfig.getName().isEmpty()) {
-            line_num++;
-            ConfigurationLine line = new ConfigurationLine();
-            line.setLine_num(line_num);
-            line.setParameter(paramConfig);
-            lines.add(line);
-            this.setParamConfig(null);
-        }
-
-    }
+//    public void addParameter() {
+//        if (!paramConfig.getName().isEmpty()) {
+//            line_num++;
+//            ConfigurationLine line = new ConfigurationLine();
+//            line.setLine_num(line_num);
+//            line.setParameter(paramConfig);
+//            lines.add(line);
+//            this.setParamConfig(null);
+//        }
+//
+//    }
 
     public void addHeader() {
         setDisabledCB(true);

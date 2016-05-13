@@ -7,7 +7,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import service.AbstractEJB;
 import service.ParameterConfigurationAttrColumn;
-import so.config.entity.ConfigurationLine;
 import so.config.entity.ParameterConfiguration;
 import so.config.entity.ParameterConfigurationValues;
 
@@ -32,7 +31,7 @@ public class ParameterEJB extends AbstractEJB<ParameterConfiguration> {
 
     /*---Дополнительные методы---*/
     public List<ParameterConfigurationValues> getValues(Long id) {
-        TypedQuery<ParameterConfigurationValues> tq = em.createNamedQuery(ConfigurationLine.FIND_BY_HEADER_ID, ParameterConfigurationValues.class).setParameter("p_header_id", id);
+        TypedQuery<ParameterConfigurationValues> tq = em.createNamedQuery(ParameterConfigurationValues.FIND_BY_HEADER_ID, ParameterConfigurationValues.class).setParameter("p_header_id", id);
         return tq.getResultList();
     }
    

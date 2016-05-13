@@ -1,7 +1,6 @@
 package converters;
 
 import so.config.beans.FindParameterSession;
-import so.config.beans.ParameterClientBean;
 import so.config.entity.ParameterConfiguration;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +12,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.inject.Inject;
 import javax.inject.Named;
+import so.config.beans.ParameterCBean;
 
 /**
  *
@@ -26,7 +26,7 @@ public class ParameterConverter implements Converter {
     private FindParameterSession ps;
 
     @Inject
-    private ParameterClientBean cb;
+    private ParameterCBean cb;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -52,7 +52,7 @@ public class ParameterConverter implements Converter {
     }
 
     public List<ParameterConfiguration> completeParameter(String query) {
-        ParameterConfiguration[] allItems = cb.getItems();
+        List<ParameterConfiguration> allItems = cb.getItems();
         List<ParameterConfiguration> filteredItems = new ArrayList<>();
 
         for (ParameterConfiguration item : allItems) {

@@ -16,7 +16,7 @@
                             <p:outputLabel value="Имя столбца"/>
                             <p:inputText maxlength="50" value="#{openParameterView.param.columnName}"/>
                             <p:outputLabel value="Тип данных"/>
-                            <p:outputLabel value="#{parameterClientBean.item.parameterType}"/>
+                            <p:outputLabel value="#{parameterCBean.item.parameterType}"/>
                             <p:outputLabel value="Атрибут"/>
                             <p:autoComplete id="attr" required="false" value="#{openParameterView.param.attribute}" completeMethod="#{parameterConverter.completeAttrParameter}"
                                             forceSelection="true"/>
@@ -25,7 +25,7 @@
                             <p:outputLabel value="Multiple"/>
                             <p:inputSwitch value="#{openParameterView.param.multiple}" />
                             <p:commandButton action="params" value="Back" immediate="true"/>
-                            <p:commandButton action="#{parameterClientBean.editItem}" value="Save" update="mainMSG"/>
+                            <p:commandButton action="#{parameterCBean.editItem}" value="Save" update="mainMSG"/>
                         </h:panelGrid>
                     </p:fieldset>  
                 </h:form>
@@ -48,7 +48,7 @@
                         </p:column>
                         <f:facet name="footer" >
                             <p:inputText id="newValue" value="#{openParameterView.newValue}" />
-                            <p:commandButton value="Add" actionListener="#{openParameterView.addNewValue()}" update="dTable mainMSG"/>
+                            <p:commandButton value="Add" actionListener="#{parameterCBean.addNewValue()}" update="dTable mainMSG"/>
                             <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
                         </f:facet>
                     </p:dataTable>
@@ -63,7 +63,7 @@
                                 </p:column>
                             </p:dataTable>
                             <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>
-                            <p:commandButton value="Yes" actionListener="#{openParameterView.deleteItems}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
+                            <p:commandButton value="Yes" actionListener="#{parameterCBean.deleteValues()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
                         </p:outputPanel>
                     </p:dialog>
                 </h:form>

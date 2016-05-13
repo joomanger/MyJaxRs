@@ -26,10 +26,10 @@ public class OpenParameterView implements Serializable {
     private List<ParameterConfigurationValues> selectedValues = new ArrayList<>();
 
     @Inject
-    private ParameterClientBean client;
+    private ParameterCBean client;
 
     @Inject
-    private ParameterValuesClientBean clientValues;
+    private ParameterValuesCBean clientValues;
 
     @PostConstruct
     private void init() {
@@ -72,10 +72,8 @@ public class OpenParameterView implements Serializable {
     }
 
     public void onCellEdit(CellEditEvent event) {
-        //Object oldValue = event.getOldValue();
-        System.out.println("config.beans.OpenParameterView.onCellEdit() " + event.getRowIndex());
         ParameterConfigurationValues vvv = values.get(event.getRowIndex());
-        clientValues.editItem(vvv, "Строка обновлена");
+        clientValues.editItem(vvv);
         values.clear();
         values.addAll(client.getValues());
     }
@@ -88,32 +86,12 @@ public class OpenParameterView implements Serializable {
         this.selectedValues = selectedValues;
     }
 
-    public void deleteItems() {
-        for (ParameterConfigurationValues p : selectedValues) {
-            clientValues.deleteItem(p.getParamater_value_id(), "Параметр " + p.getParameterValue() + " удален успешно");
-        }
-        values.clear();
-        values.addAll(client.getValues());
-        selectedValues.clear();
-    }
-
     public String getNewValue() {
         return newValue;
     }
 
     public void setNewValue(String newValue) {
         this.newValue = newValue;
-    }
-
-    public void addNewValue() {
-        ParameterConfigurationValues p = new ParameterConfigurationValues();
-        p.setParameter_id(param.getParameter_id());
-        p.setLine_num(client.getMaxLineNum() + 1);
-        p.setParameterValue(newValue);
-        clientValues.addItem(p, "Параметр добавлен успешно");
-        values.clear();
-        values.addAll(client.getValues());
-        newValue = null;
     }
 
 }

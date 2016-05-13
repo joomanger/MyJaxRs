@@ -23,57 +23,46 @@ public class ParameterCBean {
 
     @Inject
     private OpenParameterView opv;
-    
-    @Inject 
+
+    @Inject
     private FindParameterView pv;
 
     @Inject
     private ParameterEJB paramEJB;
 
+    @Inject
+    private ParameterValuesCBean clientValues;
+
     public ParameterConfiguration getItem() {
-        //return super.getItem(ParameterConfiguration.class, fpv.getParamID());
         return paramEJB.find(fpv.getParamID());
     }
 
-//    public ParameterConfiguration[] getItems() {
-//        return super.getItems(ParameterConfiguration[].class);
-//    }
     public List<ParameterConfiguration> getItems() {
-        //return super.getItems(ParameterConfiguration[].class);
         return paramEJB.findAll();
     }
 
     public List<ParameterConfiguration> getItemsList() {
-        //return Arrays.asList(super.getItems(ParameterConfiguration[].class));
         return paramEJB.findAll();
     }
 
     public List<ParameterConfigurationValues> getValues() {
-//        return getTarget().path("/{header_id}/lines").resolveTemplate("header_id", fpv.getParamID()).request().get(new GenericType<List<ParameterConfigurationValues>>() {
-//        });
         return paramEJB.getValues(fpv.getParamID());
     }
 
     public List<ParameterConfigurationValues> getValues(Long p_header_id) {
-//        return getTarget().path("/{header_id}/lines").resolveTemplate("header_id", p_header_id).request().get(new GenericType<List<ParameterConfigurationValues>>() {
-//        });
         return paramEJB.getValues(p_header_id);
     }
 
     public Integer getMaxLineNum() {
-        // return getTarget().path("/{header_id}/max_line_num").resolveTemplate("header_id", fpv.getParamID()).request().get(Integer.class);
         return paramEJB.getMaxLineNum(fpv.getParamID());
     }
 
     public List<String> getAttrColumn() {
-//        ParameterConfigurationAttrColumn obj=getTarget().path("/attrColumns").request().get(ParameterConfigurationAttrColumn.class);
-//        return obj.getColumns();
         return paramEJB.getAttrColumns().getColumns();
     }
 
     public String editItem() {
         ParameterConfiguration pc = opv.getParam();
-        //super.editItem(pc, "Параметр " + pc.getName() + " обновлен успешно");
         String status = paramEJB.create(pc);
         paramEJB.sendMessage(status, "Параметр " + pc.getName() + " обновлен успешно");
         return "params";
@@ -82,9 +71,7 @@ public class ParameterCBean {
     public String addItem() {
         ParameterConfiguration p = npv.getParamConfig();
         if (p.getParameterType() != ParameterConfiguration.ParameterType.TABLE) {
-//            Response t = super.addItem(p, "Параметр " + p.getName() + " добавлен успешно");
             String status = paramEJB.create(p);
-//            if (t.getStatus() != 200) {
             paramEJB.sendMessage(status, "Параметр " + p.getName() + " добавлен успешно");
             if (status.equals(paramEJB.SUCCESSFUL)) {
                 return "params";
@@ -101,7 +88,6 @@ public class ParameterCBean {
     public String addItemTable() {
         ParameterConfiguration p = npv.getParamConfig();
         p.setValues(npv.getValues());
-        // Response t = super.addItem(p, "Параметр " + p.getName() + " добавлен успешно");
         String status = paramEJB.create(p);
         paramEJB.sendMessage(status, "Параметр " + p.getName() + " добавлен успешно");
         if (status.equals(paramEJB.SUCCESSFUL)) {
@@ -111,21 +97,57 @@ public class ParameterCBean {
             return null;
         }
     }
-    
+
     public void deleteItems() {
         for (ParameterConfiguration p : pv.getParamsDelete()) {
-            //pcb.deleteItem(p.getParameter_id(), "Параметр " + p.getName() + " удален успешно");
-             String status = paramEJB.remove(p);
-             paramEJB.sendMessage(status, "Параметр " + p.getName() + " удален успешно");
+            String status = paramEJB.remove(p);
+            paramEJB.sendMessage(status, "Параметр " + p.getName() + " удален успешно");
         }
-        
-        //params.clear();
+
         pv.getParams().clear();
-        //params.addAll(pcb.getItemsList());
         pv.getParams().addAll(getItemsList());
-        
-        //paramsDelete.clear();
         pv.getParamsDelete().clear();
     }
 
+    /*NewParameterView methods:*/
+    public void deleteParameterValues() {
+        for (ParameterConfigurationValues p : npv.getSelectedValues()) {
+            npv.getValues().remove(p);
+        }
+        npv.getSelectedValues().clear();
+    }
+
+    public void addParameterValue() {
+        if (!npv.getParameterValue().trim().isEmpty()) {
+            int l = npv.getLine_num();
+            l++;
+            npv.setLine_num(l);
+            ParameterConfigurationValues pcv = new ParameterConfigurationValues();
+            pcv.setLine_num(l);
+            pcv.setParameterValue(npv.getParameterValue());
+            npv.getValues().add(pcv);
+            npv.setParameterValue(null);
+        }
+    }
+
+    /*OpenParameterView methods:*/
+    public void addNewValue() {
+        ParameterConfigurationValues p = new ParameterConfigurationValues();
+        p.setParameter_id(opv.getParam().getParameter_id());
+        p.setLine_num(getMaxLineNum() + 1);
+        p.setParameterValue(opv.getNewValue());
+        clientValues.addItem(p);
+        opv.getValues().clear();
+        opv.getValues().addAll(getValues());
+        opv.setNewValue(null);
+    }
+
+    public void deleteValues() {
+        for (ParameterConfigurationValues p : opv.getSelectedValues()) {
+            clientValues.deleteItem(p.getParamater_value_id());
+        }
+        opv.getValues().clear();
+        opv.getValues().addAll(getValues());
+        opv.getSelectedValues().clear();
+    }
 }

@@ -26,7 +26,7 @@ public class NewParameterView implements Serializable {
     private List<ParameterConfigurationValues> selectedValues;
     private int line_num;
 
-    private String value;
+    private String parameterValue;
 
     @PostConstruct
     private void init() {
@@ -38,14 +38,22 @@ public class NewParameterView implements Serializable {
         line_num = 0;
     }
 
-    public void addValue() {
-        if (!value.trim().isEmpty()) {
+    public String getParameterValue() {
+        return parameterValue;
+    }
+
+    public void setParameterValue(String parameterValue) {
+        this.parameterValue = parameterValue;
+    }
+
+    public void addParameterValue() {
+        if (!parameterValue.trim().isEmpty()) {
             line_num++;
             ParameterConfigurationValues pcv = new ParameterConfigurationValues();
             pcv.setLine_num(line_num);
-            pcv.setParameterValue(getValue());
+            pcv.setParameterValue(parameterValue);
             values.add(pcv);
-            setValue(null);
+            setParameterValue(null);
         }
     }
 
@@ -90,13 +98,13 @@ public class NewParameterView implements Serializable {
         this.disabledCB = disabledCB;
     }
 
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
+//    public String getValue() {
+//        return value;
+//    }
+//
+//    public void setValue(String value) {
+//        this.value = value;
+//    }
 
     public List<ParameterConfigurationValues> getSelectedValues() {
         return selectedValues;
@@ -106,12 +114,23 @@ public class NewParameterView implements Serializable {
         this.selectedValues = selectedValues;
     }
 
-    public void deleteItems() {
-        for (ParameterConfigurationValues p : selectedValues) {
-            System.out.println(p.getLine_num());
-            values.remove(p);
-        }
-        selectedValues.clear();
+//    перенесен в ParameterCBean.deleteParameterValues  
+//    public void deleteItems() {
+//        for (ParameterConfigurationValues p : selectedValues) {
+//            System.out.println(p.getLine_num());
+//            values.remove(p);
+//        }
+//        selectedValues.clear();
+//    }
+
+    public int getLine_num() {
+        return line_num;
     }
+
+    public void setLine_num(int line_num) {
+        this.line_num = line_num;
+    }
+    
+    
 
 }

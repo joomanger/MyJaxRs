@@ -18,7 +18,7 @@ import javax.inject.Named;
 public class FindConfigView implements Serializable {
 
     @Inject
-    private ConfigClientBean clientBean;
+    private ConfigCBean clientBean;
     private List<Configuration> selectedConfigs;
     private List<Configuration> configs;
     
@@ -27,7 +27,7 @@ public class FindConfigView implements Serializable {
     public void init() {
         selectedConfigs = new ArrayList<>();
         configs = new ArrayList<>();
-        configs.addAll(clientBean.getItemsList());
+        configs.addAll(clientBean.getItems());
     }
 
     public List<Configuration> getSelectedConfigs() {
@@ -46,13 +46,13 @@ public class FindConfigView implements Serializable {
         this.configs = configs;
     }
 
-    public void deleteConfigs() {
-        for (Configuration c : selectedConfigs) {
-            clientBean.deleteItem(c.getHeader_id(), "Конфигурация " + c.getItem().getName() + ":" + c.getConfig_ver_num() + " удалена успешно");
-        }
-        selectedConfigs.clear();
-        configs.clear();
-        configs.addAll(clientBean.getItemsList());
-    }
+//    public void deleteConfigs() {
+//        for (Configuration c : selectedConfigs) {
+//            clientBean.deleteItem(c.getHeader_id(), "Конфигурация " + c.getItem().getName() + ":" + c.getConfig_ver_num() + " удалена успешно");
+//        }
+//        selectedConfigs.clear();
+//        configs.clear();
+//        configs.addAll(clientBean.getItemsList());
+//    }
 
 }
