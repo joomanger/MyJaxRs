@@ -76,63 +76,63 @@ public class OpenConfigView implements Serializable {
         this.paramConfig = paramConfig;
     }
 
-    public void addItem() {
-        ConfigurationLine line = new ConfigurationLine();
-        line.setParameter(paramConfig);
-        line.setLine_num(++lastLineNum);
-        line.setHeader_id(configuration.getHeader_id());
-        lines.add(line);
-        setParamConfig(null);
-    }
+//    public void addItem() {
+//        ConfigurationLine line = new ConfigurationLine();
+//        line.setParameter(paramConfig);
+//        line.setLine_num(++lastLineNum);
+//        line.setHeader_id(configuration.getHeader_id());
+//        lines.add(line);
+//        setParamConfig(null);
+//    }
 
-    public void deleteItems() {
-        for (ConfigurationLine line : selectedLines) {
-//            clientLine.deleteItem(line.getLine_id(), "Строка " + line.getLine_num() + " удалена успешно");
-            lines.remove(line);
-        }
-//        lines.clear();
-//        lines.addAll(client.getLines());
-        selectedLines.clear();
-    }
+//    public void deleteItems() {
+//        for (ConfigurationLine line : selectedLines) {
+////            clientLine.deleteItem(line.getLine_id(), "Строка " + line.getLine_num() + " удалена успешно");
+//            lines.remove(line);
+//        }
+////        lines.clear();
+////        lines.addAll(client.getLines());
+//        selectedLines.clear();
+//    }
 
     public void onCellEdit(CellEditEvent event) {
         linesForSave.add(event.getRowIndex());
     }
 
-    public String newVersion() {
-        Configuration c = getConfiguration();
-        // System.out.println(configuration.getDescription());
-        c.setHeader_id(null);
-        c.setConfig_ver_num(client.getLastVersion(c.getItem().getId()) + 1);
-        List<ConfigurationLine> newLines = new ArrayList<>();
-        for (ConfigurationLine l : lines) {
-            l.setLine_id(null);
-            l.setHeader_id(null);
-            newLines.add(l);
-        }
-        c.setLines(newLines);
-        client.addItem(c, "Новая версия конфигуации сохранена");
-        return "configs";
-    }
+//    public String newVersion() {
+//        Configuration c = getConfiguration();
+//        // System.out.println(configuration.getDescription());
+//        c.setHeader_id(null);
+//        c.setConfig_ver_num(client.getLastVersion(c.getItem().getId()) + 1);
+//        List<ConfigurationLine> newLines = new ArrayList<>();
+//        for (ConfigurationLine l : lines) {
+//            l.setLine_id(null);
+//            l.setHeader_id(null);
+//            newLines.add(l);
+//        }
+//        c.setLines(newLines);
+//        client.addItem(c, "Новая версия конфигуации сохранена");
+//        return "configs";
+//    }
 
-    public void currVersion() {
-        Configuration c = getConfiguration();
-        c.setLines(lines);
-        client.editItem(c, null);
-        String message = "Конфигурация сохранена";
-        for (int a : linesForSave) {
-            ConfigurationLine l = lines.get(a);
-            Response t = clientLine.editItem(l, null);
-            if (t.getStatus() != 204) {
-                message = "Ошибка при сохранении: " + t.getStatusInfo().toString();
-            }
-        }
-        clientLine.sendMessage(message);
-        linesForSave.clear();
-        lines.clear();
-        lines.addAll(client.getLines());
-
-    }
+//    public void currVersion() {
+//        Configuration c = getConfiguration();
+//        c.setLines(lines);
+//        client.editItem(c, null);
+//        String message = "Конфигурация сохранена";
+//        for (int a : linesForSave) {
+//            ConfigurationLine l = lines.get(a);
+//            Response t = clientLine.editItem(l, null);
+//            if (t.getStatus() != 204) {
+//                message = "Ошибка при сохранении: " + t.getStatusInfo().toString();
+//            }
+//        }
+//        clientLine.sendMessage(message);
+//        linesForSave.clear();
+//        lines.clear();
+//        lines.addAll(client.getLines());
+//
+//    }
 
     public Set<Integer> getLinesForSave() {
         return linesForSave;
@@ -141,5 +141,15 @@ public class OpenConfigView implements Serializable {
     public void setLinesForSave(Set<Integer> linesForSave) {
         this.linesForSave = linesForSave;
     }
+
+    public Integer getLastLineNum() {
+        return lastLineNum;
+    }
+
+    public void setLastLineNum(Integer lastLineNum) {
+        this.lastLineNum = lastLineNum;
+    }
+    
+    
     
 }

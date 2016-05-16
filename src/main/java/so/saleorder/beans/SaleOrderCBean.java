@@ -2,11 +2,11 @@ package so.saleorder.beans;
 
 import so.entities.SaleOrder;
 import so.entities.SaleOrderLine;
-import so.config.beans.ConfigClientBean;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import so.config.beans.ConfigCBean;
 import so.saleorder.flows.CreateSaleOrderFlow;
 import so.saleorder.flows.CreateSaleOrderLineFlow;
 import so.saleorderline.beans.SaleOrderLineCBean;
@@ -32,7 +32,7 @@ public class SaleOrderCBean {
     private SaleOrderEJB orderEJB;
 
     @Inject
-    private ConfigClientBean configClient;
+    private ConfigCBean configClient;
 
     @Inject
     private SaleOrderLineCBean slb;

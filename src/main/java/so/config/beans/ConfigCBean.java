@@ -131,23 +131,25 @@ public class ConfigCBean {
     }
 
     //OpenConfigView methods:
-    public void addItem() {
+    public void addItemOCV() {
         ConfigurationLine line = new ConfigurationLine();
         line.setParameter(openView.getParamConfig());
-        line.setLine_num(++lastLineNum);
-        line.setHeader_id(configuration.getHeader_id());
-        lines.add(line);
-        setParamConfig(null);
+        int l=openView.getLastLineNum();
+        openView.setLastLineNum(l);
+        line.setLine_num(++l);
+        line.setHeader_id(openView.getConfiguration().getHeader_id());
+        openView.getLines().add(line);
+        openView.setParamConfig(null);
     }
 
-    public void deleteItemsO() {
+    public void deleteItemsOCV() {
         for (ConfigurationLine line : openView.getSelectedLines()) {
             openView.getLines().remove(line);
         }
         openView.getSelectedLines().clear();
     }
 
-    public String newVersion() {
+    public String newVersionOCV() {
         Configuration c = openView.getConfiguration();
         c.setHeader_id(null);
         c.setConfig_ver_num(getLastVersion(c.getItem().getId()) + 1);
@@ -163,7 +165,7 @@ public class ConfigCBean {
         return "configs";
     }
 
-    public void currVersion() {
+    public void currVersionOCV() {
         Configuration c = openView.getConfiguration();
         c.setLines(openView.getLines());
         String status = configEJB.edit(c);

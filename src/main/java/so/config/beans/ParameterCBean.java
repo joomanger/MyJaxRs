@@ -63,7 +63,7 @@ public class ParameterCBean {
 
     public String editItem() {
         ParameterConfiguration pc = opv.getParam();
-        String status = paramEJB.create(pc);
+        String status = paramEJB.edit(pc);
         paramEJB.sendMessage(status, "Параметр " + pc.getName() + " обновлен успешно");
         return "params";
     }

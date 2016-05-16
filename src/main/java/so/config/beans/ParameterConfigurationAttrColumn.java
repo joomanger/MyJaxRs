@@ -1,14 +1,12 @@
-package service;
+package so.config.beans;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author savin
  */
-@XmlRootElement
 public class ParameterConfigurationAttrColumn {
 
     private List<String> columns;

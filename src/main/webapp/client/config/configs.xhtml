@@ -48,7 +48,7 @@
                                 </p:column>
                             </p:dataTable>
                             <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
-                            <p:commandButton value="Yes" actionListener="#{findConfigView.deleteConfigs}" oncomplete="PF('deleteDialog').hide()" update="dTable mainMSG" />
+                            <p:commandButton value="Yes" actionListener="#{configCBean.deleteConfigs}" oncomplete="PF('deleteDialog').hide()" update="dTable mainMSG" />
                         </p:outputPanel>
                     </p:dialog>
                 </h:form>

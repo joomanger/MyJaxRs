@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import service.AbstractEJB;
-import service.ParameterConfigurationAttrColumn;
 import so.config.entity.ParameterConfiguration;
 import so.config.entity.ParameterConfigurationValues;
 

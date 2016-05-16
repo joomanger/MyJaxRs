@@ -59,12 +59,12 @@
                                             var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{parameterConverter}" forceSelection="true" >
                             </p:autoComplete>
                             <p:focus for="addTextItem"/>
-                            <p:commandButton value="Добавить" actionListener="#{openConfigView.addItem}" update="dTable" />
-                            <p:commandButton value="Удалить" actionListener="#{openConfigView.deleteItems}" style="margin-left: 10px" update="dTable mainMSG" />
+                            <p:commandButton value="Добавить" actionListener="#{configCBean.addItemOCV()}" update="dTable" />
+                            <p:commandButton value="Удалить" actionListener="#{configCBean.deleteItemsOCV()}" style="margin-left: 10px" update="dTable mainMSG" />
                         </f:facet>
                     </p:dataTable>
-                    <p:commandButton value="Сохранить новую версию" action="#{openConfigView.newVersion}" onclick="document.getElementById('btnSend').click()" immediate="true" style="margin-left: 40px;margin-top: 10px" update="mainMSG"/>
-                    <p:commandButton value="Сохранить" actionListener="#{openConfigView.currVersion}" onclick="document.getElementById('btnSend').click()" immediate="true" style="margin-left: 40px;margin-top: 10px" update="mainMSG dTable"/>
+                    <p:commandButton value="Сохранить новую версию" action="#{configCBean.newVersionOCV()}" onclick="document.getElementById('btnSend').click()" immediate="true" style="margin-left: 40px;margin-top: 10px" update="mainMSG"/>
+                    <p:commandButton value="Сохранить" actionListener="#{configCBean.currVersionOCV()}" onclick="document.getElementById('btnSend').click()" immediate="true" style="margin-left: 40px;margin-top: 10px" update="mainMSG dTable"/>
                 </h:form>
 
             </ui:define>

@@ -19,11 +19,7 @@ public class ApplicationConfig extends Application {
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(item.beans.ItemClientBean.class);
-        resources.add(item2.beans.ItemClientBean2.class);
-        resources.add(service.Item2FacadeREST.class);
         resources.add(service.ItemFacadeREST.class);
-        resources.add(so.config.beans.ConfigClientBean.class);
-        resources.add(so.config.beans.ConfigLineClientBean.class);
         resources.add(ws.so.ConfigurationFacadeREST.class);
         resources.add(ws.so.ConfigurationLineFacadeREST.class);
         resources.add(ws.so.SaleOrderBean.class);

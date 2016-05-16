@@ -8,10 +8,12 @@
     <packaging>war</packaging>
 
     <name>MyJaxRs</name>
+    
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <netbeans.hint.deploy.server>TomEE</netbeans.hint.deploy.server>
     </properties>
     
     <dependencies>
@@ -84,6 +86,15 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.openejb.maven</groupId>
+                <artifactId>tomee-maven-plugin</artifactId>
+                <version>1.7.0</version>
+                <configuration>
+                    <tomeeVersion>1.7.0</tomeeVersion>
+                    <tomeeClassifier>plus</tomeeClassifier>
+                </configuration>
             </plugin>
         </plugins>
     </build>

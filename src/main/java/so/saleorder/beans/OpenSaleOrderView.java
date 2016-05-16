@@ -8,7 +8,6 @@ package so.saleorder.beans;
 import entities.Item;
 import so.entities.SaleOrder;
 import so.entities.SaleOrderLine;
-import so.config.beans.ConfigClientBean;
 import so.config.entity.Configuration;
 import so.config.entity.ConfigurationLine;
 import so.config.entity.ParameterConfiguration;
@@ -29,6 +28,7 @@ import javax.faces.view.ViewScoped;
 import org.primefaces.event.CellEditEvent;
 
 import org.primefaces.event.RowEditEvent;
+import so.config.beans.ConfigCBean;
 import so.saleorderline.beans.SaleOrderLineCBean;
 
 /**
@@ -100,7 +100,7 @@ public class OpenSaleOrderView implements Serializable {
 //    }
     
     @Inject
-    private ConfigClientBean configClient;
+    private ConfigCBean configClient;
 
     @Inject
     private SaleOrderCBean sob;
