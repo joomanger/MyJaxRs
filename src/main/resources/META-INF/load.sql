@@ -1,4 +1,4 @@
-CREATE SEQUENCE order_header_number_sq START 1000 increment 1 minvalue 1 maxvalue 4294967295
+CREATE SEQUENCE order_header_number_sq START 1000 increment 1 minvalue 1 maxvalue 4294967295;
 INSERT INTO ITEM(id,name, description) VALUES (1,'ЛИСТ', 'ПРОКАТ ТОЛСТОЛИСТОВОЙ');
 INSERT INTO ITEM(id,name, description) VALUES (2,'УГОЛОК', 'УГОЛОК');
 INSERT INTO ITEM(id,name, description) VALUES (3,'ШВЕЛЛЕР', 'ШВЕЛЛЕР');
@@ -32,3 +32,7 @@ INSERT INTO configurationline values(8,2,3,3);
 INSERT INTO configurationline values(9,2,4,4);
 INSERT INTO configurationline values(10,2,5,5);
 insert into saleorder values(1,'customer',1000,null,null);
+insert into users(user_id, username, fullName, password) values(1,'admin','Админчик','SBNJTRN+FjG7owHVrKtue7eqdM4RhdRWVl71HXN2d7I=');
+insert into groups(group_id, groupname,description) values(1,'admin','Группа админов');
+insert into users_groups values(1,1);
+create or replace view users_groups_v as select u.username, g.groupname from users_groups ug, users u, groups g where u.user_id=ug.user_fk and g.group_id=ug.group_fk;

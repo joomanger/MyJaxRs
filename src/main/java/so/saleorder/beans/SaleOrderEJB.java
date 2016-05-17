@@ -30,7 +30,7 @@ public class SaleOrderEJB extends AbstractEJB<SaleOrder> {
 
     /*---Дополнительные методы---*/
     public List<SaleOrderLine> getOrderLines(Long id) {
-        TypedQuery<SaleOrderLine> tq = em.createNamedQuery(SaleOrderLine.FIND_BY_HEADER_ID, SaleOrderLine.class).setParameter("p_header_id", id);
+        TypedQuery<SaleOrderLine> tq = em.createNamedQuery(SaleOrderLine.FIND_BY_HEADER_ID, SaleOrderLine.class).setParameter("p_header_id", id);;
         return tq.getResultList();
     }
 

@@ -22,6 +22,7 @@
                 <ui:insert name="top">
                     <h:form>
                         <h1><h:commandLink value="Управление заказами" action="/index"/></h1>
+                        Учетная запись: #{request.remoteUser}
                     </h:form>
                 </ui:insert>
             </div>
@@ -30,6 +31,7 @@
                     <ui:insert name="left">
                         <h:form>
                             <p:menu toggleable="true">
+                                <p:menuitem action="#{sessionActions.logout()}" value="Выход"/>
                                 <p:submenu label="Справочники">
                                     <p:menuitem action="/client/item/items" value="Позиции"/>
                                 </p:submenu> 
@@ -41,6 +43,7 @@
                                     <p:menuitem action="/client/config/param/params" value="Параметры конфигурации"/>
                                     <p:menuitem action="/client/config/configs" value="Конфигурации"/>
                                 </p:submenu>
+                                
                             </p:menu>
                         </h:form>
                     </ui:insert>
