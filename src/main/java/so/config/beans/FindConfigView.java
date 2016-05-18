@@ -46,13 +46,4 @@ public class FindConfigView implements Serializable {
         this.configs = configs;
     }
 
-//    public void deleteConfigs() {
-//        for (Configuration c : selectedConfigs) {
-//            clientBean.deleteItem(c.getHeader_id(), "Конфигурация " + c.getItem().getName() + ":" + c.getConfig_ver_num() + " удалена успешно");
-//        }
-//        selectedConfigs.clear();
-//        configs.clear();
-//        configs.addAll(clientBean.getItemsList());
-//    }
-
 }

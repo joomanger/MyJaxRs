@@ -1,6 +1,5 @@
 package so.config.beans;
 
-import static java.nio.file.Files.lines;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -134,7 +133,7 @@ public class ConfigCBean {
     public void addItemOCV() {
         ConfigurationLine line = new ConfigurationLine();
         line.setParameter(openView.getParamConfig());
-        int l=openView.getLastLineNum();
+        int l = openView.getLastLineNum();
         openView.setLastLineNum(l);
         line.setLine_num(++l);
         line.setHeader_id(openView.getConfiguration().getHeader_id());
