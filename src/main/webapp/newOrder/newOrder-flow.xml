@@ -6,6 +6,7 @@
     <flow-definition id="newOrder">  
         <flow-return id="goHome">
             <from-outcome>/client/saleorders/orders</from-outcome>
+            
         </flow-return>
     </flow-definition>
 </faces-config>

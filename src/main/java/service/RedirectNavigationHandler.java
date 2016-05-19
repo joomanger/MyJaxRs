@@ -21,10 +21,12 @@ public class RedirectNavigationHandler extends ConfigurableNavigationHandler {
 
     @Override
     public void handleNavigation(FacesContext context, String from, String outcome) {
-        if (!outcome.endsWith("?faces-redirect=true")) {
-            outcome += "?faces-redirect=true";
+        if (outcome != null) {
+            System.out.println("outcome="+outcome);
+            if (!outcome.endsWith("?faces-redirect=true")) {
+                outcome += "?faces-redirect=true";
+            }
         }
-
         parent.handleNavigation(context, from, outcome);
     }
 

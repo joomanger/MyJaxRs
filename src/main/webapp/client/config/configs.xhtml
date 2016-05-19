@@ -21,7 +21,7 @@
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:column headerText="Name">
-                            <h:link outcome="openConfig" value="#{ord.item.name}" onclick="document.getElementById('setHeaderId').value =#{ord.header_id}"  />
+                            <h:commandLink action="openConfig" value="#{ord.item.name}" onclick="document.getElementById('setHeaderId').value =#{ord.header_id}"  />
                         </p:column>
                         <p:column headerText="Description" style="width:200px;text-align: center">
                             <p:outputLabel value="#{ord.description}" />

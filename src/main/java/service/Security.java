@@ -26,7 +26,9 @@ public class Security {
         System.out.println("enter to " + action);
         System.out.println("ctx=" + user);
         HttpServletRequest req=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        System.out.println("context="+req.getRequestURI());
+        System.out.println("getRequestURI="+req.getRequestURI());
+        System.out.println("getContextPath="+req.getContextPath());
+        System.out.println("getPathInfo="+req.getPathInfo());
 //        for (Annotation a : ic.getMethod().getDeclaredAnnotations()) {
 //            System.out.println("Annot annotationType.getName=" + a.annotationType().getName() + " getTypeName=" + a.annotationType().getTypeName() + " simpleName=" + a.annotationType().getSimpleName() + " canonicalName=" + a.annotationType().getCanonicalName());
 //            if (a.annotationType().getSimpleName().equals("Who")) {

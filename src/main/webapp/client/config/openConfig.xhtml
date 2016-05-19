@@ -56,7 +56,7 @@
                             <p:autoComplete id="addTextItem" 
                                             value="#{openConfigView.paramConfig}" 
                                             completeMethod="#{parameterConverter.completeParameter}"
-                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{parameterConverter}" forceSelection="true" >
+                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{parameterConverter}" forceSelection="true" dropdown="true" style="margin-right: 50px" >
                             </p:autoComplete>
                             <p:focus for="addTextItem"/>
                             <p:commandButton value="Добавить" actionListener="#{configCBean.addItemOCV()}" update="dTable" />
