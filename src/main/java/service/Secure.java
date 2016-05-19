@@ -14,4 +14,5 @@ import javax.interceptor.InterceptorBinding;
 @InterceptorBinding
 @Target({METHOD, TYPE})
 @Retention(RUNTIME)
-public @interface Secure { }
+public @interface Secure { 
+}

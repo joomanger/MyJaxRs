@@ -48,7 +48,7 @@ public class ConfigEJB extends AbstractEJB<Configuration> {
             return null;
         }
     }
-    
+
     public Integer getLastVersion(Long id) {
         TypedQuery<Integer> tq = em.createNamedQuery(Configuration.FIND_LAST_VERSION_BY_ITEM, Integer.class).setParameter("p_item_id", id);
         return tq.getSingleResult();
@@ -58,23 +58,24 @@ public class ConfigEJB extends AbstractEJB<Configuration> {
         TypedQuery<Integer> tq = em.createNamedQuery(ConfigurationLine.MAX_LINE_NUM_BY_HEADER_ID, Integer.class).setParameter("p_header_id", id);
         return tq.getSingleResult();
     }
-    
+
     @Secure
-    @Who({"user","mama","papa"})
+    @Who({"user", "mama", "papa"})
     @Override
     public String remove(Configuration entity) {
         return super.remove(entity); //To change body of generated methods, choose Tools | Templates.
     }
+
     @RolesAllowed("admin")
     @Override
     public String edit(Configuration entity) {
         return super.edit(entity); //To change body of generated methods, choose Tools | Templates.
     }
+
     @RolesAllowed("admin")
     @Override
     public String create(Configuration entity) {
         return super.create(entity); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+
 }
