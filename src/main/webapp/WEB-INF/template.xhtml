@@ -16,12 +16,12 @@
             rel="stylesheet" type="text/css" />
     </h:head>
     <h:body>
-        <p:growl id="mainMSG"/>
+        <p:growl id="mainMSG" autoUpdate="true"/>
         <div>
             <div id="top" class="top">
                 <ui:insert name="top">
                     <h:form>
-                        <h1><h:commandLink value="Управление заказами" action="/index"/></h1>
+                        <h1><h:link value="Управление заказами" outcome="/index.xhtml"/></h1>
                         Учетная запись: #{request.remoteUser}
                     </h:form>
                 </ui:insert>
@@ -33,7 +33,7 @@
                             <p:menu toggleable="true">
                                 <p:menuitem action="#{sessionActions.logout()}" value="Выход"/>
                                 <p:submenu label="Справочники">
-                                    <p:menuitem action="/client/item/items" value="Позиции"/>
+                                    <p:menuitem action="/client/item/items" value="Позиции" />
                                 </p:submenu> 
                                 <p:submenu label="Заказы">
                                     <p:menuitem action="newOrder" value="Создать заказ"/>

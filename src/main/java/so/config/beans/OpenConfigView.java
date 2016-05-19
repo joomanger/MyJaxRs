@@ -12,7 +12,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.ws.rs.core.Response;
 import org.primefaces.event.CellEditEvent;
 
 /**
@@ -39,9 +38,13 @@ public class OpenConfigView implements Serializable {
 
     @PostConstruct
     private void init() {
+       try{ 
         configuration = client.getItem();
         lines.addAll(client.getLines());
         lastLineNum = client.getMaxLineNum();
+       }catch(Exception ex){
+           
+       }
     }
 
     public Configuration getConfiguration() {

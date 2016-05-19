@@ -1,10 +1,12 @@
 package so.config.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import service.Secure;
 import so.config.entity.Configuration;
 import so.config.entity.ConfigurationLine;
 
@@ -14,7 +16,7 @@ import so.config.entity.ConfigurationLine;
  */
 @Named
 @RequestScoped
-public class ConfigCBean {
+public class ConfigCBean implements Serializable{
 
     @Inject
     private NewConfigView newView;
@@ -41,11 +43,12 @@ public class ConfigCBean {
     public Configuration getItem(Long p_item_id, Integer p_ver_num) {
         return configEJB.getConfig(p_item_id, p_ver_num);
     }
-
+    
+    @Secure
     public List<Configuration> getItems() {
         return configEJB.findAll();
     }
-
+    
     public List<ConfigurationLine> getLines() {
         return configEJB.getValues(findSession.getConfig_id());
     }
@@ -53,11 +56,11 @@ public class ConfigCBean {
     public List<ConfigurationLine> getLines(Long p_config_id) {
         return configEJB.getValues(p_config_id);
     }
-
+    
     public Integer getMaxLineNum() {
         return configEJB.getMaxLineNum(findSession.getConfig_id());
     }
-
+    
     public Integer getMaxLineNum(Long p_config_id) {
         return configEJB.getMaxLineNum(p_config_id);
     }
@@ -97,6 +100,7 @@ public class ConfigCBean {
     }
 
     //FindConfigView methods:
+    @Secure
     public void deleteConfigs() {
         for (Configuration c : fcv.getSelectedConfigs()) {
             String status = configEJB.remove(c);
@@ -105,7 +109,7 @@ public class ConfigCBean {
         }
         fcv.getSelectedConfigs().clear();
         fcv.getConfigs().clear();
-        fcv.getConfigs().addAll(getItems());
+        fcv.getConfigs().addAll(getItems() );
     }
 
     //NewConfigView methods:
@@ -178,5 +182,6 @@ public class ConfigCBean {
         openView.getLines().addAll(getLines());
 
     }
+   
 
 }

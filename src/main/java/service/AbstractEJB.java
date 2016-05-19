@@ -78,10 +78,12 @@ public abstract class AbstractEJB<T> {
     }
 
     public void sendMessage(String status, String success_msg) {
-        if (status.equals(SUCCESSFUL)) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, success_msg, null));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, status, null));
+        if ((status != null) && (success_msg != null)) {
+            if (status.equals(SUCCESSFUL)) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, success_msg, null));
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, status, null));
+            }
         }
     }
 
