@@ -1,4 +1,4 @@
-package sys.user.entities;
+package sys.entities;
 
 import java.io.Serializable;
 import java.util.List;
@@ -33,6 +33,12 @@ public class SysUser implements Serializable {
             joinColumns = @JoinColumn(name = "user_fk"),
             inverseJoinColumns = @JoinColumn(name = "group_fk"))
     private List<SysGroup> groups;
+    
+    @OneToMany
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_fk"),
+            inverseJoinColumns = @JoinColumn(name = "role_fk"))
+    private List<SysRole> roles;
 
     public Long getUser_id() {
         return user_id;
@@ -72,6 +78,14 @@ public class SysUser implements Serializable {
 
     public void setGroups(List<SysGroup> groups) {
         this.groups = groups;
+    }
+
+    public List<SysRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<SysRole> roles) {
+        this.roles = roles;
     }
 
 }

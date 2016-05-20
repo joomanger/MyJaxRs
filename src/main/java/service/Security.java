@@ -6,7 +6,6 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -23,12 +22,7 @@ public class Security {
     public Object logMethod(InvocationContext ic) throws Exception {
         String action = ic.getTarget().getClass().getSimpleName().replace("$Proxy$_$$_WeldSubclass", "") + "." + ic.getMethod().getName();
         String user = sc.getUserName();
-        System.out.println("enter to " + action);
-        System.out.println("ctx=" + user);
-        HttpServletRequest req=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        System.out.println("getRequestURI="+req.getRequestURI());
-        System.out.println("getContextPath="+req.getContextPath());
-        System.out.println("getPathInfo="+req.getPathInfo());
+        System.out.println("user="+user+" entered to " + action);
 //        for (Annotation a : ic.getMethod().getDeclaredAnnotations()) {
 //            System.out.println("Annot annotationType.getName=" + a.annotationType().getName() + " getTypeName=" + a.annotationType().getTypeName() + " simpleName=" + a.annotationType().getSimpleName() + " canonicalName=" + a.annotationType().getCanonicalName());
 //            if (a.annotationType().getSimpleName().equals("Who")) {

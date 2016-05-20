@@ -6,13 +6,16 @@ import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.application.NavigationCase;
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 /**
  *
  * @author savin
  */
 public class RedirectNavigationHandler extends ConfigurableNavigationHandler {
-
+    @Inject
+    private SessionConfig sc;
+    
     private NavigationHandler parent;
 
     public RedirectNavigationHandler(NavigationHandler parent) {
@@ -22,7 +25,7 @@ public class RedirectNavigationHandler extends ConfigurableNavigationHandler {
     @Override
     public void handleNavigation(FacesContext context, String from, String outcome) {
         if (outcome != null) {
-            System.out.println("outcome="+outcome);
+            System.out.println(sc.getUserName()+" outcome="+outcome);
             if (!outcome.endsWith("?faces-redirect=true")) {
                 outcome += "?faces-redirect=true";
             }
