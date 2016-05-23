@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -19,8 +20,10 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "users", uniqueConstraints
         = @UniqueConstraint(columnNames = {"username"}))
+@NamedQuery(name = SysUser.FIND_BY_USERNAME, query = "select u from SysUser u where u.username=:p_username")
 public class SysUser implements Serializable {
 
+    public static final String FIND_BY_USERNAME = "FIND_BY_USERNAME";
     @Id
     @SequenceGenerator(name = "user_sq", initialValue = 2, allocationSize = 1)
     @GeneratedValue(generator = "user_sq")
@@ -33,7 +36,7 @@ public class SysUser implements Serializable {
             joinColumns = @JoinColumn(name = "user_fk"),
             inverseJoinColumns = @JoinColumn(name = "group_fk"))
     private List<SysGroup> groups;
-    
+
     @OneToMany
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_fk"),

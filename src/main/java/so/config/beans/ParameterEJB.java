@@ -34,10 +34,10 @@ public class ParameterEJB extends AbstractEJB<ParameterConfiguration> {
     }
 
     /*---Дополнительные методы---*/
-    public List<ParameterConfigurationValues> getValues(Long id) {
-        TypedQuery<ParameterConfigurationValues> tq = em.createNamedQuery(ParameterConfigurationValues.FIND_BY_HEADER_ID, ParameterConfigurationValues.class).setParameter("p_header_id", id);
-        return tq.getResultList();
-    }
+//    public List<ParameterConfigurationValues> getValues(Long id) {
+//        TypedQuery<ParameterConfigurationValues> tq = em.createNamedQuery(ParameterConfigurationValues.FIND_BY_HEADER_ID, ParameterConfigurationValues.class).setParameter("p_header_id", id);
+//        return tq.getResultList();
+//    }
 
     public Integer getMaxLineNum(Long id) {
         TypedQuery<Integer> tq = em.createNamedQuery(ParameterConfigurationValues.MAX_LINE_NUM_BY_HEADER_ID, Integer.class).setParameter("p_header_id", id);

@@ -46,11 +46,13 @@ public class ParameterCBean {
     }
 
     public List<ParameterConfigurationValues> getValues() {
-        return paramEJB.getValues(fpv.getParamID());
+        //return paramEJB.getValues(fpv.getParamID());
+        return getItem().getValues();
     }
 
     public List<ParameterConfigurationValues> getValues(Long p_header_id) {
-        return paramEJB.getValues(p_header_id);
+        //return paramEJB.getValues(p_header_id);
+        return paramEJB.find(p_header_id).getValues();
     }
 
     public Integer getMaxLineNum() {

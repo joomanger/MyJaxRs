@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Управление заказами BETA</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -22,7 +23,7 @@
                 <ui:insert name="top">
                     <h:form>
                         <h1><h:link value="Управление заказами" outcome="/index.xhtml"/></h1>
-                        Учетная запись: #{request.remoteUser}
+                        Учетная запись: #{request.remoteUser} #{userCBean.getUserByUserName(request.remoteUser).fullName}
                     </h:form>
                 </ui:insert>
             </div>
@@ -43,7 +44,17 @@
                                     <p:menuitem action="/client/config/param/params" value="Параметры конфигурации"/>
                                     <p:menuitem action="/client/config/configs" value="Конфигурации"/>
                                 </p:submenu>
-                                
+                                <c:forEach var="role" items="#{userCBean.getUserByUserName(request.remoteUser).roles}">
+                                    <c:forEach var="menu" items="#{role.menus}">
+                                        <p:submenu label="#{menu.menuName}">
+                                            <c:forEach var="item" items="#{menu.menuItems}">
+                                                <c:if test="#{!(item.view==null)}">
+                                                      <p:menuitem action="#{item.view.getUrl()}" value="#{item.menuItem}"/> 
+                                                </c:if>
+                                            </c:forEach>  
+                                        </p:submenu>
+                                    </c:forEach>
+                                </c:forEach>
                             </p:menu>
                         </h:form>
                     </ui:insert>

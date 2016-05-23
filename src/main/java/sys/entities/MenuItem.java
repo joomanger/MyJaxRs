@@ -1,13 +1,11 @@
 package sys.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -26,13 +24,16 @@ public class MenuItem implements Serializable {
     @GeneratedValue(generator = "menuItem_sq")
     private Long menuItem_id;
     private String menuItem;
-    private String url;
-    private Short npp;
-    @OneToMany
-    @JoinTable(name = "menuitems_views",
-            joinColumns = @JoinColumn(name = "menuitem_fk"),
-            inverseJoinColumns = @JoinColumn(name = "view_fk"))
-    private List<View> views;
+//    private String url;
+    private Short line_num;
+    //@OneToMany
+//    @JoinTable(name = "menuitems_views",
+//            joinColumns = @JoinColumn(name = "menuitem_fk"),
+//            inverseJoinColumns = @JoinColumn(name = "view_fk"))
+//    private List<View> views;
+    @ManyToOne
+    @JoinColumn(name = "view_id")
+    private View view;
 
     public Long getMenuItem_id() {
         return menuItem_id;
@@ -50,28 +51,20 @@ public class MenuItem implements Serializable {
         this.menuItem = menuItem;
     }
 
-    public Short getNpp() {
-        return npp;
+    public Short getLine_num() {
+        return line_num;
     }
 
-    public void setNpp(Short npp) {
-        this.npp = npp;
+    public void setLine_num(Short line_num) {
+        this.line_num = line_num;
     }
 
-    public List<View> getViews() {
-        return views;
+    public View getView() {
+        return view;
     }
 
-    public void setViews(List<View> views) {
-        this.views = views;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+    public void setView(View view) {
+        this.view = view;
     }
 
 }

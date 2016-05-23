@@ -25,7 +25,7 @@ public class SysRole implements Serializable {
     @SequenceGenerator(name = "role_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "role_sq")
     private Long role_id;
-    private String role;
+    private String roleName;
     private String description;
     @OneToMany
     @JoinTable(name = "roles_menus",
@@ -41,12 +41,12 @@ public class SysRole implements Serializable {
         this.role_id = role_id;
     }
 
-    public String getRole() {
-        return role;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public String getDescription() {

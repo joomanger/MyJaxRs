@@ -40,13 +40,6 @@ insert into users_groups values(1,1);
 insert into users_groups values(2,1);
 create or replace view users_groups_v as select u.username, g.groupname from users_groups ug, users u, groups g where u.user_id=ug.user_fk and g.group_id=ug.group_fk;
 
--- Заполним менюхи
-insert into menu values(1,true, 'Автозагрузка user');
-insert into menuitem values(1,'Конфигурации user',1,1);
-insert into menuitem values(2,'Параметры конфигурации user',1,2);
-insert into menu values(2,true, 'Автозагрузка admin');
-insert into menuitem values(3,'Конфигурации admin',1,1);
-insert into menuitem values(4,'Параметры конфигурации admin',1,2);
 
 -- Заполним въюшки
 insert into views(view_id,description,viewname,url) values(1,'','configs','/client/config/configs');
@@ -55,15 +48,21 @@ insert into views(view_id,description,viewname,url) values(3,'','openConfig','/c
 insert into views(view_id,description,viewname,url) values(4,'','params','/client/config/param/params');
 insert into views(view_id,description,viewname,url) values(5,'','openParameter','/client/config/param/openParameter');
 insert into views(view_id,description,viewname,url) values(6,'','newParameter','/client/config/param/newParameter');
+-- Заполним менюхи
+insert into menu values(1,true, 'Автозагрузка user');
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id) values(1,'Конфигурации user',1,1,null);
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id) values(2,'Параметры конфигурации user',2,1,null);
+insert into menu values(2,true, 'Автозагрузка admin');
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id) values(3,'Конфигурации admin',1,2,1);
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id) values(4,'Параметры конфигурации admin',2,2,4);
 
 --для юзера работа с конфигурациями недоступна
 --------------------------------
 
--- для юзера фуль
 -- Конфигурации admin
-insert into menuitems_views values(3,1);--configs
-insert into menuitems_views values(3,2);--newConfig
-insert into menuitems_views values(3,3);--openConfig
+--insert into menuitems_views values(3,1);--configs
+--insert into menuitems_views values(3,2);--newConfig
+--insert into menuitems_views values(3,3);--openConfig
 
 --Заполним роли
 insert into roles values(1,'','user');

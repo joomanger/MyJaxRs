@@ -34,7 +34,7 @@ public class OpenParameterView implements Serializable {
     @PostConstruct
     private void init() {
         param = client.getItem();
-        values.addAll(client.getValues());
+        values.addAll(/*client.getValues()*/param.getValues());
     }
 
     public List<ParameterConfigurationValues> getValues() {
