@@ -16,12 +16,22 @@ public class UserCBean {
     @Inject
     private UserEJB ejb;
 
-    public SysUser getUserById(Long p_id) {
+    public SysUser findUserById(Long p_id) {
         return ejb.find(p_id);
     }
 
-    public SysUser getUserByUserName(String p_username) {
-        return ejb.getByUserName(p_username);
+    public SysUser findUserByUserName(String p_username) {
+        return ejb.findByUserName(p_username);
+    }
+
+    public void deleteUsers() {
+        
+    }
+
+    public String saveUser(SysUser user) {
+        String result = ejb.edit(user);
+        ejb.sendMessage(result, "Пользователь " + user.getUsername() + " сохранен");
+        return "users";
     }
 
 }

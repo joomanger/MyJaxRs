@@ -1,5 +1,8 @@
 package sys.beans;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,8 +29,15 @@ public class UserEJB extends AbstractEJB<SysUser> {
         return em;
     }
 
+    @Override
+    public List<SysUser> findAll() {
+        List<SysUser> l = super.findAll(); //To change body of generated methods, choose Tools | Templates.
+        Collections.sort(l);
+        return l;
+    }
+
     /*---Дополнительные методы---*/
-    public SysUser getByUserName(String p_username) {
+    public SysUser findByUserName(String p_username) {
         TypedQuery<SysUser> tq = em.createNamedQuery(SysUser.FIND_BY_USERNAME, SysUser.class).setParameter("p_username", p_username);
         return tq.getSingleResult();
     }

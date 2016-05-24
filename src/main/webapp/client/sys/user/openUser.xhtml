@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../../WEB-INF/template.xhtml">
+            <ui:define name="content">
+                <h:form  prependId="false">
+                    <p:fieldset id="userHeader" legend="Пользователь" style="width: 250px; margin-bottom: 10px"> 
+                        <h:panelGrid id="yyy" columns="2" cellpadding="5" cellspacing="5">
+                            <p:outputLabel value="Пользователь"/>
+                            <p:outputLabel value="#{openUserView.user.username}"/>
+                            <p:outputLabel value="Полное имя"/>
+                            <p:inputText value="#{openUserView.user.fullName}"/>
+                            <p:outputLabel value="Пароль"/>
+                            <p:link value="Сменить пароль"/>
+                        </h:panelGrid>
+                    </p:fieldset> 
+                    <p:dataTable id="dTable" var="ord" value="#{openUserView.user.roles}" selection="#{openUserView.selectedRoles}" 
+                                 rowSelectMode="checkbox" editMode="cell" editable="true"
+                                 scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.role_id}" 
+                                 style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        <p:ajax event="cellEdit"  listener="#{openConfigView.onCellEdit}"/>
+                        <p:column headerText="Роль" style="width:100%;text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output"><p:outputLabel value="#{ord.roleName}" style="text-align: center" /></f:facet>
+                                <f:facet name="input">
+                                    <p:outputLabel value="#{ord.roleName}" style="text-align: center" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <f:facet name="footer" >
+                            <p:autoComplete id="addTextItem" 
+                                            value="#{openConfigView.paramConfig}" 
+                                            completeMethod="#{parameterConverter.completeParameter}"
+                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{parameterConverter}" forceSelection="true" dropdown="true" style="margin-right: 50px" >
+                            </p:autoComplete>
+                            <p:focus for="addTextItem"/>
+                            <p:commandButton value="Добавить" actionListener="#{configCBean.addItemOCV()}" update="dTable" />
+                            <p:commandButton value="Удалить" actionListener="#{configCBean.deleteItemsOCV()}" style="margin-left: 10px" update="dTable mainMSG" />
+                        </f:facet>
+                    </p:dataTable>
+                    <p:commandButton id="btnBack" value="Back" action="users" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
+                    <p:commandButton value="Сохранить" actionListener="#{userCBean.saveUser(openUserView.user)}" update="mainMSG dTable"/>
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

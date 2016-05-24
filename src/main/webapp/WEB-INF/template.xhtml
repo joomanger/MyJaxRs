@@ -23,7 +23,7 @@
                 <ui:insert name="top">
                     <h:form>
                         <h1><h:link value="Управление заказами" outcome="/index.xhtml"/></h1>
-                        Учетная запись: #{request.remoteUser} #{userCBean.getUserByUserName(request.remoteUser).fullName}
+                        Учетная запись: #{request.remoteUser} #{userCBean.findUserByUserName(request.remoteUser).fullName}
                     </h:form>
                 </ui:insert>
             </div>
@@ -32,7 +32,7 @@
                     <ui:insert name="left">
                         <h:form>
                             <p:menu toggleable="true">
-                                <p:menuitem action="#{sessionActions.logout()}" value="Выход"/>
+                                <p:menuitem oncomplete="PF('areYouSure').show()" value="Выход"/>
                                 <p:submenu label="Справочники">
                                     <p:menuitem action="/client/item/items" value="Позиции" />
                                 </p:submenu> 
@@ -44,25 +44,37 @@
                                     <p:menuitem action="/client/config/param/params" value="Параметры конфигурации"/>
                                     <p:menuitem action="/client/config/configs" value="Конфигурации"/>
                                 </p:submenu>
-                                <c:forEach var="role" items="#{userCBean.getUserByUserName(request.remoteUser).roles}">
+                                <p:submenu label="Администратор">
+                                    <p:menuitem action="/client/sys/user/users" value="Пользователи"/>
+                                    <p:menuitem action="/client/sys/role/roles" value="Роли"/>
+                                    <p:menuitem action="/client/sys/menu/menus" value="Меню"/>
+                                    <p:menuitem action="/client/sys/view/views" value="Представления"/>
+                                </p:submenu>
+                                <c:forEach var="role" items="#{userCBean.findUserByUserName(request.remoteUser).roles}">
                                     <c:forEach var="menu" items="#{role.menus}">
                                         <p:submenu label="#{menu.menuName}">
                                             <c:forEach var="item" items="#{menu.menuItems}">
                                                 <c:if test="#{!(item.view==null)}">
-                                                      <p:menuitem action="#{item.view.getUrl()}" value="#{item.menuItem}"/> 
+                                                    <p:menuitem action="#{item.view.getUrl()}" value="#{item.menuItem}"/> 
                                                 </c:if>
                                             </c:forEach>  
                                         </p:submenu>
                                     </c:forEach>
                                 </c:forEach>
                             </p:menu>
+
+                            <p:dialog header="Are you Sure?" widgetVar="areYouSure" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                                <p:outputPanel id="selectedParams" style="text-align:center;">
+                                    <p:commandButton value="Yes" action="#{sessionActions.logout()}" oncomplete="PF('areYouSure').hide()"/>
+                                    <p:commandButton oncomplete="PF('areYouSure').hide()" immediate="true" value="No"/>
+                                </p:outputPanel>
+                            </p:dialog>
                         </h:form>
                     </ui:insert>
                 </div>
                 <div id="content" class="left_content" style="position: absolute">
                     <ui:insert id="qqq" name="content">Content</ui:insert>
                 </div>
-
             </div>
         </div>
     </h:body>

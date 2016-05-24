@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../../WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+                <h:form prependId="false">
+                    <h:inputHidden id="setUserId" value="#{findUserSession.user_id}"/>
+                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.user_id}" var="ord" value="#{findUserView.users}" 
+                                 editable="true" reflow="true" selection="#{findUserView.selectedUsers}" rows="20" paginator="true" style="width: 600px;"
+                                 rowsPerPageTemplate="20,40,100" lazy="true">
+                        <f:facet name="header">
+                            Список пользователей
+                        </f:facet>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        <p:column headerText="Пользователь">
+                            <h:commandLink action="openUser" value="#{ord.username}" onclick="document.getElementById('setUserId').value =#{ord.user_id};"  />
+                        </p:column>
+                        <p:column headerText="Полное имя" style="width:200px;text-align: center">
+                            <p:outputLabel value="#{ord.fullName}" />
+                        </p:column>
+                        <f:facet name="footer" >
+                            <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />
+                            <p:commandButton value="New" action="newUser" immediate="true" style="margin-left: 15px"/>
+                        </f:facet>
+                    </p:dataTable> 
+                    <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                        <p:outputPanel id="selectedParams" style="text-align:center;">
+                            <p:dataTable value="#{findUserView.selectedUsers}" var="v">
+                                <p:column headerText="Пользователь">
+                                    <h:outputText value="#{v.username}"/>
+                                </p:column>
+                                <p:column headerText="Полное имя">
+                                    <h:outputText value="#{v.fullName}"/>
+                                </p:column>
+                            </p:dataTable>
+                            <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
+                            <p:commandButton value="Yes" actionListener="#{userCBean.deleteUsers}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
