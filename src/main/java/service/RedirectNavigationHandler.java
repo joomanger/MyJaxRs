@@ -14,7 +14,7 @@ import javax.inject.Inject;
  */
 public class RedirectNavigationHandler extends ConfigurableNavigationHandler {
     @Inject
-    private SessionConfig sc;
+    private SessionActions sc;
     
     private NavigationHandler parent;
 
@@ -25,7 +25,7 @@ public class RedirectNavigationHandler extends ConfigurableNavigationHandler {
     @Override
     public void handleNavigation(FacesContext context, String from, String outcome) {
         if (outcome != null) {
-            System.out.println(sc.getUserName()+" outcome="+outcome);
+            System.out.println(sc.getCurrentUser().getUsername()+" outcome="+outcome);
             if (!outcome.endsWith("?faces-redirect=true")) {
                 outcome += "?faces-redirect=true";
             }

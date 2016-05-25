@@ -23,7 +23,7 @@
                 <ui:insert name="top">
                     <h:form>
                         <h1><h:link value="Управление заказами" outcome="/index.xhtml"/></h1>
-                        Учетная запись: #{request.remoteUser} #{userCBean.findUserByUserName(request.remoteUser).fullName}
+                        Учетная запись: #{sessionActions.currentUser.fullName}
                     </h:form>
                 </ui:insert>
             </div>

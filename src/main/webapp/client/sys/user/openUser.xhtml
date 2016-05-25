@@ -18,9 +18,22 @@
                             <p:outputLabel value="Полное имя"/>
                             <p:inputText value="#{openUserView.user.fullName}"/>
                             <p:outputLabel value="Пароль"/>
-                            <p:link value="Сменить пароль"/>
+                            <p:commandLink value="Сменить пароль"  oncomplete="PF('changePassword').show()" immediate="true"/>
                         </h:panelGrid>
                     </p:fieldset> 
+                    <p:dialog header="Смена пароля" widgetVar="changePassword" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Новый пароль"/>
+                            <p:password value="#{openUserView.newPassword}">
+                                <p:ajax event="keyup" listener="#{openUserView.checkPassword}" update="b1" />
+                            </p:password>    
+                            <p:outputLabel value="Еще раз новый пароль"/>
+                            <p:password value="#{openUserView.reNewPassword}">
+                                <p:ajax event="keyup" listener="#{openUserView.checkPassword}" update="b1" />
+                            </p:password>
+                            <p:commandButton id="b1" value="Подтвердить" actionListener="#{userCBean.changePassword()}" disabled="#{!openUserView.isPasswordsEqual()}" oncomplete="PF('changePassword').hide()" update="mainMSG" />
+                        </h:panelGrid>
+                    </p:dialog>
                     <p:dataTable id="dTable" var="ord" value="#{openUserView.user.roles}" selection="#{openUserView.selectedRoles}" 
                                  rowSelectMode="checkbox" editMode="cell" editable="true"
                                  scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.role_id}" 
@@ -37,15 +50,30 @@
                         </p:column>
                         <f:facet name="footer" >
                             <p:autoComplete id="addTextItem" 
-                                            value="#{openConfigView.paramConfig}" 
-                                            completeMethod="#{parameterConverter.completeParameter}"
-                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{parameterConverter}" forceSelection="true" dropdown="true" style="margin-right: 50px" >
+                                            value="#{openUserView.newRole}" 
+                                            completeMethod="#{roleConverter.completeRole}" converter="#{roleConverter}"
+                                            var="v" itemLabel="#{v.roleName}" itemValue="#{v}"
+                                            forceSelection="true" dropdown="true" style="margin-right: 50px" >
                             </p:autoComplete>
                             <p:focus for="addTextItem"/>
-                            <p:commandButton value="Добавить" actionListener="#{configCBean.addItemOCV()}" update="dTable" />
-                            <p:commandButton value="Удалить" actionListener="#{configCBean.deleteItemsOCV()}" style="margin-left: 10px" update="dTable mainMSG" />
+                            <p:commandButton value="Добавить" actionListener="#{userCBean.addRoleOUV()}" update="dTable" />
+                            <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
                         </f:facet>
                     </p:dataTable>
+                    <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                        <p:outputPanel id="selectedParams" style="text-align:center;">
+                            <p:dataTable value="#{openUserView.selectedRoles}" var="v">
+                                <p:column headerText="Роль">
+                                    <h:outputText value="#{v.roleName}"/>
+                                </p:column>
+                                <p:column headerText="Описание">
+                                    <h:outputText value="#{v.description}"/>
+                                </p:column>
+                            </p:dataTable>
+                            <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>
+                            <p:commandButton value="Yes" actionListener="#{userCBean.deleteRoles()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
+                        </p:outputPanel>
+                    </p:dialog>
                     <p:commandButton id="btnBack" value="Back" action="users" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
                     <p:commandButton value="Сохранить" actionListener="#{userCBean.saveUser(openUserView.user)}" update="mainMSG dTable"/>
                 </h:form>

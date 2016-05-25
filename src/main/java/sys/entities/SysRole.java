@@ -19,7 +19,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "roles", uniqueConstraints
         = @UniqueConstraint(columnNames = {"role"}))
-public class SysRole implements Serializable {
+public class SysRole implements Serializable, Comparable<SysRole> {
 
     @Id
     @SequenceGenerator(name = "role_sq", initialValue = 1, allocationSize = 1)
@@ -63,6 +63,15 @@ public class SysRole implements Serializable {
 
     public void setMenus(List<Menu> menus) {
         this.menus = menus;
+    }
+
+    @Override
+    public int compareTo(SysRole o) {
+        if (roleName.charAt(0) > o.roleName.charAt(0)) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 
 }

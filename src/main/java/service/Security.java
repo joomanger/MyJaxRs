@@ -16,12 +16,12 @@ import javax.interceptor.InvocationContext;
 public class Security {
 
     @Inject
-    private SessionConfig sc;
+    private SessionActions sc;
 
     @AroundInvoke
     public Object logMethod(InvocationContext ic) throws Exception {
         String action = ic.getTarget().getClass().getSimpleName().replace("$Proxy$_$$_WeldSubclass", "") + "." + ic.getMethod().getName();
-        String user = sc.getUserName();
+        String user = sc.getCurrentUser().getUsername();
         System.out.println("user="+user+" entered to " + action);
 //        for (Annotation a : ic.getMethod().getDeclaredAnnotations()) {
 //            System.out.println("Annot annotationType.getName=" + a.annotationType().getName() + " getTypeName=" + a.annotationType().getTypeName() + " simpleName=" + a.annotationType().getSimpleName() + " canonicalName=" + a.annotationType().getCanonicalName());

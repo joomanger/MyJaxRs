@@ -16,7 +16,7 @@ import sys.entities.SysUser;
  */
 @Named
 @ViewScoped
-public class OpenUserView implements Serializable {
+public class NewUserView implements Serializable {
 
     @Inject
     private FindUserSession fus;
@@ -36,7 +36,7 @@ public class OpenUserView implements Serializable {
 
     @PostConstruct
     private void init() {
-        user = client.findUserById(fus.getUser_id());
+        user = new SysUser();
     }
 
     public String getNewPassword() {
@@ -94,5 +94,4 @@ public class OpenUserView implements Serializable {
     public Boolean isPasswordsEqual() {
         return passwordsEqual;
     }
-
 }

@@ -1,13 +1,14 @@
 package sys.beans;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import service.AbstractEJB;
+import service.SessionConfig;
 import sys.entities.SysUser;
 
 /**
@@ -19,6 +20,8 @@ public class UserEJB extends AbstractEJB<SysUser> {
 
     @PersistenceContext(unitName = "myjaxrs")
     private EntityManager em;
+    @Inject
+    private SessionConfig sc;
 
     public UserEJB() {
         super(SysUser.class);
@@ -31,7 +34,7 @@ public class UserEJB extends AbstractEJB<SysUser> {
 
     @Override
     public List<SysUser> findAll() {
-        List<SysUser> l = super.findAll(); //To change body of generated methods, choose Tools | Templates.
+        List<SysUser> l = super.findAll();
         Collections.sort(l);
         return l;
     }

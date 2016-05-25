@@ -14,7 +14,7 @@ public class SessionConfig {
     @Resource
     private SessionContext ctx;
 
-    public String getUserName() {
-        return ctx.getCallerPrincipal().getName();
+    public SessionContext getSessionContext() {
+        return ctx;
     }
 }
