@@ -34,6 +34,8 @@ public class NewUserView implements Serializable {
 
     private Boolean passwordsEqual = false;
 
+    private Boolean fieldDisabled = false;
+
     @PostConstruct
     private void init() {
         user = new SysUser();
@@ -94,4 +96,15 @@ public class NewUserView implements Serializable {
     public Boolean isPasswordsEqual() {
         return passwordsEqual;
     }
+
+    public Boolean isFieldDisabled() {
+        return fieldDisabled;
+    }
+
+    public void setFieldDisabled(Boolean fieldDisabled) {
+        this.fieldDisabled = fieldDisabled;
+    }
+
+   
+
 }

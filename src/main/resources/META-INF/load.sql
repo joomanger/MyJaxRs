@@ -35,7 +35,7 @@ insert into saleorder values(1,'customer',1000,null,null);
 
 insert into users(user_id, username, fullName, password) values(1,'admin','Админчик','SBNJTRN+FjG7owHVrKtue7eqdM4RhdRWVl71HXN2d7I=');
 insert into users(user_id, username, fullName, password) values(2,'user','Юзерок','BPiZbadjt6lpsQKO4wB1aerzpjVIbdqyEdUSyFud+Ps=');
-insert into groups(group_id, groupname,description) values(1,'admin','Группа админов');
+insert into groups(group_id, groupname,description) values(1,'users','Все пользователи системы');
 insert into users_groups values(1,1);
 insert into users_groups values(2,1);
 create or replace view users_groups_v as select u.username, g.groupname from users_groups ug, users u, groups g where u.user_id=ug.user_fk and g.group_id=ug.group_fk;

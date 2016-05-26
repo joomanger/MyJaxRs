@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -13,10 +14,13 @@ import javax.persistence.UniqueConstraint;
  * @author savin
  */
 @Entity
-@Table(name = "groups",uniqueConstraints
+@Table(name = "groups", uniqueConstraints
         = @UniqueConstraint(columnNames = {"groupname"}))
+@NamedQuery(name = SysGroup.FIND_BY_GROUP_NAME, query = "select t from SysGroup t where t.groupname=:p_groupname")
 public class SysGroup implements Serializable {
 
+    public static final String FIND_BY_GROUP_NAME = "SysGroup.Q1";
+    public static final String USERS_GROUP = "users";
     @Id
     @SequenceGenerator(name = "group_sq", initialValue = 2, allocationSize = 1)
     @GeneratedValue(generator = "group_sq")

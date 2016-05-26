@@ -12,20 +12,20 @@
             <ui:define name="content">
                 <h:form  prependId="false">
                     <p:fieldset id="userHeader" legend="Новый пользователь" style="width: 250px; margin-bottom: 10px"> 
-                        <h:panelGrid id="yyy" columns="2" cellpadding="5" cellspacing="5">
+                        <h:panelGrid id="yyy" columns="2" cellpadding="5" cellspacing="5" >
                             <p:outputLabel value="Пользователь"/>
-                            <p:inputText value="#{newUserView.user.username}"/>
+                            <p:inputText  value="#{newUserView.user.username}" disabled="#{newUserView.isFieldDisabled()}"/>
                             <p:outputLabel value="Полное имя"/>
-                            <p:inputText value="#{newUserView.user.fullName}"/>
+                            <p:inputText value="#{newUserView.user.fullName}" disabled="#{newUserView.isFieldDisabled()}"/>
                             <p:outputLabel value="Пароль"/>
-                            <p:password value="#{newUserView.newPassword}">
+                            <p:password value="#{newUserView.newPassword}" disabled="#{newUserView.isFieldDisabled()}">
                                 <p:ajax event="keyup" listener="#{newUserView.checkPassword}" update="b1" />
                             </p:password>
                             <p:outputLabel value="Повторно пароль"/>
-                            <p:password value="#{newUserView.reNewPassword}">
+                            <p:password value="#{newUserView.reNewPassword}" disabled="#{newUserView.isFieldDisabled()}">
                                 <p:ajax event="keyup" listener="#{newUserView.checkPassword}" update="b1" />
                             </p:password> 
-                            <p:commandButton  id="b1" disabled="#{!newUserView.isPasswordsEqual()}" value="Сохранить" actionListener="#{userCBean.saveUser(newUserView.user)}" update="mainMSG"/>
+                            <p:commandButton  id="b1" disabled="#{newUserView.isFieldDisabled()?newUserView.isFieldDisabled():!newUserView.isPasswordsEqual()}" value="Создать" actionListener="#{userCBean.createNewUser(newUserView.user)}" update="yyy mainMSG"/>
                         </h:panelGrid>
                     </p:fieldset> 
 
@@ -64,7 +64,7 @@
                         </p:outputPanel>
                     </p:dialog>
                     <p:commandButton id="btnBack" value="Back" action="users" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
-                    
+
                 </h:form>
 
             </ui:define>

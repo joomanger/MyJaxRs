@@ -67,40 +67,53 @@ public class UserCBean {
         }
     }
 
-    public void deleteRoles() {
-        SysUser user = nuv.getUser();
-        user.getRoles().removeAll(nuv.getSelectedRoles());
+    public void deleteRolesOUV() {
+        SysUser user = ouv.getUser();
+        user.getRoles().removeAll(ouv.getSelectedRoles());
         String status = ejb.edit(user);
         ejb.sendMessage(status, "Роли удалены успешно");
     }
 
     public void deleteRolesNUV() {
         SysUser user = nuv.getUser();
-        user.getRoles().removeAll(ouv.getSelectedRoles());
+        user.getRoles().removeAll(nuv.getSelectedRoles());
         String status = ejb.edit(user);
         ejb.sendMessage(status, "Роли удалены успешно");
     }
 
-    public String saveUser(SysUser user) {
-        String result = ejb.edit(user);
-        ejb.sendMessage(result, "Пользователь " + user.getUsername() + " сохранен");
+    public String createNewUser(SysUser user) {
+        user.setPassword(digestPassword(nuv.getNewPassword()));
+        SysUser u = ejb.registerNewUser(user);
+        String result = ejb.create(user);
+        if (u != null) {
+            nuv.setFieldDisabled(true);
+            ejb.sendMessage(result, "Пользователь " + user.getUsername() + " создан");
+        } else {
+            ejb.sendMessage(result, "Пользователь " + user.getUsername() + " не зарегистрирован в группе USERS. Обратитесь к сисадмину");
+        }
+
         return "users";
+    }
+
+    private String digestPassword(String p_password) {
+        try {
+            MessageDigest messageDigest = java.security.MessageDigest.getInstance("SHA-256");
+            byte bin[] = messageDigest.digest(p_password.getBytes());
+            return Base64.getEncoder().encodeToString(bin);
+        } catch (NoSuchAlgorithmException se) {
+            System.out.println("exception sys.beans.UserCBean.digestPassword() " + se.getMessage());
+            return null;
+        }
     }
 
     public void changePassword() {
         if (ouv.isPasswordsEqual()) {
-            try {
-                MessageDigest messageDigest = java.security.MessageDigest.getInstance("SHA-256");
-                byte bin[] = messageDigest.digest((ouv.getNewPassword()).getBytes());
-                SysUser user = ouv.getUser();
-                user.setPassword(Base64.getEncoder().encodeToString(bin));
-                String status = ejb.edit(user);
-                ejb.sendMessage(status, "Пароль изменен успешно");
-                ouv.setNewPassword("");
-                ouv.setReNewPassword("");
-            } catch (NoSuchAlgorithmException se) {
-                System.out.println("changePassword: " + se.getMessage());
-            }
+            SysUser user = ouv.getUser();
+            user.setPassword(digestPassword(ouv.getNewPassword()));
+            String status = ejb.edit(user);
+            ejb.sendMessage(status, "Пароль изменен успешно");
+            ouv.setNewPassword("");
+            ouv.setReNewPassword("");
         }
     }
 
