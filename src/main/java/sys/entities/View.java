@@ -15,7 +15,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "views", uniqueConstraints
         = @UniqueConstraint(columnNames = {"viewName"}))
-public class View implements Serializable {
+public class View implements Serializable,Comparable<View> {
 
     @Id
     @SequenceGenerator(name = "view_sq", initialValue = 1, allocationSize = 1)
@@ -56,6 +56,17 @@ public class View implements Serializable {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public int compareTo(View o) {
+        if (viewName.charAt(0) > o.viewName.charAt(0)) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+    
+    
     
 
 }

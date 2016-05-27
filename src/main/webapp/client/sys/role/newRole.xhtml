@@ -1,11 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
     <body>
-        <div>TODO write content</div>
+
+        <ui:composition template="./../../../WEB-INF/template.xhtml">
+            <ui:define name="content">
+                <h:form  prependId="false">
+                    <p:fieldset id="roleHeader" legend="Новая роль" style="width: 250px; margin-bottom: 10px"> 
+                        <h:panelGrid id="yyy" columns="2" cellpadding="5" cellspacing="5">
+                            <p:outputLabel value="Роль"/>
+                            <p:inputText value="#{newRoleView.role.roleName}"/>
+                            <p:outputLabel value="Описание"/>
+                            <p:inputText value="#{newRoleView.role.description}"/>
+                        </h:panelGrid>
+                    </p:fieldset> 
+
+                    <p:dataTable id="dTable" var="ord" value="#{newRoleView.role.menus}" selection="#{newRoleView.selectedMenus}" 
+                                 rowSelectMode="checkbox" editMode="cell" editable="true"
+                                 scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.menu_id}" 
+                                 style="width: 500px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        <p:column headerText="Меню" style="width:100%;">
+                            <p:outputLabel value="#{ord.menuName}" style="text-align: left" />
+                        </p:column>
+                        <f:facet name="footer" >
+                            <p:autoComplete id="addTextItem" 
+                                            value="#{newRoleView.newMenu}" 
+                                            completeMethod="#{menuConverter.completeMenu}" converter="#{menuConverter}"
+                                            var="v" itemLabel="#{v.menuName}" itemValue="#{v}"
+                                            forceSelection="true" dropdown="true" style="margin-right: 50px" >
+                            </p:autoComplete>
+                            <p:focus for="addTextItem"/>
+                            <p:commandButton value="Добавить" actionListener="#{roleCBean.addMenuNRV()}" update="dTable" />
+                            <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
+                        </f:facet>
+                    </p:dataTable>
+                    <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                        <p:outputPanel id="selectedParams" style="text-align:center;">
+                            <p:dataTable value="#{newRoleView.selectedMenus}" var="v">
+                                <p:column headerText="Роль">
+                                    <h:outputText value="#{v.menuName}"/>
+                                </p:column>
+                            </p:dataTable>
+                            <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>
+                            <p:commandButton value="Yes" actionListener="#{roleCBean.deleteMenusNRV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
+                        </p:outputPanel>
+                    </p:dialog>
+                    <p:commandButton id="btnBack" value="Back" action="roles" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
+                    <p:commandButton value="Создать" action="#{roleCBean.createRole()}" style="margin-top: 10px;margin-right: 20px"/>
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
     </body>
 </html>
