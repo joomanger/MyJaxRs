@@ -18,6 +18,7 @@ public class NewRoleView implements Serializable{
     private SysRole role=new SysRole();
     private List<Menu> selectedMenus=new ArrayList<>();
     private Menu newMenu;
+    private Boolean b1=false;
 
     public SysRole getRole() {
         return role;
@@ -41,6 +42,14 @@ public class NewRoleView implements Serializable{
 
     public void setNewMenu(Menu newMenu) {
         this.newMenu = newMenu;
+    }
+
+    public Boolean getB1() {
+        return b1;
+    }
+
+    public void setB1(Boolean b1) {
+        this.b1 = b1;
     }
     
 }

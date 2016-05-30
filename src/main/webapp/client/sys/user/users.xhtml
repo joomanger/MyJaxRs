@@ -20,10 +20,10 @@
                             Список пользователей
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column headerText="Пользователь">
+                        <p:column headerText="Пользователь"  style="width: 100px;">
                             <h:commandLink action="openUser" value="#{ord.username}" onclick="document.getElementById('setUserId').value =#{ord.user_id};"  />
                         </p:column>
-                        <p:column headerText="Полное имя" style="width:200px;text-align: center">
+                        <p:column headerText="Полное имя" style="text-align: center">
                             <p:outputLabel value="#{ord.fullName}" />
                         </p:column>
                         <f:facet name="footer" >

@@ -14,9 +14,10 @@
                     <p:fieldset id="roleHeader" legend="Новая роль" style="width: 250px; margin-bottom: 10px"> 
                         <h:panelGrid id="yyy" columns="2" cellpadding="5" cellspacing="5">
                             <p:outputLabel value="Роль"/>
-                            <p:inputText value="#{newRoleView.role.roleName}"/>
+                            <p:inputText value="#{newRoleView.role.roleName}" disabled="#{newRoleView.b1}"/>
                             <p:outputLabel value="Описание"/>
-                            <p:inputText value="#{newRoleView.role.description}"/>
+                            <p:inputText value="#{newRoleView.role.description}" disabled="#{newRoleView.b1}"/>
+                            <p:commandButton value="Создать" actionListener="#{roleCBean.createRole()}" style="margin-top: 10px;margin-right: 20px" update="yyy dTable" disabled="#{newRoleView.b1}"/>
                         </h:panelGrid>
                     </p:fieldset> 
 
@@ -29,15 +30,15 @@
                             <p:outputLabel value="#{ord.menuName}" style="text-align: left" />
                         </p:column>
                         <f:facet name="footer" >
-                            <p:autoComplete id="addTextItem" 
+                            <p:autoComplete id="addTextItem" disabled="#{!newRoleView.b1}"
                                             value="#{newRoleView.newMenu}" 
                                             completeMethod="#{menuConverter.completeMenu}" converter="#{menuConverter}"
                                             var="v" itemLabel="#{v.menuName}" itemValue="#{v}"
                                             forceSelection="true" dropdown="true" style="margin-right: 50px" >
                             </p:autoComplete>
                             <p:focus for="addTextItem"/>
-                            <p:commandButton value="Добавить" actionListener="#{roleCBean.addMenuNRV()}" update="dTable" />
-                            <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
+                            <p:commandButton value="Добавить" actionListener="#{roleCBean.addMenuNRV()}" update="dTable" disabled="#{!newRoleView.b1}"/>
+                            <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px" disabled="#{!newRoleView.b1}"/>
                         </f:facet>
                     </p:dataTable>
                     <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
@@ -52,7 +53,6 @@
                         </p:outputPanel>
                     </p:dialog>
                     <p:commandButton id="btnBack" value="Back" action="roles" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
-                    <p:commandButton value="Создать" action="#{roleCBean.createRole()}" style="margin-top: 10px;margin-right: 20px"/>
                 </h:form>
 
             </ui:define>

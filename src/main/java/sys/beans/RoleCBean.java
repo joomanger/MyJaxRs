@@ -64,7 +64,10 @@ public class RoleCBean {
     }
 
     public void addMenuNRV() {
-        nrv.getRole().getMenus().add(nrv.getNewMenu());
+        SysRole role = nrv.getRole();
+        role.getMenus().add(nrv.getNewMenu());
+        String status = ejb.edit(role);
+        ejb.sendMessage(status, "Меню добавлено успешно");
     }
 
     public String saveRoleORV() {
@@ -73,10 +76,11 @@ public class RoleCBean {
         return "roles";
     }
 
-    public String createRole() {
+    public void createRole() {
         SysRole role = nrv.getRole();
-        ejb.create(role);
-        return "roles";
+        String status=ejb.create(role);
+        ejb.sendMessage(status, "Роль создана успешно");
+        nrv.setB1(true);
     }
 
 }

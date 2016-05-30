@@ -1,11 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
     <body>
-        <div>TODO write content</div>
+
+        <ui:composition template="./../../../WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+                <h:form prependId="false">
+                    <h:inputHidden id="setMenuId" value="#{findMenuSession.menu_id}"/>
+                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.menu_id}" var="ord" value="#{menuCBean.findAll()}" 
+                                 editable="true" reflow="true" selection="#{findMenuView.selectedMenus}" rows="20" paginator="true" style="width: 400px;"
+                                 rowsPerPageTemplate="20,40,100" lazy="true">
+                        <f:facet name="header">
+                            Меню
+                        </f:facet>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        <p:column headerText="Меню" style="width: 250px">
+                            <h:commandLink action="openMenu" value="#{ord.menuName}" onclick="document.getElementById('setMenuId').value =#{ord.menu_id};"  />
+                        </p:column>
+                        <p:column headerText="Активное" style="text-align: center">
+                            <p:selectBooleanCheckbox disabled="true" value="#{ord.activeStatus}" />
+                        </p:column>
+                        <f:facet name="footer" >
+                            <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />
+                            <p:commandButton value="New" action="newMenu" immediate="true" style="margin-left: 15px"/>
+                        </f:facet>
+                    </p:dataTable> 
+                    <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                        <p:outputPanel id="selectedParams" style="text-align: center">
+                            <p:dataTable value="#{findMenuView.selectedMenus}" var="v">
+                                <p:column headerText="Роль">
+                                    <h:outputText value="#{v.menuName}" style="text-align: left"/>
+                                </p:column>
+                            </p:dataTable>
+
+                            <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
+                            <p:commandButton value="Yes" actionListener="#{menuCBean.deleteMenus()}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
+
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
     </body>
 </html>
