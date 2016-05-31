@@ -3,6 +3,7 @@ package sys.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public class Menu implements Serializable, Comparable<Menu> {
     private String menuName;
     private Boolean activeStatus = true;
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    @JoinColumn(name = "menu_id")
+    @JoinColumn(name="menu_id")
     private List<MenuItem> menuItems;
 
     public Long getMenu_id() {

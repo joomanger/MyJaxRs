@@ -15,7 +15,7 @@ import sys.entities.MenuItem;
 @Named
 @RequestScoped
 public class MenuCBean {
-    
+
     @Inject
     private MenuEJB ejb;
     @Inject
@@ -24,32 +24,47 @@ public class MenuCBean {
     private FindMenuView fmv;
     @Inject
     private NewMenuView nmv;
-    
+
     public List<Menu> findAll() {
         List<Menu> menus = ejb.findAll();
         Collections.sort(menus);
         return menus;
     }
-    
+
     public void deleteMenus() {
         for (Menu menu : fmv.getSelectedMenus()) {
             String status = ejb.remove(menu);
             ejb.sendMessage(status, "Меню " + menu.getMenuName() + " удалено успешно");
         }
     }
-    
+
     public void createMenu() {
         Menu menu = nmv.getMenu();
         String status = ejb.create(menu);
         ejb.sendMessage(status, "Меню создано успешно");
         nmv.setB1(true);
     }
-    
+
     public void deleteMenuItems() {
         for (MenuItem mi : nmv.getSelectedMenuItems()) {
             String status = itemEJB.remove(mi);
             itemEJB.sendMessage(status, "Пункт меню " + mi.getMenuItem() + " удален успешно");
         }
     }
-    
+
+    public void addMenuItemNMV() {
+        nmv.next_line();
+        MenuItem mi = new MenuItem();
+        mi.setView(nmv.getNewView());
+        mi.setLine_num(nmv.getLine_num());
+        mi.setMenuItem("openTest" + nmv.getLine_num());
+        mi.setMenu_id(nmv.getMenu().getMenu_id());
+        String status = itemEJB.create(mi);
+        itemEJB.sendMessage(status, "Пункт меню " + mi.getMenuItem() + " добавлен успешно");
+    }
+
+    public List<MenuItem> findMenuItemsNMV() {
+        return itemEJB.findByMenuId(nmv.getMenu().getMenu_id());
+    }
+
 }

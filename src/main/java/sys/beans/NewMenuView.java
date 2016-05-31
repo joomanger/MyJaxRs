@@ -17,38 +17,39 @@ import sys.entities.View;
 @Named
 @ViewScoped
 public class NewMenuView implements Serializable {
-    
+
     private Menu menu;
     private Boolean b1;
     private View newView;
     private List<MenuItem> selectedMenuItems = new ArrayList<>();
+    private Short line_num = 0;
 
     @PostConstruct
     private void init() {
         menu = new Menu();
         menu.setActiveStatus(true);
     }
-    
+
     public Menu getMenu() {
         return menu;
     }
-    
+
     public void setMenu(Menu menu) {
         this.menu = menu;
     }
-    
+
     public Boolean getB1() {
         return b1;
     }
-    
+
     public void setB1(Boolean b1) {
         this.b1 = b1;
     }
-    
+
     public List<MenuItem> getSelectedMenuItems() {
         return selectedMenuItems;
     }
-    
+
     public void setSelectedMenuItems(List<MenuItem> selectedMenuItems) {
         this.selectedMenuItems = selectedMenuItems;
     }
@@ -60,6 +61,13 @@ public class NewMenuView implements Serializable {
     public void setNewView(View newView) {
         this.newView = newView;
     }
-    
-    
+
+    public void next_line() {
+        line_num++;
+    }
+
+    public Short getLine_num() {
+        return line_num;
+    }
+
 }

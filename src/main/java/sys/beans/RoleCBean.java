@@ -78,7 +78,7 @@ public class RoleCBean {
 
     public void createRole() {
         SysRole role = nrv.getRole();
-        String status=ejb.create(role);
+        String status = ejb.create(role);
         ejb.sendMessage(status, "Роль создана успешно");
         nrv.setB1(true);
     }
