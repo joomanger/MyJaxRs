@@ -1,7 +1,6 @@
 package sys.entities;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -21,7 +20,7 @@ import javax.persistence.UniqueConstraint;
 @Table(uniqueConstraints
         = @UniqueConstraint(columnNames = {"menuItem"}))
 @NamedQueries(
-        @NamedQuery(name = MenuItem.FIND_BY_MENU_ID, query = "select t from MenuItem t where t.menu_id=:p_menu_id"))
+        @NamedQuery(name = MenuItem.FIND_BY_MENU_ID, query = "select t from MenuItem t where t.menu.menu_id=:p_menu_id order by t.line_num"))
 public class MenuItem implements Serializable {
 
     public static final String FIND_BY_MENU_ID = "MenuItem.findByMenuId";
@@ -30,17 +29,12 @@ public class MenuItem implements Serializable {
     @GeneratedValue(generator = "menuItem_sq")
     private Long menuItem_id;
     private String menuItem;
-//    private String url;
     private Short line_num;
-    //@OneToMany
-//    @JoinTable(name = "menuitems_views",
-//            joinColumns = @JoinColumn(name = "menuitem_fk"),
-//            inverseJoinColumns = @JoinColumn(name = "view_fk"))
-//    private List<View> views;
+    private Long view_id;
     @ManyToOne
-    @JoinColumn(name = "view_id")
-    private View view;
-    private Long menu_id;
+    @JoinColumn(name="menu_id", nullable=false)
+    private Menu menu;
+    //private Long menu_id;
 
     public Long getMenuItem_id() {
         return menuItem_id;
@@ -66,20 +60,36 @@ public class MenuItem implements Serializable {
         this.line_num = line_num;
     }
 
-    public View getView() {
-        return view;
+//    public View getView() {
+//        return view;
+//    }
+//
+//    public void setView(View view) {
+//        this.view = view;
+//    }
+    public Long getView_id() {
+        return view_id;
     }
 
-    public void setView(View view) {
-        this.view = view;
+    public void setView_id(Long view_id) {
+        this.view_id = view_id;
     }
 
-    public Long getMenu_id() {
-        return menu_id;
+//    public Long getMenu_id() {
+//        return menu_id;
+//    }
+//
+//    public void setMenu_id(Long menu_id) {
+//        this.menu_id = menu_id;
+//    }
+
+    public Menu getMenu() {
+        return menu;
     }
 
-    public void setMenu_id(Long menu_id) {
-        this.menu_id = menu_id;
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
+    
 
 }

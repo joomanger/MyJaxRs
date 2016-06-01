@@ -3,7 +3,6 @@ package sys.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,13 +23,13 @@ import javax.persistence.UniqueConstraint;
 public class Menu implements Serializable, Comparable<Menu> {
 
     @Id
-    @SequenceGenerator(name = "menu_sq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "menu_sq", initialValue = 3, allocationSize = 1)
     @GeneratedValue(generator = "menu_sq")
     private Long menu_id;
     private String menuName;
     private Boolean activeStatus = true;
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    @JoinColumn(name="menu_id")
+    //@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(targetEntity=MenuItem.class, cascade={CascadeType.ALL}, mappedBy="menu")
     private List<MenuItem> menuItems;
 
     public Long getMenu_id() {
@@ -65,6 +64,9 @@ public class Menu implements Serializable, Comparable<Menu> {
         this.menuItems = menuItems;
     }
 
+//    public void addMenuItem(MenuItem mi){
+//        this.menuItems.add(mi);
+//    }
     @Override
     public int compareTo(Menu o) {
         if (menuName.charAt(0) > o.menuName.charAt(0)) {

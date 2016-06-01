@@ -23,6 +23,7 @@ public class NewMenuView implements Serializable {
     private View newView;
     private List<MenuItem> selectedMenuItems = new ArrayList<>();
     private Short line_num = 0;
+    private String newMenuName;
 
     @PostConstruct
     private void init() {
@@ -65,9 +66,20 @@ public class NewMenuView implements Serializable {
     public void next_line() {
         line_num++;
     }
+    public void prev_line() {
+        line_num--;
+    }
 
     public Short getLine_num() {
         return line_num;
     }
 
+    public String getNewMenuName() {
+        return newMenuName;
+    }
+
+    public void setNewMenuName(String newMenuName) {
+        this.newMenuName = newMenuName;
+    }
+    
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.postgresql.util.PSQLException;
 import sys.entities.Menu;
 import sys.entities.MenuItem;
 
@@ -35,7 +36,9 @@ public class MenuCBean {
         for (Menu menu : fmv.getSelectedMenus()) {
             String status = ejb.remove(menu);
             ejb.sendMessage(status, "Меню " + menu.getMenuName() + " удалено успешно");
+            fmv.getMenus().remove(menu);
         }
+
     }
 
     public void createMenu() {
@@ -49,18 +52,34 @@ public class MenuCBean {
         for (MenuItem mi : nmv.getSelectedMenuItems()) {
             String status = itemEJB.remove(mi);
             itemEJB.sendMessage(status, "Пункт меню " + mi.getMenuItem() + " удален успешно");
+            nmv.getMenu().getMenuItems().remove(mi);
         }
+//        Menu m = nmv.getMenu();
+//        m.getMenuItems().removeAll(nmv.getSelectedMenuItems());
+//        String status = ejb.edit(m);
+//        ejb.sendMessage(status, "Удаление выполнено успешно");
     }
 
     public void addMenuItemNMV() {
+        Menu m = nmv.getMenu();
         nmv.next_line();
         MenuItem mi = new MenuItem();
-        mi.setView(nmv.getNewView());
+        mi.setView_id(nmv.getNewView().getView_id());
         mi.setLine_num(nmv.getLine_num());
-        mi.setMenuItem("openTest" + nmv.getLine_num());
-        mi.setMenu_id(nmv.getMenu().getMenu_id());
-        String status = itemEJB.create(mi);
+        mi.setMenuItem(nmv.getNewMenuName());
+        m.getMenuItems().add(mi);
+        String status = null;
+        try {
+            status = ejb.edit(m);
+            //m.getMenuItems().add(mi);
+        } catch (Exception ex) {
+            ejb.sendMessage("Ошибка вставки", null);
+            nmv.prev_line();
+        }
+
         itemEJB.sendMessage(status, "Пункт меню " + mi.getMenuItem() + " добавлен успешно");
+        nmv.setNewMenuName(null);
+        nmv.setNewView(null);
     }
 
     public List<MenuItem> findMenuItemsNMV() {

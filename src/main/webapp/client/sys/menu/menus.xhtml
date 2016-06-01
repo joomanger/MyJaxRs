@@ -13,7 +13,7 @@
             <ui:define name="content">
                 <h:form prependId="false">
                     <h:inputHidden id="setMenuId" value="#{findMenuSession.menu_id}"/>
-                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.menu_id}" var="ord" value="#{menuCBean.findAll()}" 
+                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.menu_id}" var="ord" value="#{findMenuView.menus}" 
                                  editable="true" reflow="true" selection="#{findMenuView.selectedMenus}" rows="20" paginator="true" style="width: 400px;"
                                  rowsPerPageTemplate="20,40,100" lazy="true">
                         <f:facet name="header">
@@ -21,7 +21,7 @@
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:column headerText="Меню" style="width: 250px">
-                            <h:commandLink action="openMenu" value="#{ord.menuName}" onclick="document.getElementById('setMenuId').value =#{ord.menu_id};"  />
+                            <h:commandLink action="openMenu" value="#{ord.menuName}#{ord.menuItems.size()}" onclick="document.getElementById('setMenuId').value =#{ord.menu_id};"  />
                         </p:column>
                         <p:column headerText="Активное" style="text-align: center">
                             <p:selectBooleanCheckbox disabled="true" value="#{ord.activeStatus}" />
