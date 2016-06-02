@@ -3,8 +3,8 @@ package sys.beans;
 import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import service.AbstractEJB;
 import sys.entities.Menu;
 
@@ -14,7 +14,8 @@ import sys.entities.Menu;
  */
 @Stateless
 public class MenuEJB extends AbstractEJB<Menu> {
-    @PersistenceContext(unitName = "myjaxrs")
+
+    @Inject
     private EntityManager em;
 
     public MenuEJB() {
@@ -32,5 +33,5 @@ public class MenuEJB extends AbstractEJB<Menu> {
         Collections.sort(l);
         return l;
     }
-    
+
 }

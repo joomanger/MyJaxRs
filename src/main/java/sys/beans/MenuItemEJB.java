@@ -2,8 +2,9 @@ package sys.beans;
 
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import service.AbstractEJB;
 import sys.entities.MenuItem;
@@ -15,7 +16,8 @@ import sys.entities.MenuItem;
 @Stateless
 public class MenuItemEJB extends AbstractEJB<MenuItem> {
 
-    @PersistenceContext(unitName = "myjaxrs")
+    //@PersistenceContext(unitName = "myjaxrs")
+    @Inject
     private EntityManager em;
 
     public MenuItemEJB() {
@@ -23,7 +25,8 @@ public class MenuItemEJB extends AbstractEJB<MenuItem> {
     }
 
     @Override
-    protected EntityManager getEntityManager() {
+    public EntityManager getEntityManager() {
+        em = Persistence.createEntityManagerFactory("test").createEntityManager();
         return em;
     }
 

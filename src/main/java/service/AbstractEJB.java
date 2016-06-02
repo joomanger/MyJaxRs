@@ -1,11 +1,10 @@
 package service;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 /**
  *
@@ -17,6 +16,7 @@ public abstract class AbstractEJB<T> {
     public final String SUCCESSFUL = "S#";
     public final String ERROR = "E#";
     private final Class<T> entityClass;
+    private FacesContext facesContext;
 
     public AbstractEJB(Class<T> entityClass) {
         this.entityClass = entityClass;
@@ -26,7 +26,10 @@ public abstract class AbstractEJB<T> {
 
     public String create(T entity) {
         try {
+            EntityTransaction tr = getEntityManager().getTransaction();
+            tr.begin();
             getEntityManager().persist(entity);
+            tr.commit();
             return SUCCESSFUL;
         } catch (Exception ex) {
             return ERROR + " " + ex.getMessage();
@@ -35,7 +38,10 @@ public abstract class AbstractEJB<T> {
 
     public String edit(T entity) {
         try {
+            EntityTransaction tr = getEntityManager().getTransaction();
+            tr.begin();
             getEntityManager().merge(entity);
+            tr.commit();
             return SUCCESSFUL;
         } catch (Exception ex) {
             return ERROR + " " + ex.getMessage();
@@ -44,7 +50,10 @@ public abstract class AbstractEJB<T> {
 
     public String remove(T entity) {
         try {
+            EntityTransaction tr = getEntityManager().getTransaction();
+            tr.begin();
             getEntityManager().remove(getEntityManager().merge(entity));
+            tr.commit();
             return SUCCESSFUL;
         } catch (Exception ex) {
             return ERROR + " " + ex.getMessage();
@@ -61,6 +70,10 @@ public abstract class AbstractEJB<T> {
 
     public List<T> findAll() {
         javax.persistence.criteria.CriteriaQuery cq;
+
+        if (getEntityManager() == null) {
+            System.out.println("EMA NULL");
+        }
         cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery(cq).getResultList();
@@ -84,12 +97,18 @@ public abstract class AbstractEJB<T> {
     }
 
     public void sendMessage(String status, String success_msg) {
-        if ((status != null)) {
-            if (status.equals(SUCCESSFUL)) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, success_msg, null));
-            } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, status, null));
+        try {
+            if ((status != null)) {
+                if (status.equals(SUCCESSFUL)) {
+                    //FacesContext.getCurrentInstance()
+                    facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, success_msg, null));
+                } else {
+                    //FacesContext.getCurrentInstance().
+                    facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, status, null));
+                }
             }
+        } catch (NullPointerException ex) {
+            System.out.println("FacesContext is null");
         }
     }
 

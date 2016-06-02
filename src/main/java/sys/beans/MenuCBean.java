@@ -5,7 +5,6 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.postgresql.util.PSQLException;
 import sys.entities.Menu;
 import sys.entities.MenuItem;
 
@@ -41,9 +40,22 @@ public class MenuCBean {
 
     }
 
+    public void deleteMenu(Menu menu) {
+        String status = ejb.remove(menu);
+        ejb.sendMessage(status, "Меню " + menu.getMenuName() + " удалено успешно");
+        fmv.getMenus().remove(menu);
+    }
+
     public void createMenu() {
         Menu menu = nmv.getMenu();
         String status = ejb.create(menu);
+        ejb.sendMessage(status, "Меню создано успешно");
+        nmv.setB1(true);
+    }
+
+    public void createMenu(Menu menu) {
+        String status = ejb.create(menu);
+        System.out.println("status=" + status);
         ejb.sendMessage(status, "Меню создано успешно");
         nmv.setB1(true);
     }
