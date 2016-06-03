@@ -1,5 +1,6 @@
 package sys.beans;
 
+import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,6 +19,10 @@ public class MenuItemCBean {
 
     public MenuItem getItem(Long p_id) {
         return ejb.find(p_id);
+    }
+    
+    public List<MenuItem> findAll(){
+        return ejb.findAll();
     }
 
 }

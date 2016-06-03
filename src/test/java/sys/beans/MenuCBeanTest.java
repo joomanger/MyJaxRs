@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sys.beans;
 
 import javax.enterprise.inject.Produces;
@@ -18,11 +13,10 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 import sys.entities.Menu;
+import sys.entities.MenuItem;
 
 /**
  *
@@ -39,10 +33,11 @@ public class MenuCBeanTest {
 
     @Inject
     private MenuCBean instance;
+    @Inject
+    private MenuItemCBean instance2;
 
-    public MenuCBeanTest() {
-    }
-
+//    public MenuCBeanTest() {
+//    }
     @BeforeClass
     public static void setUpClass() {
     }
@@ -53,9 +48,10 @@ public class MenuCBeanTest {
 
     @Before
     public void setUp() throws SystemException {
-        tm=em.getTransaction();
+        tm = em.getTransaction();
         menu.setActiveStatus(Boolean.TRUE);
         menu.setMenuName("TestMenu");
+
     }
 
     @After
@@ -78,59 +74,54 @@ public class MenuCBeanTest {
     @Test
     @InRequestScope
     public void testCreateAndDeleteMenu() {
-        System.out.println("createMenu");
-        System.out.println("2.create new menu");
+
+        System.out.println("---==createMenu==---");
         tm.begin();
         instance.createMenu(menu);
         tm.commit();
-        System.out.println("Menus count: " + instance.findAll().size());
         Assert.assertEquals(3, instance.findAll().size());
-        System.out.println("deleteMenus");
-        System.out.println("3.delete menu");
+
         tm.begin();
         instance.deleteMenu(menu);
         tm.commit();
-        System.out.println("Menus count: " + instance.findAll().size());
         Assert.assertEquals(2, instance.findAll().size());
     }
 
-   
-//
-//    /**
-//     * Test of deleteMenuItems method, of class MenuCBean.
-//     */
-//    @Test
-//    public void testDeleteMenuItems() {
-//        System.out.println("deleteMenuItems");
-//        MenuCBean instance = new MenuCBean();
-//        instance.deleteMenuItems();
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of addMenuItemNMV method, of class MenuCBean.
-//     */
-//    @Test
-//    public void testAddMenuItemNMV() {
-//        System.out.println("addMenuItemNMV");
-//        MenuCBean instance = new MenuCBean();
-//        instance.addMenuItemNMV();
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of findMenuItemsNMV method, of class MenuCBean.
-//     */
-//    @Test
-//    public void testFindMenuItemsNMV() {
-//        System.out.println("findMenuItemsNMV");
-//        MenuCBean instance = new MenuCBean();
-//        List<MenuItem> expResult = null;
-//        List<MenuItem> result = instance.findMenuItemsNMV();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    @Test
+    @InRequestScope
+    public void testCreateDeleteMenuItems() {
+
+        System.out.println("---==createMenuItems==---");
+        tm.begin();
+        instance.createMenu(menu);
+        tm.commit();
+        Assert.assertEquals(3, instance.findAll().size());
+
+        //Добавим первую строку
+        MenuItem mi = new MenuItem();
+        mi.setView_id(1l);
+        mi.setLine_num(Short.parseShort("1"));
+        mi.setMenuItem("Testik1");
+        tm.begin();
+        instance.addMenuItemNMV(menu, mi);
+        tm.commit();
+
+        //Добавим вторую строку
+        MenuItem mi2 = new MenuItem();
+        mi2.setView_id(1l);
+        mi2.setLine_num(Short.parseShort("2"));
+        mi2.setMenuItem("Testik2");
+        tm.begin();
+        instance.addMenuItemNMV(menu, mi2);
+        tm.commit();
+        Assert.assertEquals(6, instance2.findAll().size());
+
+        //Удалим меню
+        tm.begin();
+        instance.deleteMenu(menu);
+        tm.commit();
+        Assert.assertEquals(2, instance.findAll().size());
+
+    }
+
 }

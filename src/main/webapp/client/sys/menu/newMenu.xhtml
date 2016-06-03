@@ -24,7 +24,7 @@
 
                     <p:dataTable id="dTable" var="ord" value="#{newMenuView.menu.menuItems}" selection="#{newMenuView.selectedMenuItems}" 
                                  rowSelectMode="checkbox" editMode="cell" editable="true"
-                                 scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.menuItem}" 
+                                 scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord}" 
                                  style="width: 1000px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:column headerText="нпп" style="width:30px;">
@@ -46,11 +46,11 @@
                         <f:facet name="footer" >
                             <p:outputLabel for="addTextItem" value="Новый пункт"/>
                             <p:inputText id="addTextItem" value="#{newMenuView.newMenuName}"/>
-                            <p:autoComplete  disabled="#{!newMenuView.b1}" alt="sadsd"
-                                            value="#{newMenuView.newView}" 
-                                            completeMethod="#{viewConverter.completeView}" converter="#{viewConverter}"
-                                            var="v" itemLabel="#{v.viewName}" itemValue="#{v}"
-                                            forceSelection="true" dropdown="true" style="margin-right: 50px" >
+                            <p:autoComplete  disabled="#{!newMenuView.b1}"
+                                             value="#{newMenuView.newView}" 
+                                             completeMethod="#{viewConverter.completeView}" converter="#{viewConverter}"
+                                             var="v" itemLabel="#{v.viewName}" itemValue="#{v}"
+                                             forceSelection="true" dropdown="true" style="margin-right: 50px" >
                             </p:autoComplete>
                             <p:focus for="addTextItem"/>
                             <p:commandButton value="Добавить" actionListener="#{menuCBean.addMenuItemNMV()}" update="dTable" disabled="#{!newMenuView.b1}"/>

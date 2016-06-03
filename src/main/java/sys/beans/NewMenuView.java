@@ -18,7 +18,7 @@ import sys.entities.View;
 @ViewScoped
 public class NewMenuView implements Serializable {
 
-    private Menu menu;
+    private Menu menu=new Menu();
     private Boolean b1;
     private View newView;
     private List<MenuItem> selectedMenuItems = new ArrayList<>();
@@ -27,7 +27,7 @@ public class NewMenuView implements Serializable {
 
     @PostConstruct
     private void init() {
-        menu = new Menu();
+      //  menu = new Menu();
         menu.setActiveStatus(true);
     }
 

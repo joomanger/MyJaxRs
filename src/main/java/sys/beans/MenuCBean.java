@@ -74,12 +74,35 @@ public class MenuCBean {
 
     public void addMenuItemNMV() {
         Menu m = nmv.getMenu();
-        nmv.next_line();
         MenuItem mi = new MenuItem();
-        mi.setView_id(nmv.getNewView().getView_id());
-        mi.setLine_num(nmv.getLine_num());
-        mi.setMenuItem(nmv.getNewMenuName());
-        m.getMenuItems().add(mi);
+        String status = null;
+        try {
+            nmv.next_line();
+            mi.setView_id(nmv.getNewView().getView_id());
+            mi.setLine_num(nmv.getLine_num());
+            mi.setMenuItem(nmv.getNewMenuName());
+            m.getMenuItems().add(mi);
+            status = ejb.edit(m);
+
+            //m.getMenuItems().add(mi);
+        } catch (Exception ex) {
+            ejb.sendMessage("Ошибка вставки", null);
+            nmv.prev_line();
+        }
+
+        ejb.sendMessage(status, "Пункт меню " + mi.getMenuItem() + " добавлен успешно");
+        nmv.setNewMenuName(null);
+        nmv.setNewView(null);
+    }
+
+    public void addMenuItemNMV(Menu menu, MenuItem menuItem) {
+        Menu m = menu;
+//        nmv.next_line();
+//        MenuItem mi = new MenuItem();
+//        mi.setView_id(nmv.getNewView().getView_id());
+//        mi.setLine_num(nmv.getLine_num());
+//        mi.setMenuItem(nmv.getNewMenuName());
+        m.getMenuItems().add(menuItem);
         String status = null;
         try {
             status = ejb.edit(m);
@@ -89,7 +112,7 @@ public class MenuCBean {
             nmv.prev_line();
         }
 
-        itemEJB.sendMessage(status, "Пункт меню " + mi.getMenuItem() + " добавлен успешно");
+        itemEJB.sendMessage(status, "Пункт меню " + menuItem.getMenuItem() + " добавлен успешно");
         nmv.setNewMenuName(null);
         nmv.setNewView(null);
     }

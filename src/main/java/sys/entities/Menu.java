@@ -1,7 +1,9 @@
 package sys.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,9 +30,9 @@ public class Menu implements Serializable, Comparable<Menu> {
     private Long menu_id;
     private String menuName;
     private Boolean activeStatus = true;
-    //@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    @OneToMany(targetEntity=MenuItem.class, cascade={CascadeType.ALL}, mappedBy="menu")
-    private List<MenuItem> menuItems;
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
+    @JoinColumn(name = "menu_id")
+    private Set<MenuItem> menuItems=new HashSet<>();
 
     public Long getMenu_id() {
         return menu_id;
@@ -56,11 +58,11 @@ public class Menu implements Serializable, Comparable<Menu> {
         this.activeStatus = activeStatus;
     }
 
-    public List<MenuItem> getMenuItems() {
+    public Set<MenuItem> getMenuItems() {
         return menuItems;
     }
 
-    public void setMenuItems(List<MenuItem> menuItems) {
+    public void setMenuItems(Set<MenuItem> menuItems) {
         this.menuItems = menuItems;
     }
 
