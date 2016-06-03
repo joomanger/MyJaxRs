@@ -4,7 +4,6 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 
 /**
  *
@@ -16,7 +15,6 @@ public abstract class AbstractEJB<T> {
     public final String SUCCESSFUL = "S#";
     public final String ERROR = "E#";
     private final Class<T> entityClass;
-    private FacesContext facesContext;
 
     public AbstractEJB(Class<T> entityClass) {
         this.entityClass = entityClass;
@@ -26,10 +24,7 @@ public abstract class AbstractEJB<T> {
 
     public String create(T entity) {
         try {
-            EntityTransaction tr = getEntityManager().getTransaction();
-            tr.begin();
             getEntityManager().persist(entity);
-            tr.commit();
             return SUCCESSFUL;
         } catch (Exception ex) {
             return ERROR + " " + ex.getMessage();
@@ -38,10 +33,7 @@ public abstract class AbstractEJB<T> {
 
     public String edit(T entity) {
         try {
-            EntityTransaction tr = getEntityManager().getTransaction();
-            tr.begin();
             getEntityManager().merge(entity);
-            tr.commit();
             return SUCCESSFUL;
         } catch (Exception ex) {
             return ERROR + " " + ex.getMessage();
@@ -50,10 +42,7 @@ public abstract class AbstractEJB<T> {
 
     public String remove(T entity) {
         try {
-            EntityTransaction tr = getEntityManager().getTransaction();
-            tr.begin();
             getEntityManager().remove(getEntityManager().merge(entity));
-            tr.commit();
             return SUCCESSFUL;
         } catch (Exception ex) {
             return ERROR + " " + ex.getMessage();
@@ -101,10 +90,10 @@ public abstract class AbstractEJB<T> {
             if ((status != null)) {
                 if (status.equals(SUCCESSFUL)) {
                     //FacesContext.getCurrentInstance()
-                    facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, success_msg, null));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, success_msg, null));
                 } else {
                     //FacesContext.getCurrentInstance().
-                    facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, status, null));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, status, null));
                 }
             }
         } catch (NullPointerException ex) {

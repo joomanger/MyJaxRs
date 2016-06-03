@@ -2,9 +2,20 @@
 <persistence version="2.1"
              xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+    <persistence-unit name="myjaxrs" transaction-type="JTA">
+        <jta-data-source>postgreSQLJDBCResource</jta-data-source>
+        <properties>
+            <property name="javax.persistence.schema-generation.database.action" value="create-or-extend-tables"/>
+            <property name="javax.persistence.sql-load-script-source" value="META-INF/load.sql"/>
+            <property name="javax.persistence.schema-generation.create-script-fsource" value="META-INF/create.sql"/>
+            <property name="eclipselink.logging.exceptions" value="false"/>
+        </properties>
+    </persistence-unit>
     <persistence-unit name="test" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+<!--        <jta-data-source>postgreSQLJDBCResource</jta-data-source>-->
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
+<!--        <class>sys.entities.Menu</class>-->
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres" />
             <property name="javax.persistence.jdbc.user" value="postgres" />
@@ -15,26 +26,5 @@
             <property name="eclipselink.logging.level" value="SEVERE" />
         </properties>
     </persistence-unit>
-    <persistence-unit name="myjaxrs" transaction-type="JTA">
-        <jta-data-source>postgreSQLJDBCResource</jta-data-source>
-        <properties>
-            <property name="javax.persistence.schema-generation.database.action" value="create-or-extend-tables"/>
-            <property name="javax.persistence.sql-load-script-source" value="META-INF/load.sql"/>
-            <property name="javax.persistence.schema-generation.create-script-fsource" value="META-INF/create.sql"/>
-            <property name="eclipselink.logging.exceptions" value="false"/>
-        </properties>
-    </persistence-unit>
 </persistence>
-<!--<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-    <persistence-unit name="myjaxrs" transaction-type="JTA">
-        <jta-data-source>postgreSQLJDBCResource</jta-data-source>
-        <properties>
-            <property name="javax.persistence.schema-generation.database.action" value="create-or-extend-tables"/>
-            <property name="javax.persistence.sql-load-script-source" value="META-INF/load.sql"/>
-            <property name="javax.persistence.schema-generation.create-script-fsource" value="META-INF/create.sql"/>
-            <property name="eclipselink.logging.exceptions" value="false"/>
-        </properties>
-    </persistence-unit>
-</persistence>-->
 

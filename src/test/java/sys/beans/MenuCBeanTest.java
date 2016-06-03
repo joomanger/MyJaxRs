@@ -5,8 +5,12 @@
  */
 package sys.beans;
 
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.transaction.SystemException;
 import org.jglue.cdiunit.CdiRunner;
 import org.jglue.cdiunit.InRequestScope;
 import org.junit.After;
@@ -14,8 +18,10 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import sys.entities.Menu;
 
 /**
@@ -23,7 +29,13 @@ import sys.entities.Menu;
  * @author savin
  */
 @RunWith(CdiRunner.class)
-public class MenuCBeanTest extends AbstractTest {
+public class MenuCBeanTest {
+
+    @Produces
+    private final EntityManager em = Persistence.createEntityManagerFactory("test").createEntityManager();
+    private EntityTransaction tm;
+
+    private Menu menu = new Menu();
 
     @Inject
     private MenuCBean instance;
@@ -40,7 +52,10 @@ public class MenuCBeanTest extends AbstractTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws SystemException {
+        tm=em.getTransaction();
+        menu.setActiveStatus(Boolean.TRUE);
+        menu.setMenuName("TestMenu");
     }
 
     @After
@@ -53,50 +68,33 @@ public class MenuCBeanTest extends AbstractTest {
     @Test
     @InRequestScope
     public void testFindAll() {
+
         System.out.println("MenuEJB.findAll");
         System.out.println("1.Menus count: " + instance.findAll().size());
         Assert.assertEquals(2, instance.findAll().size());
 
-        Menu menu = new Menu();
-        menu.setActiveStatus(Boolean.TRUE);
-        menu.setMenuName("TestMenu");
-
-        System.out.println("2.create new menu");
-        instance.createMenu(menu);
-
-        System.out.println("Menus count: " + instance.findAll().size());
-        Assert.assertEquals(3, instance.findAll().size());
-
-        System.out.println("3.delete menu");
-        instance.deleteMenu(menu);
-        System.out.println("Menus count: " + instance.findAll().size());
-        Assert.assertEquals(2, instance.findAll().size());
-
     }
 
-    /**
-     * Test of deleteMenus method, of class MenuCBean.
-     */
-//    @Test
-//    public void testDeleteMenus() {
-//        System.out.println("deleteMenus");
-//        MenuCBean instance = new MenuCBean();
-//        instance.deleteMenus();
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of createMenu method, of class MenuCBean.
-//     */
-//    @Test
-//    public void testCreateMenu() {
-//        System.out.println("createMenu");
-//        MenuCBean instance = new MenuCBean();
-//        instance.createMenu();
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    @Test
+    @InRequestScope
+    public void testCreateAndDeleteMenu() {
+        System.out.println("createMenu");
+        System.out.println("2.create new menu");
+        tm.begin();
+        instance.createMenu(menu);
+        tm.commit();
+        System.out.println("Menus count: " + instance.findAll().size());
+        Assert.assertEquals(3, instance.findAll().size());
+        System.out.println("deleteMenus");
+        System.out.println("3.delete menu");
+        tm.begin();
+        instance.deleteMenu(menu);
+        tm.commit();
+        System.out.println("Menus count: " + instance.findAll().size());
+        Assert.assertEquals(2, instance.findAll().size());
+    }
+
+   
 //
 //    /**
 //     * Test of deleteMenuItems method, of class MenuCBean.
