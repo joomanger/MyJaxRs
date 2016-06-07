@@ -24,11 +24,17 @@ public class MenuCBean {
     private FindMenuView fmv;
     @Inject
     private NewMenuView nmv;
+    @Inject
+    private OpenMenuView omv;
 
     public List<Menu> findAll() {
         List<Menu> menus = ejb.findAll();
         Collections.sort(menus);
         return menus;
+    }
+
+    public Menu findMenu(Long p_menu_id) {
+        return ejb.find(p_menu_id);
     }
 
     public void deleteMenus() {
@@ -46,11 +52,11 @@ public class MenuCBean {
         fmv.getMenus().remove(menu);
     }
 
-    public void createMenu() {
+    public String createMenu() {
         Menu menu = nmv.getMenu();
         String status = ejb.create(menu);
         ejb.sendMessage(status, "Меню создано успешно");
-        nmv.setB1(true);
+        return "menus";
     }
 
     public void createMenu(Menu menu) {
@@ -60,48 +66,61 @@ public class MenuCBean {
         nmv.setB1(true);
     }
 
-    public void deleteMenuItems() {
-        for (MenuItem mi : nmv.getSelectedMenuItems()) {
-            String status = itemEJB.remove(mi);
-            itemEJB.sendMessage(status, "Пункт меню " + mi.getMenuItem() + " удален успешно");
-            nmv.getMenu().getMenuItems().remove(mi);
-        }
-//        Menu m = nmv.getMenu();
-//        m.getMenuItems().removeAll(nmv.getSelectedMenuItems());
-//        String status = ejb.edit(m);
-//        ejb.sendMessage(status, "Удаление выполнено успешно");
-    }
-
     public void addMenuItemNMV() {
+
         Menu m = nmv.getMenu();
         MenuItem mi = new MenuItem();
-        String status = null;
-        try {
-            nmv.next_line();
-            mi.setView_id(nmv.getNewView().getView_id());
-            mi.setLine_num(nmv.getLine_num());
-            mi.setMenuItem(nmv.getNewMenuName());
-            m.getMenuItems().add(mi);
-            status = ejb.edit(m);
-
-            //m.getMenuItems().add(mi);
-        } catch (Exception ex) {
-            ejb.sendMessage("Ошибка вставки", null);
-            nmv.prev_line();
-        }
-
-        ejb.sendMessage(status, "Пункт меню " + mi.getMenuItem() + " добавлен успешно");
-        nmv.setNewMenuName(null);
+        nmv.next_line();
+        mi.setView_id(nmv.getNewView().getView_id());
+        mi.setLine_num(nmv.getLine_num());
+        mi.setMenuItem(nmv.getNewMenuName());
+        m.getMenuItems().add(mi);
+        String status=ejb.create(m);
+        ejb.sendMessage(status, "sdsdsd");
         nmv.setNewView(null);
+        nmv.setNewMenuName(null);
     }
 
+    public void saveMenuHeader() {
+        String status = ejb.edit(omv.getMenu());
+        ejb.sendMessage(status, "Меню сохранено успешно");
+    }
+
+    public void addMenuItemOMV() {
+        if ((omv.getNewMenuName().isEmpty()) || (omv.getNewView() == null)) {
+            ejb.sendMessage("Пункт меню не должен быть пустым", null);
+        } else {
+            Menu m = omv.getMenu();
+            MenuItem mi = new MenuItem();
+            omv.next_line();
+            mi.setView_id(omv.getNewView().getView_id());
+            mi.setLine_num(omv.getLine_num());
+            mi.setMenuItem(omv.getNewMenuName());
+            m.getMenuItems().add(mi);
+
+            String status = ejb.edit(m);
+            ejb.sendMessage(status, "Пункт " + mi.getMenuItem() + " добавлен успешно");
+
+            omv.setNewView(null);
+            omv.setNewMenuName(null);
+        }
+    }
+
+    public void deleteMenuItemsNMV() {
+        nmv.getMenu().getMenuItems().removeAll(nmv.getSelectedMenuItems());
+    }
+
+    public void deleteMenuItemsOMV() {
+        for(MenuItem mi:omv.getSelectedMenuItems()){
+            String status = itemEJB.remove(mi);
+            itemEJB.sendMessage(status, "Пункты меню "+mi.getMenuItem()+" удалены успешно");
+        }
+        omv.getMenu().getMenuItems().removeAll(omv.getSelectedMenuItems());
+    }
+
+    //For test
     public void addMenuItemNMV(Menu menu, MenuItem menuItem) {
         Menu m = menu;
-//        nmv.next_line();
-//        MenuItem mi = new MenuItem();
-//        mi.setView_id(nmv.getNewView().getView_id());
-//        mi.setLine_num(nmv.getLine_num());
-//        mi.setMenuItem(nmv.getNewMenuName());
         m.getMenuItems().add(menuItem);
         String status = null;
         try {
@@ -119,6 +138,15 @@ public class MenuCBean {
 
     public List<MenuItem> findMenuItemsNMV() {
         return itemEJB.findByMenuId(nmv.getMenu().getMenu_id());
+    }
+
+    public Short getLastLineNum(Long p_menu_id) {
+        Short rez = ejb.getLastLineNum(p_menu_id);
+        if (rez == null) {
+            return 0;
+        } else {
+            return rez;
+        }
     }
 
 }

@@ -26,7 +26,7 @@ public class MenuItemEJB extends AbstractEJB<MenuItem> {
 
     @Override
     public EntityManager getEntityManager() {
-        em = Persistence.createEntityManagerFactory("test").createEntityManager();
+        //em = Persistence.createEntityManagerFactory("test").createEntityManager();
         return em;
     }
 

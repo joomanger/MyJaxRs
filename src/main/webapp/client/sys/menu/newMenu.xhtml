@@ -18,7 +18,6 @@
                             <p:inputText value="#{newMenuView.menu.menuName}" disabled="#{newMenuView.b1}"/>
                             <p:outputLabel value="Активное"/>
                             <p:inputSwitch value="#{newMenuView.menu.activeStatus}" disabled="#{newMenuView.b1}"/>
-                            <p:commandButton value="Создать" actionListener="#{menuCBean.createMenu()}" style="margin-top: 10px;margin-right: 20px" update="yyy dTable" disabled="#{newMenuView.b1}"/>
                         </h:panelGrid>
                     </p:fieldset> 
 
@@ -45,16 +44,15 @@
                         </p:column>
                         <f:facet name="footer" >
                             <p:outputLabel for="addTextItem" value="Новый пункт"/>
-                            <p:inputText id="addTextItem" value="#{newMenuView.newMenuName}"/>
-                            <p:autoComplete  disabled="#{!newMenuView.b1}"
-                                             value="#{newMenuView.newView}" 
+                            <p:inputText id="addTextItem" value="#{newMenuView.newMenuName}" required="false"/>
+                            <p:autoComplete  value="#{newMenuView.newView}"  required="false"
                                              completeMethod="#{viewConverter.completeView}" converter="#{viewConverter}"
                                              var="v" itemLabel="#{v.viewName}" itemValue="#{v}"
                                              forceSelection="true" dropdown="true" style="margin-right: 50px" >
                             </p:autoComplete>
                             <p:focus for="addTextItem"/>
-                            <p:commandButton value="Добавить" actionListener="#{menuCBean.addMenuItemNMV()}" update="dTable" disabled="#{!newMenuView.b1}"/>
-                            <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px" disabled="#{!newMenuView.b1}"/>
+                            <p:commandButton value="Добавить" actionListener="#{menuCBean.addMenuItemNMV()}" update="dTable"/>
+                            <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
                         </f:facet>
                     </p:dataTable>
                     <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
@@ -68,10 +66,11 @@
                                 </p:column>
                             </p:dataTable>
                             <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>
-                            <p:commandButton value="Yes" actionListener="#{menuCBean.deleteMenuItems()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
+                            <p:commandButton value="Yes" actionListener="#{menuCBean.deleteMenuItemsNMV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
                         </p:outputPanel>
                     </p:dialog>
                     <p:commandButton id="btnBack" value="Back" action="menus" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
+                    <p:commandButton id="btnCreate" value="Create" immediate="true" action="#{menuCBean.createMenu()}"  style="margin-top: 10px;margin-right: 20px"/>
                 </h:form>
 
             </ui:define>

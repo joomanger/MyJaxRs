@@ -1,15 +1,16 @@
 package sys.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -22,17 +23,19 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(uniqueConstraints
         = @UniqueConstraint(columnNames = {"menuName"}))
+@NamedQueries(
+        @NamedQuery(name = Menu.LAST_LINE_NUM, query = "select max(t.line_num) from MenuItem t where t.menu.menu_id=:p_menu_id"))
 public class Menu implements Serializable, Comparable<Menu> {
 
+    public static final String LAST_LINE_NUM = "Menu.LAST_LINE_NUM";
     @Id
     @SequenceGenerator(name = "menu_sq", initialValue = 3, allocationSize = 1)
     @GeneratedValue(generator = "menu_sq")
     private Long menu_id;
     private String menuName;
     private Boolean activeStatus = true;
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
-    @JoinColumn(name = "menu_id")
-    private Set<MenuItem> menuItems=new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "menu")
+    private List<MenuItem> menuItems = new ArrayList<>();
 
     public Long getMenu_id() {
         return menu_id;
@@ -58,17 +61,14 @@ public class Menu implements Serializable, Comparable<Menu> {
         this.activeStatus = activeStatus;
     }
 
-    public Set<MenuItem> getMenuItems() {
+    public List<MenuItem> getMenuItems() {
         return menuItems;
     }
 
-    public void setMenuItems(Set<MenuItem> menuItems) {
+    public void setMenuItems(List<MenuItem> menuItems) {
         this.menuItems = menuItems;
     }
 
-//    public void addMenuItem(MenuItem mi){
-//        this.menuItems.add(mi);
-//    }
     @Override
     public int compareTo(Menu o) {
         if (menuName.charAt(0) > o.menuName.charAt(0)) {
