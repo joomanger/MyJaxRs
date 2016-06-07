@@ -1,7 +1,9 @@
 package sys.entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -29,8 +31,8 @@ public class MenuItem implements Serializable, Comparable<MenuItem> {
     private String menuItem;
     private Short line_num;
     private Long view_id;
-    @ManyToOne
-    @JoinColumn(name="MENU_ID",nullable = false, updatable = false, insertable = true)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "MENU_ID", nullable = false, updatable = false, insertable = true)
     private Menu menu;
 
     public Menu getMenu() {
@@ -40,7 +42,7 @@ public class MenuItem implements Serializable, Comparable<MenuItem> {
     public void setMenu(Menu menu) {
         this.menu = menu;
     }
-    
+
     public Long getMenuItem_id() {
         return menuItem_id;
     }
@@ -75,12 +77,11 @@ public class MenuItem implements Serializable, Comparable<MenuItem> {
 
     @Override
     public int compareTo(MenuItem o) {
-       if (line_num > o.getLine_num()) {
+        if (line_num > o.getLine_num()) {
             return 1;
         } else {
             return -1;
         }
     }
-    
 
 }

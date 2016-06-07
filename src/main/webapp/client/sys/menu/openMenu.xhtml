@@ -18,7 +18,6 @@
                             <p:inputText value="#{openMenuView.menu.menuName}"/>
                             <p:outputLabel value="Активное"/>
                             <p:inputSwitch value="#{openMenuView.menu.activeStatus}"/>
-                            <p:commandButton id="btnSave" value="Сохранить" actionListener="#{menuCBean.saveMenuHeader()}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
                         </h:panelGrid>
                     </p:fieldset> 
 
@@ -71,6 +70,7 @@
                         </p:outputPanel>
                     </p:dialog>
                     <p:commandButton id="btnBack" value="Back" action="menus" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
+                    <p:commandButton id="btnSave" value="Сохранить" actionListener="#{menuCBean.saveMenuHeader()}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
                 </h:form>
 
             </ui:define>

@@ -74,9 +74,9 @@ public class MenuCBean {
         mi.setView_id(nmv.getNewView().getView_id());
         mi.setLine_num(nmv.getLine_num());
         mi.setMenuItem(nmv.getNewMenuName());
-        m.getMenuItems().add(mi);
-        String status=ejb.create(m);
-        ejb.sendMessage(status, "sdsdsd");
+//        mi.setMenu(m);
+//        m.getMenuItems().add(mi);
+        m.addMenuItem(mi);
         nmv.setNewView(null);
         nmv.setNewMenuName(null);
     }
@@ -96,10 +96,8 @@ public class MenuCBean {
             mi.setView_id(omv.getNewView().getView_id());
             mi.setLine_num(omv.getLine_num());
             mi.setMenuItem(omv.getNewMenuName());
-            m.getMenuItems().add(mi);
 
-            String status = ejb.edit(m);
-            ejb.sendMessage(status, "Пункт " + mi.getMenuItem() + " добавлен успешно");
+            m.addMenuItem(mi);
 
             omv.setNewView(null);
             omv.setNewMenuName(null);
@@ -112,10 +110,8 @@ public class MenuCBean {
 
     public void deleteMenuItemsOMV() {
         for(MenuItem mi:omv.getSelectedMenuItems()){
-            String status = itemEJB.remove(mi);
-            itemEJB.sendMessage(status, "Пункты меню "+mi.getMenuItem()+" удалены успешно");
+            omv.getMenu().removeMenuItem(mi);
         }
-        omv.getMenu().getMenuItems().removeAll(omv.getSelectedMenuItems());
     }
 
     //For test

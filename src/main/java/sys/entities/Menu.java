@@ -5,16 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import org.eclipse.persistence.annotations.PrivateOwned;
 
 /**
  *
@@ -34,8 +33,19 @@ public class Menu implements Serializable, Comparable<Menu> {
     private Long menu_id;
     private String menuName;
     private Boolean activeStatus = true;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "menu")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "menu")
+    @PrivateOwned
     private List<MenuItem> menuItems = new ArrayList<>();
+
+    public void addMenuItem(MenuItem mi) {
+        getMenuItems().add(mi);
+        mi.setMenu(this);
+    }
+
+    public void removeMenuItem(MenuItem mi) {
+        getMenuItems().remove(mi);
+        mi.setMenu(null);
+    }
 
     public Long getMenu_id() {
         return menu_id;
