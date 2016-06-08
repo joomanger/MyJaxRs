@@ -81,9 +81,14 @@ public class MenuCBean {
         nmv.setNewMenuName(null);
     }
 
-    public void saveMenuHeader() {
+    public void saveMenu(String msg) {
         String status = ejb.edit(omv.getMenu());
-        ejb.sendMessage(status, "Меню сохранено успешно");
+        ejb.sendMessage(status, msg);
+    }
+
+    public void saveMenuItem(MenuItem mi, String msg) {
+        String status = itemEJB.edit(mi);
+        itemEJB.sendMessage(status, msg);
     }
 
     public void addMenuItemOMV() {
@@ -92,13 +97,20 @@ public class MenuCBean {
         } else {
             Menu m = omv.getMenu();
             MenuItem mi = new MenuItem();
-            omv.next_line();
+//            omv.next_line();
+            Short line_num = ejb.getLastLineNum(m.getMenu_id());
+            if (line_num == null) {
+                line_num = 1;
+            } else {
+                line_num++;
+            }
+
             mi.setView_id(omv.getNewView().getView_id());
-            mi.setLine_num(omv.getLine_num());
+            mi.setLine_num(line_num);
             mi.setMenuItem(omv.getNewMenuName());
-
             m.addMenuItem(mi);
-
+            saveMenu("Пункт добавлен успешно");
+            //saveMenuItem(mi, "Пункт добавлен успешно");
             omv.setNewView(null);
             omv.setNewMenuName(null);
         }
@@ -109,9 +121,10 @@ public class MenuCBean {
     }
 
     public void deleteMenuItemsOMV() {
-        for(MenuItem mi:omv.getSelectedMenuItems()){
+        for (MenuItem mi : omv.getSelectedMenuItems()) {
             omv.getMenu().removeMenuItem(mi);
         }
+        saveMenu("Пункты удалены успешно");
     }
 
     //For test

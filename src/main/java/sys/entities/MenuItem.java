@@ -1,7 +1,6 @@
 package sys.entities;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,6 +18,8 @@ import javax.persistence.UniqueConstraint;
  * @author savin
  */
 @Entity
+@Table(uniqueConstraints
+        = @UniqueConstraint(columnNames = {"menuItem"}))
 @NamedQueries(
         @NamedQuery(name = MenuItem.FIND_BY_MENU_ID, query = "select t from MenuItem t where t.menu.menu_id=:p_menu_id order by t.line_num"))
 public class MenuItem implements Serializable, Comparable<MenuItem> {
@@ -40,7 +41,14 @@ public class MenuItem implements Serializable, Comparable<MenuItem> {
     }
 
     public void setMenu(Menu menu) {
+        setMenu(menu, true);
+    }
+
+    public void setMenu(Menu menu, boolean set) {
         this.menu = menu;
+        if (menu != null && set) {
+            menu.addMenuItem(this, false);
+        }
     }
 
     public Long getMenuItem_id() {

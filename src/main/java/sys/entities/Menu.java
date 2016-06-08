@@ -33,18 +33,27 @@ public class Menu implements Serializable, Comparable<Menu> {
     private Long menu_id;
     private String menuName;
     private Boolean activeStatus = true;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "menu")
+    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, mappedBy = "menu")
     @PrivateOwned
     private List<MenuItem> menuItems = new ArrayList<>();
 
     public void addMenuItem(MenuItem mi) {
-        getMenuItems().add(mi);
-        mi.setMenu(this);
+        addMenuItem(mi, true);
+    }
+
+    public void addMenuItem(MenuItem mi, boolean add) {
+        if (mi != null) {
+            getMenuItems().add(mi);
+            if (add) {
+                mi.setMenu(this, false);
+            }
+        }
     }
 
     public void removeMenuItem(MenuItem mi) {
         getMenuItems().remove(mi);
         mi.setMenu(null);
+        
     }
 
     public Long getMenu_id() {
