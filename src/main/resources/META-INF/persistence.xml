@@ -13,9 +13,8 @@
     </persistence-unit>
     <persistence-unit name="test" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-<!--        <jta-data-source>postgreSQLJDBCResource</jta-data-source>-->
+        <jta-data-source>postgreSQLJDBCResource</jta-data-source>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
-<!--        <class>sys.entities.Menu</class>-->
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres" />
             <property name="javax.persistence.jdbc.user" value="postgres" />

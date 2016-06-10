@@ -67,53 +67,62 @@ public class MenuCBean {
     }
 
     public void addMenuItemNMV() {
-
-        Menu m = nmv.getMenu();
-        MenuItem mi = new MenuItem();
-        nmv.next_line();
-        mi.setView_id(nmv.getNewView().getView_id());
-        mi.setLine_num(nmv.getLine_num());
-        mi.setMenuItem(nmv.getNewMenuName());
-//        mi.setMenu(m);
-//        m.getMenuItems().add(mi);
-        m.addMenuItem(mi);
-        nmv.setNewView(null);
-        nmv.setNewMenuName(null);
+        if ((nmv.getNewMenuName().isEmpty()) || (nmv.getNewView() == null)) {
+            ejb.sendMessage("Пункт меню не должен быть пустым", null);
+        } else {
+            Menu m = nmv.getMenu();
+            MenuItem mi = new MenuItem();
+            nmv.next_line();
+            mi.setView_id(nmv.getNewView().getView_id());
+            mi.setLine_num(nmv.getLine_num());
+            mi.setMenuItem(nmv.getNewMenuName());
+            m.addMenuItem(mi);
+            nmv.setNewView(null);
+            nmv.setNewMenuName(null);
+        }
     }
 
     public void saveMenu(String msg) {
+
         String status = ejb.edit(omv.getMenu());
         ejb.sendMessage(status, msg);
     }
 
-    public void saveMenuItem(MenuItem mi, String msg) {
-        String status = itemEJB.edit(mi);
-        itemEJB.sendMessage(status, msg);
-    }
-
     public void addMenuItemOMV() {
-        if ((omv.getNewMenuName().isEmpty()) || (omv.getNewView() == null)) {
-            ejb.sendMessage("Пункт меню не должен быть пустым", null);
+        Menu menu = omv.getMenu();
+        MenuItem mi = new MenuItem();
+        Short line_num = ejb.getLastLineNum(menu.getMenu_id());
+        if (line_num == null) {
+            line_num = 1;
         } else {
-            Menu m = omv.getMenu();
-            MenuItem mi = new MenuItem();
-//            omv.next_line();
-            Short line_num = ejb.getLastLineNum(m.getMenu_id());
-            if (line_num == null) {
-                line_num = 1;
-            } else {
-                line_num++;
-            }
-
-            mi.setView_id(omv.getNewView().getView_id());
-            mi.setLine_num(line_num);
-            mi.setMenuItem(omv.getNewMenuName());
-            m.addMenuItem(mi);
-            saveMenu("Пункт добавлен успешно");
-            //saveMenuItem(mi, "Пункт добавлен успешно");
-            omv.setNewView(null);
-            omv.setNewMenuName(null);
+            line_num++;
         }
+
+        Long view_id;
+        try {
+            view_id = omv.getNewView().getView_id();
+        } catch (NullPointerException ex) {
+            view_id = null;
+        }
+
+        String menuName;
+        try {
+            menuName = omv.getNewMenuName();
+        } catch (NullPointerException ex) {
+            menuName = null;
+        }
+
+        mi.setView_id(view_id);
+        mi.setLine_num(line_num);
+        mi.setMenuItem(menuName);
+        mi.setMenu(menu);
+        String status = itemEJB.create(mi);
+        if (!status.equals(itemEJB.SUCCESSFUL)) {
+            omv.getMenu().getMenuItems().remove(mi);
+        }
+        itemEJB.sendMessage(status, "Пункт " + mi.getMenuItem() + " добавлен успешно");
+        omv.setNewView(null);
+        omv.setNewMenuName(null);
     }
 
     public void deleteMenuItemsNMV() {
@@ -121,28 +130,20 @@ public class MenuCBean {
     }
 
     public void deleteMenuItemsOMV() {
+        boolean succ = true;
         for (MenuItem mi : omv.getSelectedMenuItems()) {
-            omv.getMenu().removeMenuItem(mi);
+            String status = itemEJB.remove(mi);
+            if (!status.equals(itemEJB.SUCCESSFUL)) {
+                succ = false;
+            } else {
+                omv.getMenu().getMenuItems().remove(mi);
+            }
         }
-        saveMenu("Пункты удалены успешно");
-    }
-
-    //For test
-    public void addMenuItemNMV(Menu menu, MenuItem menuItem) {
-        Menu m = menu;
-        m.getMenuItems().add(menuItem);
-        String status = null;
-        try {
-            status = ejb.edit(m);
-            //m.getMenuItems().add(mi);
-        } catch (Exception ex) {
-            ejb.sendMessage("Ошибка вставки", null);
-            nmv.prev_line();
+        if (succ) {
+            itemEJB.sendMessage(itemEJB.SUCCESSFUL, "Пункты удалены успешно");
+        } else {
+            itemEJB.sendMessage(itemEJB.ERROR, "Ошибка при удалении");
         }
-
-        itemEJB.sendMessage(status, "Пункт меню " + menuItem.getMenuItem() + " добавлен успешно");
-        nmv.setNewMenuName(null);
-        nmv.setNewView(null);
     }
 
     public List<MenuItem> findMenuItemsNMV() {

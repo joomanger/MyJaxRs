@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Size;
 import org.eclipse.persistence.annotations.PrivateOwned;
 
 /**
@@ -31,11 +32,16 @@ public class Menu implements Serializable, Comparable<Menu> {
     @SequenceGenerator(name = "menu_sq", initialValue = 3, allocationSize = 1)
     @GeneratedValue(generator = "menu_sq")
     private Long menu_id;
+    @Size(min=3,max=30,message = "Длина поля от 3 до 30 символов!")
     private String menuName;
     private Boolean activeStatus = true;
-    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, mappedBy = "menu")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "menu")
     @PrivateOwned
     private List<MenuItem> menuItems = new ArrayList<>();
+
+    public Menu() {
+
+    }
 
     public void addMenuItem(MenuItem mi) {
         addMenuItem(mi, true);
@@ -53,7 +59,7 @@ public class Menu implements Serializable, Comparable<Menu> {
     public void removeMenuItem(MenuItem mi) {
         getMenuItems().remove(mi);
         mi.setMenu(null);
-        
+
     }
 
     public Long getMenu_id() {

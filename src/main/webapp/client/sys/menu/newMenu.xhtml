@@ -13,11 +13,13 @@
             <ui:define name="content">
                 <h:form  prependId="false">
                     <p:fieldset id="menuHeader" legend="Новое меню" style="width: 250px; margin-bottom: 10px"> 
-                        <h:panelGrid id="yyy" columns="2" cellpadding="5" cellspacing="5">
+                        <h:panelGrid id="yyy" columns="3" cellpadding="5" cellspacing="5">
                             <p:outputLabel value="Меню"/>
-                            <p:inputText value="#{newMenuView.menu.menuName}" disabled="#{newMenuView.b1}"/>
+                            <p:inputText id="menuName" value="#{newMenuView.menu.menuName}" disabled="#{newMenuView.b1}"/>
+                            <p:message for="menuName" />
                             <p:outputLabel value="Активное"/>
-                            <p:inputSwitch value="#{newMenuView.menu.activeStatus}" disabled="#{newMenuView.b1}"/>
+                            <p:inputSwitch id="activeStatus" value="#{newMenuView.menu.activeStatus}" disabled="#{newMenuView.b1}"/>
+                            <p:message for="activeStatus" />
                         </h:panelGrid>
                     </p:fieldset> 
 
@@ -51,7 +53,7 @@
                                              forceSelection="true" dropdown="true" style="margin-right: 50px" >
                             </p:autoComplete>
                             <p:focus for="addTextItem"/>
-                            <p:commandButton value="Добавить" actionListener="#{menuCBean.addMenuItemNMV()}" update="dTable"/>
+                            <p:commandButton value="Добавить" actionListener="#{menuCBean.addMenuItemNMV()}" update="dTable mainMSG"/>
                             <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
                         </f:facet>
                     </p:dataTable>
@@ -70,7 +72,7 @@
                         </p:outputPanel>
                     </p:dialog>
                     <p:commandButton id="btnBack" value="Back" action="menus" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
-                    <p:commandButton id="btnCreate" value="Создать" immediate="true" action="#{menuCBean.createMenu()}"  style="margin-top: 10px;margin-right: 20px"/>
+                    <p:commandButton id="btnCreate" value="Создать" ajax="false" validateClient="true"  actionListener="#{menuCBean.createMenu()}"   style="margin-top: 10px;margin-right: 20px"/>                    
                 </h:form>
 
             </ui:define>

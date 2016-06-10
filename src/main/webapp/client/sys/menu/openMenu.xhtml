@@ -18,9 +18,11 @@
                             <p:inputText value="#{openMenuView.menu.menuName}"/>
                             <p:outputLabel value="Активное"/>
                             <p:inputSwitch value="#{openMenuView.menu.activeStatus}"/>
+                            <p:commandButton id="btnSave" value="Сохранить" actionListener="#{menuCBean.saveMenu('Меню сохранено')}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
                         </h:panelGrid>
                     </p:fieldset> 
-
+                </h:form>
+                <h:form  prependId="false">
                     <p:dataTable id="dTable" var="ord" value="#{openMenuView.menu.menuItems}" selection="#{openMenuView.selectedMenuItems}" 
                                  rowSelectMode="checkbox" editMode="cell" editable="true"
                                  scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord}" 
@@ -51,7 +53,7 @@
                                              forceSelection="true" dropdown="true" style="margin-right: 50px" >
                             </p:autoComplete>
                             <p:focus for="addTextItem"/>
-                            <p:commandButton value="Добавить" actionListener="#{menuCBean.addMenuItemOMV()}" update="dTable"/>
+                            <p:commandButton value="Добавить" actionListener="#{menuCBean.addMenuItemOMV()}" update="dTable mainMSG"/>
                             <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
                         </f:facet>
                     </p:dataTable>
@@ -70,7 +72,6 @@
                         </p:outputPanel>
                     </p:dialog>
                     <p:commandButton id="btnBack" value="Back" action="menus" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
-                    <p:commandButton id="btnSave" value="Сохранить" actionListener="#{menuCBean.saveMenu('Меню сохранено')}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
                 </h:form>
 
             </ui:define>

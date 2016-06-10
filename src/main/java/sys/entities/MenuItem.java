@@ -2,8 +2,8 @@ package sys.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,6 +12,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -19,7 +21,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(uniqueConstraints
-        = @UniqueConstraint(columnNames = {"menuItem"}))
+        = @UniqueConstraint(columnNames = {"menuItem","menu_id"}))
 @NamedQueries(
         @NamedQuery(name = MenuItem.FIND_BY_MENU_ID, query = "select t from MenuItem t where t.menu.menu_id=:p_menu_id order by t.line_num"))
 public class MenuItem implements Serializable, Comparable<MenuItem> {
@@ -27,14 +29,20 @@ public class MenuItem implements Serializable, Comparable<MenuItem> {
     public static final String FIND_BY_MENU_ID = "MenuItem.findByMenuId";
     @Id
     @SequenceGenerator(name = "menuItem_sq", initialValue = 10, allocationSize = 1)
-    @GeneratedValue(generator = "menuItem_sq")
+    @GeneratedValue(generator = "menuItem_sq", strategy = GenerationType.SEQUENCE)
     private Long menuItem_id;
+    @Size(min=2,max=30,message = "Длина поля от 2 до 30 символов!")
+    @NotNull(message = "Пункт меню не должен быть пустым!")
     private String menuItem;
     private Short line_num;
+    @NotNull(message = "Въюха же должна быть, дебил!")
     private Long view_id;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "MENU_ID", nullable = false, updatable = false, insertable = true)
+    @ManyToOne
+    @JoinColumn(name = "MENU_ID")
     private Menu menu;
+
+    public MenuItem() {
+    }
 
     public Menu getMenu() {
         return menu;

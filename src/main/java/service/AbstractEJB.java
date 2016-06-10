@@ -1,9 +1,15 @@
 package service;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 /**
  *
@@ -24,8 +30,21 @@ public abstract class AbstractEJB<T> {
 
     public String create(T entity) {
         try {
-            getEntityManager().persist(entity);
-            return SUCCESSFUL;
+            ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+            Validator validator = factory.getValidator();
+            Set<ConstraintViolation<T>> constraintViolations = validator.validate(entity);
+            StringBuilder sb = new StringBuilder();
+            if (constraintViolations.size() > 0) {
+                Iterator<ConstraintViolation<T>> iterator = constraintViolations.iterator();
+                while (iterator.hasNext()) {
+                    ConstraintViolation<T> cv = iterator.next();
+                    sb.append(cv.getMessage());
+                }
+                return sb.toString();
+            } else {
+                getEntityManager().persist(entity);
+                return SUCCESSFUL;
+            }
         } catch (Exception ex) {
             return ERROR + " " + ex.getMessage();
         }

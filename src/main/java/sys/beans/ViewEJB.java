@@ -17,7 +17,8 @@ import sys.entities.View;
 @Stateless
 public class ViewEJB extends AbstractEJB<View> {
 
-    @PersistenceContext(unitName = "myjaxrs")
+    //@PersistenceContext(unitName = "myjaxrs")
+    @Inject
     private EntityManager em;
     @Inject
     private SessionConfig sc;
