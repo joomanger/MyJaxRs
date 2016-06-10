@@ -9,6 +9,9 @@
             <property name="javax.persistence.sql-load-script-source" value="META-INF/load.sql"/>
             <property name="javax.persistence.schema-generation.create-script-fsource" value="META-INF/create.sql"/>
             <property name="eclipselink.logging.exceptions" value="false"/>
+            <property name="eclipselink.cache.shared.default" value="false"/>
+            <property name="eclipselink.query-results-cache" value="false"/>
+            <property name="eclipselink.refresh" value="true"/>
         </properties>
     </persistence-unit>
     <persistence-unit name="test" transaction-type="RESOURCE_LOCAL">

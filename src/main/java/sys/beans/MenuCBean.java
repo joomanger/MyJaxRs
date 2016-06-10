@@ -118,7 +118,7 @@ public class MenuCBean {
         mi.setMenu(menu);
         String status = itemEJB.create(mi);
         if (!status.equals(itemEJB.SUCCESSFUL)) {
-            omv.getMenu().getMenuItems().remove(mi);
+            menu.getMenuItems().remove(mi);
         }
         itemEJB.sendMessage(status, "Пункт " + mi.getMenuItem() + " добавлен успешно");
         omv.setNewView(null);

@@ -35,6 +35,7 @@ public class OpenMenuView implements Serializable {
     @PostConstruct
     private void init() {
         menu = client.findMenu(fms.getMenu_id());
+        System.out.println(menu.getMenuName()+" "+menu.getMenuItems().size());
         Collections.sort(menu.getMenuItems());
         line_num=client.getLastLineNum(fms.getMenu_id());
     }
