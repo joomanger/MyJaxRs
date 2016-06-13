@@ -5,11 +5,10 @@ import java.util.List;
 import java.util.Set;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
 import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 
 /**
  *
@@ -17,6 +16,10 @@ import javax.validation.ValidatorFactory;
  * @param <T>
  */
 public abstract class AbstractEJB<T> {
+
+    @Inject
+    @MyValidator
+    private Validator validator;
 
     public final String SUCCESSFUL = "S#";
     public final String ERROR = "E#";
@@ -28,19 +31,25 @@ public abstract class AbstractEJB<T> {
 
     protected abstract EntityManager getEntityManager();
 
+    public String validateMyEntity(T entity) {
+        Set<ConstraintViolation<T>> constraintViolations = validator.validate(entity);
+        StringBuilder sb = new StringBuilder();
+        if (constraintViolations.size() > 0) {
+            Iterator<ConstraintViolation<T>> iterator = constraintViolations.iterator();
+            while (iterator.hasNext()) {
+                ConstraintViolation<T> cv = iterator.next();
+                sb.append(cv.getMessage());
+            }
+            return sb.toString();
+        }
+        return SUCCESSFUL;
+    }
+
     public String create(T entity) {
         try {
-            ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-            Validator validator = factory.getValidator();
-            Set<ConstraintViolation<T>> constraintViolations = validator.validate(entity);
-            StringBuilder sb = new StringBuilder();
-            if (constraintViolations.size() > 0) {
-                Iterator<ConstraintViolation<T>> iterator = constraintViolations.iterator();
-                while (iterator.hasNext()) {
-                    ConstraintViolation<T> cv = iterator.next();
-                    sb.append(cv.getMessage());
-                }
-                return sb.toString();
+            String result = validateMyEntity(entity);
+            if (!result.equals(SUCCESSFUL)) {
+                return result;
             } else {
                 getEntityManager().persist(entity);
                 return SUCCESSFUL;
@@ -52,8 +61,13 @@ public abstract class AbstractEJB<T> {
 
     public String edit(T entity) {
         try {
-            getEntityManager().merge(entity);
-            return SUCCESSFUL;
+            String result = validateMyEntity(entity);
+            if (!result.equals(SUCCESSFUL)) {
+                return result;
+            } else {
+                getEntityManager().merge(entity);
+                return SUCCESSFUL;
+            }
         } catch (Exception ex) {
             return ERROR + " " + ex.getMessage();
         }

@@ -13,13 +13,11 @@
             <ui:define name="content">
                 <h:form  prependId="false">
                     <p:fieldset id="menuHeader" legend="Новое меню" style="width: 250px; margin-bottom: 10px"> 
-                        <h:panelGrid id="yyy" columns="3" cellpadding="5" cellspacing="5">
+                        <h:panelGrid id="yyy" columns="2" cellpadding="5" cellspacing="5">
                             <p:outputLabel value="Меню"/>
                             <p:inputText id="menuName" value="#{newMenuView.menu.menuName}" disabled="#{newMenuView.b1}"/>
-                            <p:message for="menuName" />
                             <p:outputLabel value="Активное"/>
                             <p:inputSwitch id="activeStatus" value="#{newMenuView.menu.activeStatus}" disabled="#{newMenuView.b1}"/>
-                            <p:message for="activeStatus" />
                         </h:panelGrid>
                     </p:fieldset> 
 
@@ -28,11 +26,17 @@
                                  scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord}" 
                                  style="width: 1000px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column headerText="нпп" style="width:30px;">
-                            <p:outputLabel value="#{ord.line_num}" style="text-align: left" />
+                        <p:column headerText="нпп" style="width:30px; text-align: center">
+                            <p:outputLabel value="#{ord.line_num}" />
                         </p:column>
                         <p:column headerText="Пункт меню" style="width:100px;">
                             <p:outputLabel value="#{ord.menuItem}" style="text-align: left" />
+                        </p:column>
+                        <p:column headerText="Показ." style="width:36px; text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output"><p:selectBooleanCheckbox value="#{ord.visibleItem}" /></f:facet>
+                                <f:facet name="input"><p:selectBooleanCheckbox value="#{ord.visibleItem}"  /></f:facet>
+                            </p:cellEditor>
                         </p:column>
                         <c:set var="view" value="#{viewCBean.findViewById(ord.view_id)}"/>
                         <p:column headerText="Представление" style="width:100px;">
@@ -72,7 +76,7 @@
                         </p:outputPanel>
                     </p:dialog>
                     <p:commandButton id="btnBack" value="Back" action="menus" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
-                    <p:commandButton id="btnCreate" value="Создать" ajax="false" validateClient="true"  actionListener="#{menuCBean.createMenu()}"   style="margin-top: 10px;margin-right: 20px"/>                    
+                    <p:commandButton id="btnCreate" value="Создать" ajax="false" validateClient="true"  action="#{menuCBean.createMenu()}"   style="margin-top: 10px;margin-right: 20px"/>                    
                 </h:form>
 
             </ui:define>

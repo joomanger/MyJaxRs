@@ -25,14 +25,24 @@
                 <h:form  prependId="false">
                     <p:dataTable id="dTable" var="ord" value="#{openMenuView.menu.menuItems}" selection="#{openMenuView.selectedMenuItems}" 
                                  rowSelectMode="checkbox" editMode="cell" editable="true"
-                                 scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord}" 
+                                 scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.line_num}" 
                                  style="width: 1000px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column headerText="нпп" style="width:30px;">
-                            <p:outputLabel value="#{ord.line_num}" style="text-align: left" />
+                        <p:ajax event="cellEdit"  listener="#{openMenuView.onCellEdit}"/>
+                        <p:column headerText="нпп" style="width:30px; text-align: center">
+                            <p:cellEditor> 
+                                <f:facet name="output"><p:outputLabel value="#{ord.line_num}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{ord.line_num}"/></f:facet>
+                            </p:cellEditor>
                         </p:column>
                         <p:column headerText="Пункт меню" style="width:100px;">
                             <p:outputLabel value="#{ord.menuItem}" style="text-align: left" />
+                        </p:column>
+                        <p:column headerText="Показ." style="width:56px; text-align: center" >
+                               <p:selectBooleanCheckbox value="#{ord.visibleItem}" >
+                                   <f:attribute name="menuItem_id" value="#{ord.menuItem_id}"/>
+                                   <p:ajax event="change" listener="#{openMenuView.onCellEdit}"/>
+                               </p:selectBooleanCheckbox>
                         </p:column>
                         <c:set var="view" value="#{viewCBean.findViewById(ord.view_id)}"/>
                         <p:column headerText="Представление" style="width:100px;">
@@ -55,6 +65,7 @@
                             <p:focus for="addTextItem"/>
                             <p:commandButton value="Добавить" actionListener="#{menuCBean.addMenuItemOMV()}" update="dTable mainMSG"/>
                             <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
+                            <p:commandButton value="Изменить" immediate="true" actionListener="#{menuCBean.saveChangedLinesOMV()}" style="margin-left: 10px" update="dTable mainMSG"/>
                         </f:facet>
                     </p:dataTable>
                     <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">

@@ -32,7 +32,6 @@ public class MenuItem implements Serializable, Comparable<MenuItem> {
     @GeneratedValue(generator = "menuItem_sq", strategy = GenerationType.SEQUENCE)
     private Long menuItem_id;
     @Size(min=2,max=30,message = "Длина поля от 2 до 30 символов!")
-    @NotNull(message = "Пункт меню не должен быть пустым!")
     private String menuItem;
     private Short line_num;
     @NotNull(message = "Въюха же должна быть, дебил!")
@@ -40,6 +39,7 @@ public class MenuItem implements Serializable, Comparable<MenuItem> {
     @ManyToOne
     @JoinColumn(name = "MENU_ID")
     private Menu menu;
+    private Boolean visibleItem=false;
 
     public MenuItem() {
     }
@@ -89,6 +89,14 @@ public class MenuItem implements Serializable, Comparable<MenuItem> {
 
     public void setView_id(Long view_id) {
         this.view_id = view_id;
+    }
+
+    public Boolean getVisibleItem() {
+        return visibleItem;
+    }
+
+    public void setVisibleItem(Boolean visibleItem) {
+        this.visibleItem = visibleItem;
     }
 
     @Override

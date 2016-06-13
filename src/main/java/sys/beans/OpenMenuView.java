@@ -3,12 +3,16 @@ package sys.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.component.selectbooleancheckbox.SelectBooleanCheckbox;
+import org.primefaces.event.CellEditEvent;
 import sys.entities.Menu;
 import sys.entities.MenuItem;
 import sys.entities.View;
@@ -28,16 +32,33 @@ public class OpenMenuView implements Serializable {
 
     private Menu menu;
     private List<MenuItem> selectedMenuItems = new ArrayList<>();
+    private Set<Integer> linesForSave = new HashSet<>();
     private View newView;
     private String newMenuName;
-    private Short line_num=0;
+    private Short line_num = 0;
 
     @PostConstruct
     private void init() {
         menu = client.findMenu(fms.getMenu_id());
-        System.out.println(menu.getMenuName()+" "+menu.getMenuItems().size());
         Collections.sort(menu.getMenuItems());
-        line_num=client.getLastLineNum(fms.getMenu_id());
+        line_num = client.getLastLineNum(fms.getMenu_id());
+    }
+
+    public void onCellEdit(CellEditEvent event) {
+        linesForSave.add(event.getRowIndex());
+    }
+
+    public void onCellEdit(AjaxBehaviorEvent event) {
+        SelectBooleanCheckbox c = (SelectBooleanCheckbox) event.getComponent();
+        long rw = Long.parseLong(c.getAttributes().get("menuItem_id").toString());
+        int r = 0;
+        for (MenuItem mi : menu.getMenuItems()) {
+            if (mi.getMenuItem_id() == rw) {
+                linesForSave.add(r);
+                break;
+            }
+            r++;
+        }
     }
 
     public Menu getMenu() {
@@ -79,9 +100,17 @@ public class OpenMenuView implements Serializable {
     public void setLine_num(Short line_num) {
         this.line_num = line_num;
     }
-    
-    public void next_line(){
+
+    public void next_line() {
         line_num++;
+    }
+
+    public Set<Integer> getLinesForSave() {
+        return linesForSave;
+    }
+
+    public void setLinesForSave(Set<Integer> linesForSave) {
+        this.linesForSave = linesForSave;
     }
 
 }

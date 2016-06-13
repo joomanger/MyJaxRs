@@ -54,7 +54,7 @@
                                     <c:forEach var="menu" items="#{role.menus}">
                                         <p:submenu label="#{menu.menuName}">
                                             <c:forEach var="item" items="#{menu.menuItems}">
-                                                <c:if test="#{!(item.view_id==null)}">
+                                                <c:if test="#{item.visibleItem}">
                                                     <c:set var="view" value="#{viewCBean.findViewById(item.view_id)}"/>
                                                     <p:menuitem action="#{view.getUrl()}" value="#{item.menuItem}"/> 
                                                 </c:if>
