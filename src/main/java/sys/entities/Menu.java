@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -37,6 +38,7 @@ public class Menu implements Serializable, Comparable<Menu> {
     private Boolean activeStatus = true;
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "menu")
     @PrivateOwned
+    @OrderBy("line_num asc")
     private List<MenuItem> menuItems = new ArrayList<>();
 
     public Menu() {

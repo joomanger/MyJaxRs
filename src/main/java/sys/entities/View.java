@@ -2,9 +2,12 @@ package sys.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -15,7 +18,9 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "views", uniqueConstraints
         = @UniqueConstraint(columnNames = {"viewName"}))
-public class View implements Serializable,Comparable<View> {
+@SqlResultSetMapping(name = "users_views_v", entities = {
+    @EntityResult(entityClass = View.class)})
+public class View implements Serializable, Comparable<View> {
 
     @Id
     @SequenceGenerator(name = "view_sq", initialValue = 1, allocationSize = 1)
@@ -24,6 +29,16 @@ public class View implements Serializable,Comparable<View> {
     private String viewName;
     private String description;
     private String url;
+
+    public View() {
+    }
+
+    public View(Long view_id, String viewName, String description, String url) {
+        this.view_id = view_id;
+        this.viewName = viewName;
+        this.description = description;
+        this.url = url;
+    }
 
     public Long getView_id() {
         return view_id;
@@ -65,8 +80,5 @@ public class View implements Serializable,Comparable<View> {
             return -1;
         }
     }
-    
-    
-    
 
 }

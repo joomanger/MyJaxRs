@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import service.AbstractEJB;
 import service.SessionConfig;
 import sys.entities.View;
@@ -37,6 +36,10 @@ public class ViewEJB extends AbstractEJB<View> {
         List<View> l = super.findAll();
         Collections.sort(l);
         return l;
+    }
+
+    public List<View> findViewsByUserName(String username) {
+        return em.createNativeQuery("select v.view_id, v.viewName, v.description, v.url from users_views_v v where v.username='" + username + "'", "users_views_v").getResultList();
     }
 
 }

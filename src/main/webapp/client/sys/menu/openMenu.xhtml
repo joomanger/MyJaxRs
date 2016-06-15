@@ -40,7 +40,7 @@
                         </p:column>
                         <p:column headerText="Показ." style="width:56px; text-align: center" >
                                <p:selectBooleanCheckbox value="#{ord.visibleItem}" >
-                                   <f:attribute name="menuItem_id" value="#{ord.menuItem_id}"/>
+                                   <f:attribute name="menuItem" value="#{ord}"/>
                                    <p:ajax event="change" listener="#{openMenuView.onCellEdit}"/>
                                </p:selectBooleanCheckbox>
                         </p:column>

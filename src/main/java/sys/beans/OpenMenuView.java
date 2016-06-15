@@ -40,7 +40,7 @@ public class OpenMenuView implements Serializable {
     @PostConstruct
     private void init() {
         menu = client.findMenu(fms.getMenu_id());
-        Collections.sort(menu.getMenuItems());
+        //Collections.sort(menu.getMenuItems());
         line_num = client.getLastLineNum(fms.getMenu_id());
     }
 
@@ -50,15 +50,12 @@ public class OpenMenuView implements Serializable {
 
     public void onCellEdit(AjaxBehaviorEvent event) {
         SelectBooleanCheckbox c = (SelectBooleanCheckbox) event.getComponent();
-        long rw = Long.parseLong(c.getAttributes().get("menuItem_id").toString());
-        int r = 0;
-        for (MenuItem mi : menu.getMenuItems()) {
-            if (mi.getMenuItem_id() == rw) {
-                linesForSave.add(r);
-                break;
-            }
-            r++;
+        if (c.getAttributes().get("menuItem") instanceof MenuItem) {
+            MenuItem rw = (MenuItem) (c.getAttributes().get("menuItem"));
+            //System.out.println("menu.getMenuItems().indexOf(rw)=" + menu.getMenuItems().indexOf(rw));
+            linesForSave.add(menu.getMenuItems().indexOf(rw));
         }
+
     }
 
     public Menu getMenu() {

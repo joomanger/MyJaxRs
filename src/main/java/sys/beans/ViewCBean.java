@@ -52,5 +52,7 @@ public class ViewCBean {
     public View findViewById(Long p_view_id) {
         return ejb.find(p_view_id);
     }
+    
+    
 
 }

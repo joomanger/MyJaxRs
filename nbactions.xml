@@ -13,8 +13,9 @@
             <properties>
                 <netbeans.deploy>true</netbeans.deploy>
                 <argLine>-Dfile.encoding=UTF-8</argLine>
+                <resourceEncoding>UTF-8</resourceEncoding>
                 
-                <encoding>UTF-8</encoding>
+                
             </properties>
         </action>
         <action>
@@ -40,6 +41,20 @@
                 <goal>test</goal>
             </goals>
             <properties>
+                <argLine>-Dfile.encoding=UTF-8</argLine>
+            </properties>
+        </action>
+        <action>
+            <actionName>run.single.deploy</actionName>
+            <packagings>
+                <packaging>war</packaging>
+            </packagings>
+            <goals>
+                <goal>package</goal>
+            </goals>
+            <properties>
+                <netbeans.deploy>true</netbeans.deploy>
+                <netbeans.deploy.clientUrlPart>${webpagePath}</netbeans.deploy.clientUrlPart>
                 <argLine>-Dfile.encoding=UTF-8</argLine>
             </properties>
         </action>

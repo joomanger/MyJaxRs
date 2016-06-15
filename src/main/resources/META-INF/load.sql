@@ -39,6 +39,7 @@ insert into groups(group_id, groupname,description) values(1,'users','Все п�
 insert into users_groups values(1,1);
 insert into users_groups values(2,1);
 create or replace view users_groups_v as select u.username, g.groupname from users_groups ug, users u, groups g where u.user_id=ug.user_fk and g.group_id=ug.group_fk;
+create or replace view users_views_v as select u.username,v.view_id, v.viewName, v.description, v.url from views v, menuitem mi,roles_menus rm,users_roles ur,users u where mi.view_id=v.view_id and rm.menu_fk=mi.menu_id and ur.role_fk=rm.role_fk and u.user_id=ur.user_fk;
 
 
 -- Заполним въюшки
