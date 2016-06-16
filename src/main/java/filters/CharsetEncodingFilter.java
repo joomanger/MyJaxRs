@@ -12,6 +12,8 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -23,13 +25,13 @@ public class CharsetEncodingFilter implements Filter {
 
     @Override
     public void destroy() {
-        
+
     }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         String encodingParam = filterConfig.getInitParameter("encoding");
-        
+
         if (encodingParam != null) {
             encoding = encodingParam;
         }
@@ -39,6 +41,15 @@ public class CharsetEncodingFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         request.setCharacterEncoding(encoding);
+        HttpServletRequest req = (HttpServletRequest) request;
+        if (req.getSession(false).getAttribute("access") == null) {
+//            HttpServletResponse httpResponse = (HttpServletResponse) response;
+//            httpResponse.sendRedirect("");
+            System.out.println("Access denied");
+        } else {
+            System.out.println("Access allowed");
+        }
+
         chain.doFilter(request, response);
     }
 

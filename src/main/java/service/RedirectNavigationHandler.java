@@ -7,19 +7,18 @@ import javax.faces.application.NavigationCase;
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import sys.beans.ViewEJB;
-import sys.entities.View;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author savin
  */
 public class RedirectNavigationHandler extends ConfigurableNavigationHandler {
+
     @Inject
     private SessionActions sc;
-//    @Inject
-//    private ViewEJB ejb;
-    
+    private HttpSession session;
+
     private NavigationHandler parent;
 
     public RedirectNavigationHandler(NavigationHandler parent) {
@@ -28,22 +27,26 @@ public class RedirectNavigationHandler extends ConfigurableNavigationHandler {
 
     @Override
     public void handleNavigation(FacesContext context, String from, String outcome) {
+        System.out.println("dsf;lkjdslkjldsjf");
+        session = (HttpSession) context.getExternalContext().getSession(false);
         if (outcome != null) {
-            System.out.println(sc.getCurrentUser().getUsername()+" outcome="+outcome);
-//            for(View v:ejb.findViewsByUserName(sc.getCurrentUser().getUsername())){
-//                System.out.println(v.getViewName()+" "+v.getUrl());
-//            };
-            if((sc.getViewsMap().containsKey(outcome))||(sc.getViewsMap().containsValue(outcome))){
-                System.out.println("ACCESS ALLOWED");
-            }else{
-                System.out.println("ACCESS DENIED");
-                outcome="/index.xhtml";
-            }
+            if ((sc.getViewsMap().containsKey(outcome)) || (sc.getViewsMap().containsValue(outcome)) || (outcome.contains("login.xhtml")) || (outcome.contains("error.xhtml")) || (sc.getCurrentUser().getUsername().equals("admin"))) {
+              
+                if (!outcome.endsWith("?faces-redirect=true")) {
+                    outcome += "?faces-redirect=true";
+                }
+                session.setAttribute("access", "yes");
+//                System.out.println("outcome=" + outcome);
                 
-            if (!outcome.endsWith("?faces-redirect=true")) {
-                outcome += "?faces-redirect=true";
+//
+            } else {
+                session.setAttribute("access", null);
+//                System.out.println("outcome=" + outcome);
+//                sc.sendMessage("Доступ закрыт!", null);
+                outcome = /*"/index.xhtml?faces-redirect=true"*/null;
             }
         }
+
         parent.handleNavigation(context, from, outcome);
     }
 

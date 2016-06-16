@@ -60,5 +60,9 @@ public class SessionActions implements Serializable {
             viewsMap.put(v.getViewName(), v.getUrl());
         }
     }
+    
+    public void sendMessage(String status,String success){
+        ejb.sendMessage(status, success);
+    }
 
 }
