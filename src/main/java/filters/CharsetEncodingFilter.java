@@ -20,18 +20,18 @@ import javax.servlet.http.HttpServletResponse;
  * @author savin
  */
 public class CharsetEncodingFilter implements Filter {
-
+    
     private String encoding = "utf-8";
 
     @Override
     public void destroy() {
-
+        System.out.println("filter destroy");
     }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         String encodingParam = filterConfig.getInitParameter("encoding");
-
+        System.out.println("filter init");
         if (encodingParam != null) {
             encoding = encodingParam;
         }
@@ -42,15 +42,15 @@ public class CharsetEncodingFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         request.setCharacterEncoding(encoding);
         HttpServletRequest req = (HttpServletRequest) request;
-        if (req.getSession(false).getAttribute("access") == null) {
-//            HttpServletResponse httpResponse = (HttpServletResponse) response;
-//            httpResponse.sendRedirect("");
-            System.out.println("Access denied");
-        } else {
-            System.out.println("Access allowed");
+        System.out.println("doFilter handleNavigation="+req.getSession(false).getAttribute("handleNavigation"));
+        HttpServletResponse res = (HttpServletResponse) response;
+        if ((req.getSession(false).getAttribute("handleNavigation") == null)&&(req.getSession(false).getAttribute("doFilter")==null)) {
+            //req.getSession(false).setAttribute("handleNavigation", "true");
+            req.getSession(false).setAttribute("doFilter","true");
+            res.sendRedirect("faces/index.xhtml");
         }
-
         chain.doFilter(request, response);
+        req.getSession(false).setAttribute("handleNavigation",null);
     }
 
 }

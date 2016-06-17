@@ -27,27 +27,22 @@ public class RedirectNavigationHandler extends ConfigurableNavigationHandler {
 
     @Override
     public void handleNavigation(FacesContext context, String from, String outcome) {
-        System.out.println("dsf;lkjdslkjldsjf");
+        System.out.println("handleNavigation");
         session = (HttpSession) context.getExternalContext().getSession(false);
+        session.setAttribute("handleNavigation", "true");
         if (outcome != null) {
             if ((sc.getViewsMap().containsKey(outcome)) || (sc.getViewsMap().containsValue(outcome)) || (outcome.contains("login.xhtml")) || (outcome.contains("error.xhtml")) || (sc.getCurrentUser().getUsername().equals("admin"))) {
-              
+
                 if (!outcome.endsWith("?faces-redirect=true")) {
                     outcome += "?faces-redirect=true";
                 }
-                session.setAttribute("access", "yes");
-//                System.out.println("outcome=" + outcome);
-                
-//
             } else {
-                session.setAttribute("access", null);
-//                System.out.println("outcome=" + outcome);
-//                sc.sendMessage("Доступ закрыт!", null);
-                outcome = /*"/index.xhtml?faces-redirect=true"*/null;
+                outcome = null;
             }
         }
-
+        System.out.println("before parent.handleNavigation(context, from, outcome)");
         parent.handleNavigation(context, from, outcome);
+        System.out.println("after parent.handleNavigation(context, from, outcome)");
     }
 
     @Override

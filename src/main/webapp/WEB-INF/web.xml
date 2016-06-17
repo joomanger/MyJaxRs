@@ -64,6 +64,6 @@
     </welcome-file-list>
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/faces/login.xhtml</location>
+        <location>/faces/login.xhtml&msg=Ваш сеанс закончен. Введите повторно логин и пароль.</location>
     </error-page>
 </web-app>
