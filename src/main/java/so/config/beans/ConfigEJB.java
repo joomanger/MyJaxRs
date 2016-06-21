@@ -1,12 +1,12 @@
 package so.config.beans;
 
 import java.util.List;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import service.AbstractEJB;
+import service.Secure;
 import so.config.entity.Configuration;
 import so.config.entity.ConfigurationLine;
 
@@ -15,6 +15,7 @@ import so.config.entity.ConfigurationLine;
  * @author savin
  */
 @Stateless
+@Secure
 public class ConfigEJB extends AbstractEJB<Configuration> {
 
     @PersistenceContext(unitName = "myjaxrs")

@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import service.AbstractEJB;
+import service.Secure;
 import sys.entities.MenuItem;
 
 /**

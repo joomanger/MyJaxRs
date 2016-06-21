@@ -1,11 +1,13 @@
 package service;
 
-import javax.faces.application.FacesMessage;
+import java.io.Serializable;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -13,7 +15,7 @@ import javax.interceptor.InvocationContext;
  */
 @Interceptor
 @Secure
-public class Security {
+public class Security implements Serializable{
 
     @Inject
     private SessionActions sc;
@@ -23,6 +25,10 @@ public class Security {
         String action = ic.getTarget().getClass().getSimpleName().replace("$Proxy$_$$_WeldSubclass", "") + "." + ic.getMethod().getName();
         String user = sc.getCurrentUser().getUsername();
         System.out.println("user="+user+" entered to " + action);
+        HttpServletRequest req=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        System.out.println("getPathInfo()="+req.getPathInfo());
+        System.out.println("getServletPath()="+req.getServletPath());
+        
 //        for (Annotation a : ic.getMethod().getDeclaredAnnotations()) {
 //            System.out.println("Annot annotationType.getName=" + a.annotationType().getName() + " getTypeName=" + a.annotationType().getTypeName() + " simpleName=" + a.annotationType().getSimpleName() + " canonicalName=" + a.annotationType().getCanonicalName());
 //            if (a.annotationType().getSimpleName().equals("Who")) {
@@ -32,10 +38,21 @@ public class Security {
 //                }
 //            }
 //        }
-        try {
-            if ((action).equals("ConfigCBean.deleteConfigs")) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Нет доступа", null));
-                return null;
+        try { 
+            
+//            System.out.println("before if");
+//            for(Map.Entry<String, String> e:sc.getViewsMap().entrySet()){
+//                System.out.println("-------------------");
+//                System.out.println(e.getKey()+" "+e.getValue());
+//            }
+            if ((!sc.getViewsMap().containsValue(req.getPathInfo().replace(".xhtml", "")))&&(!sc.getCurrentUser().getUsername().equals("admin"))) {
+//                System.out.println("Access denied!");
+                HttpServletResponse res=(HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();
+                try{
+                res.sendRedirect(req.getContextPath()+"/faces/index.xhtml");
+                }catch(IllegalStateException ex){
+                    System.out.println("error: "+ex.getMessage());
+                }
             }
             return ic.proceed();
         } finally {

@@ -46,30 +46,58 @@ create or replace view users_views_v as select u.username,v.view_id, v.viewName,
 insert into views(view_id,description,viewname,url) values(1,'','configs','/client/config/configs');
 insert into views(view_id,description,viewname,url) values(2,'','newConfig','/client/config/newConfig');
 insert into views(view_id,description,viewname,url) values(3,'','openConfig','/client/config/openConfig');
+
 insert into views(view_id,description,viewname,url) values(4,'','params','/client/config/param/params');
 insert into views(view_id,description,viewname,url) values(5,'','openParameter','/client/config/param/openParameter');
 insert into views(view_id,description,viewname,url) values(6,'','newParameter','/client/config/param/newParameter');
+
+insert into views(view_id,description,viewname,url) values(7,'','menus','/client/sys/menu/menus');
+insert into views(view_id,description,viewname,url) values(8,'','newMenu','/client/sys/menu/newMenu');
+insert into views(view_id,description,viewname,url) values(9,'','openMenu','/client/sys/menu/openMenu');
+
+insert into views(view_id,description,viewname,url) values(10,'','views','/client/sys/view/views');
+insert into views(view_id,description,viewname,url) values(11,'','openView','/client/sys/view/openView');
+insert into views(view_id,description,viewname,url) values(12,'','newView','/client/sys/view/newView');
+
+insert into views(view_id,description,viewname,url) values(13,'','roles','/client/sys/role/roles');
+insert into views(view_id,description,viewname,url) values(14,'','openRole','/client/sys/role/openRole');
+insert into views(view_id,description,viewname,url) values(15,'','newRole','/client/sys/role/newRole');
+
+insert into views(view_id,description,viewname,url) values(16,'','users','/client/sys/user/users');
+insert into views(view_id,description,viewname,url) values(17,'','openUser','/client/sys/user/openUser');
+insert into views(view_id,description,viewname,url) values(18,'','newUser','/client/sys/user/newUser');
+
 -- Заполним менюхи
-insert into menu values(1,true, 'Автозагрузка user');
-insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id) values(1,'Конфигурации user',1,1,null);
-insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id) values(2,'Параметры конфигурации user',2,1,null);
-insert into menu values(2,true, 'Автозагрузка admin');
-insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id) values(3,'Конфигурации admin',1,2,1);
-insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id) values(4,'Параметры конфигурации admin',2,2,4);
+insert into menu values(1,true, 'System Administrator');
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(1,'Конфигурации',1,1,1,true);
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(2,'Открыть конфиг',2,1,3,false);
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(3,'Создать конфиг',3,1,2,false);
 
---для юзера работа с конфигурациями недоступна
---------------------------------
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(4,'Параметры конфигурации',4,1,4,true);
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(5,'Открыть параметр',5,1,5,false);
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(6,'Создать параметры',6,1,6,false);
 
--- Конфигурации admin
---insert into menuitems_views values(3,1);--configs
---insert into menuitems_views values(3,2);--newConfig
---insert into menuitems_views values(3,3);--openConfig
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(7,'Меню',7,1,7,true);
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(8,'Открыть меню',8,1,8,false);
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(9,'Создать меню',9,1,9,false);
+
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(10,'Представления',10,1,10,true);
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(11,'Открыть представление',11,1,11,false);
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(12,'Создать представление',12,1,12,false);
+
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(13,'Роли',13,1,13,true);
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(14,'Открыть роль',14,1,14,false);
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(15,'Создать роль',15,1,15,false);
+
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(16,'Пользователи',16,1,16,true);
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(17,'Открыть пользователя',17,1,17,false);
+insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(18,'Создать пользователя',18,1,18,false);
+
 
 --Заполним роли
-insert into roles values(1,'','user');
-insert into roles values(2,'','admin');
+insert into roles values(1,'','admin');
+insert into roles values(2,'','user');
 insert into roles_menus values(1,1);
-insert into roles_menus values(2,2);
 
-insert into users_roles values(1,2);
-insert into users_roles values(2,1);
+insert into users_roles values(1,1);
+insert into users_roles values(2,2);

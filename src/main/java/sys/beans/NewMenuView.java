@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import service.Secure;
 import sys.entities.Menu;
 import sys.entities.MenuItem;
 import sys.entities.View;
@@ -16,6 +17,7 @@ import sys.entities.View;
  */
 @Named
 @ViewScoped
+@Secure
 public class NewMenuView implements Serializable {
 
     private Menu menu=new Menu();

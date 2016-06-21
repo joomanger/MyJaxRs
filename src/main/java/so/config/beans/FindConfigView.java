@@ -27,7 +27,11 @@ public class FindConfigView implements Serializable {
     public void init() {
         selectedConfigs = new ArrayList<>();
         configs = new ArrayList<>();
+        try{
         configs.addAll(clientBean.getItems());
+        }catch(Exception ex){
+            
+        }
     }
 
     public List<Configuration> getSelectedConfigs() {

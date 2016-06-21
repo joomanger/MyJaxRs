@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import service.Secure;
 import sys.entities.Menu;
 
 /**
@@ -15,6 +16,7 @@ import sys.entities.Menu;
  */
 @Named
 @ViewScoped
+@Secure
 public class FindMenuView implements Serializable {
 
     @Inject

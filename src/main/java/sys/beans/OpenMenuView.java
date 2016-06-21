@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.component.selectbooleancheckbox.SelectBooleanCheckbox;
 import org.primefaces.event.CellEditEvent;
+import service.Secure;
 import sys.entities.Menu;
 import sys.entities.MenuItem;
 import sys.entities.View;
@@ -23,6 +24,7 @@ import sys.entities.View;
  */
 @Named
 @ViewScoped
+@Secure
 public class OpenMenuView implements Serializable {
 
     @Inject

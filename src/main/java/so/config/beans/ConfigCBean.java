@@ -44,7 +44,6 @@ public class ConfigCBean implements Serializable{
         return configEJB.getConfig(p_item_id, p_ver_num);
     }
     
-    @Secure
     public List<Configuration> getItems() {
         return configEJB.findAll();
     }
@@ -64,7 +63,7 @@ public class ConfigCBean implements Serializable{
     public Integer getMaxLineNum(Long p_config_id) {
         return configEJB.getMaxLineNum(p_config_id);
     }
-
+   
     public String addItemTable() {
         Configuration config = newView.getConfiguration();
         config.setConfig_ver_num(getLastVersion() + 1);
@@ -100,7 +99,7 @@ public class ConfigCBean implements Serializable{
     }
 
     //FindConfigView methods:
-    @Secure
+   
     public void deleteConfigs() {
         for (Configuration c : fcv.getSelectedConfigs()) {
             String status = configEJB.remove(c);
@@ -113,6 +112,7 @@ public class ConfigCBean implements Serializable{
     }
 
     //NewConfigView methods:
+   
     public void addParameter() {
         if (!newView.getParamConfig().getName().isEmpty()) {
             int l = newView.getLine_num();
@@ -125,7 +125,7 @@ public class ConfigCBean implements Serializable{
             newView.setParamConfig(null);
         }
     }
-
+   
     public void deleteItems() {
         for (ConfigurationLine c : newView.getSelectedLines()) {
             newView.getLines().remove(c);
@@ -134,6 +134,7 @@ public class ConfigCBean implements Serializable{
     }
 
     //OpenConfigView methods:
+   
     public void addItemOCV() {
         ConfigurationLine line = new ConfigurationLine();
         line.setParameter(openView.getParamConfig());
@@ -144,14 +145,14 @@ public class ConfigCBean implements Serializable{
         openView.getLines().add(line);
         openView.setParamConfig(null);
     }
-
+   
     public void deleteItemsOCV() {
         for (ConfigurationLine line : openView.getSelectedLines()) {
             openView.getLines().remove(line);
         }
         openView.getSelectedLines().clear();
     }
-
+   
     public String newVersionOCV() {
         Configuration c = openView.getConfiguration();
         c.setHeader_id(null);
@@ -167,7 +168,7 @@ public class ConfigCBean implements Serializable{
         configEJB.sendMessage(status, "Новая версия конфигуации сохранена");
         return "configs";
     }
-
+    
     public void currVersionOCV() {
         Configuration c = openView.getConfiguration();
         c.setLines(openView.getLines());

@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import service.Secure;
 import sys.entities.SysRole;
 import sys.entities.SysUser;
 
@@ -16,6 +17,7 @@ import sys.entities.SysUser;
  */
 @Named
 @ViewScoped
+@Secure
 public class OpenUserView implements Serializable {
 
     @Inject

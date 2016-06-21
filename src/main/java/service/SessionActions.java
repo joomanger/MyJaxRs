@@ -55,13 +55,15 @@ public class SessionActions implements Serializable {
     }
 
     public void updateViewSecurity() {
-        viewsMap.clear();
-        for (View v : ejb.findViewsByUserName(user.getUsername())) {
-            viewsMap.put(v.getViewName(), v.getUrl());
+        if (user != null) {
+            viewsMap.clear();
+            for (View v : ejb.findViewsByUserName(user.getUsername())) {
+                viewsMap.put(v.getViewName(), v.getUrl());
+            }
         }
     }
-    
-    public void sendMessage(String status,String success){
+
+    public void sendMessage(String status, String success) {
         ejb.sendMessage(status, success);
     }
 

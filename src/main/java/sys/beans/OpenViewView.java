@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import service.Secure;
 import sys.entities.View;
 
 /**
@@ -13,6 +14,7 @@ import sys.entities.View;
  */
 @Named
 @ViewScoped
+@Secure
 public class OpenViewView implements Serializable {
 
     @Inject

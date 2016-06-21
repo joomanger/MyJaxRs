@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import service.Secure;
 import sys.entities.SysRole;
 
 /**
@@ -13,6 +14,7 @@ import sys.entities.SysRole;
  */
 @Named
 @ViewScoped
+@Secure
 public class FindRoleView implements Serializable {
 
     private List<SysRole> selectedRoles = new ArrayList<>();

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import service.Secure;
 import sys.entities.Menu;
 import sys.entities.SysRole;
 
@@ -14,6 +15,7 @@ import sys.entities.SysRole;
  */
 @Named
 @ViewScoped
+@Secure
 public class NewRoleView implements Serializable{
     private SysRole role=new SysRole();
     private List<Menu> selectedMenus=new ArrayList<>();

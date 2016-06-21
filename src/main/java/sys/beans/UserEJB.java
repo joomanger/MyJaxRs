@@ -43,8 +43,15 @@ public class UserEJB extends AbstractEJB<SysUser> {
 
     /*---Дополнительные методы---*/
     public SysUser findByUserName(String p_username) {
-        TypedQuery<SysUser> tq = em.createNamedQuery(SysUser.FIND_BY_USERNAME, SysUser.class).setParameter("p_username", p_username);
-        return tq.getSingleResult();
+        if (!p_username.isEmpty()) {
+            try {
+                TypedQuery<SysUser> tq = em.createNamedQuery(SysUser.FIND_BY_USERNAME, SysUser.class).setParameter("p_username", p_username);
+                return tq.getSingleResult();
+            } catch (Exception ex) {
+                return null;
+            }
+        }
+        return null;
     }
 
     /*регистрация пользователя(нового) в группе USER*/

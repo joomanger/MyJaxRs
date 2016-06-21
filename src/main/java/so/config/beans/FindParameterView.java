@@ -27,7 +27,11 @@ public class FindParameterView implements Serializable {
     public void init() {
         paramsDelete = new ArrayList<>();
         params = new ArrayList<>();
+        try{
         params.addAll(pcb.getItemsList());
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     public List<ParameterConfiguration> getParamsDelete() {
