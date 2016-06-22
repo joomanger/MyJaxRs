@@ -1,6 +1,8 @@
 package service;
 
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
@@ -15,20 +17,21 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Interceptor
 @Secure
-public class Security implements Serializable{
+public class Security implements Serializable {
 
     @Inject
     private SessionActions sc;
 
+    @Inject
+    private Logger log;
+
     @AroundInvoke
     public Object logMethod(InvocationContext ic) throws Exception {
-        String action = ic.getTarget().getClass().getSimpleName().replace("$Proxy$_$$_WeldSubclass", "") + "." + ic.getMethod().getName();
-        String user = sc.getCurrentUser().getUsername();
-        System.out.println("user="+user+" entered to " + action);
-        HttpServletRequest req=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        System.out.println("getPathInfo()="+req.getPathInfo());
-        System.out.println("getServletPath()="+req.getServletPath());
-        
+        HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        if ((FacesContext.getCurrentInstance().getExternalContext().getInitParameter("logging").equals("true"))) {
+            String action = ic.getTarget().getClass().getSimpleName().replace("$Proxy$_$$_WeldSubclass", "") + "." + ic.getMethod().getName();
+            log.log(Level.INFO, "User [{0}] entered to {1}", new Object[]{sc.getCurrentUser().getUsername(), action});
+//        }
 //        for (Annotation a : ic.getMethod().getDeclaredAnnotations()) {
 //            System.out.println("Annot annotationType.getName=" + a.annotationType().getName() + " getTypeName=" + a.annotationType().getTypeName() + " simpleName=" + a.annotationType().getSimpleName() + " canonicalName=" + a.annotationType().getCanonicalName());
 //            if (a.annotationType().getSimpleName().equals("Who")) {
@@ -37,26 +40,23 @@ public class Security implements Serializable{
 //                    System.out.println("role=" + role);
 //                }
 //            }
-//        }
-        try { 
-            
-//            System.out.println("before if");
-//            for(Map.Entry<String, String> e:sc.getViewsMap().entrySet()){
-//                System.out.println("-------------------");
-//                System.out.println(e.getKey()+" "+e.getValue());
-//            }
-            if ((!sc.getViewsMap().containsValue(req.getPathInfo().replace(".xhtml", "")))&&(!sc.getCurrentUser().getUsername().equals("admin"))) {
-//                System.out.println("Access denied!");
-                HttpServletResponse res=(HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();
-                try{
-                res.sendRedirect(req.getContextPath()+"/faces/index.xhtml");
-                }catch(IllegalStateException ex){
-                    System.out.println("error: "+ex.getMessage());
+        }
+        try {
+
+            if ((!sc.getViewsMap().containsValue(req.getPathInfo().replace(".xhtml", ""))) && (!sc.getCurrentUser().getUsername().equals("admin"))) {
+                HttpServletResponse res = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+                try {
+                    log.log(Level.SEVERE, "For user [{0}] access denied into {1}", new Object[]{sc.getCurrentUser().getUsername(), req.getPathInfo()});
+                    res.sendRedirect(req.getContextPath() + "/faces/index.xhtml?message=Access denied");
+                } catch (IllegalStateException ex) {
                 }
             }
             return ic.proceed();
         } finally {
-            System.out.println("exiting from " + ic.getMethod().getName());
+            if ((FacesContext.getCurrentInstance().getExternalContext().getInitParameter("logging").equals("true"))) {
+                log.log(Level.INFO, "User [{0}] exiting from  {1}", new Object[]{sc.getCurrentUser().getUsername(), ic.getMethod().getName()});
+
+            }
         }
     }
 }

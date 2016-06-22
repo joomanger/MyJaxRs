@@ -40,16 +40,6 @@
                                     <p:menuitem action="newOrder" outcome="newOrder" value="Создать заказ"/>
                                     <p:menuitem action="/client/saleorders/orders" value="Заказы"/>
                                 </p:submenu>
-                                <p:submenu label="Конфигурация номенклатуры">
-                                    <p:menuitem action="/client/config/param/params" value="Параметры конфигурации"/>
-                                    <p:menuitem action="/client/config/configs" value="Конфигурации"/>
-                                </p:submenu>
-                                <p:submenu label="Администратор">
-                                    <p:menuitem action="/client/sys/user/users" value="Пользователи"/>
-                                    <p:menuitem action="/client/sys/role/roles" value="Роли"/>
-                                    <p:menuitem action="/client/sys/menu/menus" value="Меню"/>
-                                    <p:menuitem action="/client/sys/view/views" value="Представления"/>
-                                </p:submenu>
                                 <c:forEach var="role" items="#{userCBean.findUserByUserName(request.remoteUser).roles}">
                                     <c:forEach var="menu" items="#{role.menus}">
                                         <p:submenu label="#{menu.menuName}">
