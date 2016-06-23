@@ -24,6 +24,7 @@ public class FindMenuView implements Serializable {
 
     private List<Menu> selectedMenus = new ArrayList<>();
     private List<Menu> menus = new ArrayList<>();
+    private List<Menu> filteredMenus = new ArrayList<>();
 
     @PostConstruct
     private void init() {
@@ -45,5 +46,14 @@ public class FindMenuView implements Serializable {
     public void setMenus(List<Menu> menus) {
         this.menus = menus;
     }
+
+    public List<Menu> getFilteredMenus() {
+        return filteredMenus;
+    }
+
+    public void setFilteredMenus(List<Menu> filteredMenus) {
+        this.filteredMenus = filteredMenus;
+    }
+    
 
 }

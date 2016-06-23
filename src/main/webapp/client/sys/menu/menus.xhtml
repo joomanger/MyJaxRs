@@ -15,12 +15,12 @@
                     <h:inputHidden id="setMenuId" value="#{findMenuSession.menu_id}"/>
                     <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.menu_id}" var="ord" value="#{findMenuView.menus}" 
                                  editable="true" reflow="true" selection="#{findMenuView.selectedMenus}" rows="20" paginator="true" style="width: 400px;"
-                                 rowsPerPageTemplate="20,40,100" lazy="true">
+                                 rowsPerPageTemplate="20,40,100" lazy="true" filteredValue="#{findMenuView.filteredMenus}">
                         <f:facet name="header">
                             Меню
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column headerText="Меню" style="width: 250px">
+                        <p:column headerText="Меню" filterBy="#{ord.menuName}" footerText="contains" filterMatchMode="contains" style="width: 250px">
                             <h:commandLink action="openMenu" value="#{ord.menuName}" onclick="document.getElementById('setMenuId').value =#{ord.menu_id};"  />
                         </p:column>
                         <p:column headerText="Активное" style="text-align: center">

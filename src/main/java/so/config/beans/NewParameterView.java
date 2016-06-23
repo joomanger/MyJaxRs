@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import service.Secure;
 
 /**
  *
@@ -15,6 +16,7 @@ import javax.inject.Named;
  */
 @Named
 @ViewScoped
+@Secure
 public class NewParameterView implements Serializable {
 
     private ParameterConfiguration paramConfig = new ParameterConfiguration();

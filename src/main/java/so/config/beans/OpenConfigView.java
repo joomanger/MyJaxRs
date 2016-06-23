@@ -13,6 +13,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.CellEditEvent;
+import service.Secure;
 
 /**
  *
@@ -20,6 +21,7 @@ import org.primefaces.event.CellEditEvent;
  */
 @Named
 @ViewScoped
+@Secure
 public class OpenConfigView implements Serializable {
 
     @Inject

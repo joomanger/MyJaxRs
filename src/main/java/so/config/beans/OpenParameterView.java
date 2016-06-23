@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
+import service.Secure;
 
 /**
  *
@@ -18,6 +19,7 @@ import org.primefaces.event.RowEditEvent;
  */
 @Named
 @ViewScoped
+@Secure
 public class OpenParameterView implements Serializable {
 
     private ParameterConfiguration param;
