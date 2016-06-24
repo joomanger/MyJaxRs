@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./../../../WEB-INF/template.xhtml">
+            <ui:define name="content">
+                <h:form  prependId="false">
+                    <p:fieldset id="menuHeader" legend="Меню" style="width: 250px; margin-bottom: 10px"> 
+                        <h:panelGrid id="yyy" columns="2" cellpadding="5" cellspacing="5">
+                            <p:outputLabel value="Меню"/>
+                            <p:inputText value="#{openMenuView.menu.menuName}"/>
+                            <p:outputLabel value="Активное"/>
+                            <p:inputSwitch value="#{openMenuView.menu.activeStatus}"/>
+                            <p:commandButton id="btnSave" value="Сохранить" actionListener="#{menuCBean.saveMenu('Меню сохранено')}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
+                        </h:panelGrid>
+                    </p:fieldset> 
+                </h:form>
+                <h:form  prependId="false">
+                    <p:dataTable id="dTable" var="ord" value="#{openMenuView.menu.menuItems}" selection="#{openMenuView.selectedMenuItems}" 
+                                 rowSelectMode="checkbox" editMode="cell" editable="true"
+                                 scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.line_num}" 
+                                 style="width: 1000px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        <p:ajax event="cellEdit"  listener="#{openMenuView.onCellEdit}"/>
+                        <p:column headerText="нпп" style="width:30px; text-align: center">
+                            <p:cellEditor> 
+                                <f:facet name="output"><p:outputLabel value="#{ord.line_num}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{ord.line_num}"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="Пункт меню" style="width:100px;">
+                            <p:outputLabel value="#{ord.menuItem}" style="text-align: left" />
+                        </p:column>
+                        <p:column headerText="Показ." style="width:56px; text-align: center" >
+                               <p:selectBooleanCheckbox value="#{ord.visibleItem}" >
+                                   <f:attribute name="menuItem" value="#{ord}"/>
+                                   <p:ajax event="change" listener="#{openMenuView.onCellEdit}"/>
+                               </p:selectBooleanCheckbox>
+                        </p:column>
+                        <c:set var="view" value="#{viewCBean.findViewById(ord.view_id)}"/>
+                        <p:column headerText="Представление" style="width:100px;">
+                            <p:outputLabel value="#{view.viewName}" style="text-align: left" />
+                        </p:column>
+                        <p:column headerText="Описание" style="width:250px;">
+                            <p:outputLabel value="#{view.description}" style="text-align: left" />
+                        </p:column>
+                        <p:column headerText="URL" style="width:300px;">
+                            <p:outputLabel value="#{view.url}" style="text-align: left" />
+                        </p:column>
+                        <f:facet name="footer" >
+                            <p:outputLabel for="addTextItem" value="Новый пункт"/>
+                            <p:inputText id="addTextItem" value="#{openMenuView.newMenuName}" required="false"/>
+                            <p:autoComplete  value="#{openMenuView.newView}"  required="false"
+                                             completeMethod="#{viewConverter.completeView}" converter="#{viewConverter}"
+                                             var="v" itemLabel="#{v.viewName}" itemValue="#{v}"
+                                             forceSelection="true" dropdown="true" style="margin-right: 50px" >
+                            </p:autoComplete>
+                            <p:focus for="addTextItem"/>
+                            <p:commandButton value="Добавить" actionListener="#{menuCBean.addMenuItemOMV()}" update="dTable mainMSG"/>
+                            <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
+                            <p:commandButton value="Изменить" immediate="true" actionListener="#{menuCBean.saveChangedLinesOMV()}" style="margin-left: 10px" update="dTable mainMSG"/>
+                        </f:facet>
+                    </p:dataTable>
+                    <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                        <p:outputPanel id="selectedParams" style="text-align:center;">
+                            <p:dataTable value="#{openMenuView.selectedMenuItems}" var="v">
+                                <p:column headerText="нпп">
+                                    <h:outputText value="#{v.line_num}"/>
+                                </p:column>
+                                <p:column headerText="Пункт меню">
+                                    <h:outputText value="#{v.menuItem}"/>
+                                </p:column>
+                            </p:dataTable>
+                            <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>
+                            <p:commandButton value="Yes" actionListener="#{menuCBean.deleteMenuItemsOMV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
+                        </p:outputPanel>
+                    </p:dialog>
+                    <p:commandButton id="btnBack" value="Back" action="menus" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

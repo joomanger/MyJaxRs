@@ -5,7 +5,7 @@
  */
 package so.saleorder.beans;
 
-import entities.Item;
+import item.entities.Item;
 import so.entities.SaleOrder;
 import so.entities.SaleOrderLine;
 import so.config.entity.Configuration;

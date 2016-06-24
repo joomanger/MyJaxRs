@@ -1,6 +1,6 @@
 package so.config.entity;
 
-import entities.Item;
+import item.entities.Item;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;

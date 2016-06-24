@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">s
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/template.xhtml">
+            <ui:define name="content">
+                <h:form  prependId="false">
+                    <p:fieldset id="menuHeader" legend="Новый справочник" style="width: 250px; margin-bottom: 10px"> 
+                        <h:panelGrid id="yyy" columns="2" cellpadding="5" cellspacing="5">
+                            <p:outputLabel value="Имя"/>
+                            <p:inputText id="lookupName" value="#{newLookupView.lookup.name}" disabled="#{newLookupView.b1}"/>
+                            <p:outputLabel value="Описание"/>
+                            <p:inputText id="lookupDesc" value="#{newLookupView.lookup.description}" disabled="#{newLookupView.b1}"/>
+                            <p:outputLabel value="Активное"/>
+                            <p:inputSwitch id="activeStatus" value="#{newLookupView.lookup.activeStatus}" disabled="#{newLookupView.b1}"/>
+                        </h:panelGrid>
+                    </p:fieldset> 
+
+                    <p:dataTable id="dTable" var="ord" value="#{newLookupView.lookup.lookupItems}" selection="#{newLookupView.selectedLookupItems}" 
+                                 rowSelectMode="checkbox" editMode="cell" editable="true"
+                                 scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord}" 
+                                 style="width: 1000px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        <p:column headerText="Значение" style="width:100px; text-align: left">
+                            <p:outputLabel value="#{ord.valuez}" />
+                        </p:column>
+                        <p:column headerText="Описание" style="width:250px;">
+                            <p:outputLabel value="#{ord.valuezDescription}" style="text-align: left" />
+                        </p:column>
+                        <p:column headerText="Показ." style="width:56px; text-align: center" >
+                            <p:selectBooleanCheckbox value="#{ord.activeStatus}" />
+                        </p:column>
+                        <f:facet name="footer" >
+                            <p:outputLabel for="lookupName" value="Новое значение:"/>
+                            <p:inputText id="lookupName" value="#{newLookupView.newLookupName}" required="false"/>
+                            <p:inputText id="lookupDesc" value="#{newLookupView.newLookupDesc}" required="false"/>
+                            <p:focus for="lookupName"/>
+                            <p:commandButton value="Добавить" actionListener="#{lookupCBean.addLookupItemNLV()}" update="dTable mainMSG"/>
+                            <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
+                        </f:facet>
+                    </p:dataTable>
+                    <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                        <p:outputPanel id="selectedParams" style="text-align:center;">
+                            <p:dataTable value="#{newMenuView.selectedMenuItems}" var="v">
+                                <p:column headerText="нпп">
+                                    <h:outputText value="#{v.line_num}"/>
+                                </p:column>
+                                <p:column headerText="Пункт меню">
+                                    <h:outputText value="#{v.menuItem}"/>
+                                </p:column>
+                            </p:dataTable>
+                            <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>
+                            <p:commandButton value="Yes" actionListener="#{menuCBean.deleteMenuItemsNMV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
+                        </p:outputPanel>
+                    </p:dialog>
+                    <p:commandButton id="btnBack" value="Back" action="lookups" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
+                    <p:commandButton id="btnCreate" value="Создать" ajax="false" validateClient="true"  action="#{lookupCBean.createLookup()}"   style="margin-top: 10px;margin-right: 20px"/>                    
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

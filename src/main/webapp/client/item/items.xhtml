@@ -3,13 +3,48 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
         <ui:composition template="./../../WEB-INF/template.xhtml">
 
             <ui:define name="content">
+                <h:form prependId="false">
+                    <h:inputHidden id="itemId" value="#{findItemSession.item_id}"/>
+                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.menu_id}" var="ord" value="#{findMenuView.menus}" 
+                                 editable="true" reflow="true" selection="#{findMenuView.selectedMenus}" rows="20" paginator="true" style="width: 400px;"
+                                 rowsPerPageTemplate="20,40,100" lazy="true" filteredValue="#{findMenuView.filteredMenus}">
+                        <f:facet name="header">
+                            Позиции
+                        </f:facet>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        <p:column headerText="Меню" filterBy="#{ord.menuName}" footerText="contains" filterMatchMode="contains" style="width: 250px">
+                            <h:commandLink action="openMenu" value="#{ord.menuName}" onclick="document.getElementById('setMenuId').value =#{ord.menu_id};"  />
+                        </p:column>
+                        <p:column headerText="Активное" style="text-align: center">
+                            <p:selectBooleanCheckbox disabled="true" value="#{ord.activeStatus}" />
+                        </p:column>
+                        <f:facet name="footer" >
+                            <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />
+                            <p:commandButton value="New" action="newMenu" immediate="true" style="margin-left: 15px"/>
+                        </f:facet>
+                    </p:dataTable> 
+                    <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                        <p:outputPanel id="selectedParams" style="text-align: center">
+                            <p:dataTable value="#{findMenuView.selectedMenus}" var="v">
+                                <p:column headerText="Роль">
+                                    <h:outputText value="#{v.menuName}" style="text-align: left"/>
+                                </p:column>
+                            </p:dataTable>
+
+                            <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
+                            <p:commandButton value="Yes" actionListener="#{menuCBean.deleteMenus()}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
+
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
                 <h1>Items list</h1>
                 <h:form> 
                     <h:selectOneRadio value="#{itemBackingBean.id}"
