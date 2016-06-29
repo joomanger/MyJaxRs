@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.eclipse.persistence.annotations.PrivateOwned;
 
 /**
@@ -22,7 +24,8 @@ public class Lookup implements Serializable {
     @Id
     @SequenceGenerator(name = "lookup_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "lookup_sq")
-    private Long id;
+    private Long lookup_id;
+    @Size(min=3,max=30,message = "Длина поля ИМЯ от 3 до 30 символов!")
     private String name;
     private String description;
     private Boolean activeStatus=true;
@@ -50,12 +53,12 @@ public class Lookup implements Serializable {
         li.setLookup(null);
     }
 
-    public Long getId() {
-        return id;
+    public Long getLookup_id() {
+        return lookup_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setLookup_id(Long lookup_id) {
+        this.lookup_id = lookup_id;
     }
 
     public String getName() {

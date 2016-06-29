@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -18,7 +20,8 @@ public class LookupItem implements Serializable {
     @Id
     @SequenceGenerator(name = "lookupitem_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "lookupitem_sq")
-    private Long id;
+    private Long lookupItem_id;
+    @Size(min=1,max=30,message = "Длина поля ЗНАЧЕНИЕ от 1 до 30 символов!")
     private String valuez;
     private String valuezDescription;
     private Boolean activeStatus=true;
@@ -27,12 +30,12 @@ public class LookupItem implements Serializable {
     @JoinColumn(name = "LOOKUP_ID")
     private Lookup lookup;
 
-    public Long getId() {
-        return id;
+    public Long getLookupItem_id() {
+        return lookupItem_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setLookupItem_id(Long lookupItem_id) {
+        this.lookupItem_id = lookupItem_id;
     }
 
     public String getValuez() {

@@ -28,10 +28,16 @@
                                  style="width: 1000px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:column headerText="Значение" style="width:100px; text-align: left">
-                            <p:outputLabel value="#{ord.valuez}" />
+                            <p:cellEditor> 
+                                <f:facet name="input"><p:inputText value="#{ord.valuez}"/></f:facet>
+                                <f:facet name="output"><p:outputLabel value="#{ord.valuez}"/></f:facet>
+                            </p:cellEditor>    
                         </p:column>
                         <p:column headerText="Описание" style="width:250px;">
-                            <p:outputLabel value="#{ord.valuezDescription}" style="text-align: left" />
+                            <p:cellEditor> 
+                                <f:facet name="input"><p:inputText value="#{ord.valuezDescription}"/></f:facet>
+                                <f:facet name="output"><p:outputLabel value="#{ord.valuezDescription}"/></f:facet>
+                            </p:cellEditor>    
                         </p:column>
                         <p:column headerText="Показ." style="width:56px; text-align: center" >
                             <p:selectBooleanCheckbox value="#{ord.activeStatus}" />

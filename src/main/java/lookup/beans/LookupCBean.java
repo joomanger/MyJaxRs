@@ -27,8 +27,29 @@ public class LookupCBean {
     @Inject
     private NewLookupView nlv;
 
+    @Inject
+    private OpenLookupView olv;
+
     public List<Lookup> findAll() {
         return ejb.findAll();
+    }
+
+    public Lookup find(Long lookup_id) {
+        return ejb.find(lookup_id);
+    }
+
+    public void saveLookupHeader() {
+        Lookup lp = olv.getLookup();
+        String result = ejb.validateMyEntity(lp);
+        if (result.equals(ejb.SUCCESSFUL)) {
+            String status = ejb.edit(lp);
+            ejb.sendMessage(status, "Справочник обновлен успешно");
+            if (!status.equals(ejb.SUCCESSFUL)) {
+                ejb.sendMessage(status, null);
+            }
+        } else {
+            ejb.sendMessage(result, null);
+        }
     }
 
     public void deleteLookups() {
@@ -63,14 +84,47 @@ public class LookupCBean {
 
     public String createLookup() {
         Lookup lookup = nlv.getLookup();
-        String status = ejb.create(lookup);
-        ejb.sendMessage(status, "Справочник создан успешно");
-        if (status.equals(ejb.SUCCESSFUL)) {
-            return "lookups";
+        String result = ejb.validateMyEntity(lookup);
+        if (result.equals(ejb.SUCCESSFUL)) {
+            String status = ejb.create(lookup);
+            ejb.sendMessage(status, "Справочник создан успешно");
+            if (status.equals(ejb.SUCCESSFUL)) {
+                return "lookups";
+            } else {
+                ejb.sendMessage(status, null);
+                return null;
+            }
         } else {
-            ejb.sendMessage(status, null);
+            ejb.sendMessage(result, null);
             return null;
         }
+
     }
 
+    public void addlookupItemOMV() {
+        LookupItem li = olv.getLookupItem();
+        String result = itemEJB.validateMyEntity(li);
+        if (result.equals(itemEJB.SUCCESSFUL)) {
+            li.setLookup(olv.getLookup());
+            String status = itemEJB.create(li);
+            if (status.equals(itemEJB.SUCCESSFUL)) {
+                itemEJB.sendMessage(status, "Значение добавлено успешно");
+                olv.getLookupItem().setValuez(null);
+                olv.getLookupItem().setValuezDescription(null);
+            } else {
+                itemEJB.sendMessage(status, null);
+            }
+        } else {
+            itemEJB.sendMessage(result, null);
+        }
+
+    }
+
+    public void saveChangedLinesOMV() {
+
+    }
+
+    public void deleteLookupItemsOMV() {
+
+    }
 }
