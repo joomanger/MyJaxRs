@@ -19,17 +19,15 @@
                             <p:inputText value="#{openLookupView.lookup.description}"/>
                             <p:outputLabel value="Активный"/>
                             <p:inputSwitch value="#{openLookupView.lookup.activeStatus}"/>
-                            <p:commandButton id="btnSave" value="Сохранить" actionListener="#{lookupCBean.saveLookupHeader()}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
                         </h:panelGrid>
                     </p:fieldset> 
-                </h:form>
-                <h:form  prependId="false">
+<!--                </h:form>
+                <h:form  prependId="false">-->
                     <p:dataTable id="dTable" var="ord" value="#{openLookupView.lookup.lookupItems}" selection="#{openLookupView.selectedLookupItems}" 
                                  rowSelectMode="checkbox" editMode="cell" editable="true"
                                  scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.lookupItem_id}" 
                                  style="width: 1000px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:ajax event="cellEdit"  listener="#{openLookupView.onCellEdit}"/>
                         <p:column headerText="Значение" style="width:100px; text-align: left">
                             <p:cellEditor> 
                                 <f:facet name="input"><p:inputText value="#{ord.valuez}"/></f:facet>
@@ -43,19 +41,15 @@
                             </p:cellEditor>    
                         </p:column>
                         <p:column headerText="Показ." style="width:56px; text-align: center" >
-                            <p:selectBooleanCheckbox value="#{ord.activeStatus}" >
-                                <f:attribute name="lookupItem" value="#{ord}"/>
-                                   <p:ajax event="change" listener="#{openLookupView.onCellEdit}"/>
-                            </p:selectBooleanCheckbox>
+                            <p:selectBooleanCheckbox value="#{ord.activeStatus}" />
                         </p:column>
                         <f:facet name="footer" >
                             <p:outputLabel for="valuez" value="Новое значение"/>
-                            <p:inputText id="valuez" value="#{openLookupView.lookupItem.valuez}" required="false"/>
-                            <p:inputText id="description" value="#{openLookupView.lookupItem.valuezDescription}" required="false"/>
+                            <p:inputText id="valuez" value="#{openLookupView.lookupValue}" required="false"/>
+                            <p:inputText id="description" value="#{openLookupView.lookupValueDescription}" required="false"/>
                             <p:focus for="valuez"/>
                             <p:commandButton value="Добавить" actionListener="#{lookupCBean.addlookupItemOMV()}" update="dTable mainMSG"/>
                             <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
-                            <p:commandButton value="Изменить" immediate="true" actionListener="#{lookupCBean.saveChangedLinesOMV()}" style="margin-left: 10px" update="dTable mainMSG"/>
                         </f:facet>
                     </p:dataTable>
                     <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
@@ -73,6 +67,7 @@
                         </p:outputPanel>
                     </p:dialog>
                     <p:commandButton id="btnBack" value="Back" action="lookups" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
+                    <p:commandButton id="btnSave" value="Сохранить" actionListener="#{lookupCBean.saveLookup()}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
                 </h:form>
 
             </ui:define>

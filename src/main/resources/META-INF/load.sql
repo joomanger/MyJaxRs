@@ -101,3 +101,50 @@ insert into roles_menus values(1,1);
 
 insert into users_roles values(1,1);
 insert into users_roles values(2,2);
+
+--Заполним лукапы
+insert into lookup(lookup_id, activestatus, description, name) values(1,true,'Пункты поставки','FOB');
+insert into lookup(lookup_id, activestatus, description, name) values(2,true,'Единицы измерения','UOM');
+insert into lookup(lookup_id, activestatus, description, name) values(3,true,'Условия доставки','FREIGHT TERMS');
+--FOB
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(1,true,'Граница Украина-Белоруссия','Граница Украина-Белоруссия',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(2,true,'Граница Украина-Венгрия','Граница Украина-Венгрия',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(3,true,'Граница Украина-Молдова','Граница Украина-Молдова',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(4,true,'Граница Украина-Польша','Граница Украина-Польша',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(5,true,'Граница Украина-Румыния','Граница Украина-Румыния',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(6,true,'Граница Украина-РФ','Граница Украина-РФ',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(7,true,'Граница Украина-Словакия','Граница Украина-Словакия',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(8,true,'Грузополучатель','Грузополучатель',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(9,true,'Порт Бердянск','Порт Бердянск',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(10,true,'Порт Измаил','Порт Измаил',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(11,true,'Порт Ильичевск','Порт Ильичевск',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(12,true,'Порт Ильичевск-Паромная','Порт Ильичевск-Паромная',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(13,true,'Порт Ильичевск-Рыбный','Порт Ильичевск-Рыбный',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(14,true,'Порт Мариуполь','Порт Мариуполь',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(15,true,'Порт Николаев','Порт Николаев',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(16,true,'Порт Одесса','Порт Одесса',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(17,true,'Порт Южный','Порт Южный',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(18,true,'Склад АМК','Склад АМК',1);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(19,true,'Склад ДМКД','Склад ДМКД',1);
+--UOM
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(20,true,'Tn','Тонны',2);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(21,true,'Пч','Пачки',2);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(22,true,'Шт','Штуки',2);
+--FREIGHT TERMS
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(23,true,'CFR','Стоимость и фрахт',3);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(24,true,'CIF','Стоимость, страхование и фрахт',3);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(25,true,'CIP','Фрахт/перевозка и страхование оплачены до',3);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(26,true,'CPT','Фрахт/перевозка оплачены до',3);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(27,true,'DAF','Поставка до границы',3);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(28,true,'DAP','Поставка в месте назначения',3);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(29,true,'DDP','Поставка с оплатой пошлины',3);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(30,true,'DDU','Поставка без оплаты пошлины',3);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(31,true,'DEQ','Поставка с пристани',3);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(32,true,'DES','Поставка с судна',3);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(33,true,'EXW','Франко завод',3);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(34,true,'FAS','Поставка в доль борта судна',3);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(35,true,'FCA','Франко перевозчик',3);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(36,true,'FOB','Франко борт',3);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(37,true,'FOB ST L/S/D','Стоимость укладки груза на борту судна включена',3);
+
+

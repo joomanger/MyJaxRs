@@ -7,7 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 
 /**
@@ -15,10 +16,12 @@ import javax.validation.constraints.Size;
  * @author savin
  */
 @Entity
+@Table(uniqueConstraints
+        = @UniqueConstraint(columnNames = {"lookup_id","valuez"}))
 public class LookupItem implements Serializable {
 
     @Id
-    @SequenceGenerator(name = "lookupitem_sq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "lookupitem_sq", initialValue = 38, allocationSize = 1)
     @GeneratedValue(generator = "lookupitem_sq")
     private Long lookupItem_id;
     @Size(min=1,max=30,message = "Длина поля ЗНАЧЕНИЕ от 1 до 30 символов!")

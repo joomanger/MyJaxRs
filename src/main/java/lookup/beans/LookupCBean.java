@@ -38,7 +38,7 @@ public class LookupCBean {
         return ejb.find(lookup_id);
     }
 
-    public void saveLookupHeader() {
+    public void saveLookup() {
         Lookup lp = olv.getLookup();
         String result = ejb.validateMyEntity(lp);
         if (result.equals(ejb.SUCCESSFUL)) {
@@ -102,15 +102,17 @@ public class LookupCBean {
     }
 
     public void addlookupItemOMV() {
-        LookupItem li = olv.getLookupItem();
+        LookupItem li = new LookupItem();
+        li.setValuez(olv.getLookupValue());
+        li.setValuezDescription(olv.getLookupValueDescription());
         String result = itemEJB.validateMyEntity(li);
         if (result.equals(itemEJB.SUCCESSFUL)) {
             li.setLookup(olv.getLookup());
             String status = itemEJB.create(li);
             if (status.equals(itemEJB.SUCCESSFUL)) {
                 itemEJB.sendMessage(status, "Значение добавлено успешно");
-                olv.getLookupItem().setValuez(null);
-                olv.getLookupItem().setValuezDescription(null);
+                olv.setLookupValue(null);
+                olv.setLookupValueDescription(null);
             } else {
                 itemEJB.sendMessage(status, null);
             }
@@ -120,11 +122,8 @@ public class LookupCBean {
 
     }
 
-    public void saveChangedLinesOMV() {
-
-    }
-
     public void deleteLookupItemsOMV() {
-
+        olv.getLookup().getLookupItems().removeAll(olv.getSelectedLookupItems());
+        saveLookup();
     }
 }

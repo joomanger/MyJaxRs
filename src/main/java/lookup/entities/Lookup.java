@@ -22,7 +22,7 @@ import org.eclipse.persistence.annotations.PrivateOwned;
 public class Lookup implements Serializable {
 
     @Id
-    @SequenceGenerator(name = "lookup_sq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "lookup_sq", initialValue = 4, allocationSize = 1)
     @GeneratedValue(generator = "lookup_sq")
     private Long lookup_id;
     @Size(min=3,max=30,message = "Длина поля ИМЯ от 3 до 30 символов!")
