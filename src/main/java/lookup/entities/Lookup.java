@@ -19,7 +19,7 @@ import org.eclipse.persistence.annotations.PrivateOwned;
  * @author savin
  */
 @Entity
-public class Lookup implements Serializable {
+public class Lookup implements Serializable, Comparable<Lookup> {
 
     @Id
     @SequenceGenerator(name = "lookup_sq", initialValue = 4, allocationSize = 1)
@@ -92,5 +92,15 @@ public class Lookup implements Serializable {
     public void setLookupItems(List<LookupItem> lookupItems) {
         this.lookupItems = lookupItems;
     }
+
+    @Override
+    public int compareTo(Lookup o) {
+       if(this.name.charAt(0)>o.name.charAt(0)){
+           return 1;
+       }else{
+           return -1;
+       }
+    }
+    
 
 }

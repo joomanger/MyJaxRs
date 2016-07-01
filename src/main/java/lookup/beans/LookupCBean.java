@@ -1,11 +1,14 @@
 package lookup.beans;
 
+import java.util.Collections;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import lookup.entities.Lookup;
 import lookup.entities.LookupItem;
+import service.AbstractClientBean;
 
 /**
  *
@@ -13,7 +16,7 @@ import lookup.entities.LookupItem;
  */
 @Named
 @RequestScoped
-public class LookupCBean {
+public class LookupCBean extends AbstractClientBean<Lookup> {
 
     @Inject
     private LookupEJB ejb;
@@ -30,13 +33,29 @@ public class LookupCBean {
     @Inject
     private OpenLookupView olv;
 
-    public List<Lookup> findAll() {
-        return ejb.findAll();
+    public LookupCBean() {
+        super(Lookup.class);
     }
 
+    @Override
+    @PostConstruct
+    protected void setEJB() {
+        super.setEJBean(ejb);
+    }
+
+    @Override
+    public List<Lookup> findAll() {
+        List<Lookup> l = ejb.findAll();
+        Collections.sort(l);
+        return l;
+    }
+
+    @Override
     public Lookup find(Long lookup_id) {
         return ejb.find(lookup_id);
     }
+
+    
 
     public void saveLookup() {
         Lookup lp = olv.getLookup();
@@ -53,10 +72,11 @@ public class LookupCBean {
     }
 
     public void deleteLookups() {
-        for (Lookup lookup : flv.getSelectedLookups()) {
+//        for (Lookup lookup : flv.getSelectedLookups()) {
+        for (Lookup lookup : flv.getSelectedEntities()) {
             String status = ejb.remove(lookup);
             ejb.sendMessage(status, "Справочник " + lookup.getName() + " удален успешно");
-            flv.getLookups().remove(lookup);
+            flv.getEntities().remove(lookup);
         }
 
     }
@@ -126,4 +146,5 @@ public class LookupCBean {
         olv.getLookup().getLookupItems().removeAll(olv.getSelectedLookupItems());
         saveLookup();
     }
+
 }

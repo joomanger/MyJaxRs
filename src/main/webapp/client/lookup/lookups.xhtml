@@ -13,8 +13,8 @@
             <ui:define name="content">
                 <h:form prependId="false">
                     <h:inputHidden id="setLookupId" value="#{findLookupSession.lookup_id}"/>
-                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.lookup_id}" var="ord" value="#{findLookupView.lookups}" 
-                                 editable="true" reflow="true" selection="#{findLookupView.selectedLookups}" rows="20" paginator="true" style="width: 700px;"
+                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.lookup_id}" var="ord" value="#{findLookupView.entities}" 
+                                 editable="true" reflow="true" selection="#{findLookupView.selectedEntities}" rows="20" paginator="true" style="width: 700px;"
                                  rowsPerPageTemplate="20,40,100" lazy="true">
                         <f:facet name="header">
                             Стандартные справочники
@@ -36,7 +36,7 @@
                     </p:dataTable> 
                     <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
                         <p:outputPanel id="selectedParams" style="text-align: center">
-                            <p:dataTable value="#{findLookupView.selectedLookups}" var="v">
+                            <p:dataTable value="#{findLookupView.selectedEntities}" var="v">
                                 <p:column headerText="Наименование">
                                     <h:outputText value="#{v.name}" style="text-align: left"/>
                                 </p:column>
