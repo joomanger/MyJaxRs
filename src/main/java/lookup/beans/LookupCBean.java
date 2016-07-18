@@ -147,4 +147,9 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
         saveLookup();
     }
 
+    @Override
+    public void deleteSelectedEntities() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
