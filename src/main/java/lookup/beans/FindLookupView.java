@@ -5,7 +5,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import lookup.entities.Lookup;
-import service.AbstractFindView;
+import service.AbstractView;
 
 /**
  *
@@ -13,7 +13,7 @@ import service.AbstractFindView;
  */
 @Named
 @ViewScoped
-public class FindLookupView extends AbstractFindView<Lookup> {
+public class FindLookupView extends AbstractView<Lookup> {
 
     @Inject
     private LookupCBean client;
@@ -24,8 +24,8 @@ public class FindLookupView extends AbstractFindView<Lookup> {
 
     @Override
     @PostConstruct
-    public void setClient() {
-        super.setClient(client);
+    protected void init() {
+        super.setEntities(client.findAll());
     }
 
 }

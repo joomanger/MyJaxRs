@@ -1,12 +1,10 @@
 package lookup.beans;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import lookup.entities.Lookup;
-import lookup.entities.LookupItem;
+import service.AbstractView;
 
 /**
  *
@@ -14,13 +12,22 @@ import lookup.entities.LookupItem;
  */
 @Named
 @ViewScoped
-public class NewLookupView implements Serializable {
+public class NewLookupView extends AbstractView<Lookup> {
 
-    private Lookup lookup=new Lookup();
-    private List<LookupItem> selectedLookupItems = new ArrayList<>();
-    private boolean b1 = false;
+    private final Lookup lookup = new Lookup();
     private String newLookupName;
     private String newLookupDesc;
+
+    public NewLookupView() {
+        super(Lookup.class);
+    }
+
+    @PostConstruct
+    @Override
+    protected void init() {
+        lookup.setActiveStatus(Boolean.TRUE);
+        super.setEntity(lookup);
+    }
 
     public String getNewLookupName() {
         return newLookupName;
@@ -36,30 +43,6 @@ public class NewLookupView implements Serializable {
 
     public void setNewLookupDesc(String newLookupDesc) {
         this.newLookupDesc = newLookupDesc;
-    }
-
-    public Lookup getLookup() {
-        return lookup;
-    }
-
-    public void setLookup(Lookup lookup) {
-        this.lookup = lookup;
-    }
-
-    public boolean isB1() {
-        return b1;
-    }
-
-    public void setB1(boolean b1) {
-        this.b1 = b1;
-    }
-
-    public List<LookupItem> getSelectedLookupItems() {
-        return selectedLookupItems;
-    }
-
-    public void setSelectedLookupItems(List<LookupItem> selectedLookupItems) {
-        this.selectedLookupItems = selectedLookupItems;
     }
 
 }

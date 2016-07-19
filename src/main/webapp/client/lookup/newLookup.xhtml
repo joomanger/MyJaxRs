@@ -4,7 +4,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">s
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -14,15 +14,15 @@
                     <p:fieldset id="menuHeader" legend="Новый справочник" style="width: 250px; margin-bottom: 10px"> 
                         <h:panelGrid id="yyy" columns="2" cellpadding="5" cellspacing="5">
                             <p:outputLabel value="Имя"/>
-                            <p:inputText id="lookupName" value="#{newLookupView.lookup.name}" disabled="#{newLookupView.b1}"/>
+                            <p:inputText id="lookupName" value="#{newLookupView.entity.name}"/>
                             <p:outputLabel value="Описание"/>
-                            <p:inputText id="lookupDesc" value="#{newLookupView.lookup.description}" disabled="#{newLookupView.b1}"/>
+                            <p:inputText id="lookupDesc" value="#{newLookupView.entity.description}"/>
                             <p:outputLabel value="Активное"/>
-                            <p:inputSwitch id="activeStatus" value="#{newLookupView.lookup.activeStatus}" disabled="#{newLookupView.b1}"/>
+                            <p:inputSwitch id="activeStatus" value="#{newLookupView.entity.activeStatus}"/>
                         </h:panelGrid>
 
 
-                        <p:dataTable id="dTable" var="ord" value="#{newLookupView.lookup.lookupItems}" selection="#{newLookupView.selectedLookupItems}" 
+                        <p:dataTable id="dTable" var="ord" value="#{newLookupView.entity.lookupItems}" selection="#{newLookupView.selectedEntityLines}" 
                                      rowSelectMode="checkbox" editMode="cell" editable="true"
                                      scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord}" 
                                      style="width: 1000px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
@@ -53,12 +53,12 @@
                         </p:dataTable>
                         <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
                             <p:outputPanel id="selectedParams" style="text-align:center;">
-                                <p:dataTable value="#{newMenuView.selectedMenuItems}" var="v">
-                                    <p:column headerText="нпп">
-                                        <h:outputText value="#{v.line_num}"/>
+                                <p:dataTable value="#{newLookupView.selectedEntityLines}" var="v">
+                                    <p:column headerText="Значение">
+                                        <h:outputText value="#{v.valuez}"/>
                                     </p:column>
-                                    <p:column headerText="Пункт меню">
-                                        <h:outputText value="#{v.menuItem}"/>
+                                    <p:column headerText="Описание">
+                                        <h:outputText value="#{v.valuezDescription}"/>
                                     </p:column>
                                 </p:dataTable>
                                 <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>

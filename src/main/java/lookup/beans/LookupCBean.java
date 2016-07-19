@@ -45,20 +45,21 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
 
     @Override
     public List<Lookup> findAll() {
-        List<Lookup> l = ejb.findAll();
+        List<Lookup> l = super.findAll();
         Collections.sort(l);
         return l;
     }
 
-    @Override
-    public Lookup find(Long lookup_id) {
-        return ejb.find(lookup_id);
-    }
+//    @Override
+//    public Lookup find(Long lookup_id) {
+//        return ejb.find(lookup_id);
+//    }
 
     
 
     public void saveLookup() {
-        Lookup lp = olv.getLookup();
+        //Lookup lp = olv.getLookup();
+        Lookup lp = olv.getEntity();
         String result = ejb.validateMyEntity(lp);
         if (result.equals(ejb.SUCCESSFUL)) {
             String status = ejb.edit(lp);
@@ -83,7 +84,7 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
 
     public void addLookupItemNLV() {
 
-        Lookup l = nlv.getLookup();
+        Lookup l = nlv.getEntity();
 
         LookupItem li = new LookupItem();
 
@@ -103,7 +104,7 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
     }
 
     public String createLookup() {
-        Lookup lookup = nlv.getLookup();
+        Lookup lookup = nlv.getEntity();
         String result = ejb.validateMyEntity(lookup);
         if (result.equals(ejb.SUCCESSFUL)) {
             String status = ejb.create(lookup);
@@ -127,7 +128,8 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
         li.setValuezDescription(olv.getLookupValueDescription());
         String result = itemEJB.validateMyEntity(li);
         if (result.equals(itemEJB.SUCCESSFUL)) {
-            li.setLookup(olv.getLookup());
+            //li.setLookup(olv.getLookup());
+            li.setLookup(olv.getEntity());
             String status = itemEJB.create(li);
             if (status.equals(itemEJB.SUCCESSFUL)) {
                 itemEJB.sendMessage(status, "Значение добавлено успешно");
@@ -143,7 +145,8 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
     }
 
     public void deleteLookupItemsOMV() {
-        olv.getLookup().getLookupItems().removeAll(olv.getSelectedLookupItems());
+        //olv.getLookup().getLookupItems().removeAll(olv.getSelectedLookupItems());
+        olv.getEntity().getLookupItems().removeAll(olv.getSelectedEntityLines());
         saveLookup();
     }
 

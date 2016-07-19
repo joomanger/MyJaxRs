@@ -25,7 +25,7 @@ public abstract class AbstractClientBean<T> implements IClientBean<T> {
 
     @Override
     public T find(Long p_id) {
-        return null;
+        return ejb.find(p_id);
     }
 
     @Override
