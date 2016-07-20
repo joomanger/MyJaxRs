@@ -11,33 +11,72 @@ public abstract class AbstractClientBean<T> implements IClientBean<T> {
 
     private final Class<T> entity;
 
-    private IEJB<T> ejb;
-
     public AbstractClientBean(Class<T> entity) {
         this.entity = entity;
     }
 
-    protected abstract void setEJB();
+    protected abstract AbstractEJB<T> getEJB();
 
-    public void setEJBean(IEJB<T> ejb) {
-        this.ejb = ejb;
-    }
+    protected abstract AbstractView<T> getOpenView();
+
+    protected abstract AbstractView<T> getFindView();
+
+    protected abstract AbstractView<T> getNewView();
 
     @Override
     public T find(Long p_id) {
-        return ejb.find(p_id);
+        return getEJB().find(p_id);
     }
 
     @Override
     public List<T> findAll() {
-        List<T> l = ejb.findAll();
-        //Collections.sort(l);
-        return l;
+        return getEJB().findAll();
     }
-    
+
     @Override
-    public void saveEntity() {
-        
+    public String createEntity(String backURL) {
+
+        String result = getEJB().validateMyEntity(getNewView().getEntity());
+        if (result.equals(getEJB().SUCCESSFUL)) {
+            String status = getEJB().create(getNewView().getEntity());
+            getEJB().sendMessage(status, "Объект создан успешно");
+            if (status.equals(getEJB().SUCCESSFUL)) {
+                return backURL;
+            } else {
+                getEJB().sendMessage(status, null);
+                return null;
+            }
+        } else {
+            getEJB().sendMessage(result, null);
+            return null;
+        }
+    }
+
+    @Override
+    public void changeEntity() {
+        String result = getEJB().validateMyEntity(getOpenView().getEntity());
+        if (result.equals(getEJB().SUCCESSFUL)) {
+            String status = getEJB().edit(getOpenView().getEntity());
+            getEJB().sendMessage(status, "Объект обновлен успешно");
+            if (!status.equals(getEJB().SUCCESSFUL)) {
+                getEJB().sendMessage(status, null);
+            }
+        } else {
+            getEJB().sendMessage(result, null);
+        }
+    }
+
+    @Override
+    public void deleteSelectedEntities() {
+        for (T entity : getFindView().getSelectedEntities()) {
+            String status = getEJB().remove(entity);
+            if (status.equals(getEJB().SUCCESSFUL)) {
+                getEJB().sendMessage(status, "Объект удален успешно");
+                getFindView().getEntities().remove(entity);
+            } else {
+                getEJB().sendMessage(status, null);
+            }
+        }
     }
 
 }

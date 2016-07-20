@@ -46,7 +46,7 @@
                                 <p:inputText id="valuez" value="#{openLookupView.lookupValue}" required="false"/>
                                 <p:inputText id="description" value="#{openLookupView.lookupValueDescription}" required="false"/>
                                 <p:focus for="valuez"/>
-                                <p:commandButton value="Добавить" actionListener="#{lookupCBean.addlookupItemOMV()}" update="dTable mainMSG"/>
+                                <p:commandButton value="Добавить" actionListener="#{lookupCBean.addlookupItemOLV()}" update="dTable mainMSG"/>
                                 <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
                             </f:facet>
                         </p:dataTable>
@@ -61,11 +61,11 @@
                                     </p:column>
                                 </p:dataTable>
                                 <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>
-                                <p:commandButton value="Yes" actionListener="#{lookupCBean.deleteLookupItemsOMV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
+                                <p:commandButton value="Yes" actionListener="#{lookupCBean.deleteLookupItemsOLV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
                             </p:outputPanel>
                         </p:dialog>
                         <p:commandButton id="btnBack" value="Back" action="lookups" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
-                        <p:commandButton id="btnSave" value="Сохранить" actionListener="#{lookupCBean.saveLookup()}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
+                        <p:commandButton id="btnSave" value="Сохранить" actionListener="#{lookupCBean.changeEntity()}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
                     </p:fieldset> 
                 </h:form>
 

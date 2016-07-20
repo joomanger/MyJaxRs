@@ -62,11 +62,11 @@
                                     </p:column>
                                 </p:dataTable>
                                 <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>
-                                <p:commandButton value="Yes" actionListener="#{menuCBean.deleteMenuItemsNMV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
+                                <p:commandButton value="Yes" actionListener="#{lookupCBean.deleteLookupItemsNLV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
                             </p:outputPanel>
                         </p:dialog>
                         <p:commandButton id="btnBack" value="Back" action="lookups" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
-                        <p:commandButton id="btnCreate" value="Создать" ajax="false" validateClient="true"  action="#{lookupCBean.createLookup()}"   style="margin-top: 10px;margin-right: 20px"/>                    
+                        <p:commandButton id="btnCreate" value="Создать" ajax="false" validateClient="true"  action="#{lookupCBean.createEntity('lookups')}"   style="margin-top: 10px;margin-right: 20px"/>                    
                     </p:fieldset>
                 </h:form>
 
