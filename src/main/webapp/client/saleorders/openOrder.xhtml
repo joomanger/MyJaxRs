@@ -75,7 +75,7 @@
                             <p:column headerText="#{attrs.columnName}" style="width: #{attrs.size}px; text-align: #{attrs.parameterType=='TABLE'?'Center':'Right'}">
                                 <c:choose>
                                     <c:when test="#{attrs.parameterType=='TABLE'}">
-                                        <p:cellEditor rendered="#{openSaleOrderView.isEditableCell(ord.item.id,attrs.attribute)}">
+                                        <p:cellEditor rendered="#{openSaleOrderView.isEditableCell(ord.item.item_id,attrs.attribute)}">
                                             <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}"/></f:facet>
                                             <f:facet name="input">
                                                 <c:if test="#{attrs.multiple}"> 
@@ -103,19 +103,19 @@
                                         </p:cellEditor>
                                     </c:when>
                                     <c:when test="#{attrs.parameterType=='DOUBLE'}">
-                                        <p:cellEditor rendered="#{openSaleOrderView.isEditableCell(ord.item.id,attrs.attribute)}">
+                                        <p:cellEditor rendered="#{openSaleOrderView.isEditableCell(ord.item.item_id,attrs.attribute)}">
                                             <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}"/></f:facet>
                                             <f:facet name="input"><p:inputText value="#{ord[attrs.attribute]}" /></f:facet>
                                         </p:cellEditor>
                                     </c:when>
                                     <c:when test="#{attrs.parameterType=='INTEGER'}">
-                                        <p:cellEditor rendered="#{openSaleOrderView.isEditableCell(ord.item.id,attrs.attribute)}">
+                                        <p:cellEditor rendered="#{openSaleOrderView.isEditableCell(ord.item.item_id,attrs.attribute)}">
                                             <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" /></f:facet>
                                             <f:facet name="input"><p:inputText value="#{ord[attrs.attribute]}" /></f:facet>
                                         </p:cellEditor>
                                     </c:when>
                                     <c:when test="#{attrs.parameterType=='STRING'}">
-                                        <p:cellEditor rendered="#{openSaleOrderView.isEditableCell(ord.item.id,attrs.attribute)}">
+                                        <p:cellEditor rendered="#{openSaleOrderView.isEditableCell(ord.item.item_id,attrs.attribute)}">
                                             <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" /></f:facet>
                                             <f:facet name="input"><p:inputText value="#{ord[attrs.attribute]}" /></f:facet>
                                         </p:cellEditor>

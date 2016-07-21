@@ -13,24 +13,24 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-public class Item implements Serializable {
+public class Item implements Serializable, Comparable<Item> {
 
     private static final long serialVersionUID = 1L;
     @Id
     @SequenceGenerator(name = "item_sq", initialValue = 6, allocationSize = 1)
     @GeneratedValue(generator = "item_sq")
-    private long id;
+    private long item_id;
     private String name;
     private String description;
     private String uom1;
     private String uom2;
 
-    public long getId() {
-        return id;
+    public long getItem_id() {
+        return item_id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setItem_id(long item_id) {
+        this.item_id = item_id;
     }
 
     public String getName() {
@@ -64,6 +64,14 @@ public class Item implements Serializable {
     public void setUom2(String uom2) {
         this.uom2 = uom2;
     }
-    
-    
+
+    @Override
+    public int compareTo(Item o) {
+        if (this.name.charAt(0) > o.name.charAt(0)) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+
 }

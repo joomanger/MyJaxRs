@@ -7,6 +7,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
@@ -18,16 +20,21 @@ import org.eclipse.persistence.annotations.PrivateOwned;
  * @author savin
  */
 @Entity
+@NamedQueries(
+        @NamedQuery(name = Lookup.FIND_BY_NAME, query = "select t from Lookup t where t.name=:p_name")
+)
+
 public class Lookup implements Serializable, Comparable<Lookup> {
 
+    public static final String FIND_BY_NAME = "Lookup.FIND_BY_NAME";
     @Id
     @SequenceGenerator(name = "lookup_sq", initialValue = 4, allocationSize = 1)
     @GeneratedValue(generator = "lookup_sq")
     private Long lookup_id;
-    @Size(min=3,max=30,message = "Длина поля ИМЯ от 3 до 30 символов!")
+    @Size(min = 3, max = 30, message = "Длина поля ИМЯ от 3 до 30 символов!")
     private String name;
     private String description;
-    private Boolean activeStatus=true;
+    private Boolean activeStatus = true;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "lookup")
     @PrivateOwned
@@ -94,12 +101,11 @@ public class Lookup implements Serializable, Comparable<Lookup> {
 
     @Override
     public int compareTo(Lookup o) {
-       if(this.name.charAt(0)>o.name.charAt(0)){
-           return 1;
-       }else{
-           return -1;
-       }
+        if (this.name.charAt(0) > o.name.charAt(0)) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
-    
 
 }

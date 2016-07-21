@@ -12,50 +12,45 @@
 
             <ui:define name="content">
                 <h:form prependId="false">
-                    <h:inputHidden id="itemId" value="#{findItemSession.item_id}"/>
-                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.menu_id}" var="ord" value="#{findMenuView.menus}" 
-                                 editable="true" reflow="true" selection="#{findMenuView.selectedMenus}" rows="20" paginator="true" style="width: 400px;"
-                                 rowsPerPageTemplate="20,40,100" lazy="true" filteredValue="#{findMenuView.filteredMenus}">
+                    <h:inputHidden id="setItemId" value="#{findItemSession.item_id}"/>
+                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.item_id}" var="ord" value="#{findItemView.entities}" 
+                                 editable="true" reflow="true" selection="#{findItemView.selectedEntities}" rows="20" paginator="true" style="width: 700px;"
+                                 rowsPerPageTemplate="20,40,100" lazy="true">
                         <f:facet name="header">
-                            Позиции
+                            Справочник металлопродукции
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column headerText="Меню" filterBy="#{ord.menuName}" footerText="contains" filterMatchMode="contains" style="width: 250px">
-                            <h:commandLink action="openMenu" value="#{ord.menuName}" onclick="document.getElementById('setMenuId').value =#{ord.menu_id};"  />
+                        <p:column headerText="Наименование" style="width: 150px;text-align: left">
+                            <h:commandLink action="openItem" value="#{ord.name}" onclick="document.getElementById('setItemId').value =#{ord.item_id};"/>
                         </p:column>
-                        <p:column headerText="Активное" style="text-align: center">
-                            <p:selectBooleanCheckbox disabled="true" value="#{ord.activeStatus}" />
+                        <p:column headerText="Описание" style="width: 250px;text-align: left">
+                            <h:outputText value="#{ord.description}"/>
+                        </p:column>
+                        <p:column headerText="ЕИ1" style="width: 50px;text-align: center">
+                            <h:outputText value="#{ord.uom1}"/>
+                        </p:column>
+                        <p:column headerText="ЕИ2" style="width: 50px;text-align: center">
+                            <h:outputText value="#{ord.uom2}"/>
                         </p:column>
                         <f:facet name="footer" >
                             <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />
-                            <p:commandButton value="New" action="newMenu" immediate="true" style="margin-left: 15px"/>
+                            <p:commandButton value="New" action="newItem" immediate="true" style="margin-left: 15px"/>
                         </f:facet>
                     </p:dataTable> 
                     <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
                         <p:outputPanel id="selectedParams" style="text-align: center">
-                            <p:dataTable value="#{findMenuView.selectedMenus}" var="v">
-                                <p:column headerText="Роль">
-                                    <h:outputText value="#{v.menuName}" style="text-align: left"/>
+                            <p:dataTable value="#{findItemView.selectedEntities}" var="v">
+                                <p:column headerText="Наименование">
+                                    <h:outputText value="#{v.name}" style="text-align: left"/>
+                                </p:column>
+                                <p:column headerText="Описание">
+                                    <h:outputText value="#{v.description}" style="text-align: left"/>
                                 </p:column>
                             </p:dataTable>
-
                             <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
-                            <p:commandButton value="Yes" actionListener="#{menuCBean.deleteMenus()}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
-
+                            <p:commandButton value="Yes" actionListener="#{itemCBean.deleteSelectedEntities()}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
                         </p:outputPanel>
                     </p:dialog>
-                </h:form>
-                <h1>Items list</h1>
-                <h:form> 
-                    <h:selectOneRadio value="#{itemBackingBean.id}"
-                                      layout="pageDirection">
-                        <f:selectItems value="#{itemClientBean.items}"
-                                       var="m" itemValue="#{m.id}"
-                                       itemLabel="#{m.name} #{m.description}"/>
-                    </h:selectOneRadio> 
-                    <h:commandButton action="item" value="Detail"/> 
-                    <h:commandButton action="additem" value="Add"/> 
-                    <h:commandButton action="items" onclick="return confirm('Are you sure?')" value="Del" actionListener="#{itemClientBean.deleteItem()}"/> 
                 </h:form>
             </ui:define>
 

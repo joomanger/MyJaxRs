@@ -27,8 +27,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(uniqueConstraints
         = @UniqueConstraint(columnNames = {"item_id", "config_ver_num"}))
 @NamedQueries({
-    @NamedQuery(name = Configuration.FIND_LAST_VERSION_BY_ITEM, query = "select max(c.config_ver_num) from Configuration c where c.item.id=:p_item_id"),
-    @NamedQuery(name = Configuration.FIND_HEADER_ID_BY_LAST_VER_NUM_AND_ITEM_ID, query = "select c from Configuration c where c.item.id=:p_item_id and c.config_ver_num=:p_ver_num")})
+    @NamedQuery(name = Configuration.FIND_LAST_VERSION_BY_ITEM, query = "select max(c.config_ver_num) from Configuration c where c.item.item_id=:p_item_id"),
+    @NamedQuery(name = Configuration.FIND_HEADER_ID_BY_LAST_VER_NUM_AND_ITEM_ID, query = "select c from Configuration c where c.item.item_id=:p_item_id and c.config_ver_num=:p_ver_num")})
 public class Configuration implements Serializable {
 
     public static final String FIND_LAST_VERSION_BY_ITEM = "Q1";

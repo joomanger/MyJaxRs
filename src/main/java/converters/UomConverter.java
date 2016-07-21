@@ -1,17 +1,19 @@
 package converters;
 
-import item.beans.ItemCBean;
-import item.entities.Item;
+import java.util.ArrayList;
+import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
-import javax.inject.Named;
-import java.util.ArrayList;
-import java.util.List;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import lookup.beans.LookupCBean;
+import lookup.beans.LookupItemCBean;
+import lookup.entities.Lookup;
+import lookup.entities.LookupItem;
 
 /**
  *
@@ -19,16 +21,18 @@ import javax.inject.Inject;
  */
 @Named
 @RequestScoped
-public class ItemConverter implements Converter {
+public class UomConverter implements Converter {
 
     @Inject
-    private ItemCBean client;
+    private LookupCBean client;
+    @Inject
+    private LookupItemCBean clientItem;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if (value != null && value.trim().length() > 0) {
             try {
-                return client.find(Long.parseLong(value));
+                return clientItem.find(Long.parseLong(value));
 
             } catch (NumberFormatException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Not a valid theme."));
@@ -41,20 +45,20 @@ public class ItemConverter implements Converter {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
-            return String.valueOf(((Item) value).getItem_id());
+            return String.valueOf(((LookupItem) value).getLookupItem_id());
         } else {
             return null;
         }
     }
 
-    public List<Item> completeItem(String query) {
-        List<Item> allItems = client.findAll();
-        List<Item> filteredItems = new ArrayList<>();
+    public List<String> completeItem(String query) {
+        Lookup l = client.findByName("UOM");
+        List<LookupItem> allItems = l.getLookupItems();
+        List<String> filteredItems = new ArrayList<>();
 
-        allItems.stream().filter((item) -> (item.getName().toLowerCase().contains(query.toLowerCase()))).forEach((item) -> {
-            filteredItems.add(item);
+        allItems.stream().filter((item) -> (item.getValuez().toLowerCase().contains(query.toLowerCase()))).forEach((item) -> {
+            filteredItems.add(item.getValuez());
         });
         return filteredItems;
     }
-
 }

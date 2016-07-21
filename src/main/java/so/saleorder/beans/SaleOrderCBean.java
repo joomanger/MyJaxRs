@@ -87,7 +87,7 @@ public class SaleOrderCBean {
         Short next_num = getMaxLineNum(sessionBean.getId());
         next_num++;
         line.setLine_num(next_num);
-        line.setConfig_ver_num(configClient.getLastVersion(sov.getItem().getId()));
+        line.setConfig_ver_num(configClient.getLastVersion(sov.getItem().getItem_id()));
         slb.create(line, "Строка успешно добавлена");
 
         //updateListLines();
@@ -120,7 +120,7 @@ public class SaleOrderCBean {
     public void saveLines() {
         for (int a : sov.getLinesForSave()) {
             SaleOrderLine sl = sov.getOrder_lines().get(a);
-            sl.setConfig_ver_num(configClient.getLastVersion(sl.getItem().getId()));
+            sl.setConfig_ver_num(configClient.getLastVersion(sl.getItem().getItem_id()));
             slb.edit(sl, "Строка " + sl.getLine_num() + " сохранена успешно");
         }
         

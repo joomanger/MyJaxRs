@@ -276,7 +276,7 @@ public class OpenSaleOrderView implements Serializable {
 
             Set<String> set = new LinkedHashSet<>();
             for (SaleOrderLine line : getOrder_lines()) {
-                Configuration config = configClient.getItem(line.getItem().getId(), configClient.getLastVersion(line.getItem().getId()));
+                Configuration config = configClient.getItem(line.getItem().getItem_id(), configClient.getLastVersion(line.getItem().getItem_id()));
                 for (ConfigurationLine configLine : configClient.getLines(config.getHeader_id())) {
                     ParameterConfiguration pc = configLine.getParameter();
                     pc.setAttribute(configLine.getParameter().getAttribute().toLowerCase());

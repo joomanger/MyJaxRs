@@ -65,9 +65,13 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
         return l;
     }
 
-    //---------------------------------------------------------------//
-    //Дополнительные методы для работы с дочерними объектами(строками)
-    //---------------------------------------------------------------//
+    //----------------------//
+    //Дополнительные методы 
+    //----------------------//
+    public Lookup findByName(String name) {
+        return ejb.findByName(name);
+    }
+
     public void addLookupItemNLV() {
         Lookup l = nlv.getEntity();
         LookupItem li = new LookupItem();

@@ -75,7 +75,7 @@ public class ConfigCBean implements Serializable{
     }
 
     public Integer getLastVersion() {
-        Integer version = configEJB.getLastVersion(newView.getConfiguration().getItem().getId());
+        Integer version = configEJB.getLastVersion(newView.getConfiguration().getItem().getItem_id());
         //getTarget().path("/version/{item_id}").resolveTemplate("item_id", newView.getConfiguration().getItem().getId()).request().get(Integer.class);
         if (version == null) {
             return 0;
@@ -156,7 +156,7 @@ public class ConfigCBean implements Serializable{
     public String newVersionOCV() {
         Configuration c = openView.getConfiguration();
         c.setHeader_id(null);
-        c.setConfig_ver_num(getLastVersion(c.getItem().getId()) + 1);
+        c.setConfig_ver_num(getLastVersion(c.getItem().getItem_id()) + 1);
         List<ConfigurationLine> newLines = new ArrayList<>();
         for (ConfigurationLine l : openView.getLines()) {
             l.setLine_id(null);
