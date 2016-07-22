@@ -32,7 +32,7 @@ public abstract class AbstractClientBean<T> implements IClientBean<T> {
     public List<T> findAll() {
         return getEJB().findAll();
     }
-
+ 
     @Override
     public String createEntity(String backURL) {
 

@@ -25,6 +25,9 @@ public class Item implements Serializable, Comparable<Item> {
     private String uom1;
     private String uom2;
 
+//    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    @JoinColumn(name = "uom3")
+//    private LookupItem uom3 = new LookupItem();
     public long getItem_id() {
         return item_id;
     }
