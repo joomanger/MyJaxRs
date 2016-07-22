@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/template.xhtml">
+            <ui:define name="content">
+                <h:form  prependId="false">
+                    <p:fieldset legend="Условие платежа" style="width: 350px; margin-bottom: 10px"> 
+                        <h:panelGrid id="yyy" columns="2" cellpadding="5" cellspacing="5">
+                            <p:outputLabel value="Наименование"/>
+                            <p:inputText value="#{openPaymentView.entity.name}"/>
+                            <p:outputLabel value="Описание"/>
+                            <p:inputText value="#{openPaymentView.entity.description}"/>
+                            <p:outputLabel value="Предоплата до отгрузки"/>
+                            <p:inputText value="#{openPaymentView.entity.prepayShip}"/>
+                            <p:outputLabel value="Предоплата до производства"/>
+                            <p:inputText value="#{openPaymentView.entity.prepayManuf}"/>
+                            <p:outputLabel value="Предоплата,%"/>
+                            <p:inputText value="#{openPaymentView.entity.prepayValue}"/>
+                            <p:outputLabel value="Отсрочка после отгрузки, дни"/>
+                            <p:inputText value="#{openPaymentView.entity.delayDaysAfterShp}"/>
+                            <p:outputLabel value="Тип дней отсрочки"/>
+                            <p:inputText value="#{openPaymentView.entity.dayType}"/>
+                        </h:panelGrid>
+                        <p:commandButton id="btnBack" value="Back" action="payments" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
+                        <p:commandButton id="btnSave" value="Сохранить" actionListener="#{paymentCBean.changeEntity()}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
+                    </p:fieldset> 
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

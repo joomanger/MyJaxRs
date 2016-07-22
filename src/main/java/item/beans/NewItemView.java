@@ -13,7 +13,7 @@ import service.AbstractView;
 @Named
 @ViewScoped
 public class NewItemView extends AbstractView<Item> {
-
+    
     public NewItemView() {
         super(Item.class);
     }
@@ -21,7 +21,7 @@ public class NewItemView extends AbstractView<Item> {
     @Override
     @PostConstruct
     protected void init() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.setEntity(new Item());
     }
 
 }

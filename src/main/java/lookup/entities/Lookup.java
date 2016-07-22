@@ -12,6 +12,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 import org.eclipse.persistence.annotations.PrivateOwned;
 
@@ -23,7 +25,8 @@ import org.eclipse.persistence.annotations.PrivateOwned;
 @NamedQueries(
         @NamedQuery(name = Lookup.FIND_BY_NAME, query = "select t from Lookup t where t.name=:p_name")
 )
-
+@Table(uniqueConstraints
+        = @UniqueConstraint(columnNames = {"name"}))
 public class Lookup implements Serializable, Comparable<Lookup> {
 
     public static final String FIND_BY_NAME = "Lookup.FIND_BY_NAME";

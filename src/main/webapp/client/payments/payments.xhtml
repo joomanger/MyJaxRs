@@ -12,31 +12,28 @@
 
             <ui:define name="content">
                 <h:form prependId="false">
-                    <h:inputHidden id="setLookupId" value="#{findLookupSession.lookup_id}"/>
-                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.lookup_id}" var="ord" value="#{findLookupView.entities}" 
-                                 editable="true" reflow="true" selection="#{findLookupView.selectedEntities}" rows="20" paginator="true" style="width: 700px;"
+                    <h:inputHidden id="setPaymentId" value="#{findPaymentSession.payment_id}"/>
+                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.payment_id}" var="ord" value="#{findPaymentView.entities}" 
+                                 editable="true" reflow="true" selection="#{findPaymentView.selectedEntities}" rows="20" paginator="true" style="width: 1000px;"
                                  rowsPerPageTemplate="20,40,100" lazy="true">
                         <f:facet name="header">
-                            Стандартные справочники
+                            Условия платежа
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:column headerText="Наименование" style="width: 150px;text-align: left">
-                            <h:commandLink action="openLookup" value="#{ord.name}" onclick="document.getElementById('setLookupId').value =#{ord.lookup_id};"/>
+                            <h:commandLink action="openPayment" value="#{ord.name}" onclick="document.getElementById('setPaymentId').value =#{ord.payment_id};"/>
                         </p:column>
-                        <p:column headerText="Описание" style="width: 250px;text-align: left">
+                        <p:column headerText="Описание" style="text-align: left">
                             <h:outputText value="#{ord.description}"/>
-                        </p:column>
-                        <p:column headerText="Активное" style="width: 50px;text-align: center">
-                            <p:selectBooleanCheckbox disabled="true" value="#{ord.activeStatus}" />
                         </p:column>
                         <f:facet name="footer" >
                             <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />
-                            <p:commandButton id="newBtn" value="New" action="newLookup" immediate="true" style="margin-left: 15px"/>
+                            <p:commandButton id="newBtn" value="New" action="newPayment" immediate="true" style="margin-left: 15px"/>
                         </f:facet>
                     </p:dataTable> 
                     <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
                         <p:outputPanel id="selectedParams" style="text-align: center">
-                            <p:dataTable value="#{findLookupView.selectedEntities}" var="v">
+                            <p:dataTable value="#{findPaymentView.selectedEntities}" var="v">
                                 <p:column headerText="Наименование">
                                     <h:outputText value="#{v.name}" style="text-align: left"/>
                                 </p:column>
@@ -45,7 +42,7 @@
                                 </p:column>
                             </p:dataTable>
                             <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
-                            <p:commandButton value="Yes" actionListener="#{lookupCBean.deleteSelectedEntities()}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
+                            <p:commandButton value="Yes" actionListener="#{paymentCBean.deleteSelectedEntities()}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
                         </p:outputPanel>
                     </p:dialog>
                 </h:form>

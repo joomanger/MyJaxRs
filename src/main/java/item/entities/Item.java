@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -20,8 +22,10 @@ public class Item implements Serializable, Comparable<Item> {
     @SequenceGenerator(name = "item_sq", initialValue = 6, allocationSize = 1)
     @GeneratedValue(generator = "item_sq")
     private long item_id;
+    @Size(min = 3, max = 255, message = "Длина НАИМЕНОВАНИЕ должны быть в пределах от 3 до 255 символов")
     private String name;
     private String description;
+    @NotNull(message = "ЕИ1 обязательно для заполнения")
     private String uom1;
     private String uom2;
 

@@ -15,6 +15,7 @@ import service.AbstractView;
 public class NewLookupView extends AbstractView<Lookup> {
 
     private final Lookup lookup = new Lookup();
+    
     private String newLookupName;
     private String newLookupDesc;
 
