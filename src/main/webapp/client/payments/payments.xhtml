@@ -20,11 +20,8 @@
                             Условия платежа
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column headerText="Наименование" style="width: 150px;text-align: left">
-                            <h:commandLink action="openPayment" value="#{ord.name}" onclick="document.getElementById('setPaymentId').value =#{ord.payment_id};"/>
-                        </p:column>
-                        <p:column headerText="Описание" style="text-align: left">
-                            <h:outputText value="#{ord.description}"/>
+                        <p:column headerText="Наименование" style="width: 800px;text-align: left">
+                            <h:commandLink action="openPayment" value="#{ord.condition}" onclick="document.getElementById('setPaymentId').value =#{ord.payment_id};"/>
                         </p:column>
                         <f:facet name="footer" >
                             <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />
@@ -35,10 +32,7 @@
                         <p:outputPanel id="selectedParams" style="text-align: center">
                             <p:dataTable value="#{findPaymentView.selectedEntities}" var="v">
                                 <p:column headerText="Наименование">
-                                    <h:outputText value="#{v.name}" style="text-align: left"/>
-                                </p:column>
-                                <p:column headerText="Описание">
-                                    <h:outputText value="#{v.description}" style="text-align: left"/>
+                                    <h:outputText value="#{v.condition}" style="text-align: left"/>
                                 </p:column>
                             </p:dataTable>
                             <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>

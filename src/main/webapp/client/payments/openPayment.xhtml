@@ -12,20 +12,20 @@
                 <h:form  prependId="false">
                     <p:fieldset legend="Условие платежа" style="width: 350px; margin-bottom: 10px"> 
                         <h:panelGrid id="yyy" columns="2" cellpadding="5" cellspacing="5">
-                            <p:outputLabel value="Наименование"/>
-                            <p:inputText value="#{openPaymentView.entity.name}"/>
-                            <p:outputLabel value="Описание"/>
-                            <p:inputText value="#{openPaymentView.entity.description}"/>
+                            <p:outputLabel value="Условие"/>
+                            
+                            <p:inputTextarea cols="60" rows="3" value="#{openPaymentView.entity.condition}"/>
                             <p:outputLabel value="Предоплата до отгрузки"/>
-                            <p:inputText value="#{openPaymentView.entity.prepayShip}"/>
+                            <p:inputSwitch value="#{openPaymentView.entity.prepayShip}"/>
                             <p:outputLabel value="Предоплата до производства"/>
-                            <p:inputText value="#{openPaymentView.entity.prepayManuf}"/>
+                            <p:inputSwitch value="#{openPaymentView.entity.prepayManuf}"/>
                             <p:outputLabel value="Предоплата,%"/>
-                            <p:inputText value="#{openPaymentView.entity.prepayValue}"/>
+                            <p:inputText value="#{openPaymentView.entity.prepayValue}" style="width: 30px;text-align: right"/>
                             <p:outputLabel value="Отсрочка после отгрузки, дни"/>
-                            <p:inputText value="#{openPaymentView.entity.delayDaysAfterShp}"/>
+                            <p:inputText value="#{openPaymentView.entity.delayDaysAfterShp}" style="width: 30px;text-align: right"/>
                             <p:outputLabel value="Тип дней отсрочки"/>
-                            <p:inputText value="#{openPaymentView.entity.dayType}"/>
+                            <p:autoComplete id="dayTypes" size="15" value="#{openPaymentView.entity.dayType}" completeMethod="#{daysTypesLOV.completeItem}" 
+                                            forceSelection="true" dropdown="true" style="margin-right: 40px"/>
                         </h:panelGrid>
                         <p:commandButton id="btnBack" value="Back" action="payments" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
                         <p:commandButton id="btnSave" value="Сохранить" actionListener="#{paymentCBean.changeEntity()}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>

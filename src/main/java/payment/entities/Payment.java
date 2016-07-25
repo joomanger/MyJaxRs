@@ -7,7 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -23,16 +26,18 @@ public class Payment implements Serializable, Comparable<Payment> {
     @GeneratedValue(generator = "payment_sq")
     private Long payment_id;
     @NotNull
-    private String name;
+    @Size(min=5, max = 255,message = "Размер УСЛОВИЯ от 5 до 255 символов")
+    private String condition;
     @NotNull
-    private String description;
+    private Boolean prepayShip=false;
     @NotNull
-    private String prepayShip;
+    private Boolean prepayManuf=false;
     @NotNull
-    private String prepayManuf;
-    @NotNull
+    @Max(value = 100,message = "Предоплата не должна превышать 100%")
+    @Min(value=0,message = "Предоплата не должна быть меньше 0%")
     private Integer prepayValue;
     private Integer delayDaysAfterShp;
+    @Size(min=0,max=15)
     private String dayType;
 
     public Long getPayment_id() {
@@ -43,35 +48,27 @@ public class Payment implements Serializable, Comparable<Payment> {
         this.payment_id = payment_id;
     }
 
-    public String getName() {
-        return name;
+    public String getCondition() {
+        return condition;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCondition(String condition) {
+        this.condition = condition;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getPrepayShip() {
+    public Boolean getPrepayShip() {
         return prepayShip;
     }
 
-    public void setPrepayShip(String prepayShip) {
+    public void setPrepayShip(Boolean prepayShip) {
         this.prepayShip = prepayShip;
     }
 
-    public String getPrepayManuf() {
+    public Boolean getPrepayManuf() {
         return prepayManuf;
     }
 
-    public void setPrepayManuf(String prepayManuf) {
+    public void setPrepayManuf(Boolean prepayManuf) {
         this.prepayManuf = prepayManuf;
     }
 
@@ -101,7 +98,7 @@ public class Payment implements Serializable, Comparable<Payment> {
 
     @Override
     public int compareTo(Payment o) {
-        if (this.name.charAt(0) > o.name.charAt(0)) {
+        if (this.condition.charAt(0) > o.condition.charAt(0)) {
             return 1;
         } else {
             return -1;
