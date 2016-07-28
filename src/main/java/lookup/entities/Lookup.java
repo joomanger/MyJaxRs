@@ -38,6 +38,7 @@ public class Lookup implements Serializable, Comparable<Lookup> {
     private String name;
     private String description;
     private Boolean activeStatus = true;
+    private Boolean systemLookup = false;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "lookup")
     @PrivateOwned
@@ -100,6 +101,14 @@ public class Lookup implements Serializable, Comparable<Lookup> {
 
     public void setLookupItems(List<LookupItem> lookupItems) {
         this.lookupItems = lookupItems;
+    }
+
+    public Boolean getSystemLookup() {
+        return systemLookup;
+    }
+
+    public void setSystemLookup(Boolean systemLookup) {
+        this.systemLookup = systemLookup;
     }
 
     @Override

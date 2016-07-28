@@ -103,9 +103,10 @@ insert into users_roles values(1,1);
 insert into users_roles values(2,2);
 
 --Заполним лукапы
-insert into lookup(lookup_id, activestatus, description, name) values(1,true,'Пункты поставки','FOB');
-insert into lookup(lookup_id, activestatus, description, name) values(2,true,'Единицы измерения','UOM');
-insert into lookup(lookup_id, activestatus, description, name) values(3,true,'Условия доставки','FREIGHT TERMS');
+insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(1,true,'Пункты поставки','FOB',true);
+insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(2,true,'Единицы измерения','UOM',true);
+insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(3,true,'Условия доставки','FREIGHT TERMS',true);
+insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(4,true,'Календарные/Банковские дни','DAYTYPES',true);
 --FOB
 insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(1,true,'Граница Украина-Белоруссия','Граница Украина-Белоруссия',1);
 insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(2,true,'Граница Украина-Венгрия','Граница Украина-Венгрия',1);
@@ -146,5 +147,9 @@ insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,looku
 insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(35,true,'FCA','Франко перевозчик',3);
 insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(36,true,'FOB','Франко борт',3);
 insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(37,true,'FOB ST L/S/D','Стоимость укладки груза на борту судна включена',3);
+--DAYTYPES
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(38,true,'BANKING','Банковские',4);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(39,true,'CALENDAR','Календарные',4);
+
 
 

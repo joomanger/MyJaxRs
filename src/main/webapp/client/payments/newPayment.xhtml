@@ -13,7 +13,7 @@
                     <p:fieldset id="menuHeader" legend="Новое условие платежа" style="width: 250px; margin-bottom: 10px"> 
                         <h:panelGrid id="yyy" columns="2" cellpadding="5" cellspacing="5">
                             <p:outputLabel value="Условие"/>
-                            <p:inputText value="#{newPaymentView.entity.condition}" style="width: 250px"/>
+                            <p:inputTextarea cols="60" rows="3" value="#{newPaymentView.entity.condition}"/>
                             <p:outputLabel value="Предоплата до отгрузки"/>
                             <p:inputSwitch value="#{newPaymentView.entity.prepayShip}"/>
                             <p:outputLabel value="Предоплата до производства"/>

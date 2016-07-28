@@ -14,11 +14,11 @@
                     <p:fieldset legend="Справочник" style="width: 250px; margin-bottom: 10px"> 
                         <h:panelGrid id="yyy" columns="2" cellpadding="5" cellspacing="5">
                             <p:outputLabel value="Имя"/>
-                            <p:inputText value="#{openLookupView.entity.name}"/>
+                            <p:inputText value="#{openLookupView.entity.name}" disabled="#{openLookupView.entity.systemLookup}"/>
                             <p:outputLabel value="Описание"/>
-                            <p:inputText value="#{openLookupView.entity.description}"/>
+                            <p:inputText value="#{openLookupView.entity.description}" disabled="#{openLookupView.entity.systemLookup}"/>
                             <p:outputLabel value="Активный"/>
-                            <p:inputSwitch value="#{openLookupView.entity.activeStatus}"/>
+                            <p:inputSwitch value="#{openLookupView.entity.activeStatus}" disabled="#{openLookupView.entity.systemLookup}"/>
                         </h:panelGrid>
 
                         <p:dataTable id="dTable" var="ord" value="#{openLookupView.entity.lookupItems}" selection="#{openLookupView.selectedEntityLines}" 

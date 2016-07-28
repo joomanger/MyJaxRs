@@ -1,6 +1,7 @@
 package lookup.beans;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -116,4 +117,17 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
         olv.getEntity().getLookupItems().removeAll(olv.getSelectedEntityLines());
         changeEntity();
     }
+
+    @Override
+    public void deleteSelectedEntities() {
+        for (Iterator<Lookup> lookupIter = flv.getSelectedEntities().iterator(); lookupIter.hasNext();) {
+            Lookup lookup = lookupIter.next();
+            if (lookup.getSystemLookup()) {
+                lookupIter.remove();
+                ejb.sendMessage("Системный объект удалить нельзя", null);
+            }
+        }
+        super.deleteSelectedEntities();
+    }
+
 }
