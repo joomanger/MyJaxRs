@@ -28,7 +28,7 @@ public class ParameterConfigurationValues implements Serializable {
    // public static final String FIND_BY_HEADER_ID = "PCFBHI";
     public static final String MAX_LINE_NUM_BY_HEADER_ID = "MAX_LINE_NUM";
     @Id
-    @SequenceGenerator(name = "parameterConfigurationValues_sq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "parameterConfigurationValues_sq", initialValue = 11, allocationSize = 1)
     @GeneratedValue(generator = "parameterConfigurationValues_sq")
     private long paramater_value_id;
     private Long parameter_id;

@@ -1,5 +1,6 @@
 package service;
 
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Singleton;
@@ -16,5 +17,10 @@ public class SessionConfig {
 
     public SessionContext getSessionContext() {
         return ctx;
+    }
+
+    @PreDestroy
+    private void preDestroy() {
+        ctx = null;
     }
 }

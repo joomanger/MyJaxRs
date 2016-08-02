@@ -1,9 +1,9 @@
 CREATE SEQUENCE order_header_number_sq START 1000 increment 1 minvalue 1 maxvalue 4294967295;
-INSERT INTO ITEM(id,name, description) VALUES (1,'ЛИСТ', 'ПРОКАТ ТОЛСТОЛИСТОВОЙ');
-INSERT INTO ITEM(id,name, description) VALUES (2,'УГОЛОК', 'УГОЛОК');
-INSERT INTO ITEM(id,name, description) VALUES (3,'ШВЕЛЛЕР', 'ШВЕЛЛЕР');
-INSERT INTO ITEM(id,name, description) VALUES (4,'БАЛКА', 'БАЛКА ДВУТАВРОВАЯ');
-INSERT INTO ITEM(id,name, description) VALUES (5,'КАТАНКА', 'КАТАНКА ИЗ УГЛЕРОДИСТОЙ СТАЛИ ОБЫКНОВЕННОГО КАЧЕСТВА');
+INSERT INTO ITEM(item_id,name, description,uom1,uom2) VALUES (1,'ЛИСТ', 'ПРОКАТ ТОЛСТОЛИСТОВОЙ','Тн','Шт');
+INSERT INTO ITEM(item_id,name, description,uom1,uom2) VALUES (2,'УГОЛОК', 'УГОЛОК','Тн',null);
+INSERT INTO ITEM(item_id,name, description,uom1,uom2) VALUES (3,'ШВЕЛЛЕР', 'ШВЕЛЛЕР','Тн',null);
+INSERT INTO ITEM(item_id,name, description,uom1,uom2) VALUES (4,'БАЛКА', 'БАЛКА ДВУТАВРОВАЯ','Тн',null);
+INSERT INTO ITEM(item_id,name, description,uom1,uom2) VALUES (5,'КАТАНКА', 'КАТАНКА ИЗ УГЛЕРОДИСТОЙ СТАЛИ ОБЫКНОВЕННОГО КАЧЕСТВА','Тн',null);
 INSERT INTO parameterconfiguration values(1,'ATTRIBUTE1','L,mm',false,'Длина, мм', 1,35);
 INSERT INTO parameterconfiguration values(2,'ATTRIBUTE2','T,mm',false,'Толщина, мм', 1,35);
 INSERT INTO parameterconfiguration values(3,'ATTRIBUTE3','W,mm',false,'Ширина, мм', 1,35);
@@ -128,7 +128,7 @@ insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,looku
 insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(18,true,'Склад АМК','Склад АМК',1);
 insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(19,true,'Склад ДМКД','Склад ДМКД',1);
 --UOM
-insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(20,true,'Tn','Тонны',2);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(20,true,'Тн','Тонны',2);
 insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(21,true,'Пч','Пачки',2);
 insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(22,true,'Шт','Штуки',2);
 --FREIGHT TERMS

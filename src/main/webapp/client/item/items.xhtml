@@ -14,7 +14,7 @@
                 <h:form prependId="false">
                     <h:inputHidden id="setItemId" value="#{findItemSession.item_id}"/>
                     <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.item_id}" var="ord" value="#{findItemView.entities}" 
-                                 editable="true" reflow="true" selection="#{findItemView.selectedEntities}" rows="20" paginator="true" style="width: 700px;"
+                                 editable="true" reflow="true" selection="#{findItemView.selectedEntities}" rows="20" paginator="true" style="width: 1200px;"
                                  rowsPerPageTemplate="20,40,100" lazy="true">
                         <f:facet name="header">
                             Справочник металлопродукции
@@ -23,7 +23,7 @@
                         <p:column headerText="Наименование" style="width: 150px;text-align: left">
                             <h:commandLink action="openItem" value="#{ord.name}" onclick="document.getElementById('setItemId').value =#{ord.item_id};"/>
                         </p:column>
-                        <p:column headerText="Описание" style="width: 250px;text-align: left">
+                        <p:column headerText="Описание" style="width: 550px;text-align: left">
                             <h:outputText value="#{ord.description}"/>
                         </p:column>
                         <p:column headerText="ЕИ1" style="width: 50px;text-align: center">
@@ -37,14 +37,14 @@
                             <p:commandButton value="New" action="newItem" immediate="true" style="margin-left: 15px"/>
                         </f:facet>
                     </p:dataTable> 
-                    <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                    <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="900px">
                         <p:outputPanel id="selectedParams" style="text-align: center">
                             <p:dataTable value="#{findItemView.selectedEntities}" var="v">
-                                <p:column headerText="Наименование">
-                                    <h:outputText value="#{v.name}" style="text-align: left"/>
+                                <p:column headerText="Наименование" style="text-align: left;width: 250px">
+                                    <h:outputText value="#{v.name}" />
                                 </p:column>
-                                <p:column headerText="Описание">
-                                    <h:outputText value="#{v.description}" style="text-align: left"/>
+                                <p:column headerText="Описание" style="text-align: left;width: 550px">
+                                    <h:outputText value="#{v.description}" />
                                 </p:column>
                             </p:dataTable>
                             <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>

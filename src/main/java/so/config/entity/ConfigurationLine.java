@@ -30,7 +30,7 @@ public class ConfigurationLine implements Serializable, Comparable<Configuration
     public static final String FIND_BY_HEADER_ID = "BHI";
     public static final String MAX_LINE_NUM_BY_HEADER_ID = "MBHI";
     @Id
-    @SequenceGenerator(name = "configurationline_sq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "configurationline_sq", initialValue = 13, allocationSize = 1)
     @GeneratedValue(generator = "configurationline_sq")
     private Long line_id;
     private Integer line_num;
