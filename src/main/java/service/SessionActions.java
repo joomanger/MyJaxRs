@@ -24,12 +24,15 @@ public class SessionActions implements Serializable {
 
     @Inject
     private SessionConfig sc;
+    
     @Inject
     private UserCBean client;
     @Inject
     private ViewEJB ejb;
 
     private SysUser user;
+    
+    private String language="RU";
 
     private Map<String, String> viewsMap = new HashMap<>();
 
@@ -66,5 +69,15 @@ public class SessionActions implements Serializable {
     public void sendMessage(String status, String success) {
         ejb.sendMessage(status, success);
     }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+    
+    
 
 }

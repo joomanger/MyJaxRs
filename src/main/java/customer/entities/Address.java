@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
@@ -31,6 +32,29 @@ public class Address implements Serializable {
     @NotNull
     private String fullAddress;
     private String postCode;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    private Boolean bill_to = true;
+    private Boolean ship_to = true;
+    private String rcv_code;
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        setCustomer(customer, true);
+    }
+
+    public void setCustomer(Customer customer, boolean set) {
+        this.customer = customer;
+        if (customer != null && set) {
+            customer.addAddress(this, false);
+        }
+    }
 
     public Long getAddress_id() {
         return address_id;
@@ -78,6 +102,30 @@ public class Address implements Serializable {
 
     public void setPostCode(String postCode) {
         this.postCode = postCode;
+    }
+
+    public Boolean getBill_to() {
+        return bill_to;
+    }
+
+    public void setBill_to(Boolean bill_to) {
+        this.bill_to = bill_to;
+    }
+
+    public Boolean getShip_to() {
+        return ship_to;
+    }
+
+    public void setShip_to(Boolean ship_to) {
+        this.ship_to = ship_to;
+    }
+
+    public String getRcv_code() {
+        return rcv_code;
+    }
+
+    public void setRcv_code(String rcv_code) {
+        this.rcv_code = rcv_code;
     }
 
 }

@@ -19,6 +19,8 @@
                             <p:inputText value="#{openLookupView.entity.description}" disabled="#{openLookupView.entity.systemLookup}"/>
                             <p:outputLabel value="Активный"/>
                             <p:inputSwitch value="#{openLookupView.entity.activeStatus}" disabled="#{openLookupView.entity.systemLookup}"/>
+                            <p:outputLabel for="german" value="German:" />
+                            <p:calendar id="german" locale="ru" navigator="true"  pattern="dd.MM.yyyy" />
                         </h:panelGrid>
 
                         <p:dataTable id="dTable" var="ord" value="#{openLookupView.entity.lookupItems}" selection="#{openLookupView.selectedEntityLines}" 

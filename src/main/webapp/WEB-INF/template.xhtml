@@ -23,7 +23,7 @@
                 <ui:insert name="top">
                     <h:form>
                         <h1><h:link value="Управление заказами" outcome="/index.xhtml"/></h1>
-                        Учетная запись: #{sessionActions.currentUser.fullName}
+                        Учетная запись: #{sessionActions.currentUser.fullName}; Язык: #{sessionActions.language}
                     </h:form>
                 </ui:insert>
             </div>
@@ -37,6 +37,7 @@
                                     <p:menuitem action="/client/item/items" value="Позиции" />
                                     <p:menuitem action="/client/lookup/lookups" value="Стандартные справочники" />
                                     <p:menuitem action="/client/payments/payments" value="Условия платежа" />
+                                    <p:menuitem action="/client/country/countries" value="Страны" />
                                 </p:submenu> 
                                 <p:submenu label="Заказы">
                                     <p:menuitem action="newOrder" outcome="newOrder" value="Создать заказ"/>

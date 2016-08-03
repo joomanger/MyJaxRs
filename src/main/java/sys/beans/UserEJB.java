@@ -22,8 +22,8 @@ public class UserEJB extends AbstractEJB<SysUser> {
 
     @PersistenceContext(unitName = "myjaxrs")
     private EntityManager em;
-    @Inject
-    private SessionConfig sc;
+//    @Inject
+//    private SessionConfig sc;
 
     public UserEJB() {
         super(SysUser.class);

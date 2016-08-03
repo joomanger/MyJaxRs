@@ -1,5 +1,6 @@
 package lovs;
 
+import service.AbstractLookupLOV;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
