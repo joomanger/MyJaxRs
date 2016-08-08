@@ -30,6 +30,7 @@ public class OpenCountryView extends AbstractView<Country>{
     @PostConstruct
     @Override
     protected void init() {
-        super.setEntity(client.find(fls.getCountry_id()));
+        //super.setEntity(client.find(fls.getCountry_id()));
+        
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface IEJB<T> {
 
-    public T find(Long p_id);
+    public T find(Object p_id);
 
     public List<T> findAll();
     

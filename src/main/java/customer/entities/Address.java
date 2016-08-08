@@ -39,6 +39,7 @@ public class Address implements Serializable {
 
     private Boolean bill_to = true;
     private Boolean ship_to = true;
+    private Boolean isVendor;
     private String rcv_code;
 
     public Customer getCustomer() {
@@ -118,6 +119,14 @@ public class Address implements Serializable {
 
     public void setShip_to(Boolean ship_to) {
         this.ship_to = ship_to;
+    }
+
+    public Boolean getIsVendor() {
+        return isVendor;
+    }
+
+    public void setIsVendor(Boolean isVendor) {
+        this.isVendor = isVendor;
     }
 
     public String getRcv_code() {

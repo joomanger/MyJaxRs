@@ -1,6 +1,6 @@
 package customer.beans;
 
-import customer.entities.Country;
+import customer.entities.CountryNew;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,39 +14,39 @@ import service.AbstractView;
  */
 @Named
 @RequestScoped
-public class CountryCBean extends AbstractClientBean<Country> {
+public class CountryCBean extends AbstractClientBean<CountryNew> {
 
     @Inject
-    private CountryEJB ejb;
+    private CountryEJB2 ejb;
     @Inject
-    private FindCountryView fcv;
+    private FindCountryView2 fcv;
     @Inject
     private NewCountryView ncv;
     @Inject
-    private OpenCountryView ocv;
+    private OpenCountryView2 ocv;
 
     public CountryCBean() {
-        super(Country.class);
+        super(CountryNew.class);
     }
 
     @Override
-    protected AbstractEJB<Country> getEJB() {
+    protected AbstractEJB<CountryNew> getEJB() {
         return ejb;
     }
 
     @Override
-    protected AbstractView<Country> getOpenView() {
+    protected AbstractView<CountryNew> getOpenView() {
         return ocv;
     }
 
     @Override
-    protected AbstractView<Country> getFindView() {
+    protected AbstractView<CountryNew> getFindView() {
         return fcv;
     }
 
     @Override
-    protected AbstractView<Country> getNewView() {
-        return ncv;
+    protected AbstractView<CountryNew> getNewView() {
+        return null;
     }
 
 }

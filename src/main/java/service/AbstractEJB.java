@@ -93,7 +93,7 @@ public abstract class AbstractEJB<T> implements IEJB<T>{
     }
 
     @Override
-    public T find(Long id) {
+    public T find(Object id) {
         if (id != null) {
             return getEntityManager().find(entityClass, id);
         } else {

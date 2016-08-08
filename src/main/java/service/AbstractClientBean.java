@@ -24,7 +24,7 @@ public abstract class AbstractClientBean<T> implements IClientBean<T> {
     protected abstract AbstractView<T> getNewView();
 
     @Override
-    public T find(Long p_id) {
+    public T find(Object p_id) {
         return getEJB().find(p_id);
     }
 

@@ -8,7 +8,7 @@ import java.util.List;
  */
 public interface IClientBean<T> {
     
-    public T find(Long p_id);
+    public T find(Object p_id);
 
     public List<T> findAll();
     

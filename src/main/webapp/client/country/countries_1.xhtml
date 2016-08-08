@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+                <h:form prependId="false">
+                    <h:inputHidden id="setCountryId" value="#{findCountrySession2.country_id}"/>
+                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.country_id}" var="ord" value="#{findCountryView2.entities}" 
+                                 editable="true" reflow="true" selection="#{findCountryView2.selectedEntities}" rows="20" paginator="true" style="width: 1050px;"
+                                 rowsPerPageTemplate="20,40,100" lazy="true">
+                        <f:facet name="header">
+                            Стандартные стран
+                        </f:facet>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        <p:column headerText="Наименование" style="width: 150px;text-align: left">
+                            <h:commandLink action="openCountry" value="#{ord.eu_code}" onclick="document.getElementById('setCountryId').value =#{ord.country_id};"/>
+                        </p:column>
+                        <p:column headerText="Описание" style="width: 750px;text-align: left">
+                            <h:outputText value="#{ord.iso_code}"/>
+                        </p:column>
+                        <f:facet name="footer" >
+                            <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />
+                            <p:commandButton id="newBtn" value="New" action="newCountry" immediate="true" style="margin-left: 15px"/>
+                        </f:facet>
+                    </p:dataTable> 
+                    <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                        <p:outputPanel id="selectedParams" style="text-align: center">
+                            <p:dataTable value="#{findCountryView2.selectedEntities}" var="v">
+                                <p:column headerText="Наименование">
+                                    <h:outputText value="#{v.eu_code}" style="text-align: left"/>
+                                </p:column>
+                            </p:dataTable>
+                            <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
+                            <p:commandButton value="Yes" actionListener="#{countryCBean.deleteSelectedEntities()}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
