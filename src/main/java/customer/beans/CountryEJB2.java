@@ -1,6 +1,5 @@
 package customer.beans;
 
-import customer.entities.Country;
 import customer.entities.CountryNew;
 import customer.entities.CountryTL;
 import java.util.List;
@@ -32,19 +31,13 @@ public class CountryEJB2 extends AbstractEJB<CountryNew> {
         return em;
     }
 
-    public List<CountryNew> findByLang() {
-        TypedQuery<CountryNew> tq = em.createNamedQuery(CountryNew.FIND_ALL, CountryNew.class);
-        return tq.getResultList();
-    }
+//    public List<CountryNew> findByLang() {
+//        TypedQuery<CountryNew> tq = em.createNamedQuery(CountryNew.FIND_ALL, CountryNew.class);
+//        return tq.getResultList();
+//    }
 
-    @Override
-    public String create(CountryNew entity) {
-        return super.create(entity);
-//        if (sa.getLanguage().equals("RU")) {
-//            entity.setLanguage("US");
-//            super.create(entity);
-//        }
-//        return res;
+    public List<CountryTL> findByLang() {
+        return em.createNamedQuery(CountryTL.FIND_BY_LANG, CountryTL.class).setParameter("p_lang", sa.getLanguage()).getResultList();
     }
 
 }

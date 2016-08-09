@@ -41,7 +41,7 @@ public class CountryCBean extends AbstractClientBean<CountryNew> {
 
     @Override
     protected AbstractView<CountryNew> getFindView() {
-        return fcv;
+        return null;
     }
 
     @Override

@@ -35,6 +35,8 @@ public class CountryEJB extends AbstractEJB<Country> {
         return tq.getResultList();
     }
 
+    
+
     @Override
     public String create(Country entity) {
         return super.create(entity);

@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @NamedQueries(
-        @NamedQuery(name = CountryTL.FIND_BY_LANG, query = "select t from CountryTL t where t.language=:p_lang order by t.name")
+        @NamedQuery(name = CountryTL.FIND_BY_LANG, query = "select t from CountryTL t where t.language=:p_lang order by t.country_id")
 )
 public class CountryTL implements Serializable {
  public static final String FIND_BY_LANG = "CountryTL.FIND_BY_LANG";
