@@ -44,9 +44,9 @@ public class CountryEJB2 extends AbstractEJB<CountryNew> {
         List<Object[]> a = em.createNativeQuery("select c.country_id,c.eu_code,c.iso_code, "
                 + "t.countrytl_id, t.country_id, t.name, t.description from CountryNew c,CountryTL t "
                 + "where c.country_id=t.country_id and t.language=?1", "CountryMapping").setParameter(1, sa.getLanguage()).getResultList();
-        a.stream().forEach((Object[] aa) -> {
+        a.stream().forEach((aa) -> {
             //System.out.println(((CountryNew) aa[0]).getEu_code());
-            System.out.println(aa[0]);
+            System.out.println(aa.length);
         });
     }
 
