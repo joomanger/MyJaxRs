@@ -5,6 +5,7 @@ package customer.entities;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.inject.Inject;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,9 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import so.entities.SaleOrderLine;
+import javax.persistence.Transient;
+import service.SessionActions;
 
 /**
  *
@@ -26,18 +26,24 @@ import so.entities.SaleOrderLine;
         @NamedQuery(name = CountryNew.FIND_ALL, query = "select t from CountryNew t")
 )
 public class CountryNew implements Serializable {
-public static final String FIND_ALL = "CountryNew.FIND_ALL";
+
+    public static final String FIND_ALL = "CountryNew.FIND_ALL";
+    
     @Id
     private String country_id;
-   //@NotNull
+    //@NotNull
 //    @Size(min = 0, max = 3, message = "Значение КОД должно быть не более 3-х символов")
     private String eu_code;
-  //  @Size(min = 3, max = 3, message = "Значение ISO-код должно быть 3-буквенным")
+    //  @Size(min = 3, max = 3, message = "Значение ISO-код должно быть 3-буквенным")
     private String iso_code;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "country_id")
     private List<CountryTL> countryTL;
+    @Transient
+    private String name;
+    @Transient
+    private String description;
 
     public String getCountry_id() {
         return country_id;
@@ -61,6 +67,22 @@ public static final String FIND_ALL = "CountryNew.FIND_ALL";
 
     public void setIso_code(String iso_code) {
         this.iso_code = iso_code;
+    }
+
+    public String getName() {
+            return countryTL.get(1).getName();
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return countryTL.get(0).getDescription();
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<CountryTL> getCountryTL() {
