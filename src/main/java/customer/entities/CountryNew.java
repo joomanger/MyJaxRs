@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 /**
  *
@@ -36,6 +37,7 @@ public class CountryNew implements Serializable {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "country_id")
+    @OrderBy("name asc")
     private List<CountryTL> countryTL;
 
     public String getCountry_id() {
@@ -63,16 +65,21 @@ public class CountryNew implements Serializable {
     }
 
     public String getName(String lang) {
-        if (lang.equals("RU")) {
-            return countryTL.get(1).getName();
-        } else {
-            return countryTL.get(0).getName();
+        for (CountryTL c : countryTL) {
+            if (c.getLanguage().equals(lang)) {
+                return c.getName();
+            }
         }
-
+        return null;
     }
 
-    public String getDescription() {
-        return countryTL.get(0).getDescription();
+    public String getDescription(String lang) {
+        for (CountryTL c : countryTL) {
+            if (c.getLanguage().equals(lang)) {
+                return c.getDescription();
+            }
+        }
+        return null;
     }
 
     public List<CountryTL> getCountryTL() {

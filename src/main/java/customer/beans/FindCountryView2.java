@@ -9,6 +9,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import service.AbstractView;
+import service.SessionActions;
 
 /**
  *
@@ -20,7 +21,7 @@ public class FindCountryView2 extends AbstractView<CountryNew> {
 
     @Inject
     private CountryEJB2 client;
-
+    
     public FindCountryView2() {
         super(CountryNew.class);
     }
