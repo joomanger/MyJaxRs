@@ -28,7 +28,7 @@ import service.SessionActions;
 public class CountryNew implements Serializable {
 
     public static final String FIND_ALL = "CountryNew.FIND_ALL";
-    
+
     @Id
     private String country_id;
     //@NotNull
@@ -40,10 +40,6 @@ public class CountryNew implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "country_id")
     private List<CountryTL> countryTL;
-    @Transient
-    private String name;
-    @Transient
-    private String description;
 
     public String getCountry_id() {
         return country_id;
@@ -69,20 +65,17 @@ public class CountryNew implements Serializable {
         this.iso_code = iso_code;
     }
 
-    public String getName() {
+    public String getName(String lang) {
+        if (lang.equals("RU")) {
             return countryTL.get(1).getName();
-    }
+        } else {
+            return countryTL.get(0).getName();
+        }
 
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {
         return countryTL.get(0).getDescription();
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public List<CountryTL> getCountryTL() {

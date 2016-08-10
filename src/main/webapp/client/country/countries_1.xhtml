@@ -4,8 +4,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -22,7 +21,7 @@
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:column headerText="Наименование" style="width: 150px;text-align: left">
-                            <h:commandLink action="openCountry" value="#{ord.name}" onclick="document.getElementById('setCountryId').value =#{ord.country_id};"/>
+                            <h:commandLink action="openCountry" value="#{ord.getName('EN')}" onclick="document.getElementById('setCountryId').value =#{ord.country_id};"/>
                         </p:column>
                         <p:column headerText="Описание" style="width: 750px;text-align: left">
                             <h:outputText value="#{ord.description}"/>
