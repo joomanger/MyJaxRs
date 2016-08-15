@@ -4,11 +4,9 @@ import customer.entities.Country;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -24,28 +22,18 @@ import javax.validation.constraints.Size;
 public class RWRoad implements Serializable, Comparable<RWRoad> {
 
     @Id
-    @SequenceGenerator(name = "rwroad_sq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(generator = "rwroad_sq")
-    private Long rwr_id;
-    @NotNull
-    @Size(min = 2, max = 3, message = "Значение ISO-код должно быть 2- или 3- значным")
+    @Size(min = 2, max = 3, message = "Значение КОД должно быть 2- или 3- значным")
     private String rwr_code;
     @NotNull
     private String shortName;
+
+    private String rwr_code_orc;
+
     @NotNull
-    private String name;
+    private String fullName;
     @OneToOne(cascade = {CascadeType.PERSIST})
-    @JoinColumn(name = "country_fk")
-    @NotNull
+    @JoinColumn(name = "country_id")
     private Country country;
-
-    public Long getRwr_id() {
-        return rwr_id;
-    }
-
-    public void setRwr_id(Long rwr_id) {
-        this.rwr_id = rwr_id;
-    }
 
     public String getRwr_code() {
         return rwr_code;
@@ -63,12 +51,12 @@ public class RWRoad implements Serializable, Comparable<RWRoad> {
         this.shortName = shortName;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Country getCountry() {
@@ -79,10 +67,24 @@ public class RWRoad implements Serializable, Comparable<RWRoad> {
         this.country = country;
     }
 
+    public String getNameForReport() {
+        return shortName + "(" + rwr_code + ")";
+    }
+
+    public String getRwr_code_orc() {
+        return rwr_code_orc;
+    }
+
+    public void setRwr_code_orc(String rwr_code_orc) {
+        this.rwr_code_orc = rwr_code_orc;
+    }
+
     @Override
     public int compareTo(RWRoad o) {
-        if (this.name.charAt(0) > o.name.charAt(0)) {
+        if (this.fullName.charAt(0) > o.fullName.charAt(0)) {
             return 1;
+        } else if (this.fullName.charAt(0) == o.fullName.charAt(0)) {
+            return 0;
         } else {
             return -1;
         }

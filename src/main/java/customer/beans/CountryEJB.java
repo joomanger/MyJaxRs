@@ -2,8 +2,6 @@ package customer.beans;
 
 import customer.entities.Country;
 import customer.entities.CountryVL;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -23,8 +21,6 @@ public class CountryEJB extends AbstractEJB<Country> {
     @Inject
     private SessionActions sa;
 
-    private final List<CountryVL> countryVL = new ArrayList<>();
-
     public CountryEJB() {
         super(Country.class);
     }
@@ -33,22 +29,19 @@ public class CountryEJB extends AbstractEJB<Country> {
     protected EntityManager getEntityManager() {
         return em;
     }
-
+    // Мэппинг прописал в orm.xml, так как аннотации не воспринимает!!!
     public List<CountryVL> findAllVL() {
-        List<Object[]> a = em.createNativeQuery("select c.country_id, "
+        List<CountryVL> a = em.createNativeQuery("select c.country_id, "
                 + "t.name, t.description, c.eu_code,c.iso_code from Country c,CountryTL t "
-                + "where c.country_id=t.country_id and t.language=?1 order by t.name").setParameter(1, sa.getLanguage()).getResultList();
-        countryVL.clear();
-        a.stream().forEach((aa) -> {
-            for (int i = 0; i < 5; i++) {
-                if (aa[i] == null) {
-                    aa[i] = "";
-                }
-            }
-            CountryVL c = new CountryVL(aa[0].toString(), aa[1].toString(), aa[2].toString(), aa[3].toString(), aa[4].toString());
-            countryVL.add(c);
-        });
-        return countryVL;
+                + "where c.country_id=t.country_id and t.language=?1 order by t.name", "CountryVLMapping").setParameter(1, sa.getLanguage()).getResultList();
+        return a;
+    }
+
+    public CountryVL findVL(String country_id) {
+        CountryVL a = (CountryVL) em.createNativeQuery("select c.country_id, "
+                + "t.name, t.description, c.eu_code,c.iso_code from Country c,CountryTL t "
+                + "where c.country_id=?1 and c.country_id=t.country_id and t.language=?2", "CountryVLMapping").setParameter(1, country_id).setParameter(2, sa.getLanguage()).getSingleResult();
+        return a;
     }
 
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../../WEB-INF/template.xhtml">
+            <ui:define name="content">
+                <h:form  prependId="false">
+                    <p:fieldset legend="Продукция" style="width: 250px; margin-bottom: 10px"> 
+                        <h:panelGrid id="yyy" columns="2" cellpadding="5" cellspacing="5">
+                            <p:outputLabel value="Наименование"/>
+                            <p:inputText value="#{newItemView.entity.name}"/>
+                            <p:outputLabel value="Описание"/>
+                            <p:inputText value="#{newItemView.entity.description}" style="width: 250px"/>
+                            <p:outputLabel value="ЕИ1"/>
+                            <p:autoComplete id="uom1" size="5" value="#{newItemView.entity.uom1}" completeMethod="#{uomLOV.completeItem}" 
+                                            forceSelection="true" dropdown="true" style="margin-right: 40px;"/>
+                            <p:outputLabel value="ЕИ2"/>
+                            <p:autoComplete id="uom2" size="5" value="#{newItemView.entity.uom2}" completeMethod="#{uomLOV.completeItem}" 
+                                            forceSelection="true" dropdown="true" style="margin-right: 40px"/>
+                        </h:panelGrid>
+                        <p:commandButton id="btnBack" value="Back" action="items" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
+                        <p:commandButton id="btnSave" value="Создать" action="#{itemCBean.createEntity('items')}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
+                    </p:fieldset> 
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

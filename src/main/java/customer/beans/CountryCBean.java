@@ -121,5 +121,19 @@ public class CountryCBean extends AbstractClientBean<Country> {
     public List<CountryVL> findAllVL() {
         return ejb.findAllVL();
     }
+    
+    public CountryVL findVL(String country_id){
+        return ejb.findVL(country_id);
+    }
+
+    @Override
+    public String createEntity(String backURL) {
+        if (ncv.getEntity().getCountryTL().isEmpty()) {
+            ejb.sendMessage("Название страны обязательно", null);
+            return null;
+        }
+
+        return super.createEntity(backURL); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

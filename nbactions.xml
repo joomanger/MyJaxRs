@@ -12,7 +12,7 @@
             </goals>
             <properties>
                 <netbeans.deploy>true</netbeans.deploy>
-                <argLine>-Dfile.encoding=UTF-8</argLine>
+                <argLine>-Dfile.encoding=UTF-8 -Djava.util.Arrays.useLegacyMergeSort=true</argLine>
                 <resourceEncoding>UTF-8</resourceEncoding>
                 
                 

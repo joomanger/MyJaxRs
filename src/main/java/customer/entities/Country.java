@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.eclipse.persistence.annotations.PrivateOwned;
 
 /**
@@ -20,16 +20,18 @@ import org.eclipse.persistence.annotations.PrivateOwned;
 public class Country implements Serializable {
 
     @Id
+    @Size(min = 2, max = 2, message = "Значение КОД должно быть 2-буквенным")
     protected String country_id;
-    //@NotNull
-//    @Size(min = 0, max = 3, message = "Значение КОД должно быть не более 3-х символов")
+   
+    @Size(min = 0, max = 3, message = "Значение EU-код должно быть не более 3-х символов")
     protected String eu_code;
-    //  @Size(min = 3, max = 3, message = "Значение ISO-код должно быть 3-буквенным")
+    @Size(min = 3, max = 3, message = "Значение ISO-код должно быть 3-буквенным")
     protected String iso_code;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "country")
     @PrivateOwned
     @OrderBy("language asc")
+    @NotNull
     private List<CountryTL> countryTL = new ArrayList<>();
 
     public Country() {

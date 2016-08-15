@@ -15,6 +15,7 @@ public abstract class AbstractView<T> implements Serializable {
 
     private List<T> entities = new ArrayList<>();
     private List<T> selectedEntities = new ArrayList<>();
+    private List<T> filteredEntities;
     private T entity;
     private List<Integer> linesForSave = new ArrayList<>();
     private List<Object> selectedEntityLines = new ArrayList<>();
@@ -65,4 +66,12 @@ public abstract class AbstractView<T> implements Serializable {
         this.selectedEntityLines = selectedEntityLines;
     }
 
+    public List<T> getFilteredEntities() {
+        return filteredEntities;
+    }
+
+    public void setFilteredEntities(List<T> filteredEntities) {
+        this.filteredEntities = filteredEntities;
+    }
+    
 }
