@@ -38,7 +38,6 @@ public class SessionActions implements Serializable {
 
     @PostConstruct
     private void init() {
-        System.out.println("init() into SessionActions");
         user = client.findUserByUserName(sc.getSessionContext().getCallerPrincipal().getName());
         updateViewSecurity();
     }

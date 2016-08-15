@@ -1,3 +1,6 @@
+/*
+
+ */
 package customer.beans;
 
 import java.io.Serializable;
@@ -11,15 +14,14 @@ import javax.inject.Named;
 @Named
 @SessionScoped
 public class FindCountrySession implements Serializable {
+    private String country_id;
 
-    private Long country_id;
-
-    public Long getCountry_id() {
+    public String getCountry_id() {
         return country_id;
     }
 
-    public void setCountry_id(Long country_id) {
+    public void setCountry_id(String country_id) {
         this.country_id = country_id;
     }
-
+    
 }

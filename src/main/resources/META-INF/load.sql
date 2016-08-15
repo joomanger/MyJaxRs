@@ -107,6 +107,7 @@ insert into lookup(lookup_id, activestatus, description, name,systemlookup) valu
 insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(2,true,'Единицы измерения','UOM',true);
 insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(3,true,'Условия доставки','FREIGHT TERMS',true);
 insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(4,true,'Календарные/Банковские дни','DAYTYPES',true);
+insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(5,true,'Языки системы','LANGUAGES',true);
 --FOB
 insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(1,true,'Граница Украина-Белоруссия','Граница Украина-Белоруссия',1);
 insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(2,true,'Граница Украина-Венгрия','Граница Украина-Венгрия',1);
@@ -150,6 +151,10 @@ insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,looku
 --DAYTYPES
 insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(38,true,'BANKING','Банковские',4);
 insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(39,true,'CALENDAR','Календарные',4);
+--LANGUAGES
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(40,true,'RU','Русский',5);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(41,true,'US','Английский',5);
+insert into lookupitem(lookupitem_id,activestatus,valuez,valuezdescription,lookup_id) values(42,true,'UA','Украинский',5);
 
 
 

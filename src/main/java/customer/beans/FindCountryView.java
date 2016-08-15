@@ -1,6 +1,9 @@
+/*
+
+ */
 package customer.beans;
 
-import customer.entities.Country;
+import customer.entities.CountryVL;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -13,18 +16,19 @@ import service.AbstractView;
  */
 @Named
 @RequestScoped
-public class FindCountryView extends AbstractView<Country> {
+public class FindCountryView extends AbstractView<CountryVL> {
+
     @Inject
-    private CountryEJB client;
+    private CountryCBean client;
 
     public FindCountryView() {
-        super(Country.class);
+        super(CountryVL.class);
     }
-    
+
     @PostConstruct
     @Override
     protected void init() {
-        super.setEntities(client.findByLang());
+        setEntities(client.findAllVL());
     }
 
 }

@@ -19,6 +19,9 @@ public class NewCountryView extends AbstractView<Country> {
     @Inject
     private SessionActions sc;
     private final Country country = new Country();
+    private String language;
+    private String countryValue;
+    private String countryDescription;
 
     public NewCountryView() {
         super(Country.class);
@@ -27,8 +30,31 @@ public class NewCountryView extends AbstractView<Country> {
     @PostConstruct
     @Override
     protected void init() {
-        country.setLanguage(sc.getLanguage());
         super.setEntity(country);
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getCountryValue() {
+        return countryValue;
+    }
+
+    public void setCountryValue(String countryValue) {
+        this.countryValue = countryValue;
+    }
+
+    public String getCountryDescription() {
+        return countryDescription;
+    }
+
+    public void setCountryDescription(String countryDescription) {
+        this.countryDescription = countryDescription;
     }
 
 }

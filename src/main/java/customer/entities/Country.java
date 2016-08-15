@@ -1,71 +1,53 @@
 package customer.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import org.eclipse.persistence.annotations.PrivateOwned;
 
 /**
  *
  * @author savin
  */
 @Entity
-@Table(uniqueConstraints
-        = @UniqueConstraint(columnNames = {"name", "language"}))
-@NamedQueries(
-        @NamedQuery(name = Country.FIND_BY_LANG, query = "select t from Country t where t.language=:p_lang order by t.name")
-)
-public class Country implements Serializable, Comparable<Country> {
+public class Country implements Serializable {
 
-    public static final String FIND_BY_LANG = "Country.FIND_BY_LANG";
     @Id
-    @SequenceGenerator(name = "country_sq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(generator = "country_sq")
-    private Long country_id;
-    @NotNull
-    private String name;
-    @NotNull
-    private String fullName;
-    @NotNull
-    @Size(min = 2, max = 2, message = "Значение КОД должно быть 2-буквенным")
-    private String code;
-    @NotNull
-    @Size(min = 0, max = 3, message = "Значение КОД должно быть не более 3-х символов")
-    private String eu_code;
-    @Size(min = 3, max = 3, message = "Значение ISO-код должно быть 3-буквенным")
-    private String iso_code;
+    protected String country_id;
+    //@NotNull
+//    @Size(min = 0, max = 3, message = "Значение КОД должно быть не более 3-х символов")
+    protected String eu_code;
+    //  @Size(min = 3, max = 3, message = "Значение ISO-код должно быть 3-буквенным")
+    protected String iso_code;
 
-    private String language;
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "country")
+    @PrivateOwned
+    @OrderBy("language asc")
+    private List<CountryTL> countryTL = new ArrayList<>();
 
-    public Long getCountry_id() {
+    public Country() {
+    }
+
+    public Country(String country_id, String eu_code, String iso_code, List<CountryTL> countryTL) {
+        this.country_id = country_id;
+        this.eu_code = eu_code;
+        this.iso_code = iso_code;
+        this.countryTL = countryTL;
+    }
+
+    public String getCountry_id() {
         return country_id;
     }
 
-    public void setCountry_id(Long country_id) {
+    public void setCountry_id(String country_id) {
         this.country_id = country_id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getEu_code() {
@@ -84,28 +66,25 @@ public class Country implements Serializable, Comparable<Country> {
         this.iso_code = iso_code;
     }
 
-    public String getFullName() {
-        return fullName;
+    public List<CountryTL> getCountryTL() {
+        return countryTL;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setCountryTL(List<CountryTL> countryTL) {
+        this.countryTL = countryTL;
     }
 
-    public String getLanguage() {
-        return language;
+    public void addCountryTL(CountryTL countryTL) {
+        addCountryTL(countryTL, true);
     }
 
-    public void setLanguage(String language) {
-        this.language = language;
-    }
+    public void addCountryTL(CountryTL countryTL, boolean add) {
+        if (countryTL != null) {
+            getCountryTL().add(countryTL);
 
-    @Override
-    public int compareTo(Country o) {
-        if (this.name.charAt(0) > o.name.charAt(0)) {
-            return 1;
-        } else {
-            return -1;
+            if (add) {
+                countryTL.setCountry(this, false);
+            }
         }
     }
 

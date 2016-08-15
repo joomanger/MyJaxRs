@@ -14,17 +14,26 @@
                 <h:form prependId="false">
                     <h:inputHidden id="setCountryId" value="#{findCountrySession.country_id}"/>
                     <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.country_id}" var="ord" value="#{findCountryView.entities}" 
-                                 editable="true" reflow="true" selection="#{findCountryView.selectedEntities}" rows="20" paginator="true" style="width: 1050px;"
+                                 editable="true" reflow="true" selection="#{findCountryView.selectedEntities}" rows="20" paginator="true" style="width: 1150px;"
                                  rowsPerPageTemplate="20,40,100" lazy="true">
                         <f:facet name="header">
-                            Стандартные стран
+                            Справочник стран
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:column headerText="Наименование" style="width: 150px;text-align: left">
-                            <h:commandLink action="openCountry" value="#{ord.name}" onclick="document.getElementById('setCountryId').value =#{ord.country_id};"/>
+                            <h:commandLink action="openCountry" value="#{ord.name}" onclick="document.getElementById('setCountryId').value ='#{ord.country_id}';"/>
                         </p:column>
                         <p:column headerText="Описание" style="width: 750px;text-align: left">
-                            <h:outputText value="#{ord.fullName}"/>
+                            <h:outputText value="#{ord.description}"/>
+                        </p:column>
+                        <p:column headerText="Код" style="width: 35px;text-align: center">
+                            <h:outputText value="#{ord.country_id}"/>
+                        </p:column>
+                        <p:column headerText="EU код" style="width: 35px;text-align: center">
+                            <h:outputText value="#{ord.eu_code}"/>
+                        </p:column>
+                        <p:column headerText="ISO код" style="width: 35px;text-align: center">
+                            <h:outputText value="#{ord.iso_code}"/>
                         </p:column>
                         <f:facet name="footer" >
                             <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />
@@ -34,6 +43,9 @@
                     <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
                         <p:outputPanel id="selectedParams" style="text-align: center">
                             <p:dataTable value="#{findCountryView.selectedEntities}" var="v">
+                                <p:column headerText="Код" style="width: 35px;text-align: center">
+                                    <h:outputText value="#{v.country_id}"/>
+                                </p:column>
                                 <p:column headerText="Наименование">
                                     <h:outputText value="#{v.name}" style="text-align: left"/>
                                 </p:column>

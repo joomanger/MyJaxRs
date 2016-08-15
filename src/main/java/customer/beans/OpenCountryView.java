@@ -13,24 +13,49 @@ import service.AbstractView;
  */
 @Named
 @ViewScoped
-public class OpenCountryView extends AbstractView<Country>{
-     @Inject
+public class OpenCountryView extends AbstractView<Country> {
+
+    @Inject
     private CountryCBean client;
     @Inject
     private FindCountrySession fls;
-    
-    //Поля для создания новой строки
-//    private String lookupValue;
-//    private String lookupValueDescription;
+
+    private String language;
+    private String countryValue;
+    private String countryDescription;
 
     public OpenCountryView() {
         super(Country.class);
     }
-    
+
     @PostConstruct
     @Override
     protected void init() {
-        //super.setEntity(client.find(fls.getCountry_id()));
-        
+        super.setEntity(client.find(fls.getCountry_id()));
     }
+
+    public String getCountryValue() {
+        return countryValue;
+    }
+
+    public void setCountryValue(String countryValue) {
+        this.countryValue = countryValue;
+    }
+
+    public String getCountryDescription() {
+        return countryDescription;
+    }
+
+    public void setCountryDescription(String countryDescription) {
+        this.countryDescription = countryDescription;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
 }
