@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import org.eclipse.persistence.annotations.PrivateOwned;
 
@@ -22,7 +22,7 @@ public class Country implements Serializable {
     @Id
     @Size(min = 2, max = 2, message = "Значение КОД должно быть 2-буквенным")
     protected String country_id;
-   
+
     @Size(min = 0, max = 3, message = "Значение EU-код должно быть не более 3-х символов")
     protected String eu_code;
     @Size(min = 3, max = 3, message = "Значение ISO-код должно быть 3-буквенным")
@@ -31,8 +31,9 @@ public class Country implements Serializable {
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "country")
     @PrivateOwned
     @OrderBy("language asc")
-    @NotNull
     private List<CountryTL> countryTL = new ArrayList<>();
+    @Transient
+    private String name;
 
     public Country() {
     }
@@ -88,6 +89,14 @@ public class Country implements Serializable {
                 countryTL.setCountry(this, false);
             }
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

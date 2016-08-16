@@ -13,15 +13,16 @@
                     <p:fieldset legend="Дорога" style="width: 250px; margin-bottom: 10px"> 
                         <h:panelGrid id="yyy" columns="4" cellpadding="5" cellspacing="5">
                             <p:outputLabel value="Код"/>
-                            <p:inputText value="#{openRoadView.entity.rwr_code}"/>
+                            <p:inputText value="#{openRoadView.entity.rwr_code}" style="width: 30px;text-align: center"/>
                             <p:outputLabel value="Сокр.наименование"/>
-                            <p:inputText value="#{openRoadView.entity.shortName}"/>
+                            <p:inputText value="#{openRoadView.entity.shortName}" style="width: 50px;text-align: center"/>
                             <p:outputLabel value="Полное наименование"/>
-                            <p:inputText value="#{openRoadView.entity.fullName}" style="width: 250px"/>
+                            <p:inputText value="#{openRoadView.entity.fullName}" style="width: 150px"/>
                             <p:outputLabel value="Страна"/>
                             <p:autoComplete value="#{openRoadView.entity.country}" maxResults="20"
                                             completeMethod="#{countryConverter.completeItem}"
-                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{countryConverter}" forceSelection="true" dropdown="true" style="margin-right: 50px" >
+                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{countryConverter}" 
+                                            forceSelection="true" style="margin-right: 50px" >
                             </p:autoComplete>
                         </h:panelGrid>
                         <p:commandButton id="btnBack" value="Back" action="roads" immediate="true" style="margin-top: 10px;margin-right: 20px"/>

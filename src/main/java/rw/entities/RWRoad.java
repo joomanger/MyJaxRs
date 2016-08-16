@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(uniqueConstraints
-        = @UniqueConstraint(columnNames = {"name"}))
+        = @UniqueConstraint(columnNames = {"fullName"}))
 public class RWRoad implements Serializable, Comparable<RWRoad> {
 
     @Id

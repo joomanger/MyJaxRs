@@ -1,64 +1,49 @@
-/*
-
- */
 package rw.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
+import javax.persistence.OrderBy;
+import org.eclipse.persistence.annotations.PrivateOwned;
 
 /**
  *
  * @author savin
  */
 @Entity
-@Table(uniqueConstraints
-        = @UniqueConstraint(columnNames = {"name"}))
-public class RWStation implements Serializable, Comparable<RWStation> {
+public class RWStation implements Serializable {
 
     @Id
-    @SequenceGenerator(name = "rwstation_sq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(generator = "rwstation_sq")
-    private Long rws_id;
-    @NotNull
-    private String name;
-    @NotNull
-    private String description;
+    protected String rws_code;
     @OneToOne(cascade = {CascadeType.PERSIST})
-    @JoinColumn(name = "rwroad_fk")
-    @NotNull
-    private RWRoad rwroad;
+    @JoinColumn(name = "rwroad_code")
+    protected RWRoad rwroad;
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "rwstation")
+    @PrivateOwned
+    @OrderBy("language asc")
+    private List<RWStationTL> rwstationTL = new ArrayList<>();
 
-    public Long getRws_id() {
-        return rws_id;
+    public RWStation() {
     }
 
-    public void setRws_id(Long rws_id) {
-        this.rws_id = rws_id;
+    public RWStation(String rws_code, RWRoad rwroad, List<RWStationTL> rwstationTL) {
+        this.rws_code = rws_code;
+        this.rwroad = rwroad;
+        this.rwstationTL = rwstationTL;
     }
 
-    public String getName() {
-        return name;
+    public String getRws_code() {
+        return rws_code;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setRws_code(String rws_code) {
+        this.rws_code = rws_code;
     }
 
     public RWRoad getRwroad() {
@@ -69,12 +54,24 @@ public class RWStation implements Serializable, Comparable<RWStation> {
         this.rwroad = rwroad;
     }
 
-    @Override
-    public int compareTo(RWStation o) {
-        if (this.name.charAt(0) > o.name.charAt(0)) {
-            return 1;
-        } else {
-            return -1;
+    public List<RWStationTL> getRwstationTL() {
+        return rwstationTL;
+    }
+
+    public void setRwstationTL(List<RWStationTL> rwstationTL) {
+        this.rwstationTL = rwstationTL;
+    }
+
+    public void addRWStationTL(RWStationTL rwstationTL) {
+        addRWStationTL(rwstationTL, true);
+    }
+
+    public void addRWStationTL(RWStationTL rwstationTL, boolean add) {
+        if (rwstationTL != null) {
+            getRwstationTL().add(rwstationTL);
+            if (add) {
+                rwstationTL.setRWStation(this, false);
+            }
         }
     }
 

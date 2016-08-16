@@ -14,6 +14,7 @@
                 <h:form prependId="false">
                     <h:inputHidden id="setRoadId" value="#{findRoadSession.rwr_code}"/>
                     <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.rwr_code}" var="ord" 
+                                 widgetVar="roadsTable"
                                  value="#{findRoadView.entities}" filteredValue="#{findRoadView.filteredEntities}" 
                                  emptyMessage="Данные не найдены"
                                  editable="true"  selection="#{findRoadView.selectedEntities}" 
@@ -21,18 +22,28 @@
                                  rowsPerPageTemplate="20,40,100">
                         <f:facet name="header">
                             Справочник железных дорог СНГ, Балтии и России
+                            <p:inputText id="globalFilter" onkeyup="PF('roadsTable').filter()" style="width:150px" placeholder="Поиск"/>
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column filterBy="#{ord.fullName}"  filterMaxLength="6" filterMatchMode="contains"  headerText="Полное наименование" style="width: 150px;text-align: left">
-                            <h:commandLink action="openRoad" value="#{ord.fullName}" onclick="document.getElementById('setRoadId').value ='#{ord.rwr_code}';"/>
+                        <p:column filterBy="#{ord.fullName}" filterMatchMode="contains"  headerText="Полное наименование" style="width: 150px;text-align: left">
+                            <f:facet name="filter">
+                                <h:inputHidden/>
+                            </f:facet>
+                            <h:commandLink action="openRoad" value="#{ord.fullName}" onclick="document.getElementById('setRoadId').value = '#{ord.rwr_code}';"/>
                         </p:column>
                         <p:column headerText="Сокр.наименование" style="width: 100px;text-align: center">
                             <h:outputText value="#{ord.shortName}"/>
                         </p:column>
-                        <p:column filterBy="#{ord.rwr_code}" filterMatchMode="contains" headerText="Код" style="width: 110px;text-align: center">
+                        <p:column filterBy="#{ord.rwr_code}" filterMatchMode="contains" headerText="Код" style="width: 35px;text-align: center">
+                            <f:facet name="filter">
+                                <h:inputHidden/>
+                            </f:facet>
                             <h:outputText value="#{ord.rwr_code}"/>
                         </p:column>
-                        <p:column headerText="Страна" style="width: 50px;text-align: center">
+                        <p:column filterBy="#{ord.country.country_id}" filterMatchMode="contains" headerText="Страна" style="width: 50px;text-align: center">
+                            <f:facet name="filter">
+                                <h:inputHidden/>
+                            </f:facet>
                             <h:outputText value="#{ord.country.country_id}"/>
                         </p:column>
                         <f:facet name="footer" >

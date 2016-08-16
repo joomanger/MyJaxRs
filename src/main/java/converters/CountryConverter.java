@@ -33,7 +33,6 @@ public class CountryConverter implements Converter {
         if (value != null && value.trim().length() > 0) {
             try {
                 return client.find(value);
-
             } catch (NumberFormatException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Not a valid theme."));
             }

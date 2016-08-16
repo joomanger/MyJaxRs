@@ -1,6 +1,3 @@
-/*
-
- */
 package customer.entities;
 
 import java.io.Serializable;
