@@ -29,7 +29,7 @@ public class RWRoad implements Serializable, Comparable<RWRoad> {
 
     @NotNull
     private String fullName;
-    @OneToOne(cascade = {CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.DETACH})
     @JoinColumn(name = "country_id")
     private Country country;
 
