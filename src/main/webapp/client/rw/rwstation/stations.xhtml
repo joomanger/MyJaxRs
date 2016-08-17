@@ -24,19 +24,20 @@
                             <p:inputText id="globalFilter" onkeyup="PF('myTable').filter()" style="width:150px" placeholder="Поиск"/>
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column filterBy="#{ord.rws_code}" filterMatchMode="contains"  headerText="Код" style="width: 30px;text-align: center">
-                            <f:facet name="filter">
-                                <h:inputHidden/>
-                            </f:facet>
-                            <h:commandLink action="openStation" value="#{ord.rws_code}" onclick="document.getElementById('setID').value = '#{ord.rws_code}';"/>
-                        </p:column>
                         <p:column filterBy="#{ord.name}" filterMatchMode="contains" headerText="Наименование" style="width: 80px;text-align: left">
                             <f:facet name="filter">
                                 <h:inputHidden/>
                             </f:facet>
-                            <h:outputText value="#{ord.name}"/>
+
+                            <h:commandLink action="openStation" value="#{ord.name}" onclick="document.getElementById('setID').value = '#{ord.rws_code}';"/>
                         </p:column>
-                        <p:column filterBy="#{ord.fullname}" filterMatchMode="contains" headerText="Дорога" style="width: 100px;text-align: left">
+                        <p:column filterBy="#{ord.rws_code}" filterMatchMode="contains"  headerText="Код" style="width: 30px;text-align: center">
+                            <f:facet name="filter">
+                                <h:inputHidden/>
+                            </f:facet>
+                            <h:outputText value="#{ord.rws_code}"/>
+                        </p:column>
+                        <p:column filterBy="#{ord.fullname}" filterMatchMode="contains" headerText="ЖД дорога" style="width: 100px;text-align: left">
                             <f:facet name="filter">
                                 <h:inputHidden/>
                             </f:facet>
