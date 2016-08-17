@@ -22,7 +22,7 @@ public class RWStation implements Serializable {
     @Id
     protected String rws_code;
     private Long location_id_orc;
-    @OneToOne(cascade = {CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.DETACH})
     @JoinColumn(name = "rwroad_code")
     protected RWRoad rwroad;
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "rwstation")
