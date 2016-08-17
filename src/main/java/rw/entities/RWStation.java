@@ -21,6 +21,7 @@ public class RWStation implements Serializable {
 
     @Id
     protected String rws_code;
+    private Long location_id_orc;
     @OneToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "rwroad_code")
     protected RWRoad rwroad;
@@ -36,6 +37,14 @@ public class RWStation implements Serializable {
         this.rws_code = rws_code;
         this.rwroad = rwroad;
         this.rwstationTL = rwstationTL;
+    }
+
+    public Long getLocation_id_orc() {
+        return location_id_orc;
+    }
+
+    public void setLocation_id_orc(Long location_id_orc) {
+        this.location_id_orc = location_id_orc;
     }
 
     public String getRws_code() {
@@ -65,7 +74,7 @@ public class RWStation implements Serializable {
     public void addRWStationTL(RWStationTL rwstationTL) {
         addRWStationTL(rwstationTL, true);
     }
-
+    
     public void addRWStationTL(RWStationTL rwstationTL, boolean add) {
         if (rwstationTL != null) {
             getRwstationTL().add(rwstationTL);

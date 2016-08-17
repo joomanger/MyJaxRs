@@ -27,8 +27,6 @@ public class RWRoad implements Serializable, Comparable<RWRoad> {
     @NotNull
     private String shortName;
 
-    private String rwr_code_orc;
-
     @NotNull
     private String fullName;
     @OneToOne(cascade = {CascadeType.PERSIST})
@@ -69,14 +67,6 @@ public class RWRoad implements Serializable, Comparable<RWRoad> {
 
     public String getNameForReport() {
         return shortName + "(" + rwr_code + ")";
-    }
-
-    public String getRwr_code_orc() {
-        return rwr_code_orc;
-    }
-
-    public void setRwr_code_orc(String rwr_code_orc) {
-        this.rwr_code_orc = rwr_code_orc;
     }
 
     @Override
