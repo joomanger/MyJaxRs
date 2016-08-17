@@ -32,38 +32,32 @@
                             </f:facet>
                             <h:commandLink action="openStation" value="#{ord.rws_code}" onclick="document.getElementById('setID').value = '#{ord.rws_code}';"/>
                         </p:column>
-                        <p:column headerText="Сокр.наименование" style="width: 100px;text-align: center">
-                            <h:outputText value="#{ord.shortName}"/>
+                        <p:column headerText="Наименование" style="width: 250px;text-align: left">
+                            <h:outputText value="#{ord.name}"/>
                         </p:column>
-                        <p:column filterBy="#{ord.rwr_code}" filterMatchMode="contains" headerText="Код" style="width: 35px;text-align: center">
+                        <p:column filterBy="#{ord.rwroad.nameForReport}" filterMatchMode="contains" headerText="Дорога" style="width: 50px;text-align: center">
                             <f:facet name="filter">
                                 <h:inputHidden/>
                             </f:facet>
-                            <h:outputText value="#{ord.rwr_code}"/>
-                        </p:column>
-                        <p:column filterBy="#{ord.country.country_id}" filterMatchMode="contains" headerText="Страна" style="width: 50px;text-align: center">
-                            <f:facet name="filter">
-                                <h:inputHidden/>
-                            </f:facet>
-                            <h:outputText value="#{ord.country.country_id}"/>
+                            <h:outputText value="#{ord.rwroad.nameForReport}"/>
                         </p:column>
                         <f:facet name="footer" >
                             <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />
-                            <p:commandButton value="New" action="newRoad" immediate="true" style="margin-left: 15px"/>
+                            <p:commandButton value="New" action="newStation" immediate="true" style="margin-left: 15px"/>
                         </f:facet>
                     </p:dataTable> 
                     <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="500px">
                         <p:outputPanel id="selectedParams" style="text-align: center">
-                            <p:dataTable value="#{findRoadView.selectedEntities}" var="v">
-                                <p:column headerText="Наименование" style="text-align: left;width: 50px">
-                                    <h:outputText value="#{v.rwr_code}" />
+                            <p:dataTable value="#{findRWStationView.selectedEntities}" var="v">
+                                <p:column headerText="Код" style="text-align: left;width: 50px">
+                                    <h:outputText value="#{v.rws_code}" />
                                 </p:column>
-                                <p:column headerText="Описание" style="text-align: left;width: 250px">
-                                    <h:outputText value="#{v.fullName}" />
+                                <p:column headerText="Наименование" style="text-align: left;width: 100px">
+                                    <h:outputText value="#{v.name}" />
                                 </p:column>
                             </p:dataTable>
                             <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
-                            <p:commandButton value="Yes" actionListener="#{roadCBean.deleteSelectedEntities()}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
+                            <p:commandButton value="Yes" actionListener="#{rwstationCBean.deleteSelectedEntities()}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
                         </p:outputPanel>
                     </p:dialog>
                 </h:form>
