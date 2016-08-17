@@ -74,7 +74,7 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
         RWStationTL tl = new RWStationTL();
         tl.setLanguage(ocv.getLanguage());
         tl.setName(ocv.getName());
-        tl.setDescription(ocv.getDescription());
+        //tl.setDescription(ocv.getDescription());
         String result = ejbTL.validateMyEntity(tl);
         if (result.equals(ejbTL.SUCCESSFUL)) {
             tl.setRwstation(ocv.getEntity());
@@ -97,7 +97,7 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
         RWStationTL tl = new RWStationTL();
         tl.setLanguage(ncv.getLanguage());
         tl.setName(ncv.getName());
-        tl.setDescription(ncv.getDescription());
+        //tl.setDescription(ncv.getDescription());
         String result = ejbTL.validateMyEntity(tl);
         if (result.equals(ejbTL.SUCCESSFUL)) {
             l.addRWStationTL(tl);
