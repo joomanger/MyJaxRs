@@ -25,20 +25,23 @@
                         </f:facet>
                         , String name, String description, RWRoad rwroad
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column filterBy="#{ord.rws_code}" filterMatchMode="contains"  headerText="Код" style="width: 500px;text-align: center">
+                        <p:column filterBy="#{ord.rws_code}" filterMatchMode="contains"  headerText="Код" style="width: 50px;text-align: center">
                             <f:facet name="filter">
                                 <h:inputHidden/>
                             </f:facet>
                             <h:commandLink action="openStation" value="#{ord.rws_code}" onclick="document.getElementById('setID').value = '#{ord.rws_code}';"/>
                         </p:column>
-                        <p:column headerText="Наименование" style="width: 250px;text-align: left">
-                            <h:outputText value="#{ord.name}"/>
-                        </p:column>
-                        <p:column filterBy="#{ord.rwroad.nameForReport}" filterMatchMode="contains" headerText="Дорога" style="width: 50px;text-align: center">
+                        <p:column filterBy="#{ord.name}" filterMatchMode="contains" headerText="Наименование" style="width: 80px;text-align: left">
                             <f:facet name="filter">
                                 <h:inputHidden/>
                             </f:facet>
-                            <h:outputText value="#{ord.rwroad.nameForReport}"/>
+                            <h:outputText value="#{ord.name}"/>
+                        </p:column>
+                        <p:column filterBy="#{ord.fullname}" filterMatchMode="contains" headerText="Дорога" style="width: 100px;text-align: left">
+                            <f:facet name="filter">
+                                <h:inputHidden/>
+                            </f:facet>
+                            <h:outputText value="#{ord.fullname}"/>
                         </p:column>
                         <f:facet name="footer" >
                             <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />

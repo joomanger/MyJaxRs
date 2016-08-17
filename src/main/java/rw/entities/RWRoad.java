@@ -33,6 +33,16 @@ public class RWRoad implements Serializable, Comparable<RWRoad> {
     @JoinColumn(name = "country_id")
     private Country country;
 
+    public RWRoad() {
+    }
+
+    public RWRoad(String rwr_code, String shortName, String fullName, Country country) {
+        this.rwr_code = rwr_code;
+        this.shortName = shortName;
+        this.fullName = fullName;
+        this.country = country;
+    }
+
     public String getRwr_code() {
         return rwr_code;
     }

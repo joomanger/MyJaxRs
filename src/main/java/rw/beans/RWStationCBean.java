@@ -58,7 +58,7 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
     @Override
     public void deleteSelectedEntities() {
         for (RWStationVL entity : fcv.getSelectedEntities()) {
-            RWStation cc = new RWStation(entity.getRws_code(), entity.getRwroad(), entity.getRwstationTL());
+            RWStation cc = null;//new RWStation(entity.getRws_code(), entity.getRwroad(), entity.getRwstationTL());
 
             String status = getEJB().remove(cc);
             if (status.equals(getEJB().SUCCESSFUL)) {

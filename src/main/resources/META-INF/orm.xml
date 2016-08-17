@@ -13,4 +13,14 @@
             <column name="iso_code"/>
         </constructor-result>
     </sql-result-set-mapping>
+    <sql-result-set-mapping name="RWStationVLMapping">
+        <constructor-result target-class="rw.entities.RWStationVL">
+            <column name="rws_code"/>
+            <column name="name"/>
+            <column name="rwr_code"/>
+            <column name="fullname"/>
+            <column name="shortname"/>
+            <column name="country_id"/>
+        </constructor-result>
+    </sql-result-set-mapping>
 </entity-mappings>
