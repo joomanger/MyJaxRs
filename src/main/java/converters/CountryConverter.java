@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import service.SessionActions;
 
 /**
  *
@@ -25,8 +24,6 @@ public class CountryConverter implements Converter {
 
     @Inject
     private CountryCBean client;
-    @Inject
-    private SessionActions sa;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
