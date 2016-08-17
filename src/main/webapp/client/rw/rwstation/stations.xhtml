@@ -23,9 +23,8 @@
                             Справочник ЖД станций
                             <p:inputText id="globalFilter" onkeyup="PF('myTable').filter()" style="width:150px" placeholder="Поиск"/>
                         </f:facet>
-                        , String name, String description, RWRoad rwroad
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column filterBy="#{ord.rws_code}" filterMatchMode="contains"  headerText="Код" style="width: 50px;text-align: center">
+                        <p:column filterBy="#{ord.rws_code}" filterMatchMode="contains"  headerText="Код" style="width: 30px;text-align: center">
                             <f:facet name="filter">
                                 <h:inputHidden/>
                             </f:facet>
