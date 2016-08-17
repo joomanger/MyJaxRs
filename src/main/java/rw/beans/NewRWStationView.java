@@ -2,11 +2,9 @@ package rw.beans;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import rw.entities.RWStation;
 import service.AbstractView;
-import service.SessionActions;
 
 /**
  *
@@ -16,8 +14,6 @@ import service.SessionActions;
 @ViewScoped
 public class NewRWStationView extends AbstractView<RWStation> {
 
-    @Inject
-    private SessionActions sc;
     private final RWStation station = new RWStation();
     private String language;
     private String name;

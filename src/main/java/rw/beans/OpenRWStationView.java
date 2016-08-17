@@ -1,6 +1,5 @@
 package rw.beans;
 
-import customer.entities.Country;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;

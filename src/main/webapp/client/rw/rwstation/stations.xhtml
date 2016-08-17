@@ -13,10 +13,9 @@
             <ui:define name="content">
                 <h:form prependId="false">
                     <h:inputHidden id="setID" value="#{findRWStationSession.rws_code}"/>
-                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.rws_code}" var="ord" 
-                                 widgetVar="myTable"
-                                 value="#{findRWStationView.entities}" filteredValue="#{findRWStationView.filteredEntities}" 
-                                 emptyMessage="Данные не найдены"
+                    <p:dataTable rowSelectMode="checkbox"  id="dTable" var="ord" rowKey="#{ord.rws_code}"
+                                 widgetVar="myTable" value="#{findRWStationView.entities}" 
+                                 emptyMessage="Данные не найдены" filteredValue="#{findRWStationView.filteredEntities}" 
                                  editable="true"  selection="#{findRWStationView.selectedEntities}" 
                                  rows="20" paginator="true" style="width: 700px;"
                                  rowsPerPageTemplate="20,40,100">
