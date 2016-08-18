@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
+import javax.persistence.Transient;
 import org.eclipse.persistence.annotations.PrivateOwned;
 
 /**
@@ -29,6 +30,8 @@ public class RWStation implements Serializable {
     @PrivateOwned
     @OrderBy("language asc")
     private List<RWStationTL> rwstationTL = new ArrayList<>();
+    @Transient
+    private String fullName;
 
     public RWStation() {
     }
@@ -38,6 +41,14 @@ public class RWStation implements Serializable {
         this.rwroad = rwroad;
         this.rwstationTL = rwstationTL;
         this.location_id_orc = location_id_orc;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Long getLocation_id_orc() {
