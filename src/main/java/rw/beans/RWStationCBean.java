@@ -71,50 +71,35 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
         }
     }
 
-    public void addRWStationTLOCV() {
-        RWStationTL tl = new RWStationTL();
-        tl.setLanguage(ocv.getLanguage());
-        tl.setName(ocv.getName());
-        //tl.setDescription(ocv.getDescription());
-        String result = ejbTL.validateMyEntity(tl);
-        if (result.equals(ejbTL.SUCCESSFUL)) {
-            tl.setRwstation(ocv.getEntity());
-            String status = ejbTL.create(tl);
-            if (status.equals(ejbTL.SUCCESSFUL)) {
-                ejbTL.sendMessage(status, "Значение добавлено успешно");
-                ocv.setName(null);
-                ocv.setLanguage(null);
-            } else {
-                ejbTL.sendMessage(status, null);
-            }
-        } else {
-            ejbTL.sendMessage(result, null);
-        }
-    }
+//    public void addRWStationTLOCV() {
+//        RWStationTL tl = new RWStationTL();
+//        tl.setLanguage(ocv.getLanguage());
+//        tl.setName(ocv.getName());
+//        String result = ejbTL.validateMyEntity(tl);
+//        if (result.equals(ejbTL.SUCCESSFUL)) {
+//            tl.setRwstation(ocv.getEntity());
+//            String status = ejbTL.create(tl);
+//            if (status.equals(ejbTL.SUCCESSFUL)) {
+//                ejbTL.sendMessage(status, "Значение добавлено успешно");
+//                ocv.setName(null);
+//                ocv.setLanguage(null);
+//            } else {
+//                ejbTL.sendMessage(status, null);
+//            }
+//        } else {
+//            ejbTL.sendMessage(result, null);
+//        }
+//    }
+   
 
-    public void addRWStationTLNCV() {
-        RWStation l = ncv.getEntity();
-        RWStationTL tl = new RWStationTL();
-        tl.setLanguage(ncv.getLanguage());
-        tl.setName(ncv.getName());
-        String result = ejbTL.validateMyEntity(tl);
-        if (result.equals(ejbTL.SUCCESSFUL)) {
-            l.addRWStationTL(tl);
-            ncv.setName(null);
-            ncv.setLanguage(null);
-        } else {
-            ejbTL.sendMessage(result, null);
-        }
-    }
-
-    public void deleteRWStationTLNCV() {
-        ncv.getEntity().getRwstationTL().removeAll(ncv.getSelectedEntityLines());
-    }
-
-    public void deleteRWStationTLOCV() {
-        ocv.getEntity().getRwstationTL().removeAll(ocv.getSelectedEntityLines());
-        changeEntity();
-    }
+//    public void deleteRWStationTLNCV() {
+//        ncv.getEntity().getRwstationTL().removeAll(ncv.getSelectedEntityLines());
+//    }
+//
+//    public void deleteRWStationTLOCV() {
+//        ocv.getEntity().getRwstationTL().removeAll(ocv.getSelectedEntityLines());
+//        changeEntity();
+//    }
 
     public List<RWStationVL> findAllVL() {
         return ejb.findAllVL();
@@ -122,9 +107,21 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
 
     @Override
     public String createEntity(String backURL) {
-        if (ncv.getEntity().getRwstationTL().isEmpty()) {
-            ejb.sendMessage("Название страны обязательно", null);
+        if(ncv.getEntity().getRws_code().trim().isEmpty()){
+            ejb.sendMessage("Код ЖД Станции обязателен", null);
             return null;
+        }
+
+        for (RWStationTL t : ncv.getEntity().getRwstationTL()) {
+            try {
+                if (t.getName().trim().isEmpty()) {
+                    ejb.sendMessage("Заполните все варианты перевода", null);
+                    return null;
+                }
+            } catch (NullPointerException ex) {
+                ejb.sendMessage("Заполните все варианты перевода", null);
+                return null;
+            }
         }
         return super.createEntity(backURL);
     }

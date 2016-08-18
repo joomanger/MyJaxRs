@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import org.eclipse.persistence.annotations.PrivateOwned;
 
 /**
@@ -25,6 +26,7 @@ public class RWStation implements Serializable {
     private Long location_id_orc;
     @OneToOne(cascade = {CascadeType.DETACH})
     @JoinColumn(name = "rwroad_code")
+    @NotNull(message = "ЖД Дорога обязательна")
     protected RWRoad rwroad;
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "rwstation")
     @PrivateOwned

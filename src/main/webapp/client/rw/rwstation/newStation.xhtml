@@ -24,12 +24,9 @@
                         </h:panelGrid>
 
                         <p:dataTable id="dTable" var="ord" value="#{newRWStationView.entity.rwstationTL}" 
-                                     selection="#{newRWStationView.selectedEntityLines}" 
-                                     rowSelectMode="checkbox" editMode="cell" editable="true"
+                                     editMode="cell" editable="true"
                                      scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord}" 
                                      style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
-                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-
                             <p:column headerText="Язык" style="width:35px; text-align: center">
                                 <p:outputLabel value="#{ord.language}"/>
                             </p:column>
@@ -39,33 +36,9 @@
                                     <f:facet name="output"><p:outputLabel value="#{ord.name}"/></f:facet>
                                 </p:cellEditor>    
                             </p:column>
-                            <f:facet name="footer" >
-                                <p:outputLabel for="lang" value="Язык"/>
-                                <p:autoComplete id="lang" size="5" value="#{newRWStationView.language}" completeMethod="#{langLOV.completeItem}" 
-                                                forceSelection="true" dropdown="true" style="margin-right: 40px;"/>
-                                <p:outputLabel for="valuez" value="Название"/>
-                                <p:inputText id="valuez" value="#{newRWStationView.name}" required="false"/>
-                                <p:focus for="lang"/>
-                                <p:commandButton value="Добавить" actionListener="#{RWStationCBean.addRWStationTLNCV()}" update="dTable mainMSG"/>
-                                <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
-                            </f:facet>
                         </p:dataTable>
-                        <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
-                            <p:outputPanel id="selectedParams" style="text-align:center;">
-                                <p:dataTable value="#{openRWStationView.selectedEntityLines}" var="v">
-                                    <p:column headerText="Язык">
-                                        <h:outputText value="#{v.language}"/>
-                                    </p:column>
-                                    <p:column headerText="Наименование">
-                                        <h:outputText value="#{v.name}"/>
-                                    </p:column>
-                                </p:dataTable>
-                                <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>
-                                <p:commandButton value="Yes" actionListener="#{RWStationCBean.deleteRWStationTLOCV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
-                            </p:outputPanel>
-                        </p:dialog>
                         <p:commandButton id="btnBack" value="Back" action="stations" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
-                        <p:commandButton id="btnSave" value="Сохранить" actionListener="#{RWStationCBean.createEntity('stations')}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
+                        <p:commandButton id="btnSave" value="Сохранить" action="#{RWStationCBean.createEntity('stations')}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
                     </p:fieldset>  
                 </h:form>
 

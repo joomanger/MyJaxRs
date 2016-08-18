@@ -1,7 +1,9 @@
 package service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -9,6 +11,9 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import lookup.beans.LookupEJB;
+import lookup.entities.Lookup;
+import lookup.entities.LookupItem;
 import sys.beans.UserCBean;
 import sys.beans.ViewEJB;
 import sys.entities.SysUser;
@@ -24,7 +29,8 @@ public class SessionActions implements Serializable {
 
     @Inject
     private SessionConfig sc;
-    
+    @Inject
+    private LookupEJB lookupEJB;
     @Inject
     private UserCBean client;
     @Inject
@@ -77,6 +83,14 @@ public class SessionActions implements Serializable {
         this.language = language;
     }
     
-    
+    public List<String> getSystemLanguages() {
+        Lookup langs = lookupEJB.findByName("LANGUAGES");
+        List<String> res = new ArrayList<>(langs.getLookupItems().size());
+        for (LookupItem li : langs.getLookupItems()) {
+            res.add(li.getValuez());
+        }
+        return res;
+    }
+
 
 }

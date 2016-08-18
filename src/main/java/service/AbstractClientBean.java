@@ -1,6 +1,9 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.List;
+import lookup.entities.Lookup;
+import lookup.entities.LookupItem;
 
 /**
  *
@@ -78,5 +81,6 @@ public abstract class AbstractClientBean<T> implements IClientBean<T> {
             }
         }
     }
-
+    
+    
 }

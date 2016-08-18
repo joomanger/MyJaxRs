@@ -11,7 +11,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -31,9 +30,8 @@ public class RWStationTL implements Serializable {
     @SequenceGenerator(name = "rwstationtl_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "rwstationtl_sq")
     private Long rwstationtl_id;
-    @NotNull
+    @Size(min = 3, max = 255,message = "Длина НАЗВАНИЕ от 3 до 255 символов")
     private String name;
-    @NotNull
     @Size(min = 2, max = 2)
     private String language;
     @ManyToOne
