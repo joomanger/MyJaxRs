@@ -90,16 +90,6 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
 //            ejbTL.sendMessage(result, null);
 //        }
 //    }
-   
-
-//    public void deleteRWStationTLNCV() {
-//        ncv.getEntity().getRwstationTL().removeAll(ncv.getSelectedEntityLines());
-//    }
-//
-//    public void deleteRWStationTLOCV() {
-//        ocv.getEntity().getRwstationTL().removeAll(ocv.getSelectedEntityLines());
-//        changeEntity();
-//    }
 
     public List<RWStationVL> findAllVL() {
         return ejb.findAllVL();
