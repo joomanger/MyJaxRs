@@ -17,7 +17,7 @@ public class NewRWStationView extends AbstractView<RWStation> {
     private final RWStation station = new RWStation();
     private String language;
     private String name;
-    private String description;
+    
 
     public NewRWStationView() {
         super(RWStation.class);
@@ -43,14 +43,6 @@ public class NewRWStationView extends AbstractView<RWStation> {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
 }

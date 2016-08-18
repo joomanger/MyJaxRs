@@ -71,7 +71,7 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
         }
     }
 
-    public void addCountryTLOCV() {
+    public void addRWStationTLOCV() {
         RWStationTL tl = new RWStationTL();
         tl.setLanguage(ocv.getLanguage());
         tl.setName(ocv.getName());
@@ -83,7 +83,6 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
             if (status.equals(ejbTL.SUCCESSFUL)) {
                 ejbTL.sendMessage(status, "Значение добавлено успешно");
                 ocv.setName(null);
-                ocv.setDescription(null);
                 ocv.setLanguage(null);
             } else {
                 ejbTL.sendMessage(status, null);
@@ -93,7 +92,7 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
         }
     }
 
-    public void addCountryTLNCV() {
+    public void addRWStationTLNCV() {
         RWStation l = ncv.getEntity();
         RWStationTL tl = new RWStationTL();
         tl.setLanguage(ncv.getLanguage());
@@ -103,18 +102,17 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
         if (result.equals(ejbTL.SUCCESSFUL)) {
             l.addRWStationTL(tl);
             ncv.setName(null);
-            ncv.setDescription(null);
             ncv.setLanguage(null);
         } else {
             ejbTL.sendMessage(result, null);
         }
     }
 
-    public void deleteCountryTLNCV() {
+    public void deleteRWStationTLNCV() {
         ncv.getEntity().getRwstationTL().removeAll(ncv.getSelectedEntityLines());
     }
 
-    public void deleteCountryTLOCV() {
+    public void deleteRWStationTLOCV() {
         ocv.getEntity().getRwstationTL().removeAll(ocv.getSelectedEntityLines());
         changeEntity();
     }
@@ -123,9 +121,9 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
         return ejb.findAllVL();
     }
 
-    public RWStationVL findVL(String rwstation_code) {
-        return ejb.findVL(rwstation_code);
-    }
+//    public RWStationVL findVL(String rwstation_code) {
+//        return ejb.findVL(rwstation_code);
+//    }
 
     @Override
     public String createEntity(String backURL) {

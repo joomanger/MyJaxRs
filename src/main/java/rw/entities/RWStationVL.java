@@ -6,7 +6,6 @@ package rw.entities;
  */
 public class RWStationVL extends RWStation {
 
-    //private String rws_code;
     private String name;
     private String rwr_code;
     private String fullname;
@@ -24,14 +23,6 @@ public class RWStationVL extends RWStation {
         this.shortname = shortname;
         this.country_id = country_id;
     }
-
-//    public String getRws_code() {
-//        return rws_code;
-//    }
-//
-//    public void setRws_code(String rws_code) {
-//        this.rws_code = rws_code;
-//    }
 
     public String getName() {
         return name;
@@ -72,5 +63,5 @@ public class RWStationVL extends RWStation {
     public void setCountry_id(String country_id) {
         this.country_id = country_id;
     }
-   
+
 }

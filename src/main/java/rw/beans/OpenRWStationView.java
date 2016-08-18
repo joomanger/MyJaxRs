@@ -22,7 +22,7 @@ public class OpenRWStationView extends AbstractView<RWStation> {
 
     private String language;
     private String name;
-    private String description;
+   
 
     public OpenRWStationView() {
         super(RWStation.class);
@@ -50,12 +50,5 @@ public class OpenRWStationView extends AbstractView<RWStation> {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
 }
