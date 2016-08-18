@@ -58,8 +58,8 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
     @Override
     public void deleteSelectedEntities() {
         for (RWStationVL entity : fcv.getSelectedEntities()) {
-            
-            RWStation cc = new RWStation(entity.getRws_code(), entity.getLocation_id_orc(),entity.getRwroad(), entity.getRwstationTL());
+
+            RWStation cc = new RWStation(entity.getRws_code(), entity.getLocation_id_orc(), entity.getRwroad(), entity.getRwstationTL());
 
             String status = getEJB().remove(cc);
             if (status.equals(getEJB().SUCCESSFUL)) {
@@ -97,7 +97,6 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
         RWStationTL tl = new RWStationTL();
         tl.setLanguage(ncv.getLanguage());
         tl.setName(ncv.getName());
-        //tl.setDescription(ncv.getDescription());
         String result = ejbTL.validateMyEntity(tl);
         if (result.equals(ejbTL.SUCCESSFUL)) {
             l.addRWStationTL(tl);
@@ -120,10 +119,6 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
     public List<RWStationVL> findAllVL() {
         return ejb.findAllVL();
     }
-
-//    public RWStationVL findVL(String rwstation_code) {
-//        return ejb.findVL(rwstation_code);
-//    }
 
     @Override
     public String createEntity(String backURL) {

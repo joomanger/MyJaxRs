@@ -33,7 +33,6 @@ public class RWStationTL implements Serializable {
     private Long rwstationtl_id;
     @NotNull
     private String name;
-    //private String description;
     @NotNull
     @Size(min = 2, max = 2)
     private String language;
@@ -56,14 +55,6 @@ public class RWStationTL implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-//    public String getDescription() {
-//        return description;
-//    }
-//
-//    public void setDescription(String description) {
-//        this.description = description;
-//    }
 
     public String getLanguage() {
         return language;

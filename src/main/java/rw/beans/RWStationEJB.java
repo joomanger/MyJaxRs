@@ -36,11 +36,4 @@ public class RWStationEJB extends AbstractEJB<RWStation> {
         return a;
     }
 
-//    public RWStationVL findVL(String country_id) {
-//        RWStationVL a = (RWStationVL) em.createNativeQuery("select c.country_id, "
-//                + "t.name, t.description, c.eu_code,c.iso_code from Country c,CountryTL t "
-//                + "where c.country_id=?1 and c.country_id=t.country_id and t.language=?2", "RWStationVLMapping").setParameter(1, country_id).setParameter(2, sa.getLanguage()).getSingleResult();
-//        return a;
-//    }
-
 }
