@@ -33,10 +33,11 @@ public class RWStation implements Serializable {
     public RWStation() {
     }
 
-    public RWStation(String rws_code, RWRoad rwroad, List<RWStationTL> rwstationTL) {
+    public RWStation(String rws_code, Long location_id_orc, RWRoad rwroad, List<RWStationTL> rwstationTL) {
         this.rws_code = rws_code;
         this.rwroad = rwroad;
         this.rwstationTL = rwstationTL;
+        this.location_id_orc = location_id_orc;
     }
 
     public Long getLocation_id_orc() {
@@ -74,7 +75,7 @@ public class RWStation implements Serializable {
     public void addRWStationTL(RWStationTL rwstationTL) {
         addRWStationTL(rwstationTL, true);
     }
-    
+
     public void addRWStationTL(RWStationTL rwstationTL, boolean add) {
         if (rwstationTL != null) {
             getRwstationTL().add(rwstationTL);

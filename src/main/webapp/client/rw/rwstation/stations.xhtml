@@ -59,7 +59,7 @@
                                 </p:column>
                             </p:dataTable>
                             <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
-                            <p:commandButton value="Yes" actionListener="#{rwstationCBean.deleteSelectedEntities()}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
+                            <p:commandButton value="Yes" actionListener="#{RWStationCBean.deleteSelectedEntities()}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
                         </p:outputPanel>
                     </p:dialog>
                 </h:form>
