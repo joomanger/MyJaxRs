@@ -22,11 +22,9 @@
                         </h:panelGrid>
                         
                         <p:dataTable id="dTable" var="ord" value="#{openCountryView.entity.countryTL}" selection="#{openCountryView.selectedEntityLines}" 
-                                     rowSelectMode="checkbox" editMode="cell" editable="true"
+                                     editMode="cell" editable="true"
                                      scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.countrytl_id}" 
                                      style="width: 1000px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
-                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                            
                             <p:column headerText="Язык" style="width:35px; text-align: left">
                                 <p:outputLabel value="#{ord.language}"/>
                             </p:column>
@@ -52,23 +50,8 @@
                                 <p:inputText id="description" value="#{openCountryView.countryDescription}" required="false"/>
                                 <p:focus for="lang"/>
                                 <p:commandButton value="Добавить" actionListener="#{countryCBean.addCountryTLOCV()}" update="dTable mainMSG"/>
-                                <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
                             </f:facet>
                         </p:dataTable>
-                        <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
-                            <p:outputPanel id="selectedParams" style="text-align:center;">
-                                <p:dataTable value="#{openCountryView.selectedEntityLines}" var="v">
-                                    <p:column headerText="Значение">
-                                        <h:outputText value="#{v.name}"/>
-                                    </p:column>
-                                    <p:column headerText="Описание">
-                                        <h:outputText value="#{v.description}"/>
-                                    </p:column>
-                                </p:dataTable>
-                                <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>
-                                <p:commandButton value="Yes" actionListener="#{countryCBean.deleteCountryTLOCV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
-                            </p:outputPanel>
-                        </p:dialog>
                         <p:commandButton id="btnBack" value="Back" action="countries" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
                         <p:commandButton id="btnSave" value="Сохранить" actionListener="#{countryCBean.changeEntity()}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
                     </p:fieldset> 

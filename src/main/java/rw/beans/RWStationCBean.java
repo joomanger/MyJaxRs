@@ -71,25 +71,25 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
         }
     }
 
-//    public void addRWStationTLOCV() {
-//        RWStationTL tl = new RWStationTL();
-//        tl.setLanguage(ocv.getLanguage());
-//        tl.setName(ocv.getName());
-//        String result = ejbTL.validateMyEntity(tl);
-//        if (result.equals(ejbTL.SUCCESSFUL)) {
-//            tl.setRwstation(ocv.getEntity());
-//            String status = ejbTL.create(tl);
-//            if (status.equals(ejbTL.SUCCESSFUL)) {
-//                ejbTL.sendMessage(status, "Значение добавлено успешно");
-//                ocv.setName(null);
-//                ocv.setLanguage(null);
-//            } else {
-//                ejbTL.sendMessage(status, null);
-//            }
-//        } else {
-//            ejbTL.sendMessage(result, null);
-//        }
-//    }
+    public void addRWStationTLOCV() {
+        RWStationTL tl = new RWStationTL();
+        tl.setLanguage(ocv.getLanguage());
+        tl.setName(ocv.getName());
+        String result = ejbTL.validateMyEntity(tl);
+        if (result.equals(ejbTL.SUCCESSFUL)) {
+            tl.setRwstation(ocv.getEntity());
+            String status = ejbTL.create(tl);
+            if (status.equals(ejbTL.SUCCESSFUL)) {
+                ejbTL.sendMessage(status, "Значение добавлено успешно");
+                ocv.setName(null);
+                ocv.setLanguage(null);
+            } else {
+                ejbTL.sendMessage(status, null);
+            }
+        } else {
+            ejbTL.sendMessage(result, null);
+        }
+    }
 
     public List<RWStationVL> findAllVL() {
         return ejb.findAllVL();

@@ -48,13 +48,14 @@
                             <p:commandButton value="New" action="newStation" immediate="true" style="margin-left: 15px"/>
                         </f:facet>
                     </p:dataTable> 
-                    <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="500px">
+                    <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" 
+                              showEffect="fade" hideEffect="fade" resizable="false" width="400px">
                         <p:outputPanel id="selectedParams" style="text-align: center">
                             <p:dataTable value="#{findRWStationView.selectedEntities}" var="v">
-                                <p:column headerText="Код" style="text-align: left;width: 50px">
+                                <p:column headerText="Код" style="text-align: center;width: 50px">
                                     <h:outputText value="#{v.rws_code}" />
                                 </p:column>
-                                <p:column headerText="Наименование" style="text-align: left;width: 100px">
+                                <p:column headerText="Наименование" style="text-align: left;width: 150px">
                                     <h:outputText value="#{v.name}" />
                                 </p:column>
                             </p:dataTable>

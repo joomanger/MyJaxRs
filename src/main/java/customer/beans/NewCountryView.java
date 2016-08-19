@@ -1,10 +1,13 @@
 package customer.beans;
 
 import customer.entities.Country;
+import customer.entities.CountryTL;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import service.AbstractView;
+import service.SessionActions;
 
 /**
  *
@@ -13,7 +16,8 @@ import service.AbstractView;
 @Named
 @ViewScoped
 public class NewCountryView extends AbstractView<Country> {
-
+    @Inject
+    private SessionActions sa;
     private final Country country = new Country();
     private String language;
     private String countryValue;
@@ -26,6 +30,11 @@ public class NewCountryView extends AbstractView<Country> {
     @PostConstruct
     @Override
     protected void init() {
+        for (String l : sa.getSystemLanguages()) {
+            CountryTL s = new CountryTL();
+            s.setLanguage(l);
+            country.addCountryTL(s);;
+        }
         super.setEntity(country);
     }
 

@@ -21,11 +21,10 @@
                             <p:inputText value="#{newCountryView.entity.iso_code}" style="width: 35px;text-align: center"/>
                         </h:panelGrid>
 
-                        <p:dataTable id="dTable" var="ord" value="#{newCountryView.entity.countryTL}" selection="#{newCountryView.selectedEntityLines}" 
-                                     rowSelectMode="checkbox" editMode="cell" editable="true"
+                        <p:dataTable id="dTable" var="ord" value="#{newCountryView.entity.countryTL}"
+                                     editMode="cell" editable="true"
                                      scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord}" 
-                                     style="width: 1000px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
-                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                     style="width: 1000px;margin-top:20px" rowsPerPageTemplate="20,40,100">
 
                             <p:column headerText="Язык" style="width:35px; text-align: left">
                                 <p:outputLabel value="#{ord.language}"/>
@@ -43,36 +42,9 @@
                                 </p:cellEditor>    
                             </p:column>
 
-                            <f:facet name="footer" >
-                                <p:outputLabel for="lang" value="Язык"/>
-                                <p:autoComplete id="lang" size="5" value="#{newCountryView.language}" completeMethod="#{langLOV.completeItem}" 
-                                                forceSelection="true" dropdown="true" style="margin-right: 40px;"/>
-                                <p:outputLabel for="valuez" value="Название"/>
-                                <p:inputText id="valuez" value="#{newCountryView.countryValue}" required="false"/>
-                                <p:outputLabel for="valuez" value="Описание"/>
-                                <p:inputText id="description" value="#{newCountryView.countryDescription}" required="false"/>
-                                <p:focus for="lang"/>
-                                <p:commandButton value="Добавить" actionListener="#{countryCBean.addCountryTLNCV()}" update="dTable mainMSG"/>
-                                <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
-                            </f:facet>
                         </p:dataTable>
-                        <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
-                            <p:outputPanel id="selectedParams" style="text-align:center;">
-                                <p:dataTable value="#{newLookupView.selectedEntityLines}" var="v">
-                                    <p:column headerText="Значение">
-                                        <h:outputText value="#{v.valuez}"/>
-                                    </p:column>
-                                    <p:column headerText="Описание">
-                                        <h:outputText value="#{v.valuezDescription}"/>
-                                    </p:column>
-                                </p:dataTable>
-                                <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>
-                                <p:commandButton value="Yes" actionListener="#{lookupCBean.deleteLookupItemsNLV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
-                            </p:outputPanel>
-                        </p:dialog>
-
                         <p:commandButton id="btnBack" value="Back" action="countries" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
-                        <p:commandButton id="btnCreate" value="Создать" ajax="false" validateClient="true"  action="#{countryCBean.createEntity('countries')}"   style="margin-top: 10px;margin-right: 20px"/>                    
+                        <p:commandButton id="btnSave" value="Сохранить" action="#{countryCBean.createEntity('countries')}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
                     </p:fieldset>
                 </h:form>
 

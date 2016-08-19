@@ -92,48 +92,34 @@ public class CountryCBean extends AbstractClientBean<Country> {
         }
     }
 
-    public void addCountryTLNCV() {
-        Country l = ncv.getEntity();
-        CountryTL tl = new CountryTL();
-        tl.setLanguage(ncv.getLanguage());
-        tl.setName(ncv.getCountryValue());
-        tl.setDescription(ncv.getCountryDescription());
-        String result = ejbTL.validateMyEntity(tl);
-        if (result.equals(ejbTL.SUCCESSFUL)) {
-            l.addCountryTL(tl);
-            ncv.setCountryValue(null);
-            ncv.setCountryDescription(null);
-            ncv.setLanguage(null);
-        } else {
-            ejbTL.sendMessage(result, null);
-        }
-    }
-
-    public void deleteCountryTLNCV() {
-        ncv.getEntity().getCountryTL().removeAll(ncv.getSelectedEntityLines());
-    }
-
-    public void deleteCountryTLOCV() {
-        ocv.getEntity().getCountryTL().removeAll(ocv.getSelectedEntityLines());
-        changeEntity();
-    }
-
     public List<CountryVL> findAllVL() {
         return ejb.findAllVL();
     }
-    
-    public CountryVL findVL(String country_id){
+
+    public CountryVL findVL(String country_id) {
         return ejb.findVL(country_id);
     }
 
     @Override
     public String createEntity(String backURL) {
-        if (ncv.getEntity().getCountryTL().isEmpty()) {
-            ejb.sendMessage("Название страны обязательно", null);
+        if (ncv.getEntity().getCountry_id().trim().isEmpty()) {
+            ejb.sendMessage("Код ЖД Страны обязателен", null);
             return null;
         }
 
-        return super.createEntity(backURL); //To change body of generated methods, choose Tools | Templates.
+        for (CountryTL t : ncv.getEntity().getCountryTL()) {
+            try {
+                if (t.getName().trim().isEmpty()) {
+                    ejb.sendMessage("Заполните все варианты перевода", null);
+                    return null;
+                }
+            } catch (NullPointerException ex) {
+                ejb.sendMessage("Заполните все варианты перевода", null);
+                return null;
+            }
+        }
+
+        return super.createEntity(backURL);
     }
 
 }

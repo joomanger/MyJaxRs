@@ -31,9 +31,8 @@ public class CountryTL implements Serializable {
     @GeneratedValue(generator = "countrytl_sq")
     private Long countrytl_id;
     @NotNull
-    @Size(min = 2, max = 2)
     private String language;
-    @NotNull
+    @Size(min = 3, max = 255,message = "Длина НАЗВАНИЕ от 3 до 255 символов")
     private String name;
     private String description;
    // private String country_id;
