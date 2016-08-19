@@ -24,13 +24,13 @@ public class RWRoad implements Serializable, Comparable<RWRoad> {
     @Id
     @Size(min = 2, max = 3, message = "Значение КОД должно быть 2- или 3- значным")
     private String rwr_code;
-    @NotNull
+    @Size(min = 1, max = 255,message = "Значение СОКР.НАИМЕНОВАНИЕ обязательно")
     private String shortName;
-
-    @NotNull
+    @Size(min = 1, max = 255,message = "Значение ПОЛНОЕ НАИМЕНОВАНИЕ обязательно")
     private String fullName;
     @OneToOne(cascade = {CascadeType.DETACH})
     @JoinColumn(name = "country_id")
+    @NotNull(message = "Значение СТРАНА обязательно")
     private Country country;
 
     public RWRoad() {
@@ -81,12 +81,16 @@ public class RWRoad implements Serializable, Comparable<RWRoad> {
 
     @Override
     public int compareTo(RWRoad o) {
-        if (this.fullName.charAt(0) > o.fullName.charAt(0)) {
-            return 1;
-        } else if (this.fullName.charAt(0) == o.fullName.charAt(0)) {
+        try {
+            if (this.fullName.charAt(0) > o.fullName.charAt(0)) {
+                return 1;
+            } else if (this.fullName.charAt(0) == o.fullName.charAt(0)) {
+                return 0;
+            } else {
+                return -1;
+            }
+        } catch (Exception ex) {
             return 0;
-        } else {
-            return -1;
         }
     }
 
