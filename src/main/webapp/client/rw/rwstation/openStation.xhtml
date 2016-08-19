@@ -11,7 +11,7 @@
         <ui:composition template="./../../../WEB-INF/template.xhtml">
             <ui:define name="content">
                 <h:form  prependId="false">
-                   <p:fieldset legend="Станция" style="width: 250px; margin-bottom: 10px"> 
+                    <p:fieldset legend="Станция" style="width: 250px; margin-bottom: 10px"> 
                         <h:panelGrid id="yyy" columns="6" cellpadding="5" cellspacing="5">
                             <p:outputLabel value="Код" />
                             <p:inputText value="#{openRWStationView.entity.rws_code}" disabled="true" style="width: 45px;text-align: center"/>
@@ -22,8 +22,8 @@
                                             forceSelection="true" style="margin-right: 50px" >
                             </p:autoComplete>
                         </h:panelGrid>
-                        
-                       <p:dataTable id="dTable" var="ord" value="#{openRWStationView.entity.rwstationTL}"
+
+                        <p:dataTable id="dTable" var="ord" value="#{openRWStationView.entity.rwstationTL}"
                                      editMode="cell" editable="true"
                                      scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.rwstationtl_id}" 
                                      style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
@@ -32,14 +32,14 @@
                             </p:column>
                             <p:column headerText="Название" style="width:200px; text-align: left">
                                 <p:cellEditor> 
-                                    <f:facet name="input"><p:inputText value="#{ord.name}"/></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{ord.name}" style="width:400px;"/></f:facet>
                                     <f:facet name="output"><p:outputLabel value="#{ord.name}"/></f:facet>
                                 </p:cellEditor>    
                             </p:column>
-                         <f:facet name="footer" >
+                            <f:facet name="footer" >
                                 <p:outputLabel for="lang" value="Язык"/>
                                 <p:autoComplete id="lang" size="5" value="#{openRWStationView.language}" completeMethod="#{langLOV.completeItem}" 
-                                            forceSelection="true" dropdown="true" style="margin-right: 40px;"/>
+                                                forceSelection="true" dropdown="true" style="margin-right: 40px;"/>
                                 <p:outputLabel for="valuez" value="Название"/>
                                 <p:inputText id="valuez" value="#{openRWStationView.name}" required="false"/>
                                 <p:commandButton value="Добавить" actionListener="#{RWStationCBean.addRWStationTLOCV()}" update="dTable mainMSG"/>
