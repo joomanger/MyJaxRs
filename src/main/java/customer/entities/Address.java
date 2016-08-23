@@ -22,13 +22,16 @@ public class Address implements Serializable {
     @SequenceGenerator(name = "address_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "address_sq")
     private Long address_id;
-    @OneToOne(cascade = {CascadeType.PERSIST})
-    @JoinColumn(name = "country_fk")
+
+    @OneToOne(cascade = {CascadeType.DETACH})
+    @JoinColumn(name = "country_id")
     @NotNull
     private Country country;
     private String region;
+
     @NotNull
     private String city;
+
     @NotNull
     private String fullAddress;
     private String postCode;
@@ -36,11 +39,6 @@ public class Address implements Serializable {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
-
-    private Boolean bill_to = true;
-    private Boolean ship_to = true;
-    private Boolean isVendor;
-    private String rcv_code;
 
     public Customer getCustomer() {
         return customer;
@@ -104,37 +102,4 @@ public class Address implements Serializable {
     public void setPostCode(String postCode) {
         this.postCode = postCode;
     }
-
-    public Boolean getBill_to() {
-        return bill_to;
-    }
-
-    public void setBill_to(Boolean bill_to) {
-        this.bill_to = bill_to;
-    }
-
-    public Boolean getShip_to() {
-        return ship_to;
-    }
-
-    public void setShip_to(Boolean ship_to) {
-        this.ship_to = ship_to;
-    }
-
-    public Boolean getIsVendor() {
-        return isVendor;
-    }
-
-    public void setIsVendor(Boolean isVendor) {
-        this.isVendor = isVendor;
-    }
-
-    public String getRcv_code() {
-        return rcv_code;
-    }
-
-    public void setRcv_code(String rcv_code) {
-        this.rcv_code = rcv_code;
-    }
-
 }

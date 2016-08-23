@@ -40,7 +40,7 @@ public class SessionActions implements Serializable {
     
     private String language="RU";
 
-    private Map<String, String> viewsMap = new HashMap<>();
+    private final Map<String, String> viewsMap = new HashMap<>();
 
     @PostConstruct
     private void init() {
