@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 import org.eclipse.persistence.annotations.PrivateOwned;
@@ -44,6 +45,8 @@ public class Lookup implements Serializable, Comparable<Lookup> {
     @PrivateOwned
     @OrderBy("valuez asc")
     private List<LookupItem> lookupItems = new ArrayList<>();
+    @Transient
+    private List<LookupItemVL> lookupItemsVL=new ArrayList<>();
 
     public void addLookupItem(LookupItem li) {
         addLookupItem(li, true);
@@ -109,6 +112,14 @@ public class Lookup implements Serializable, Comparable<Lookup> {
 
     public void setSystemLookup(Boolean systemLookup) {
         this.systemLookup = systemLookup;
+    }
+
+    public List<LookupItemVL> getLookupItemsVL() {
+        return lookupItemsVL;
+    }
+
+    public void setLookupItemsVL(List<LookupItemVL> lookupItemsVL) {
+        this.lookupItemsVL = lookupItemsVL;
     }
 
     @Override

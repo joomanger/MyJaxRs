@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import lookup.entities.Lookup;
 import lookup.entities.LookupItem;
+import lookup.entities.LookupItemVL;
 import service.AbstractClientBean;
 import service.AbstractEJB;
 import service.AbstractView;
@@ -128,6 +129,10 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
             }
         }
         super.deleteSelectedEntities();
+    }
+
+    public List<LookupItemVL> findLookupItemVL(Long p_lookup_id) {
+        return ejb.findLookupItemVL(p_lookup_id);
     }
 
 }

@@ -23,4 +23,14 @@
             <column name="country_id"/>
         </constructor-result>
     </sql-result-set-mapping>
+    <sql-result-set-mapping name="LookupItemVLMapping">
+        <constructor-result target-class="lookup.entities.LookupItemVL">
+            <column name="lookupitem_id"/>
+            <column name="activestatus"/>
+            <column name="valuez"/>
+            <column name="meaning"/>
+            <column name="description"/>
+        </constructor-result>
+    </sql-result-set-mapping>
+    
 </entity-mappings>

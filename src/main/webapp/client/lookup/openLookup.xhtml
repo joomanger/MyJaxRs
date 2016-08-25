@@ -12,36 +12,33 @@
             <ui:define name="content">
                 <h:form  prependId="false">
                     <p:fieldset legend="Справочник" style="width: 250px; margin-bottom: 10px"> 
-                        <h:panelGrid id="yyy" columns="2" cellpadding="5" cellspacing="5">
+                        <h:panelGrid id="yyy" columns="6" cellpadding="5" cellspacing="5">
                             <p:outputLabel value="Имя"/>
                             <p:inputText value="#{openLookupView.entity.name}" disabled="#{openLookupView.entity.systemLookup}"/>
                             <p:outputLabel value="Описание"/>
                             <p:inputText value="#{openLookupView.entity.description}" disabled="#{openLookupView.entity.systemLookup}"/>
                             <p:outputLabel value="Активный"/>
                             <p:inputSwitch value="#{openLookupView.entity.activeStatus}" disabled="#{openLookupView.entity.systemLookup}"/>
-                            <p:outputLabel for="german" value="German:" />
-                            <p:calendar id="german" locale="ru" navigator="true"  pattern="dd.MM.yyyy" />
                         </h:panelGrid>
-
-                        <p:dataTable id="dTable" var="ord" value="#{openLookupView.entity.lookupItems}" selection="#{openLookupView.selectedEntityLines}" 
-                                     rowSelectMode="checkbox" editMode="cell" editable="true"
-                                     scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.lookupItem_id}" 
-                                     style="width: 1000px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                        <h:inputHidden id="setLookupItemId" value="#{openLookupView.lookupItem_id}"/>
+                        <p:dataTable id="dTable" var="ord" value="#{openLookupView.entity.lookupItemsVL}" selection="#{openLookupView.selectedEntityLines}" 
+                                     rowSelectMode="checkbox" scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.lookupItem_id}" 
+                                     style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                            <p:column headerText="Значение" style="width:100px; text-align: left">
-                                <p:cellEditor> 
-                                    <f:facet name="input"><p:inputText value="#{ord.valuez}"/></f:facet>
-                                    <f:facet name="output"><p:outputLabel value="#{ord.valuez}"/></f:facet>
-                                </p:cellEditor>    
+                            <p:column headerText="Значение" style="width:200px; text-align: left">
+
+                                <p:commandLink value="#{ord.valuez}"  oncomplete="PF('changeDescFields').show()"  
+                                               onclick="document.getElementById('setLookupItemId').value =#{ord.lookupItem_id};" update="dTable2"/>
+
                             </p:column>
-                            <p:column headerText="Описание" style="width:250px;">
-                                <p:cellEditor> 
-                                    <f:facet name="input"><p:inputText value="#{ord.valuezDescription}"/></f:facet>
-                                    <f:facet name="output"><p:outputLabel value="#{ord.valuezDescription}"/></f:facet>
-                                </p:cellEditor>    
+                            <p:column headerText="Расшифровка" style="width:200px;">
+                                <p:outputLabel value="#{ord.meaning}"/>
+                            </p:column>
+                            <p:column headerText="Описание" style="width:450px;">
+                                <p:outputLabel value="#{ord.description}"/>
                             </p:column>
                             <p:column headerText="Показ." style="width:56px; text-align: center" >
-                                <p:selectBooleanCheckbox value="#{ord.activeStatus}" />
+                                <p:selectBooleanCheckbox value="#{ord.activeStatus}" disabled="true"/>
                             </p:column>
                             <f:facet name="footer" >
                                 <p:outputLabel for="valuez" value="Новое значение"/>
@@ -52,6 +49,36 @@
                                 <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
                             </f:facet>
                         </p:dataTable>
+                        <p:dialog header="Редактирование" widgetVar="changeDescFields" modal="true" showEffect="fade" hideEffect="fade" 
+                                  resizable="false" width="1000">
+                            <p:outputPanel style="text-align:center;">
+                                <p:dataTable id="dTable2" var="ord" value="#{openLookupView.li.lookupItemTL}" editMode="cell" editable="true"
+                                             scrollable="true" reflow="true" rows="3"   rowKey="#{ord.lookupItem_id}" 
+                                             style="width: 960px;margin-top:20px" lazy="true">
+                                    <p:column headerText="Язык" style="width:50px; text-align: center">
+                                        <p:outputLabel value="#{ord.language}"/>
+                                    </p:column>
+                                    <p:column headerText="Расшифровка" style="width:200px;text-align: left">
+                                        <p:cellEditor>
+                                            <f:facet name="output"><p:outputLabel value="#{ord.meaning}" /></f:facet>
+                                            <f:facet name="input">
+                                                <p:inputText value="#{ord.meaning}" />
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column headerText="Описание" style="width:450px;text-align: left">
+                                        <p:cellEditor>
+                                            <f:facet name="output"><p:outputLabel value="#{ord.description}" /></f:facet>
+                                            <f:facet name="input">
+                                                <p:inputText value="#{ord.description}" style="width: 550px" />
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                </p:dataTable>
+                                <p:commandButton oncomplete="PF('changeDescFields').hide()" immediate="true" value='Отмена'/>
+                                <p:commandButton value="Yes" actionListener="#{lookupCBean.changeEntity()}" oncomplete="PF('changeDescFields').hide()" update="dTable mainMSG" />
+                            </p:outputPanel>
+                        </p:dialog>
                         <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
                             <p:outputPanel id="selectedParams" style="text-align:center;">
                                 <p:dataTable value="#{openLookupView.selectedEntityLines}" var="v">
@@ -59,7 +86,7 @@
                                         <h:outputText value="#{v.valuez}"/>
                                     </p:column>
                                     <p:column headerText="Описание">
-                                        <h:outputText value="#{v.valuezDescription}"/>
+                                        <h:outputText value="#{v.description}"/>
                                     </p:column>
                                 </p:dataTable>
                                 <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>

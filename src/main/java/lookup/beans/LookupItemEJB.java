@@ -15,6 +15,7 @@ public class LookupItemEJB extends AbstractEJB<LookupItem> {
 
     @Inject
     private EntityManager em;
+  
 
     public LookupItemEJB() {
         super(LookupItem.class);
@@ -24,4 +25,5 @@ public class LookupItemEJB extends AbstractEJB<LookupItem> {
     protected EntityManager getEntityManager() {
         return em;
     }
+   
 }
