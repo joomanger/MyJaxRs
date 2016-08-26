@@ -115,6 +115,7 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
     }
 
     public void deleteLookupItemsOLV() {
+
         for (Object li : olv.getSelectedEntityLines()) {
             if (li instanceof LookupItemVL) {
                 String result = itemEJB.remove(((LookupItemVL) li).getLookupItem());
@@ -142,9 +143,9 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
         return ejb.findLookupItemVL(p_lookup_id);
     }
 
-//    @Override
-//    public void changeEntity() {
-//        super.changeEntity();
-//        
-//    }
+    @Override
+    public void changeEntity() {
+        super.changeEntity();
+        olv.updateEntityVL();
+    }
 }
