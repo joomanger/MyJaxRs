@@ -26,6 +26,7 @@ public class OpenLookupView extends AbstractView<Lookup> {
     private String lookupValueDescription;
 
     private Long lookupItem_id;
+    private Lookup openedLookup;
     private LookupItem li;
 
     public OpenLookupView() {
@@ -35,9 +36,15 @@ public class OpenLookupView extends AbstractView<Lookup> {
     @PostConstruct
     @Override
     protected void init() {
-        Lookup l = client.find(fls.getLookup_id());
-        l.setLookupItemsVL(client.findLookupItemVL(fls.getLookup_id()));
-        super.setEntity(l);
+        openedLookup = client.find(fls.getLookup_id());
+        updateEntityVL();
+//        openedLookup.setLookupItemsVL(client.findLookupItemVL(fls.getLookup_id()));
+//        super.setEntity(openedLookup);
+    }
+    
+    public void updateEntityVL(){
+        openedLookup.setLookupItemsVL(client.findLookupItemVL(fls.getLookup_id()));
+        super.setEntity(openedLookup);
     }
 
     public String getLookupValue() {
@@ -80,4 +87,12 @@ public class OpenLookupView extends AbstractView<Lookup> {
         this.li = li;
     }
 
+    public Lookup getOpenedLookup() {
+        return openedLookup;
+    }
+
+    public void setOpenedLookup(Lookup openedLookup) {
+        this.openedLookup = openedLookup;
+    }
+    
 }

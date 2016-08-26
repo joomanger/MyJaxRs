@@ -32,17 +32,28 @@ public class LookupItem implements Serializable {
     protected Long lookupItem_id;
     @Size(min = 1, max = 30, message = "Длина поля ЗНАЧЕНИЕ от 1 до 30 символов!")
     protected String valuez;
-    private String valuezDescription;
+    //private String valuezDescription;
     protected Boolean activeStatus = true;
 
     @ManyToOne
     @JoinColumn(name = "LOOKUP_ID")
-    private Lookup lookup;
+    protected Lookup lookup;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "lookupItem")
     @PrivateOwned
-    @OrderBy("meaning asc")
-    private List<LookupItemTL> lookupItemTL = new ArrayList<>();
+    @OrderBy("language asc")
+    protected List<LookupItemTL> lookupItemTL = new ArrayList<>();
+
+    public LookupItem() {
+    }
+
+    public LookupItem(Long lookupItem_id, String valuez, Lookup lookup, Boolean activeStatus, List<LookupItemTL> lookupItemTL) {
+        this.lookupItem_id = lookupItem_id;
+        this.valuez = valuez;
+        this.lookup = lookup;
+        this.activeStatus = activeStatus;
+        this.lookupItemTL = lookupItemTL;
+    }
 
     public List<LookupItemTL> getLookupItemTL() {
         return lookupItemTL;
@@ -81,14 +92,13 @@ public class LookupItem implements Serializable {
         this.valuez = valuez;
     }
 
-    public String getValuezDescription() {
-        return valuezDescription;
-    }
-
-    public void setValuezDescription(String valuezDescription) {
-        this.valuezDescription = valuezDescription;
-    }
-
+//    public String getValuezDescription() {
+//        return valuezDescription;
+//    }
+//
+//    public void setValuezDescription(String valuezDescription) {
+//        this.valuezDescription = valuezDescription;
+//    }
     public Lookup getLookup() {
         return lookup;
     }

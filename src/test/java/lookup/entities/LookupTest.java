@@ -62,7 +62,7 @@ public class LookupTest {
         LookupItem li = new LookupItem();
         li.setActiveStatus(Boolean.TRUE);
         li.setValuez("valuez");
-        li.setValuezDescription("asasasasasasasas");
+        //li.setValuezDescription("asasasasasasasas");
         lookup.addLookupItem(li);
 
         String status = ejb.create(lookup);

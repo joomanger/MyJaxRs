@@ -19,6 +19,7 @@ public class LookupItemVL extends LookupItem {
         this.meaning = meaning;
         this.description = description;
     }
+    
 
     public String getMeaning() {
         return meaning;
@@ -34,6 +35,10 @@ public class LookupItemVL extends LookupItem {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    public LookupItem getLookupItem(){
+        return new LookupItem(lookupItem_id, valuez, lookup, activeStatus, lookupItemTL);
     }
 
 }

@@ -78,7 +78,7 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
         Lookup l = nlv.getEntity();
         LookupItem li = new LookupItem();
         li.setValuez(nlv.getNewLookupName());
-        li.setValuezDescription(nlv.getNewLookupDesc());
+//        li.setValuezDescription(nlv.getNewLookupDesc());
         li.setActiveStatus(Boolean.TRUE);
         String result = itemEJB.validateMyEntity(li);
         if (result.equals(itemEJB.SUCCESSFUL)) {
@@ -97,7 +97,7 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
     public void addlookupItemOLV() {
         LookupItem li = new LookupItem();
         li.setValuez(olv.getLookupValue());
-        li.setValuezDescription(olv.getLookupValueDescription());
+        // li.setValuezDescription(olv.getLookupValueDescription());
         String result = itemEJB.validateMyEntity(li);
         if (result.equals(itemEJB.SUCCESSFUL)) {
             li.setLookup(olv.getEntity());
@@ -115,8 +115,15 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
     }
 
     public void deleteLookupItemsOLV() {
-        olv.getEntity().getLookupItems().removeAll(olv.getSelectedEntityLines());
-        changeEntity();
+        for (Object li : olv.getSelectedEntityLines()) {
+            if (li instanceof LookupItemVL) {
+                String result = itemEJB.remove(((LookupItemVL) li).getLookupItem());
+                if (!result.equals(itemEJB.SUCCESSFUL)) {
+                    itemEJB.sendMessage(result, null);
+                }
+            }
+        }
+        olv.updateEntityVL();
     }
 
     @Override
@@ -135,4 +142,9 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
         return ejb.findLookupItemVL(p_lookup_id);
     }
 
+//    @Override
+//    public void changeEntity() {
+//        super.changeEntity();
+//        
+//    }
 }
