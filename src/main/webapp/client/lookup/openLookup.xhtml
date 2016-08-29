@@ -68,7 +68,7 @@
                                     </p:column>
                                     <p:column headerText="Описание" style="width:450px;text-align: left">
                                         <p:cellEditor>
-                                            <f:facet name="output"><p:outputLabel value="#{ord.description}" /></f:facet>
+                                            <f:facet name="output"><p:outputLabel value="#{ord.description}" /></f:facet >
                                             <f:facet name="input">
                                                 <p:inputText value="#{ord.description}" style="width: 550px" />
                                             </f:facet>
@@ -95,6 +95,7 @@
                         </p:dialog>
                         <p:commandButton id="btnBack" value="Back" action="lookups" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
                         <p:commandButton id="btnSave" value="Сохранить" actionListener="#{lookupCBean.changeEntity()}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
+                        <p:commandButton id="cc" value="TEST" actionListener="#{lookupCBean.test()}"  style="margin-top: 10px;margin-right: 20px"/>
                     </p:fieldset> 
                 </h:form>
 

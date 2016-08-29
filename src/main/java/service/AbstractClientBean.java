@@ -59,12 +59,16 @@ public abstract class AbstractClientBean<T> implements IClientBean<T> {
     public void changeEntity() {
         String result = getEJB().validateMyEntity(getOpenView().getEntity());
         if (result.equals(getEJB().SUCCESSFUL)) {
+            System.out.println("validation is OK");
             String status = getEJB().edit(getOpenView().getEntity());
+            System.out.println("status after create =>"+status);
             getEJB().sendMessage(status, "Объект обновлен успешно");
             if (!status.equals(getEJB().SUCCESSFUL)) {
+                System.out.println("status unsuccessful =>"+status);
                 getEJB().sendMessage(status, null);
             }
         } else {
+            System.out.println("validation is not OK");
             getEJB().sendMessage(result, null);
         }
     }

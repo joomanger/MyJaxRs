@@ -3,6 +3,7 @@ package lookup.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -121,5 +122,37 @@ public class LookupItem implements Serializable {
     public void setActiveStatus(Boolean activeStatus) {
         this.activeStatus = activeStatus;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final LookupItem other = (LookupItem) obj;
+        if (!Objects.equals(this.valuez, other.valuez)) {
+            return false;
+        }
+        if (!Objects.equals(this.activeStatus, other.activeStatus)) {
+            return false;
+        }
+        if (!Objects.equals(this.getLookupItem_id(), other.getLookupItem_id())) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }

@@ -8,10 +8,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import lookup.entities.Lookup;
 import lookup.entities.LookupItem;
+import lookup.entities.LookupItemTL;
 import lookup.entities.LookupItemVL;
 import service.AbstractClientBean;
 import service.AbstractEJB;
 import service.AbstractView;
+import service.SessionActions;
 
 /**
  *
@@ -28,6 +30,9 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
     private LookupItemEJB itemEJB;
 
     @Inject
+    private LookupItemTLEJB itemTLEJB;
+
+    @Inject
     private FindLookupView flv;
 
     @Inject
@@ -35,6 +40,9 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
 
     @Inject
     private OpenLookupView olv;
+
+    @Inject
+    private SessionActions sa;
 
     public LookupCBean() {
         super(Lookup.class);
@@ -97,34 +105,90 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
     public void addlookupItemOLV() {
         LookupItem li = new LookupItem();
         li.setValuez(olv.getLookupValue());
-        // li.setValuezDescription(olv.getLookupValueDescription());
-        String result = itemEJB.validateMyEntity(li);
-        if (result.equals(itemEJB.SUCCESSFUL)) {
-            li.setLookup(olv.getEntity());
-            String status = itemEJB.create(li);
-            if (status.equals(itemEJB.SUCCESSFUL)) {
-                itemEJB.sendMessage(status, "Значение добавлено успешно");
+        for (String l : sa.getSystemLanguages()) {
+            LookupItemTL tl = new LookupItemTL();
+            tl.setLanguage(l);
+            tl.setMeaning(olv.getLookupValueDescription());
+            tl.setDescription(olv.getLookupValueDescription());
+            tl.setLookupItem(li);
+            //li.addLookupItemTL(tl);
+        }
+        
+        olv.getEntity().addLookupItem(li);
+
+        String val = ejb.validateMyEntity(olv.getEntity());
+        if (val.equals(itemEJB.SUCCESSFUL)) {
+            String result = ejb.edit(olv.getEntity());
+            if (result.equals(ejb.SUCCESSFUL)) {
+                ejb.sendMessage(result, "Значение добавлено успешно");
                 olv.setLookupValue(null);
                 olv.setLookupValueDescription(null);
+                olv.updateEntityVL();
             } else {
-                itemEJB.sendMessage(status, null);
+                ejb.sendMessage(result, null);
             }
         } else {
-            itemEJB.sendMessage(result, null);
+            ejb.sendMessage(val, null);
         }
+
+//        LookupItem li = new LookupItem();
+//        li.setValuez(olv.getLookupValue());
+//        String result = itemEJB.validateMyEntity(li);
+//        if (result.equals(itemEJB.SUCCESSFUL)) {
+//            olv.getEntity().addLookupItem(li);
+//            li.setLookup(olv.getEntity());
+//            String status = itemEJB.create(li);
+//            if (status.equals(itemEJB.SUCCESSFUL)) {
+//                itemEJB.sendMessage(status, "Значение добавлено успешно");
+//                //Добавим переводы
+//                for (String l : sa.getSystemLanguages()) {
+//                    LookupItemTL tl = new LookupItemTL();
+//                    tl.setLanguage(l);
+//                    tl.setMeaning(olv.getLookupValueDescription());
+//                    tl.setDescription(olv.getLookupValueDescription());
+//                    String resultTL = itemTLEJB.validateMyEntity(tl);
+//                    if (resultTL.equals(itemTLEJB.SUCCESSFUL)) {
+//                        tl.setLookupItem(li);
+//                        String statusTL = itemTLEJB.create(tl);
+//                        if (!statusTL.equals(itemTLEJB.SUCCESSFUL)) {
+//                            itemTLEJB.sendMessage(statusTL, null);
+//                        }
+//                    }
+//                }
+//                olv.setLookupValue(null);
+//                olv.setLookupValueDescription(null);
+//                olv.updateEntityVL();
+//            } else {
+//                itemEJB.sendMessage(status, null);
+//            }
+//        } else {
+//            itemEJB.sendMessage(result, null);
+//        }
+//        System.out.println("-----After add items----");
+//        test();
     }
 
     public void deleteLookupItemsOLV() {
 
         for (Object li : olv.getSelectedEntityLines()) {
             if (li instanceof LookupItemVL) {
-                String result = itemEJB.remove(((LookupItemVL) li).getLookupItem());
-                if (!result.equals(itemEJB.SUCCESSFUL)) {
-                    itemEJB.sendMessage(result, null);
-                }
+                olv.getEntity().getLookupItems().remove(((LookupItemVL) li).getLookupItem());
             }
         }
-        olv.updateEntityVL();
+        changeEntity();
+//        System.out.println("-----After delete items----");
+//        test();
+    }
+
+    public void test() {
+        System.out.println("SIZE LookupItem: " + olv.getOpenedLookup().getLookupItems().size());
+        for (LookupItem m : olv.getOpenedLookup().getLookupItems()) {
+            System.out.println(m.getValuez());
+        }
+        System.out.println("SIZE LookupItemVL: " + olv.getOpenedLookup().getLookupItemsVL().size());
+        for (LookupItemVL m : olv.getOpenedLookup().getLookupItemsVL()) {
+            System.out.println(m.getValuez());
+        }
     }
 
     @Override
