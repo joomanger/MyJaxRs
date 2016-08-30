@@ -38,7 +38,7 @@
                                 <p:outputLabel value="#{ord.description}"/>
                             </p:column>
                             <p:column headerText="Показ." style="width:56px; text-align: center" >
-                                <p:selectBooleanCheckbox value="#{ord.activeStatus}" disabled="true"/>
+                                <p:selectBooleanCheckbox value="#{ord.activeStatus}"/>
                             </p:column>
                             <f:facet name="footer" >
                                 <p:outputLabel for="valuez" value="Новое значение:"/>
@@ -53,13 +53,9 @@
                         <p:dialog header="Редактирование" widgetVar="changeDescFields" modal="true" showEffect="fade" hideEffect="fade" 
                                   resizable="false" width="1000">
                             <p:outputPanel style="text-align:center;">
-
                                 <p:dataTable id="dTable2" var="ord" value="#{openLookupView.li.lookupItemTL}" editMode="cell" editable="true"
                                              scrollable="true" reflow="true" rows="3"   rowKey="#{ord.lookupItem_id}" 
-                                             style="width: 960px;margin-top:20px" lazy="true">
-                                    <f:facet name="header" >
-                                        <p:inputSwitch value="#{openLookupView.activeStatus}"/>
-                                    </f:facet>
+                                             style="width: 960px;margin-top:20px;margin-bottom:20px" lazy="true">
                                     <p:column headerText="Язык" style="width:50px; text-align: center">
                                         <p:outputLabel value="#{ord.language}"/>
                                     </p:column>
@@ -79,11 +75,11 @@
                                             </f:facet>
                                         </p:cellEditor>
                                     </p:column>
-                                    
+
                                 </p:dataTable>
-                                
-                                <p:commandButton oncomplete="PF('changeDescFields').hide()" immediate="true" value='Отмена'/>
-                                <p:commandButton value="Yes" actionListener="#{lookupCBean.changeEntity()}" oncomplete="PF('changeDescFields').hide()" update="dTable mainMSG" />
+
+                                <p:commandButton oncomplete="PF('changeDescFields').hide()" immediate="true" value='Отмена' style="margin-right: 20px"/>
+                                <p:commandButton value="Сохранить" actionListener="#{lookupCBean.changeEntity()}" oncomplete="PF('changeDescFields').hide()" update="dTable mainMSG" />
                             </p:outputPanel>
                         </p:dialog>
                         <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
@@ -102,7 +98,6 @@
                         </p:dialog>
                         <p:commandButton id="btnBack" value="Back" action="lookups" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
                         <p:commandButton id="btnSave" value="Сохранить" actionListener="#{lookupCBean.changeEntity()}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
-                        <p:commandButton id="cc" value="TEST" actionListener="#{lookupCBean.test()}"  style="margin-top: 10px;margin-right: 20px"/>
                     </p:fieldset> 
                 </h:form>
 

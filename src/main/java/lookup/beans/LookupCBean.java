@@ -85,7 +85,6 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
         Lookup l = nlv.getEntity();
         LookupItem li = new LookupItem();
         li.setValuez(nlv.getNewLookupName());
-//        li.setValuezDescription(nlv.getNewLookupDesc());
         li.setActiveStatus(Boolean.TRUE);
         String result = itemEJB.validateMyEntity(li);
         if (result.equals(itemEJB.SUCCESSFUL)) {
@@ -130,48 +129,15 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
         olv.setDescription(null);
 
         changeEntity();
-
-//        String val = ejb.validateMyEntity(olv.getEntity());
-//        if (val.equals(itemEJB.SUCCESSFUL)) {
-//            String result = ejb.edit(olv.getEntity());
-//            if (result.equals(ejb.SUCCESSFUL)) {
-//                ejb.sendMessage(result, "Значение добавлено успешно");
-//                olv.setLookupValue(null);
-//                olv.setLookupValueDescription(null);
-//                olv.updateEntityVL();
-//            } else {
-//                ejb.sendMessage(result, null);
-//            }
-//        } else {
-//            ejb.sendMessage(val, null);
-//        }
-        //ejb.getEntityManager().refresh(olv.getEntity());
-//        System.out.println("-----After add items----");
-//        test();
     }
 
     public void deleteLookupItemsOLV() {
-
         for (Object li : olv.getSelectedEntityLines()) {
             if (li instanceof LookupItem) {
                 olv.getEntity().getLookupItems().remove((LookupItem) li);
             }
         }
-        //olv.setSelectedEntityLines(null);
         changeEntity();
-//        System.out.println("-----After delete items----");
-//        test();
-    }
-
-    public void test() {
-        System.out.println("SIZE LookupItem: " + olv.getOpenedLookup().getLookupItems().size());
-        for (LookupItem m : olv.getOpenedLookup().getLookupItems()) {
-            System.out.println(m.getValuez());
-        }
-//        System.out.println("SIZE LookupItemVL: " + olv.getOpenedLookup().getLookupItemsVL().size());
-//        for (LookupItemVL m : olv.getOpenedLookup().getLookupItemsVL()) {
-//            System.out.println(m.getValuez());
-//        }
     }
 
     @Override
