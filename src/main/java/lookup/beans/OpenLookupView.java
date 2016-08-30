@@ -8,6 +8,7 @@ import lookup.entities.Lookup;
 import lookup.entities.LookupItem;
 import service.AbstractView;
 
+
 /**
  *
  * @author savin
@@ -22,8 +23,12 @@ public class OpenLookupView extends AbstractView<Lookup> {
     private FindLookupSession fls;
 
     //Поля для создания новой строки
-    private String lookupValue;
-    private String lookupValueDescription;
+//    private String lookupValue;
+//    private String lookupValueDescription;
+    private String value;
+    private String meaning;
+    private String description;
+    private Boolean activeStatus=false;
 
     private Long lookupItem_id;
     private Lookup openedLookup;
@@ -36,30 +41,63 @@ public class OpenLookupView extends AbstractView<Lookup> {
     @PostConstruct
     @Override
     protected void init() {
-        openedLookup = client.find(fls.getLookup_id());
         updateEntityVL();
     }
 
     public void updateEntityVL() {
-        openedLookup.setLookupItemsVL(client.findLookupItemVL(fls.getLookup_id()));
+        openedLookup = client.find(fls.getLookup_id());
+        for (LookupItem l : openedLookup.getLookupItems()) {
+            for (LookupItem l2 : client.findLookupItemVL(fls.getLookup_id())) {
+                if (l.equals(l2)) {
+                    l.setMeaning(l2.getMeaning());
+                    l.setDescription(l2.getDescription());
+                    break;
+                }
+            }
+        }
         super.setEntity(openedLookup);
     }
 
-    public String getLookupValue() {
-        return lookupValue;
+//    public String getLookupValue() {
+//        return lookupValue;
+//    }
+//
+//    public void setLookupValue(String lookupValue) {
+//        this.lookupValue = lookupValue;
+//    }
+//
+//    public String getLookupValueDescription() {
+//        return lookupValueDescription;
+//    }
+//
+//    public void setLookupValueDescription(String lookupValueDescription) {
+//        this.lookupValueDescription = lookupValueDescription;
+//    }
+
+    public String getValue() {
+        return value;
     }
 
-    public void setLookupValue(String lookupValue) {
-        this.lookupValue = lookupValue;
+    public void setValue(String value) {
+        this.value = value;
     }
 
-    public String getLookupValueDescription() {
-        return lookupValueDescription;
+    public String getMeaning() {
+        return meaning;
     }
 
-    public void setLookupValueDescription(String lookupValueDescription) {
-        this.lookupValueDescription = lookupValueDescription;
+    public void setMeaning(String meaning) {
+        this.meaning = meaning;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
 
     public Long getLookupItem_id() {
         return lookupItem_id;
@@ -70,7 +108,12 @@ public class OpenLookupView extends AbstractView<Lookup> {
         if (lookupItem_id != null) {
             for (LookupItem j : getEntity().getLookupItems()) {
                 if (j.getLookupItem_id().equals(lookupItem_id)) {
+                    // System.out.println("j.getLookupItem_id()="+j.getLookupItem_id()+" size="+j.getLookupItemTL().size());
                     li = j;
+                    this.activeStatus=j.getActiveStatus();
+//                    for(LookupItemTL s: li.getLookupItemTL()){
+//                        System.out.println("s="+s);
+//                    }
                     break;
                 }
             }
@@ -92,5 +135,15 @@ public class OpenLookupView extends AbstractView<Lookup> {
     public void setOpenedLookup(Lookup openedLookup) {
         this.openedLookup = openedLookup;
     }
+
+    public Boolean getActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(Boolean activeStatus) {
+        this.activeStatus = activeStatus;
+    }
+    
+    
 
 }

@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import lookup.entities.Lookup;
-import lookup.entities.LookupItemVL;
+import lookup.entities.LookupItem;
 import service.AbstractEJB;
 import service.SessionActions;
 
@@ -38,8 +38,8 @@ public class LookupEJB extends AbstractEJB<Lookup> {
     }
 
     // Мэппинг прописал в orm.xml, так как аннотации не воспринимает!!!
-    public List<LookupItemVL> findLookupItemVL(Long p_lookup_id) {
-        List<LookupItemVL> a = em.createNativeQuery("select c.lookupitem_id, c.activestatus,c.valuez,"
+    public List<LookupItem> findLookupItemVL(Long p_lookup_id) {
+        List<LookupItem> a = em.createNativeQuery("select c.lookupitem_id, c.activestatus,c.valuez,"
                 + "t.meaning, t.description  from LookupItem c,LookupItemTL t "
                 + "where c.lookup_id=?1 and c.lookupitem_id=t.lookupitem_id and "
                 + "t.language=?2 order by c.valuez", "LookupItemVLMapping").setParameter(1, p_lookup_id).

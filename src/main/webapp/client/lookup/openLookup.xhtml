@@ -21,9 +21,9 @@
                             <p:inputSwitch value="#{openLookupView.entity.activeStatus}" disabled="#{openLookupView.entity.systemLookup}"/>
                         </h:panelGrid>
                         <h:inputHidden id="setLookupItemId" value="#{openLookupView.lookupItem_id}"/>
-                        <p:dataTable id="dTable" var="ord" value="#{openLookupView.entity.lookupItemsVL}" selection="#{openLookupView.selectedEntityLines}" 
+                        <p:dataTable id="dTable" var="ord" value="#{openLookupView.entity.lookupItems}" selection="#{openLookupView.selectedEntityLines}" 
                                      rowSelectMode="checkbox" scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.lookupItem_id}" 
-                                     style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                                     style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" >
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                             <p:column headerText="Значение" style="width:200px; text-align: left">
 
@@ -41,9 +41,10 @@
                                 <p:selectBooleanCheckbox value="#{ord.activeStatus}" disabled="true"/>
                             </p:column>
                             <f:facet name="footer" >
-                                <p:outputLabel for="valuez" value="Новое значение"/>
-                                <p:inputText id="valuez" value="#{openLookupView.lookupValue}" required="false"/>
-                                <p:inputText id="description" value="#{openLookupView.lookupValueDescription}" required="false"/>
+                                <p:outputLabel for="valuez" value="Новое значение:"/>
+                                <p:inputText id="valuez" value="#{openLookupView.value}" placeholder="Значение" required="false" style="width:200px"/>
+                                <p:inputText value="#{openLookupView.meaning}" placeholder="Расшифровка" required="false" style="width:200px"/>
+                                <p:inputText value="#{openLookupView.description}" placeholder="Описание" required="false" style="width:450px"/>
                                 <p:focus for="valuez"/>
                                 <p:commandButton value="Добавить" actionListener="#{lookupCBean.addlookupItemOLV()}" update="dTable mainMSG"/>
                                 <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
@@ -52,9 +53,13 @@
                         <p:dialog header="Редактирование" widgetVar="changeDescFields" modal="true" showEffect="fade" hideEffect="fade" 
                                   resizable="false" width="1000">
                             <p:outputPanel style="text-align:center;">
+
                                 <p:dataTable id="dTable2" var="ord" value="#{openLookupView.li.lookupItemTL}" editMode="cell" editable="true"
                                              scrollable="true" reflow="true" rows="3"   rowKey="#{ord.lookupItem_id}" 
                                              style="width: 960px;margin-top:20px" lazy="true">
+                                    <f:facet name="header" >
+                                        <p:inputSwitch value="#{openLookupView.activeStatus}"/>
+                                    </f:facet>
                                     <p:column headerText="Язык" style="width:50px; text-align: center">
                                         <p:outputLabel value="#{ord.language}"/>
                                     </p:column>
@@ -74,7 +79,9 @@
                                             </f:facet>
                                         </p:cellEditor>
                                     </p:column>
+                                    
                                 </p:dataTable>
+                                
                                 <p:commandButton oncomplete="PF('changeDescFields').hide()" immediate="true" value='Отмена'/>
                                 <p:commandButton value="Yes" actionListener="#{lookupCBean.changeEntity()}" oncomplete="PF('changeDescFields').hide()" update="dTable mainMSG" />
                             </p:outputPanel>

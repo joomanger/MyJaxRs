@@ -9,7 +9,6 @@ import javax.inject.Named;
 import lookup.entities.Lookup;
 import lookup.entities.LookupItem;
 import lookup.entities.LookupItemTL;
-import lookup.entities.LookupItemVL;
 import service.AbstractClientBean;
 import service.AbstractEJB;
 import service.AbstractView;
@@ -30,7 +29,7 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
     private LookupItemEJB itemEJB;
 
     @Inject
-    private LookupItemTLEJB itemTLEJB;
+    private LookupItemTLEJB itemEJBTL;
 
     @Inject
     private FindLookupView flv;
@@ -104,66 +103,49 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
 
     public void addlookupItemOLV() {
         LookupItem li = new LookupItem();
-        li.setValuez(olv.getLookupValue());
+        li.setValuez(olv.getValue());
+
+        String result = itemEJB.validateMyEntity(li);
+        if (!result.equals(itemEJB.SUCCESSFUL)) {
+            itemEJB.sendMessage(result, null);
+            return;
+        }
+
         for (String l : sa.getSystemLanguages()) {
             LookupItemTL tl = new LookupItemTL();
             tl.setLanguage(l);
-            tl.setMeaning(olv.getLookupValueDescription());
-            tl.setDescription(olv.getLookupValueDescription());
-            tl.setLookupItem(li);
-            //li.addLookupItemTL(tl);
-        }
-        
-        olv.getEntity().addLookupItem(li);
-
-        String val = ejb.validateMyEntity(olv.getEntity());
-        if (val.equals(itemEJB.SUCCESSFUL)) {
-            String result = ejb.edit(olv.getEntity());
-            if (result.equals(ejb.SUCCESSFUL)) {
-                ejb.sendMessage(result, "Значение добавлено успешно");
-                olv.setLookupValue(null);
-                olv.setLookupValueDescription(null);
-                olv.updateEntityVL();
-            } else {
-                ejb.sendMessage(result, null);
+            tl.setMeaning(olv.getMeaning());
+            tl.setDescription(olv.getDescription());
+            result = itemEJBTL.validateMyEntity(tl);
+            if (!result.equals(itemEJBTL.SUCCESSFUL)) {
+                itemEJBTL.sendMessage(result, null);
+                return;
             }
-        } else {
-            ejb.sendMessage(val, null);
+            li.addLookupItemTL(tl);
         }
 
-//        LookupItem li = new LookupItem();
-//        li.setValuez(olv.getLookupValue());
-//        String result = itemEJB.validateMyEntity(li);
-//        if (result.equals(itemEJB.SUCCESSFUL)) {
-//            olv.getEntity().addLookupItem(li);
-//            li.setLookup(olv.getEntity());
-//            String status = itemEJB.create(li);
-//            if (status.equals(itemEJB.SUCCESSFUL)) {
-//                itemEJB.sendMessage(status, "Значение добавлено успешно");
-//                //Добавим переводы
-//                for (String l : sa.getSystemLanguages()) {
-//                    LookupItemTL tl = new LookupItemTL();
-//                    tl.setLanguage(l);
-//                    tl.setMeaning(olv.getLookupValueDescription());
-//                    tl.setDescription(olv.getLookupValueDescription());
-//                    String resultTL = itemTLEJB.validateMyEntity(tl);
-//                    if (resultTL.equals(itemTLEJB.SUCCESSFUL)) {
-//                        tl.setLookupItem(li);
-//                        String statusTL = itemTLEJB.create(tl);
-//                        if (!statusTL.equals(itemTLEJB.SUCCESSFUL)) {
-//                            itemTLEJB.sendMessage(statusTL, null);
-//                        }
-//                    }
-//                }
+        olv.getEntity().addLookupItem(li);
+        olv.setValue(null);
+        olv.setMeaning(null);
+        olv.setDescription(null);
+
+        changeEntity();
+
+//        String val = ejb.validateMyEntity(olv.getEntity());
+//        if (val.equals(itemEJB.SUCCESSFUL)) {
+//            String result = ejb.edit(olv.getEntity());
+//            if (result.equals(ejb.SUCCESSFUL)) {
+//                ejb.sendMessage(result, "Значение добавлено успешно");
 //                olv.setLookupValue(null);
 //                olv.setLookupValueDescription(null);
 //                olv.updateEntityVL();
 //            } else {
-//                itemEJB.sendMessage(status, null);
+//                ejb.sendMessage(result, null);
 //            }
 //        } else {
-//            itemEJB.sendMessage(result, null);
+//            ejb.sendMessage(val, null);
 //        }
+        //ejb.getEntityManager().refresh(olv.getEntity());
 //        System.out.println("-----After add items----");
 //        test();
     }
@@ -171,10 +153,11 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
     public void deleteLookupItemsOLV() {
 
         for (Object li : olv.getSelectedEntityLines()) {
-            if (li instanceof LookupItemVL) {
-                olv.getEntity().getLookupItems().remove(((LookupItemVL) li).getLookupItem());
+            if (li instanceof LookupItem) {
+                olv.getEntity().getLookupItems().remove((LookupItem) li);
             }
         }
+        //olv.setSelectedEntityLines(null);
         changeEntity();
 //        System.out.println("-----After delete items----");
 //        test();
@@ -185,10 +168,10 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
         for (LookupItem m : olv.getOpenedLookup().getLookupItems()) {
             System.out.println(m.getValuez());
         }
-        System.out.println("SIZE LookupItemVL: " + olv.getOpenedLookup().getLookupItemsVL().size());
-        for (LookupItemVL m : olv.getOpenedLookup().getLookupItemsVL()) {
-            System.out.println(m.getValuez());
-        }
+//        System.out.println("SIZE LookupItemVL: " + olv.getOpenedLookup().getLookupItemsVL().size());
+//        for (LookupItemVL m : olv.getOpenedLookup().getLookupItemsVL()) {
+//            System.out.println(m.getValuez());
+//        }
     }
 
     @Override
@@ -203,7 +186,7 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
         super.deleteSelectedEntities();
     }
 
-    public List<LookupItemVL> findLookupItemVL(Long p_lookup_id) {
+    public List<LookupItem> findLookupItemVL(Long p_lookup_id) {
         return ejb.findLookupItemVL(p_lookup_id);
     }
 

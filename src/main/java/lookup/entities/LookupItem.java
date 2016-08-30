@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 import org.eclipse.persistence.annotations.PrivateOwned;
@@ -30,30 +31,41 @@ public class LookupItem implements Serializable {
     @Id
     @SequenceGenerator(name = "lookupitem_sq", initialValue = 38, allocationSize = 1)
     @GeneratedValue(generator = "lookupitem_sq")
-    protected Long lookupItem_id;
-    @Size(min = 1, max = 30, message = "Длина поля ЗНАЧЕНИЕ от 1 до 30 символов!")
-    protected String valuez;
+    private Long lookupItem_id;
+    @Size(min = 1, max = 50, message = "Длина поля ЗНАЧЕНИЕ от 1 до 50 символов!")
+    private String valuez;
     //private String valuezDescription;
-    protected Boolean activeStatus = true;
+    private Boolean activeStatus = true;
 
     @ManyToOne
     @JoinColumn(name = "LOOKUP_ID")
-    protected Lookup lookup;
+    private Lookup lookup;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "lookupItem")
     @PrivateOwned
     @OrderBy("language asc")
-    protected List<LookupItemTL> lookupItemTL = new ArrayList<>();
+    private List<LookupItemTL> lookupItemTL = new ArrayList<>();
+    @Transient
+    private String meaning;
+    @Transient
+    private String description;
 
     public LookupItem() {
     }
 
-    public LookupItem(Long lookupItem_id, String valuez, Lookup lookup, Boolean activeStatus, List<LookupItemTL> lookupItemTL) {
+//    public LookupItem(Long lookupItem_id, String valuez, Lookup lookup, Boolean activeStatus, List<LookupItemTL> lookupItemTL) {
+//        this.lookupItem_id = lookupItem_id;
+//        this.valuez = valuez;
+//        this.lookup = lookup;
+//        this.activeStatus = activeStatus;
+//        this.lookupItemTL = lookupItemTL;
+//    }
+    public LookupItem(Long lookupItem_id, Boolean activeStatus, String valuez, String meaning, String description) {
         this.lookupItem_id = lookupItem_id;
-        this.valuez = valuez;
-        this.lookup = lookup;
         this.activeStatus = activeStatus;
-        this.lookupItemTL = lookupItemTL;
+        this.valuez = valuez;
+        this.meaning = meaning;
+        this.description = description;
     }
 
     public List<LookupItemTL> getLookupItemTL() {
@@ -93,13 +105,6 @@ public class LookupItem implements Serializable {
         this.valuez = valuez;
     }
 
-//    public String getValuezDescription() {
-//        return valuezDescription;
-//    }
-//
-//    public void setValuezDescription(String valuezDescription) {
-//        this.valuezDescription = valuezDescription;
-//    }
     public Lookup getLookup() {
         return lookup;
     }
@@ -152,7 +157,21 @@ public class LookupItem implements Serializable {
         }
         return true;
     }
-    
-    
+
+    public String getMeaning() {
+        return meaning;
+    }
+
+    public void setMeaning(String meaning) {
+        this.meaning = meaning;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 }
