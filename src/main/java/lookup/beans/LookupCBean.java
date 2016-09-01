@@ -82,18 +82,50 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
     }
 
     public void addLookupItemNLV() {
-        Lookup l = nlv.getEntity();
+//        Lookup l = nlv.getEntity();
+//        LookupItem li = new LookupItem();
+//        li.setValuez(nlv.getNewLookupName());
+//        li.setActiveStatus(Boolean.TRUE);
+//        String result = itemEJB.validateMyEntity(li);
+//        if (result.equals(itemEJB.SUCCESSFUL)) {
+//            l.addLookupItem(li);
+//            nlv.setNewLookupName(null);
+//            nlv.setNewLookupDesc(null);
+//        } else {
+//            itemEJB.sendMessage(result, null);
+//        }
         LookupItem li = new LookupItem();
-        li.setValuez(nlv.getNewLookupName());
+        
+        li.setLookupItem_id(itemEJB.getNextLookupItemID());
+        li.setValuez(nlv.getValue());
         li.setActiveStatus(Boolean.TRUE);
+        li.setMeaning(nlv.getMeaning());
+        li.setDescription(nlv.getDescription());
+
         String result = itemEJB.validateMyEntity(li);
-        if (result.equals(itemEJB.SUCCESSFUL)) {
-            l.addLookupItem(li);
-            nlv.setNewLookupName(null);
-            nlv.setNewLookupDesc(null);
-        } else {
+        if (!result.equals(itemEJB.SUCCESSFUL)) {
             itemEJB.sendMessage(result, null);
+            return;
         }
+
+        for (String l : sa.getSystemLanguages()) {
+            LookupItemTL tl = new LookupItemTL();
+            tl.setLanguage(l);
+            tl.setMeaning(nlv.getMeaning());
+            tl.setDescription(nlv.getDescription());
+            result = itemEJBTL.validateMyEntity(tl);
+            if (!result.equals(itemEJBTL.SUCCESSFUL)) {
+                itemEJBTL.sendMessage(result, null);
+                return;
+            }
+            li.addLookupItemTL(tl);
+        }
+
+        nlv.getEntity().addLookupItem(li);
+        nlv.setValue(null);
+        nlv.setMeaning(null);
+        nlv.setDescription(null);
+        //nlv.updateEntityVL();
     }
 
     public void deleteLookupItemsNLV() {
@@ -128,7 +160,7 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
         olv.setMeaning(null);
         olv.setDescription(null);
 
-        changeEntity();
+        changeEntityOLV();
     }
 
     public void deleteLookupItemsOLV() {
@@ -137,7 +169,7 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
                 olv.getEntity().getLookupItems().remove((LookupItem) li);
             }
         }
-        changeEntity();
+        changeEntityOLV();
     }
 
     @Override
@@ -155,9 +187,13 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
     public List<LookupItem> findLookupItemVL(Long p_lookup_id) {
         return ejb.findLookupItemVL(p_lookup_id);
     }
-
-    @Override
-    public void changeEntity() {
+    
+    
+//    public void changeEntityNLV() {
+//        super.changeEntity();
+//        nlv.updateEntityVL();
+//    }
+    public void changeEntityOLV() {
         super.changeEntity();
         olv.updateEntityVL();
     }

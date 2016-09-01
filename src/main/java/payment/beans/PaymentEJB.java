@@ -3,8 +3,6 @@ package payment.beans;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import lookup.entities.Lookup;
 import payment.entities.Payment;
 import service.AbstractEJB;
 

@@ -79,7 +79,7 @@
                                 </p:dataTable>
 
                                 <p:commandButton oncomplete="PF('changeDescFields').hide()" immediate="true" value='Отмена' style="margin-right: 20px"/>
-                                <p:commandButton value="Сохранить" actionListener="#{lookupCBean.changeEntity()}" oncomplete="PF('changeDescFields').hide()" update="dTable mainMSG" />
+                                <p:commandButton value="Сохранить" actionListener="#{lookupCBean.changeEntityOLV()}" oncomplete="PF('changeDescFields').hide()" update="dTable mainMSG" />
                             </p:outputPanel>
                         </p:dialog>
                         <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">

@@ -25,5 +25,10 @@ public class LookupItemEJB extends AbstractEJB<LookupItem> {
     protected EntityManager getEntityManager() {
         return em;
     }
+    
+    public Long getNextLookupItemID(){
+        return (Long)em.createNativeQuery("select nextval('lookupitem_sq')").getSingleResult();
+        
+    }
    
 }
