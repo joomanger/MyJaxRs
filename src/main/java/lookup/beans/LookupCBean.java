@@ -82,18 +82,7 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
     }
 
     public void addLookupItemNLV() {
-//        Lookup l = nlv.getEntity();
-//        LookupItem li = new LookupItem();
-//        li.setValuez(nlv.getNewLookupName());
-//        li.setActiveStatus(Boolean.TRUE);
-//        String result = itemEJB.validateMyEntity(li);
-//        if (result.equals(itemEJB.SUCCESSFUL)) {
-//            l.addLookupItem(li);
-//            nlv.setNewLookupName(null);
-//            nlv.setNewLookupDesc(null);
-//        } else {
-//            itemEJB.sendMessage(result, null);
-//        }
+
         LookupItem li = new LookupItem();
         
         li.setLookupItem_id(itemEJB.getNextLookupItemID());
@@ -160,7 +149,7 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
         olv.setMeaning(null);
         olv.setDescription(null);
 
-        changeEntityOLV();
+        changeEntity();
     }
 
     public void deleteLookupItemsOLV() {
@@ -169,7 +158,7 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
                 olv.getEntity().getLookupItems().remove((LookupItem) li);
             }
         }
-        changeEntityOLV();
+        changeEntity();
     }
 
     @Override
@@ -189,11 +178,8 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
     }
     
     
-//    public void changeEntityNLV() {
-//        super.changeEntity();
-//        nlv.updateEntityVL();
-//    }
-    public void changeEntityOLV() {
+    @Override
+    public void changeEntity() {
         super.changeEntity();
         olv.updateEntityVL();
     }
