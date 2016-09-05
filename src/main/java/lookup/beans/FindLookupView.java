@@ -11,6 +11,7 @@ import service.AbstractView;
  *
  * @author savin
  */
+
 @Named
 @ViewScoped
 public class FindLookupView extends AbstractView<Lookup> {

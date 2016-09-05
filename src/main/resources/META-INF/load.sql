@@ -320,3 +320,4 @@ insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem
 
 
 
+

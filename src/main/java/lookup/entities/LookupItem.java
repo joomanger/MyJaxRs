@@ -34,7 +34,6 @@ public class LookupItem implements Serializable {
     private Long lookupItem_id;
     @Size(min = 1, max = 50, message = "Длина поля ЗНАЧЕНИЕ от 1 до 50 символов!")
     private String valuez;
-    //private String valuezDescription;
     private Boolean activeStatus = true;
 
     @ManyToOne
@@ -53,13 +52,6 @@ public class LookupItem implements Serializable {
     public LookupItem() {
     }
 
-//    public LookupItem(Long lookupItem_id, String valuez, Lookup lookup, Boolean activeStatus, List<LookupItemTL> lookupItemTL) {
-//        this.lookupItem_id = lookupItem_id;
-//        this.valuez = valuez;
-//        this.lookup = lookup;
-//        this.activeStatus = activeStatus;
-//        this.lookupItemTL = lookupItemTL;
-//    }
     public LookupItem(Long lookupItem_id, Boolean activeStatus, String valuez, String meaning, String description) {
         this.lookupItem_id = lookupItem_id;
         this.activeStatus = activeStatus;
