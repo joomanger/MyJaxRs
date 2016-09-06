@@ -12,7 +12,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import so.saleorder.beans.FindSaleOrderBackingBean;
 import so.saleorder.beans.OpenSaleOrderView;
@@ -40,7 +39,7 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
 
     @Override
     protected String getPath() {
-        return ("http://localhost:8080/MyJaxRs/webresources/saleorder/");
+        return "http://localhost:8080/MyJaxRs/webresources/saleorder/";
     }
 
     public SaleOrder getItem() {
@@ -71,7 +70,7 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
         order.setOrder_number(orderHeader.getOrder_number());
         order.setCustomer(orderHeader.getCustomer());
         order.setLines(orderLines.getLines());
-        Response t = super.addItem(order, "Заказ №" + orderHeader.getOrder_number() + " добавлен успешно");
+        super.addItem(order, "Заказ №" + orderHeader.getOrder_number() + " добавлен успешно");
         return "goHome";
     }
 

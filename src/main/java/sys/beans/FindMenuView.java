@@ -25,7 +25,7 @@ public class FindMenuView implements Serializable {
     private List<Menu> selectedMenus = new ArrayList<>();
     private List<Menu> menus = new ArrayList<>();
     private List<Menu> filteredMenus = new ArrayList<>();
-
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     private void init() {
         menus = client.findAll();

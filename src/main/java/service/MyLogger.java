@@ -12,6 +12,7 @@ import javax.enterprise.inject.spi.InjectionPoint;
 @Dependent
 public class MyLogger {
 
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @Produces
     private Logger log(InjectionPoint ip) {
         return Logger.getLogger(ip.getMember().getDeclaringClass().getName());

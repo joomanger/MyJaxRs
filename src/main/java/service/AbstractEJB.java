@@ -133,7 +133,7 @@ public abstract class AbstractEJB<T> implements IEJB<T>{
     @Override
     public void sendMessage(String status, String success_msg) {
         try {
-            if ((status != null)) {
+            if (status != null) {
                 if (status.equals(SUCCESSFUL)) {
                     //FacesContext.getCurrentInstance()
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, success_msg, null));

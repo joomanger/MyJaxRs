@@ -17,14 +17,14 @@ public class ApplicationConfig extends Application {
         return resources;
     }
 
-    private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(service.ItemFacadeREST.class);
-        resources.add(ws.so.ConfigurationFacadeREST.class);
-        resources.add(ws.so.ConfigurationLineFacadeREST.class);
-        resources.add(ws.so.SaleOrderBean.class);
-        resources.add(ws.so.SaleOrderFacadeREST.class);
-        resources.add(ws.so.SaleOrderLineBean.class);
-        resources.add(ws.so.SaleOrderLineFacadeREST.class);
-    }
+//    private void addRestResourceClasses(Set<Class<?>> resources) {
+//        resources.add(service.ItemFacadeREST.class);
+//        resources.add(ws.so.ConfigurationFacadeREST.class);
+//        resources.add(ws.so.ConfigurationLineFacadeREST.class);
+//        resources.add(ws.so.SaleOrderBean.class);
+//        resources.add(ws.so.SaleOrderFacadeREST.class);
+//        resources.add(ws.so.SaleOrderLineBean.class);
+//        resources.add(ws.so.SaleOrderLineFacadeREST.class);
+//    }
 
 }

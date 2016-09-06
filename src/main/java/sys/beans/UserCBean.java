@@ -40,11 +40,11 @@ public class UserCBean {
     public void deleteUsers() {
         String username = sc.getCurrentUser().getUsername();
         for (SysUser u : fuv.getSelectedUsers()) {
-            if (!u.getUsername().equals("admin")) {
-                if ((!u.getUsername().equals(username))) {
+            if (!u.getUsername().equals("admin")&&!u.getUsername().equals(username)) {
+                //if (!u.getUsername().equals(username)) {
                     String status = ejb.remove(u);
                     ejb.sendMessage(status, "Пользователь " + u.getUsername() + " удален успешно");
-                }
+               // }
             }
         }
     }
@@ -97,7 +97,7 @@ public class UserCBean {
 
     private String digestPassword(String p_password) {
         try {
-            MessageDigest messageDigest = java.security.MessageDigest.getInstance("SHA-256");
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
             byte bin[] = messageDigest.digest(p_password.getBytes());
             return Base64.getEncoder().encodeToString(bin);
         } catch (NoSuchAlgorithmException se) {

@@ -23,20 +23,20 @@ public class OpenRoadView extends AbstractView<RWRoad> {
     @Inject
     private SessionActions sa;
 
-    public OpenRoadView() {
-        super(RWRoad.class);
-    }
-
+//    public OpenRoadView() {
+//        super(RWRoad.class);
+//    }
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     @Override
     protected void init() {
         RWRoad r = client.find(fls.getRwr_code());
         try {
-            r.getCountry().getCountryTL().stream().filter((tl) -> (tl.getLanguage().equals(sa.getLanguage()))).forEach((tl) -> {
+            r.getCountry().getCountryTL().stream().filter((tl) -> tl.getLanguage().equals(sa.getLanguage())).forEach((tl) -> {
                 r.getCountry().setName(tl.getName());
             });
         } catch (NullPointerException ex) {
-
+            System.out.println(ex.getMessage());
         }
         super.setEntity(r);
     }

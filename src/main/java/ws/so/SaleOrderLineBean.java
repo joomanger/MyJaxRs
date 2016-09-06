@@ -7,7 +7,6 @@ import javax.inject.Named;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import so.saleorderline.beans.SaleOrderLineBackingBean;
 import service.RestProviderWR;
@@ -28,7 +27,7 @@ public class SaleOrderLineBean extends RestProviderWR<SaleOrderLine> {
 
     @Override
     protected String getPath() {
-        return ("http://localhost:8080/MyJaxRs/webresources/saleorderline/");
+        return "http://localhost:8080/MyJaxRs/webresources/saleorderline/";
     }
 
     public void edit() {

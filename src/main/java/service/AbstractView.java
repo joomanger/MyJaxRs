@@ -11,7 +11,7 @@ import java.util.List;
  */
 public abstract class AbstractView<T> implements Serializable {
 
-    private final Class<T> entityClass;
+   // private final Class<T> entityClass;
 
     private List<T> entities = new ArrayList<>();
     private List<T> selectedEntities = new ArrayList<>();
@@ -22,9 +22,9 @@ public abstract class AbstractView<T> implements Serializable {
 
     protected abstract void init();
 
-    public AbstractView(Class<T> entityClass) {
-        this.entityClass = entityClass;
-    }
+//    public AbstractView(Class<T> entityClass) {
+//        this.entityClass = entityClass;
+//    }
 
     public List<T> getEntities() {
         return entities;

@@ -33,6 +33,7 @@ public class OpenParameterView implements Serializable {
     @Inject
     private ParameterValuesCBean clientValues;
 
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     private void init() {
         param = client.getItem();

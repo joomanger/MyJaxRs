@@ -21,9 +21,9 @@ public class FindCountryView extends AbstractView<CountryVL> {
     @Inject
     private CountryCBean client;
 
-    public FindCountryView() {
-        super(CountryVL.class);
-    }
+//    public FindCountryView() {
+//        super(CountryVL.class);
+//    }
 
     @PostConstruct
     @Override

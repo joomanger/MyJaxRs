@@ -35,7 +35,7 @@ public class OpenUserView implements Serializable {
     private String reNewPassword;
 
     private Boolean passwordsEqual = false;
-
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     private void init() {
         user = client.findUserById(fus.getUser_id());

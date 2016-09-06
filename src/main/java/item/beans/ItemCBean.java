@@ -30,9 +30,9 @@ public class ItemCBean extends AbstractClientBean<Item> {
     @Inject
     private ItemEJB ejb;
 
-    public ItemCBean() {
-        super(Item.class);
-    }
+//    public ItemCBean() {
+//        super(Item.class);
+//    }
 
     @Override
     protected AbstractEJB<Item> getEJB() {

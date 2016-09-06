@@ -2,7 +2,6 @@ package ws.so;
 
 import so.entities.SaleOrder;
 import so.entities.SaleOrderLine;
-import so.config.entity.ConfigurationLine;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

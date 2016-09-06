@@ -30,10 +30,10 @@ public class OpenLookupView extends AbstractView<Lookup> {
     private Lookup openedLookup;
     private LookupItem li;
 
-    public OpenLookupView() {
-        super(Lookup.class);
-    }
-
+//    public OpenLookupView() {
+//        super(Lookup.class);
+//    }
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     @Override
     protected void init() {

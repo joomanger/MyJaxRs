@@ -30,9 +30,9 @@ public class CountryCBean extends AbstractClientBean<Country> {
     @Inject
     private OpenCountryView ocv;
 
-    public CountryCBean() {
-        super(Country.class);
-    }
+//    public CountryCBean() {
+//        super(Country.class);
+//    }
 
     @Override
     protected AbstractEJB<Country> getEJB() {

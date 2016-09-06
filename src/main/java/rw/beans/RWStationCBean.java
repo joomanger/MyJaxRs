@@ -30,9 +30,9 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
     @Inject
     private OpenRWStationView ocv;
 
-    public RWStationCBean() {
-        super(RWStation.class);
-    }
+//    public RWStationCBean() {
+//        super(RWStation.class);
+//    }
 
     @Override
     protected AbstractEJB<RWStation> getEJB() {

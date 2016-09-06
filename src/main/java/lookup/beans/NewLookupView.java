@@ -22,14 +22,15 @@ public class NewLookupView extends AbstractView<Lookup> {
     private String value;
     private String meaning;
     private String description;
-    
+
     private Long lookupItem_id;
     private LookupItem li;
 
-    public NewLookupView() {
-        super(Lookup.class);
-    }
+//    public NewLookupView() {
+//        super(Lookup.class);
+//    }
 
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     @Override
     protected void init() {
@@ -84,8 +85,8 @@ public class NewLookupView extends AbstractView<Lookup> {
     public void setLi(LookupItem li) {
         this.li = li;
     }
-     
-     public void updateEntityVL() {
+
+    public void updateEntityVL() {
         //openedLookup = client.find(fls.getLookup_id());
         for (LookupItem l : getEntity().getLookupItems()) {
             for (LookupItemTL tl : li.getLookupItemTL()) {
@@ -98,5 +99,5 @@ public class NewLookupView extends AbstractView<Lookup> {
         }
         //super.setEntity(openedLookup);
     }
-    
+
 }

@@ -18,9 +18,9 @@ public class FindRoadView extends AbstractView<RWRoad> {
     @Inject
     private RoadCBean client;
 
-    public FindRoadView() {
-        super(RWRoad.class);
-    }
+//    public FindRoadView() {
+//        super(RWRoad.class);
+//    }
 
     @Override
     @PostConstruct

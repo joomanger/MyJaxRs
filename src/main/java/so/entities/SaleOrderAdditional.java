@@ -55,4 +55,14 @@ public class SaleOrderAdditional implements Serializable {
         this.b = b;
     }
 
+    public SaleOrder getOrder() {
+        return order;
+    }
+
+    public void setOrder(SaleOrder order) {
+        this.order = order;
+    }
+    
+    
+
 }

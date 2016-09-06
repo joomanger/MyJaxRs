@@ -26,7 +26,8 @@ public class CreateSaleOrderFlow implements Serializable {
     private long header_id;
     private long order_number;
     private String customer;
-
+    
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     private void init() {
         order_number = sob.getNewOrderNumber();

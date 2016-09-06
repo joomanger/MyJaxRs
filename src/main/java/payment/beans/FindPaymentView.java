@@ -18,9 +18,9 @@ public class FindPaymentView extends AbstractView<Payment> {
     @Inject
     private PaymentCBean client;
 
-    public FindPaymentView() {
-        super(Payment.class);
-    }
+//    public FindPaymentView() {
+//        super(Payment.class);
+//    }
 
     @Override
     @PostConstruct

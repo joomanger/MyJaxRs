@@ -51,7 +51,7 @@ public class CountryConverter implements Converter {
         List<CountryVL> allItems = client.findAllVL();
         List<CountryVL> filteredItems = new ArrayList<>();
 
-        allItems.stream().filter((item) -> (item.getName().toLowerCase().contains(query.toLowerCase()))).forEach((item) -> {
+        allItems.stream().filter((item) -> item.getName().toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
             filteredItems.add(item);
         });
         return filteredItems;

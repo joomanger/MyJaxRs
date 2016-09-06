@@ -50,7 +50,7 @@ public class RoadConverter implements Converter {
         List<RWRoad> allItems = client.findAll();
         List<RWRoad> filteredItems = new ArrayList<>();
 
-        allItems.stream().filter((item) -> (item.getFullName().toLowerCase().contains(query.toLowerCase()))).forEach((item) -> {
+        allItems.stream().filter((item) -> item.getFullName().toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
             filteredItems.add(item);
         });
         return filteredItems;

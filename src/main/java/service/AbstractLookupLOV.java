@@ -23,7 +23,7 @@ public abstract class AbstractLookupLOV {
         List<LookupItem> allItems = l.getLookupItems();
         List<String> filteredItems = new ArrayList<>();
 
-        allItems.stream().filter((item) -> (item.getValuez().toLowerCase().contains(query.toLowerCase()))).forEach((item) -> {
+        allItems.stream().filter((item) -> item.getValuez().toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
             if (item.getActiveStatus()) {
                 filteredItems.add(item.getValuez());
             }

@@ -19,9 +19,9 @@ public class LookupItemCBean extends AbstractClientBean<LookupItem> {
     @Inject
     private LookupItemEJB ejb;
 
-    public LookupItemCBean() {
-        super(LookupItem.class);
-    }
+//    public LookupItemCBean() {
+//        super(LookupItem.class);
+//    }
 
     @Override
     protected AbstractEJB<LookupItem> getEJB() {

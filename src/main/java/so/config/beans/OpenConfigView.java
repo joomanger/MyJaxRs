@@ -27,8 +27,8 @@ public class OpenConfigView implements Serializable {
     @Inject
     private ConfigCBean client;
 
-    @Inject
-    private ConfigLineCBean clientLine;
+//    @Inject
+//    private ConfigLineCBean clientLine;
 
     private Configuration configuration = new Configuration();
     private List<ConfigurationLine> lines = new ArrayList<>();
@@ -37,7 +37,7 @@ public class OpenConfigView implements Serializable {
     private Integer lastLineNum;
 
     private ParameterConfiguration paramConfig;
-
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     private void init() {
        try{ 
@@ -45,7 +45,7 @@ public class OpenConfigView implements Serializable {
         lines.addAll(client.getLines());
         lastLineNum = client.getMaxLineNum();
        }catch(Exception ex){
-           
+           System.out.println(ex.getMessage());
        }
     }
 

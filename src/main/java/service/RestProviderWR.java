@@ -34,7 +34,7 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
     private WebTarget target;
 
     protected abstract String getPath();
-
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     private void init() {
         client = ClientBuilder.newClient();

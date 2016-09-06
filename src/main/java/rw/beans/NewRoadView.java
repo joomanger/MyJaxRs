@@ -16,9 +16,9 @@ public class NewRoadView extends AbstractView<RWRoad> {
 
     private final RWRoad entity = new RWRoad();
    
-    public NewRoadView() {
-        super(RWRoad.class);
-    }
+//    public NewRoadView() {
+//        super(RWRoad.class);
+//    }
 
     @PostConstruct
     @Override

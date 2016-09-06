@@ -6,7 +6,6 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import service.Secure;
 import so.config.entity.Configuration;
 import so.config.entity.ConfigurationLine;
 

@@ -21,9 +21,9 @@ public class FindRWStationView extends AbstractView<RWStationVL> {
     @Inject
     private RWStationCBean client;
 
-    public FindRWStationView() {
-        super(RWStationVL.class);
-    }
+//    public FindRWStationView() {
+//        super(RWStationVL.class);
+//    }
 
     @PostConstruct
     @Override

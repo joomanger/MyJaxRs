@@ -51,7 +51,7 @@ public class ItemConverter implements Converter {
         List<Item> allItems = client.findAll();
         List<Item> filteredItems = new ArrayList<>();
 
-        allItems.stream().filter((item) -> (item.getName().toLowerCase().contains(query.toLowerCase()))).forEach((item) -> {
+        allItems.stream().filter((item) -> item.getName().toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
             filteredItems.add(item);
         });
         return filteredItems;

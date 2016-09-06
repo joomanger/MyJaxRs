@@ -26,15 +26,21 @@ public class Customer implements Serializable, Comparable<Customer> {
     @SequenceGenerator(name = "customer_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "customer_sq")
     private Long customer_id;
+    private Long customer_id_orc;
     private String name;
     private String fullName;
     private String okpo;
     private String inn;
+    private Boolean resident;
+    
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "customer")
     @PrivateOwned
     private List<Address> addresses = new ArrayList<>();
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "customer")
+    @PrivateOwned
+    private List<RWAddress> RWAddresses = new ArrayList<>();
     private Boolean activeStatus = true;
-    
+
     public void addAddress(Address adr) {
         addAddress(adr, true);
     }
@@ -46,6 +52,27 @@ public class Customer implements Serializable, Comparable<Customer> {
                 adr.setCustomer(this, false);
             }
         }
+    }
+
+    public void addRWAddress(RWAddress adr) {
+        addRWAddress(adr, true);
+    }
+
+    public void addRWAddress(RWAddress adr, boolean add) {
+        if (adr != null) {
+            getRWAddresses().add(adr);
+            if (add) {
+                adr.setCustomer(this, false);
+            }
+        }
+    }
+
+    public List<RWAddress> getRWAddresses() {
+        return RWAddresses;
+    }
+
+    public void setRWAddresses(List<RWAddress> RWAddresses) {
+        this.RWAddresses = RWAddresses;
     }
 
     public Long getCustomer_id() {
@@ -104,6 +131,24 @@ public class Customer implements Serializable, Comparable<Customer> {
         this.activeStatus = activeStatus;
     }
 
+    public Long getCustomer_id_orc() {
+        return customer_id_orc;
+    }
+
+    public void setCustomer_id_orc(Long customer_id_orc) {
+        this.customer_id_orc = customer_id_orc;
+    }
+
+    public Boolean getResident() {
+        return resident;
+    }
+
+    public void setResident(Boolean resident) {
+        this.resident = resident;
+    }
+    
+    
+    
     @Override
     public int compareTo(Customer o) {
         if (name.charAt(0) > o.name.charAt(0)) {

@@ -29,7 +29,6 @@ import org.primefaces.event.CellEditEvent;
 
 import org.primefaces.event.RowEditEvent;
 import so.config.beans.ConfigCBean;
-import so.saleorderline.beans.SaleOrderLineCBean;
 
 /**
  *
@@ -39,74 +38,11 @@ import so.saleorderline.beans.SaleOrderLineCBean;
 @ViewScoped
 public class OpenSaleOrderView implements Serializable {
 
-//    @Inject
-//    private SaleOrderBean sob;
-//
-//    @Inject
-//    private ItemClientBean itemClient;
-//
-//    @Inject
-//    private ItemBackingBean itemBacking;
-//
-//    @Inject
-//    private SaleOrderLineBackingBean sol;
-//
-//    @Inject
-//    private SaleOrderLineBean solb;
-//
-//    private List<SaleOrderLine> lines=new ArrayList<>();
-//    private SaleOrder order;
-//
-//    @PostConstruct
-//    private void init() {
-//        lines = sob.getLines();
-//        order = sob.getItem();
-//        order.setLines(lines);
-//    }
-//
-//    public void onRowEdit(RowEditEvent event) {
-//        FacesMessage msg = new FacesMessage("Строка " + String.valueOf(((SaleOrderLine) event.getObject()).getLine_num()) + " изменена");
-//        FacesContext.getCurrentInstance().addMessage(null, msg);
-//        sol.setLine((SaleOrderLine) event.getObject());
-//        solb.edit();
-//    }
-//
-//    public void onRowCancel(RowEditEvent event) {
-//    }
-//
-//    public void onItemSelect(SelectEvent event) {
-//        
-//    }
-//
-//    public List<SaleOrderLine> getOrderLines() {
-//        return lines;
-//    }
-//
-//    public SaleOrder getOrder() {
-//        return order;
-//    }
-//
-//    public List<Item> completeItem(String query) {
-//        Item[] allItems = itemClient.getItems();
-//        List<Item> filteredItems = new ArrayList<>();
-//
-//        for (Item item : allItems) {
-//            if (item.getName().toLowerCase().contains(query.toLowerCase())) {
-//                filteredItems.add(item);
-//            }
-//        }
-//
-//        return filteredItems;
-//    }
-    
     @Inject
     private ConfigCBean configClient;
 
     @Inject
     private SaleOrderCBean sob;
-
-    @Inject
-    private SaleOrderLineCBean slb;
 
     @Inject
     private FindSaleOrderBackingBean sessionBean;
@@ -122,38 +58,25 @@ public class OpenSaleOrderView implements Serializable {
     private ParameterConfigurationValues value;
     private List<ParameterConfiguration> parameters;
     private Boolean disableSave = true;
-    private Boolean tableEditable=false;
+    private Boolean tableEditable = false;
     private SaleOrder order;
-//    private FacesContext fc;
-//    private Application app;
-//    private ExpressionFactory elFactory;
-//    private ELContext elContext;
     private List<String> selectedItems = new ArrayList<>();
 
     private final Map<String, Boolean> editableCells = new HashMap<>();
 
-    //карта мульти параметров со значениями
-   //private Map<String, Set<String>> paramMap = new HashMap<>();
-
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     private void init() {
-//        fc = FacesContext.getCurrentInstance();
-//        app = fc.getApplication();
-//        elFactory = app.getExpressionFactory();
-//        elContext = fc.getELContext();
-        order=sob.getItem();
+        order = sob.getItem();
         updateListLines();
         setParameters(getAllLinesAttributes());
     }
-    
+
     public SaleOrder getOrder() {
         return order;
     }
 
-//    public ValueExpression getValueExpression(String data) {
-//        return elFactory.createValueExpression(elContext, data, Object.class);
-//    }
-    public void setOrder(SaleOrder order) {    
+    public void setOrder(SaleOrder order) {
         this.order = order;
     }
 
@@ -161,7 +84,7 @@ public class OpenSaleOrderView implements Serializable {
         try {
             this.order_lines = sob.getLines(sessionBean.getId());
         } catch (Exception ex) {
-
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -205,28 +128,6 @@ public class OpenSaleOrderView implements Serializable {
         this.lastVersion = lastVersion;
     }
 
-//    public List<ConfigurationLine> values() {
-//        try {
-//            return configClient.getLines(getConfiguration().getHeader_id());
-//        } catch (Exception e) {
-//            return null;
-//        }
-//    }
-    
-    
-
-//    public Integer getLastConfigVersion() {
-//        return configClient.getLastVersion(getItem().getId());
-//    }
-//
-//    public Integer getLastConfigVersion(Long p_item_id) {
-//        return configClient.getLastVersion(p_item_id);
-//    }
-//
-//    public Configuration getConfiguration() {
-//        return configClient.getItem(item.getId(), getLastConfigVersion());
-//    }
-
     public List<ConfigurationLine> getParamValues() {
         return paramValues;
     }
@@ -258,16 +159,6 @@ public class OpenSaleOrderView implements Serializable {
     public void setOrder_line(SaleOrderLine order_line) {
         this.order_line = order_line;
     }
-
-//    public void deleteLines() {
-//        for (SaleOrderLine line : selected_lines) {
-//            slb.delete(line.getLine_id(), "Позиция " + line.getLine_num() + " удалена успешно");
-//        }
-//        order_lines.removeAll(selected_lines);
-//        selected_lines.clear();
-//        updateListLines();
-//        setParameters(getAllLinesAttributes());
-//    }
 
     public List<ParameterConfiguration> getAllLinesAttributes() {
         try {
@@ -326,7 +217,6 @@ public class OpenSaleOrderView implements Serializable {
 //        }
 //        linesForSave.clear();
 //    }
-
     public List<String> getSelectedItems() {
         return selectedItems;
     }
@@ -354,7 +244,6 @@ public class OpenSaleOrderView implements Serializable {
 //    public void setParamMap(Map<String, Set<String>> paramMap) {
 //        this.paramMap = paramMap;
 //    }
-
 //    public void addLine() {
 //        SaleOrderLine line = new SaleOrderLine();
 //        line.setHeader_id(sessionBean.getId());
@@ -367,7 +256,6 @@ public class OpenSaleOrderView implements Serializable {
 //        updateListLines();
 //        setParameters(getAllLinesAttributes());
 //    }
-
     public boolean isEditableCell(Long item_id, String attribute) {
         if (editableCells.containsKey(item_id + attribute)) {
             return editableCells.get(item_id + attribute);
@@ -400,5 +288,5 @@ public class OpenSaleOrderView implements Serializable {
     public void setTableEditable(Boolean tableEditable) {
         this.tableEditable = tableEditable;
     }
-    
+
 }

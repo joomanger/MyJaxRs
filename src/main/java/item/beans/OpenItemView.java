@@ -20,10 +20,10 @@ public class OpenItemView extends AbstractView<Item> {
     @Inject
     private FindItemSession fis;
     
-    public OpenItemView() {
-        super(Item.class);
-    }
-    
+//    public OpenItemView() {
+//        super(Item.class);
+//    }
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @Override
     @PostConstruct
     protected void init() {

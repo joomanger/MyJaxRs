@@ -24,9 +24,9 @@ public class OpenCountryView extends AbstractView<Country> {
     private String countryValue;
     private String countryDescription;
 
-    public OpenCountryView() {
-        super(Country.class);
-    }
+//    public OpenCountryView() {
+//        super(Country.class);
+//    }
 
     @PostConstruct
     @Override

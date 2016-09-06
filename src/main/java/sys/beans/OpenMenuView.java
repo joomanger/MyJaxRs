@@ -2,7 +2,6 @@ package sys.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,7 +37,7 @@ public class OpenMenuView implements Serializable {
     private View newView;
     private String newMenuName;
     private Short line_num = 0;
-
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     private void init() {
         menu = client.findMenu(fms.getMenu_id());

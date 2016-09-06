@@ -23,9 +23,9 @@ public class NewRWStationView extends AbstractView<RWStation> {
     private String language;
     private String name;
 
-    public NewRWStationView() {
-        super(RWStation.class);
-    }
+//    public NewRWStationView() {
+//        super(RWStation.class);
+//    }
 
     @PostConstruct
     @Override

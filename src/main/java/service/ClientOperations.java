@@ -9,14 +9,14 @@ import javax.ws.rs.core.Response;
  */
 public interface ClientOperations<T> {
 
-    public T getItem(Class<T> type, Object value);
+     T getItem(Class<T> type, Object value);
 
-    public T[] getItems(Class<?> type);
+     T[] getItems(Class<?> type);
 
-    public Response editItem(Object obj, String success_msg);
+     Response editItem(Object obj, String success_msg);
 
-    public Response addItem(Object obj, String success_msg);
+     Response addItem(Object obj, String success_msg);
 
-    public Response deleteItem(Object obj, String success_msg);
+     Response deleteItem(Object obj, String success_msg);
 
 }

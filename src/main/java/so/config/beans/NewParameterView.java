@@ -21,7 +21,7 @@ public class NewParameterView implements Serializable {
 
     private ParameterConfiguration paramConfig = new ParameterConfiguration();
     private List<String> paramTypes;
-    private boolean onSelectedType;
+    //private boolean onSelectedType;
     private boolean disabledCB = false;
 
     private List<ParameterConfigurationValues> values;
@@ -30,6 +30,7 @@ public class NewParameterView implements Serializable {
 
     private String parameterValue;
 
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     private void init() {
         paramTypes = new ArrayList<>();
@@ -88,10 +89,9 @@ public class NewParameterView implements Serializable {
 
     }
 
-    public void setOnSelectedType(boolean onSelectedType) {
-        this.onSelectedType = onSelectedType;
-    }
-
+//    public void setOnSelectedType(boolean onSelectedType) {
+//        this.onSelectedType = onSelectedType;
+//    }
     public boolean isDisabledCB() {
         return disabledCB;
     }
@@ -107,7 +107,6 @@ public class NewParameterView implements Serializable {
 //    public void setValue(String value) {
 //        this.value = value;
 //    }
-
     public List<ParameterConfigurationValues> getSelectedValues() {
         return selectedValues;
     }
@@ -124,7 +123,6 @@ public class NewParameterView implements Serializable {
 //        }
 //        selectedValues.clear();
 //    }
-
     public int getLine_num() {
         return line_num;
     }
@@ -132,7 +130,5 @@ public class NewParameterView implements Serializable {
     public void setLine_num(int line_num) {
         this.line_num = line_num;
     }
-    
-    
 
 }

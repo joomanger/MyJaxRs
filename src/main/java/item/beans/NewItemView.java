@@ -14,9 +14,9 @@ import service.AbstractView;
 @ViewScoped
 public class NewItemView extends AbstractView<Item> {
     
-    public NewItemView() {
-        super(Item.class);
-    }
+//    public NewItemView() {
+//        super(Item.class);
+//    }
 
     @Override
     @PostConstruct

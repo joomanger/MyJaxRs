@@ -27,6 +27,7 @@ public class NewMenuView implements Serializable {
     private Short line_num = 0;
     private String newMenuName;
 
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     private void init() {
       //  menu = new Menu();

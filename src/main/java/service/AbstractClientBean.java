@@ -9,11 +9,11 @@ import java.util.List;
  */
 public abstract class AbstractClientBean<T> implements IClientBean<T> {
 
-    private final Class<T> entity;
+    //private final Class<T> entity;
 
-    public AbstractClientBean(Class<T> entity) {
-        this.entity = entity;
-    }
+//    public AbstractClientBean(Class<T> entity) {
+//        this.entity = entity;
+//    }
 
     protected abstract AbstractEJB<T> getEJB();
 

@@ -18,7 +18,7 @@ public class SessionConfig {
     public SessionContext getSessionContext() {
         return ctx;
     }
-
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PreDestroy
     private void preDestroy() {
         ctx = null;

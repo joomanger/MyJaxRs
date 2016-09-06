@@ -23,9 +23,9 @@ public class NewCountryView extends AbstractView<Country> {
     private String countryValue;
     private String countryDescription;
 
-    public NewCountryView() {
-        super(Country.class);
-    }
+//    public NewCountryView() {
+//        super(Country.class);
+//    }
 
     @PostConstruct
     @Override
@@ -33,7 +33,7 @@ public class NewCountryView extends AbstractView<Country> {
         for (String l : sa.getSystemLanguages()) {
             CountryTL s = new CountryTL();
             s.setLanguage(l);
-            country.addCountryTL(s);;
+            country.addCountryTL(s);
         }
         super.setEntity(country);
     }

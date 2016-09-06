@@ -94,7 +94,7 @@ public class SaleOrderCBean {
         try {
             sov.setOrder_lines(getLines(sessionBean.getId()));
         } catch (Exception ex) {
-
+            System.out.println(ex.getMessage());
         }
 
         sov.setParameters(sov.getAllLinesAttributes());
@@ -112,6 +112,7 @@ public class SaleOrderCBean {
         try {
             sov.setOrder_lines(getLines(sessionBean.getId()));
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
         
         sov.setParameters(sov.getAllLinesAttributes());

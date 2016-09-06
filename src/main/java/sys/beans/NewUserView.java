@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import service.Secure;
 import sys.entities.SysRole;
@@ -20,10 +19,10 @@ import sys.entities.SysUser;
 @Secure
 public class NewUserView implements Serializable {
 
-    @Inject
-    private FindUserSession fus;
-    @Inject
-    private UserCBean client;
+//    @Inject
+//    private FindUserSession fus;
+//    @Inject
+//    private UserCBean client;
 
     private List<SysRole> selectedRoles = new ArrayList<>();
 
@@ -37,7 +36,8 @@ public class NewUserView implements Serializable {
     private Boolean passwordsEqual = false;
 
     private Boolean fieldDisabled = false;
-
+    
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     private void init() {
         user = new SysUser();

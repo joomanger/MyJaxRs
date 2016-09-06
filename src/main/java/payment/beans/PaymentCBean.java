@@ -30,9 +30,9 @@ public class PaymentCBean extends AbstractClientBean<Payment> {
     @Inject
     private OpenPaymentView olv;
 
-    public PaymentCBean() {
-        super(Payment.class);
-    }
+//    public PaymentCBean() {
+//        super(Payment.class);
+//    }
 
     @Override
     protected AbstractEJB<Payment> getEJB() {

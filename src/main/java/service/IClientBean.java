@@ -5,17 +5,18 @@ import java.util.List;
 /**
  *
  * @author savin
+ * @param <T>
  */
 public interface IClientBean<T> {
     
-    public T find(Object p_id);
+    T find(Object p_id);
 
-    public List<T> findAll();
+    List<T> findAll();
     
-    public String createEntity(String backURL);
+    String createEntity(String backURL);
 
-    public void changeEntity();
+    void changeEntity();
     
-    public void deleteSelectedEntities();
+    void deleteSelectedEntities();
 
 }

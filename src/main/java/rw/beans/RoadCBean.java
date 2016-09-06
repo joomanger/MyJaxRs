@@ -30,9 +30,9 @@ public class RoadCBean extends AbstractClientBean<RWRoad> {
     @Inject
     private OpenRoadView olv;
 
-    public RoadCBean() {
-        super(RWRoad.class);
-    }
+//    public RoadCBean() {
+//        super(RWRoad.class);
+//    }
 
     @Override
     protected AbstractEJB<RWRoad> getEJB() {

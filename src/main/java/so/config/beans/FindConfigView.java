@@ -32,7 +32,7 @@ public class FindConfigView implements Serializable {
         try{
         configs.addAll(clientBean.getItems());
         }catch(Exception ex){
-            
+            System.out.println(ex.getMessage());
         }
     }
 

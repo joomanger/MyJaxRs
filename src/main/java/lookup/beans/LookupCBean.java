@@ -43,9 +43,9 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
     @Inject
     private SessionActions sa;
 
-    public LookupCBean() {
-        super(Lookup.class);
-    }
+//    public LookupCBean() {
+//        super(Lookup.class);
+//    }
 
     @Override
     protected AbstractEJB<Lookup> getEJB() {

@@ -19,9 +19,9 @@ public class FindLookupView extends AbstractView<Lookup> {
     @Inject
     private LookupCBean client;
 
-    public FindLookupView() {
-        super(Lookup.class);
-    }
+//    public FindLookupView() {
+//        super(Lookup.class);
+//    }
 
     @Override
     @PostConstruct

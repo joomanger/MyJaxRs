@@ -18,9 +18,9 @@ public class FindItemView extends AbstractView<Item> {
     @Inject
     private ItemCBean client;
 
-    public FindItemView() {
-        super(Item.class);
-    }
+//    public FindItemView() {
+//        super(Item.class);
+//    }
 
     @Override
     @PostConstruct

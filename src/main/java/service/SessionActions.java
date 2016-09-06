@@ -41,7 +41,7 @@ public class SessionActions implements Serializable {
     private String language="RU";
 
     private final Map<String, String> viewsMap = new HashMap<>();
-
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     private void init() {
         user = client.findUserByUserName(sc.getSessionContext().getCallerPrincipal().getName());

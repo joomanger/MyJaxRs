@@ -23,7 +23,7 @@ public class OpenViewView implements Serializable {
     private FindViewSession fvs;
 
     private View view;
-
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     private void init() {
         view = ejb.find(fvs.getView_id());

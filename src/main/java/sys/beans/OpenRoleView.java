@@ -25,7 +25,7 @@ public class OpenRoleView implements Serializable {
     private SysRole role;
     private List<Menu> selectedMenus = new ArrayList<>();
     private Menu newMenu;
-
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     private void init() {
         role = client.findRole();
