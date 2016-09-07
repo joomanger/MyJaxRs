@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+                <h:form prependId="false">
+                    <h:inputHidden id="setCustomerId" value="#{findCustomerSession.customer_id}"/>
+                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.customer_id}" var="ord" value="#{findCustomerView.entities}" 
+                                 editable="true" reflow="true" selection="#{findCustomerView.selectedEntities}" rows="20" paginator="true" style="width: 1400px;"
+                                 rowsPerPageTemplate="20,40,100" widgetVar="myTable" filteredValue="#{findCustomerView.filteredEntities}" 
+                                 emptyMessage="Данные не найдены">
+                        <f:facet name="header">
+                            Справочик заказчиков
+                            <p:inputText id="globalFilter" onkeyup="PF('myTable').filter()" style="width:150px" placeholder="Поиск"/>
+                        </f:facet>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        <p:column filterBy="#{ord.name}" filterMatchMode="contains" headerText="Наименование" style="width: 150px;text-align: left">
+                            <f:facet name="filter">
+                                <h:inputHidden/>
+                            </f:facet>
+                            <h:commandLink action="openCustomer" value="#{ord.name}" onclick="document.getElementById('setCustomerId').value =#{ord.customer_id};"/>
+                        </p:column>
+                        <p:column filterBy="#{ord.fullName}" filterMatchMode="contains" headerText="Полн.наименование" style="width: 250px;text-align: left">
+                            <f:facet name="filter">
+                                <h:inputHidden/>
+                            </f:facet>
+                            <h:outputText value="#{ord.fullName}"/>
+                        </p:column>
+                        <p:column filterBy="#{ord.okpo}" filterMatchMode="contains" headerText="ОКПО" style="width: 80px;text-align: right">
+                            <f:facet name="filter">
+                                <h:inputHidden/>
+                            </f:facet>
+                            <h:outputText value="#{ord.okpo}"/>
+                        </p:column>
+                        <p:column filterBy="#{ord.inn}" filterMatchMode="contains" headerText="ИНН" style="width: 80px;text-align: right">
+                            <f:facet name="filter">
+                                <h:inputHidden/>
+                            </f:facet>
+                            <h:outputText value="#{ord.inn}"/>
+                        </p:column>
+                        <p:column headerText="Активное" style="width: 50px;text-align: center">
+                            <p:selectBooleanCheckbox disabled="true" value="#{ord.activeStatus}" />
+                        </p:column>
+                        <f:facet name="footer" >
+                            <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />
+                            <p:commandButton id="newBtn" value="New" action="newCustomer" immediate="true" style="margin-left: 15px"/>
+                        </f:facet>
+                    </p:dataTable> 
+                    <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" 
+                              showEffect="fade" hideEffect="fade" resizable="false" width="600">
+                        <p:outputPanel id="selectedParams" style="text-align: center">
+                            <p:dataTable value="#{findCustomerView.selectedEntities}" var="v">
+                                <p:column headerText="Наименование">
+                                    <h:outputText value="#{v.name}" style="text-align: left"/>
+                                </p:column>
+                                <p:column headerText="ОКПО" style="width: 80px;text-align: right">
+                                    <h:outputText value="#{v.okpo}"/>
+                                </p:column>
+                                <p:column headerText="ИНН" style="width: 80px;text-align: right">
+                                    <h:outputText value="#{v.inn}"/>
+                                </p:column>
+                            </p:dataTable>
+                            <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
+                            <p:commandButton value="Yes" actionListener="#{customerCBean.deleteSelectedEntities()}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

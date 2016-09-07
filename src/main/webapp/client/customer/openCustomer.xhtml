@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/template.xhtml">
+            <ui:define name="content">
+                <h:form  prependId="false">
+                    <p:fieldset legend="Клиент" style="width: 250px; margin-bottom: 10px"> 
+                        <h:panelGrid id="yyy" columns="4" cellpadding="5" cellspacing="5">
+                            <p:outputLabel value="Наименование"/>
+                            <p:inputText value="#{openCustomerView.entity.name}" style="width: 550px"/>
+                            <p:outputLabel value="Активный"/>
+                            <p:inputSwitch value="#{openCustomerView.entity.activeStatus}"/>
+                            <p:outputLabel value="Полн.наименование"/>
+                            <p:inputText value="#{openCustomerView.entity.fullName}" style="width: 550px"/>
+                            <p:outputLabel value="ОКПО"/>
+                            <p:inputText value="#{openCustomerView.entity.okpo}" style="width: 70px;text-align: center"/>
+                            <p:outputLabel value="ИНН"/>
+                            <p:inputText value="#{openCustomerView.entity.inn}" style="width: 100px;text-align: center"/>
+                        </h:panelGrid>
+                        <p:dataTable id="dTable" var="ord" value="#{openCustomerView.entity.RWAddresses}" selection="#{openCustomerView.selectedEntityLines}" 
+                                     rowSelectMode="checkbox" scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.rwaddress_id}" 
+                                     style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" >
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                            <p:column headerText="Станция" style="width:200px;text-align: center">
+                                <p:autoComplete value="#{ord.station}" maxResults="20"
+                                            completeMethod="#{stationConverter.completeItem}"
+                                            var="m" itemLabel="#{m.fullName}" itemValue="#{m}" converter="#{stationConverter}" 
+                                            forceSelection="true" style="width:200px;">
+                            </p:autoComplete>
+                            </p:column>
+                            
+                            <p:column headerText="Код получателя" style="width:35px;text-align: center">
+                                <p:outputLabel value="#{ord.rwRcvCode}"/>
+                            </p:column>
+                            <p:column headerText="Ветка" style="width:450px;">
+                                <p:outputLabel value="#{ord.rwBranch}"/>
+                            </p:column>
+                            <p:column headerText="Активный" style="width:56px; text-align: center" >
+                                <p:selectBooleanCheckbox value="#{ord.activeStatus}"/>
+                            </p:column>
+                            <f:facet name="footer" >
+                                <p:outputLabel for="valuez" value="Новое значение:"/>
+                                <p:inputText id="valuez" value="" placeholder="Значение" required="false" style="width:200px"/>
+                                <p:inputText value="" placeholder="Расшифровка" required="false" style="width:200px"/>
+                                <p:inputText value="" placeholder="Описание" required="false" style="width:450px"/>
+                                <p:focus for="valuez"/>
+                                <p:commandButton value="Добавить" actionListener="#{customerCBean.addRWAddressOCV()}" update="dTable mainMSG"/>
+                                <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
+                            </f:facet>
+                        </p:dataTable>
+                        <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                            <p:outputPanel id="selectedParams" style="text-align:center;">
+                                <p:dataTable value="#{openCustomerView.selectedEntityLines}" var="v">
+                                    <p:column headerText="Значение">
+                                        <h:outputText value="#{v.valuez}"/>
+                                    </p:column>
+                                    <p:column headerText="Описание">
+                                        <h:outputText value="#{v.description}"/>
+                                    </p:column>
+                                </p:dataTable>
+                                <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>
+                                <p:commandButton value="Yes" actionListener="#{lookupCBean.deleteLookupItemsOLV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
+                            </p:outputPanel>
+                        </p:dialog>
+
+                        <p:commandButton id="btnBack" value="Back" action="customers" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
+                        <p:commandButton id="btnSave" value="Сохранить" actionListener="#{customerCBean.changeEntity()}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
+                    </p:fieldset> 
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

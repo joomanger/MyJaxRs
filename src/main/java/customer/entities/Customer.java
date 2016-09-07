@@ -20,7 +20,7 @@ import org.eclipse.persistence.annotations.PrivateOwned;
 @Entity
 @Table(uniqueConstraints
         = @UniqueConstraint(columnNames = {"name"}))
-public class Customer implements Serializable, Comparable<Customer> {
+public class Customer implements Serializable{
 
     @Id
     @SequenceGenerator(name = "customer_sq", initialValue = 1, allocationSize = 1)
@@ -149,13 +149,13 @@ public class Customer implements Serializable, Comparable<Customer> {
     
     
     
-    @Override
-    public int compareTo(Customer o) {
-        if (name.charAt(0) > o.name.charAt(0)) {
-            return 1;
-        } else {
-            return -1;
-        }
-    }
+//    @Override
+//    public int compareTo(Customer o) {
+//        if (name.charAt(0) > o.name.charAt(0)) {
+//            return 1;
+//        } else {
+//            return -1;
+//        }
+//    }
 
 }

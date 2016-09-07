@@ -30,7 +30,8 @@ public class RWRoad implements Serializable, Comparable<RWRoad> {
     private String fullName;
     @OneToOne(cascade = {CascadeType.DETACH})
     @JoinColumn(name = "country_id")
-    @NotNull(message = "Значение СТРАНА обязательно")
+    @NotNull(message = "Значение СТРА@OneToOne(cascade = {CascadeType.DETACH})\n" +
+"    @JoinColumn(name = \"country_id\")НА обязательно")
     private Country country;
 
     public RWRoad() {
