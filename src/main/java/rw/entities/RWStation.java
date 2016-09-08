@@ -33,7 +33,7 @@ public class RWStation implements Serializable {
     @OrderBy("language asc")
     private List<RWStationTL> rwstationTL = new ArrayList<>();
     @Transient
-    private String name;
+    protected String name;
 
     public RWStation() {
     }
