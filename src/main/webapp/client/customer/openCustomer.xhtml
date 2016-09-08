@@ -25,18 +25,18 @@
                             <p:inputText value="#{openCustomerView.entity.inn}" style="width: 100px;text-align: center"/>
                         </h:panelGrid>
                         <p:dataTable id="dTable" var="ord" value="#{openCustomerView.entity.RWAddresses}" selection="#{openCustomerView.selectedEntityLines}" 
-                                     rowSelectMode="checkbox" scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.rwaddress_id}" 
-                                     style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" >
+                                     rowSelectMode="checkbox" scrollable="true"  reflow="true" rows="20" paginator="true"  rowKey="#{ord.rwaddress_id}" 
+                                     style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="false">
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                             <p:column headerText="Станция" style="width:200px;text-align: center">
                                 <p:autoComplete value="#{ord.station}" maxResults="20"
-                                            completeMethod="#{stationConverter.completeItem}"
-                                            var="m" itemLabel="#{m.fullName}" itemValue="#{m}" converter="#{stationConverter}" 
-                                            forceSelection="true" style="width:200px;">
-                            </p:autoComplete>
+                                                completeMethod="#{stationConverter.completeItem}"
+                                                var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{stationConverter}" 
+                                                forceSelection="true" >
+                                </p:autoComplete>
                             </p:column>
-                            
-                            <p:column headerText="Код получателя" style="width:35px;text-align: center">
+
+                            <p:column headerText="Код получателя" style="width:45px;text-align: center">
                                 <p:outputLabel value="#{ord.rwRcvCode}"/>
                             </p:column>
                             <p:column headerText="Ветка" style="width:450px;">
@@ -46,11 +46,6 @@
                                 <p:selectBooleanCheckbox value="#{ord.activeStatus}"/>
                             </p:column>
                             <f:facet name="footer" >
-                                <p:outputLabel for="valuez" value="Новое значение:"/>
-                                <p:inputText id="valuez" value="" placeholder="Значение" required="false" style="width:200px"/>
-                                <p:inputText value="" placeholder="Расшифровка" required="false" style="width:200px"/>
-                                <p:inputText value="" placeholder="Описание" required="false" style="width:450px"/>
-                                <p:focus for="valuez"/>
                                 <p:commandButton value="Добавить" actionListener="#{customerCBean.addRWAddressOCV()}" update="dTable mainMSG"/>
                                 <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
                             </f:facet>

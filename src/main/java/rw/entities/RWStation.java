@@ -33,7 +33,7 @@ public class RWStation implements Serializable {
     @OrderBy("language asc")
     private List<RWStationTL> rwstationTL = new ArrayList<>();
     @Transient
-    private String fullName;
+    private String name;
 
     public RWStation() {
     }
@@ -45,13 +45,21 @@ public class RWStation implements Serializable {
         this.location_id_orc = location_id_orc;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getName() {
+        return name;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setName(String name) {
+        this.name = name;
     }
+    
+//    public String getFullName() {
+//        return fullName;
+//    }
+//
+//    public void setFullName(String fullName) {
+//        this.fullName = fullName;
+//    }
 
     public Long getLocation_id_orc() {
         return location_id_orc;

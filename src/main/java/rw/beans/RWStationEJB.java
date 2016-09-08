@@ -29,6 +29,12 @@ public class RWStationEJB extends AbstractEJB<RWStation> {
     protected EntityManager getEntityManager() {
         return em;
     }
+    
+    public String getNameByRWcode(String p_rws_code) {
+        return String.valueOf(em.createNativeQuery("select t.name from RWStationTL t" 
+                        +" where t.rws_code=?1 and t.language=?2").setParameter(1, p_rws_code).setParameter(2, sa.getLanguage()).getSingleResult());
+    }
+    
     // Мэппинг прописал в orm.xml, так как аннотации не воспринимает!!!
     public List<RWStationVL> findAllVL() {
         List<RWStationVL> a = em.createNativeQuery("select c.rws_code, t.name, r.rwr_code, r.fullname, r.shortname,r.country_id from RWStation c,RWStationTL t, RWRoad r " 

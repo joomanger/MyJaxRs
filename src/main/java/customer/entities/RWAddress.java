@@ -99,9 +99,15 @@ public class RWAddress implements Serializable, Comparable<RWAddress> {
         }
     }
 
+    
     @Override
     public int compareTo(RWAddress o) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if(getStation().getName().charAt(0)>o.getStation().getName().charAt(0)){
+            return 1;
+        }else{
+            return -1;
+        }
+            
     }
 
 }

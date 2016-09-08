@@ -33,7 +33,6 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
 //    public RWStationCBean() {
 //        super(RWStation.class);
 //    }
-
     @Override
     protected AbstractEJB<RWStation> getEJB() {
         return ejb;
@@ -97,7 +96,7 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
 
     @Override
     public String createEntity(String backURL) {
-        if(ncv.getEntity().getRws_code().trim().isEmpty()){
+        if (ncv.getEntity().getRws_code().trim().isEmpty()) {
             ejb.sendMessage("Код ЖД Станции обязателен", null);
             return null;
         }
@@ -114,6 +113,10 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
             }
         }
         return super.createEntity(backURL);
+    }
+
+    public String getNameByCode(String p_rws_code) {
+        return ejb.getNameByRWcode(p_rws_code);
     }
 
 }
