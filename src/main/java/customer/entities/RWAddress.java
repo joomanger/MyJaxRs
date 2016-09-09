@@ -18,20 +18,19 @@ import rw.entities.RWStation;
 @Entity
 //@Table(uniqueConstraints
 //        = @UniqueConstraint(columnNames = {"rws_code","rwRcvCode"}))
-public class RWAddress implements Serializable, Comparable<RWAddress> {
+public class RWAddress implements Serializable{
 
     @Id
     @SequenceGenerator(name = "rwaddress_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "rwaddress_sq")
-    private Long rwaddress_id;
+    protected Long rwaddress_id;
     private Long rwaddress_id_orc;
     @OneToOne(cascade = {CascadeType.DETACH})
     @JoinColumn(name = "rws_code")
     private RWStation station;
-    private String rwBranch;
-    private String rwRcvCode;
-    private Boolean activeStatus = true;
-
+    protected String rwbranch;
+    protected String rwrcvcode;
+    protected Boolean activeStatus = true;
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
@@ -52,20 +51,20 @@ public class RWAddress implements Serializable, Comparable<RWAddress> {
         this.station = station;
     }
 
-    public String getRwBranch() {
-        return rwBranch;
+    public String getRwbranch() {
+        return rwbranch;
     }
 
-    public void setRwBranch(String rwBranch) {
-        this.rwBranch = rwBranch;
+    public void setRwbranch(String rwbranch) {
+        this.rwbranch = rwbranch;
     }
 
-    public String getRwRcvCode() {
-        return rwRcvCode;
+    public String getRwrcvcode() {
+        return rwrcvcode;
     }
 
-    public void setRwRcvCode(String rwRcvCode) {
-        this.rwRcvCode = rwRcvCode;
+    public void setRwrcvcode(String rwrcvcode) {
+        this.rwrcvcode = rwrcvcode;
     }
 
     public Customer getCustomer() {
@@ -97,17 +96,6 @@ public class RWAddress implements Serializable, Comparable<RWAddress> {
         if (customer != null && set) {
             customer.addRWAddress(this, false);
         }
-    }
-
-    
-    @Override
-    public int compareTo(RWAddress o) {
-        if(getStation().getName().charAt(0)>o.getStation().getName().charAt(0)){
-            return 1;
-        }else{
-            return -1;
-        }
-            
     }
 
 }

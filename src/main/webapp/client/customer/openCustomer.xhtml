@@ -24,23 +24,21 @@
                             <p:outputLabel value="ИНН"/>
                             <p:inputText value="#{openCustomerView.entity.inn}" style="width: 100px;text-align: center"/>
                         </h:panelGrid>
-                        <p:dataTable id="dTable" var="ord" value="#{openCustomerView.entity.RWAddresses}" selection="#{openCustomerView.selectedEntityLines}" 
+                        <h:inputHidden id="setRWAddressId" value="#{openCustomerView.rwaddress_id}"/>
+                        <p:dataTable id="dTable" var="ord" value="#{openCustomerView.entity.rwAddressVL}" selection="#{openCustomerView.selectedEntityLines}" 
                                      rowSelectMode="checkbox" scrollable="true"  reflow="true" rows="20" paginator="true"  rowKey="#{ord.rwaddress_id}" 
                                      style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="false">
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                             <p:column headerText="Станция" style="width:200px;text-align: center">
-                                <p:autoComplete value="#{ord.station}" maxResults="20"
-                                                completeMethod="#{stationConverter.completeItem}"
-                                                var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{stationConverter}" 
-                                                forceSelection="true" >
-                                </p:autoComplete>
+                                <p:commandLink value="#{ord.rws_name}"  oncomplete="PF('changeRWAddress').show()"  
+                                               onclick="document.getElementById('setRWAddressId').value =#{ord.rwaddress_id};" update="ccc"/>
                             </p:column>
 
                             <p:column headerText="Код получателя" style="width:45px;text-align: center">
-                                <p:outputLabel value="#{ord.rwRcvCode}"/>
+                                <p:outputLabel value="#{ord.rwrcvcode}"/>
                             </p:column>
                             <p:column headerText="Ветка" style="width:450px;">
-                                <p:outputLabel value="#{ord.rwBranch}"/>
+                                <p:outputLabel value="#{ord.rwbranch}"/>
                             </p:column>
                             <p:column headerText="Активный" style="width:56px; text-align: center" >
                                 <p:selectBooleanCheckbox value="#{ord.activeStatus}"/>
@@ -50,15 +48,39 @@
                                 <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
                             </f:facet>
                         </p:dataTable>
-                        <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+
+                        <p:dialog header="Редактирование" widgetVar="changeRWAddress" modal="true"
+                                  showEffect="fade" hideEffect="fade" 
+                                  resizable="false" width="900">
+                            asasas
+                            <p:outputLabel id="ccc" value="#{openCustomerView.rwaddress.rwrcvcode}"/>
+                            <p:fieldset>
+                                <h:panelGrid columns="2" cellpadding="5" cellspacing="5">
+                                    <p:outputLabel value="Код получателя"/>
+                                    <p:inputText value="#{openCustomerView.rwaddress.rwrcvcode}" style="width:45px;text-align: center"/>
+                                    <p:outputLabel value="Ветка"/>
+                                    <p:inputText value="#{openCustomerView.rwaddress.rwbranch}" style="width:450px;"/>
+                                    <p:outputLabel value="Активный"/>
+                                    <p:selectBooleanCheckbox value="#{openCustomerView.rwaddress.activeStatus}" />
+                                </h:panelGrid>
+                            </p:fieldset>
+                            <p:commandButton oncomplete="PF('changeRWAddress').hide()" immediate="true" value='No'/>
+                        </p:dialog>
+
+                        <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="1200">
                             <p:outputPanel id="selectedParams" style="text-align:center;">
                                 <p:dataTable value="#{openCustomerView.selectedEntityLines}" var="v">
-                                    <p:column headerText="Значение">
-                                        <h:outputText value="#{v.valuez}"/>
+                                    <p:column headerText="Станция" style="width:200px;text-align: center">
+                                        <p:outputLabel value="#{v.rws_name}"/>
                                     </p:column>
-                                    <p:column headerText="Описание">
-                                        <h:outputText value="#{v.description}"/>
+
+                                    <p:column headerText="Код получателя" style="width:45px;text-align: center">
+                                        <p:outputLabel value="#{v.rwrcvcode}"/>
                                     </p:column>
+                                    <p:column headerText="Ветка" style="width:450px;">
+                                        <p:outputLabel value="#{v.rwbranch}"/>
+                                    </p:column>
+
                                 </p:dataTable>
                                 <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>
                                 <p:commandButton value="Yes" actionListener="#{lookupCBean.deleteLookupItemsOLV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />

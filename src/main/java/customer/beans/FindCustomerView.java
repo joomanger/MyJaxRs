@@ -11,17 +11,12 @@ import service.AbstractView;
  *
  * @author savin
  */
-
 @Named
 @ViewScoped
 public class FindCustomerView extends AbstractView<Customer> {
 
     @Inject
     private CustomerCBean client;
-
-//    public FindLookupView() {
-//        super(Lookup.class);
-//    }
 
     @Override
     @PostConstruct

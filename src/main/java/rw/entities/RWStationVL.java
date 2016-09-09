@@ -24,14 +24,6 @@ public class RWStationVL extends RWStation {
         this.country_id = country_id;
     }
 
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-
     public String getRwr_code() {
         return rwr_code;
     }

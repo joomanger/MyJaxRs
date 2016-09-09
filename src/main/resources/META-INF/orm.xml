@@ -32,5 +32,15 @@
             <column name="description"/>
         </constructor-result>
     </sql-result-set-mapping>
+     <sql-result-set-mapping name="RWAddressVLMapping">
+        <constructor-result target-class="customer.entities.RWAddressVL">
+            <column name="rwaddress_id" class="java.lang.Long"/>
+            <column name="rws_code" class="java.lang.String"/>
+            <column name="rwrcvcode" class="java.lang.String"/>
+            <column name="rwbranch" class="java.lang.String"/>
+            <column name="activestatus" class="java.lang.Boolean"/>
+            <column name="rws_name" class="java.lang.String"/>
+        </constructor-result>
+    </sql-result-set-mapping>
     
 </entity-mappings>
