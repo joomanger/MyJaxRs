@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
 
@@ -52,18 +53,24 @@
                         <p:dialog header="Редактирование" widgetVar="changeRWAddress" modal="true"
                                   showEffect="fade" hideEffect="fade" 
                                   resizable="false" width="900">
-                            asasas
-                            <p:outputLabel id="ccc" value="#{openCustomerView.rwaddress.rwrcvcode}"/>
-                            <p:fieldset>
-                                <h:panelGrid columns="2" cellpadding="5" cellspacing="5">
-                                    <p:outputLabel value="Код получателя"/>
-                                    <p:inputText value="#{openCustomerView.rwaddress.rwrcvcode}" style="width:45px;text-align: center"/>
-                                    <p:outputLabel value="Ветка"/>
-                                    <p:inputText value="#{openCustomerView.rwaddress.rwbranch}" style="width:450px;"/>
-                                    <p:outputLabel value="Активный"/>
-                                    <p:selectBooleanCheckbox value="#{openCustomerView.rwaddress.activeStatus}" />
-                                </h:panelGrid>
-                            </p:fieldset>
+                            <p:dataTable id="ccc" var="a" value="#{openCustomerView.rwaddress}" >
+                                <p:column headerText="Станция" style="width:250px;">
+                                    <p:autoComplete value="#{a.station}" maxResults="20"
+                                                    completeMethod="#{stationConverter.completeItem}"
+                                                    var="m" itemLabel="#{m.rws_code}" itemValue="#{m}" converter="#{stationConverter}" 
+                                                    forceSelection="true">
+                                    </p:autoComplete>
+                                </p:column>
+                                <p:column headerText="Код получателя" style="width:45px;text-align: center">
+                                    <p:outputLabel value="#{a.rwrcvcode}"/>
+                                </p:column>
+                                <p:column headerText="Ветка" style="width:450px;text-align: center">
+                                    <p:outputLabel value="#{a.rwbranch}"/>
+                                </p:column>
+                                <p:column headerText="Активный" style="width:56px; text-align: center" >
+                                    <p:selectBooleanCheckbox value="#{a.activeStatus}"/>
+                                </p:column>
+                            </p:dataTable>
                             <p:commandButton oncomplete="PF('changeRWAddress').hide()" immediate="true" value='No'/>
                         </p:dialog>
 

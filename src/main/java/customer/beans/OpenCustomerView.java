@@ -23,7 +23,7 @@ public class OpenCustomerView extends AbstractView<Customer> {
     
     private Customer openedEntity;
     private Long rwaddress_id;
-    private RWAddress rwaddress=new RWAddress();
+    private RWAddress rwaddress;
     //Поля для создания новой строки
 
     @SuppressWarnings("PMD.UnusedPrivateMethod")
@@ -50,8 +50,9 @@ public class OpenCustomerView extends AbstractView<Customer> {
     public void setRwaddress_id(Long rwaddress_id) {
         this.rwaddress_id = rwaddress_id;
         if(rwaddress_id!=null){
-            for(RWAddress r:openedEntity.getRWAddresses()){
+            for(RWAddress r:getEntity().getRWAddresses()){
                 if(r.getRwaddress_id().equals(rwaddress_id)){
+                    System.out.println("equals r="+r.getRwrcvcode());
                     rwaddress=r;
                     break;
                 }
