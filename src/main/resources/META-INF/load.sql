@@ -103,220 +103,54 @@ insert into users_roles values(1,1);
 insert into users_roles values(2,2);
 
 --Заполним лукапы
-insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(1,true,'Пункты поставки','FOB',true);
-insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(2,true,'Единицы измерения','UOM',true);
-insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(3,true,'Условия доставки','FREIGHT TERMS',true);
-insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(4,true,'Календарные/Банковские дни','DAYTYPES',true);
-insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(5,true,'Языки системы','LANGUAGES',true);
---FOB
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(1,true,'Граница Украина-Белоруссия',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(1,'Граница Украина-Белоруссия','Граница Украина-Белоруссия','RU',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(2,'Граница Украина-Белоруссия','Граница Украина-Белоруссия','US',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(3,'Граница Украина-Белоруссия','Граница Украина-Белоруссия','UA',1);
+--Заполнение перенесено в скрипт pg_to_orcl.sql
+--insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(nextval('lookup_sq'),true,'Пункты поставки','FOB',true);
+--Заполнение перенесено в скрипт pg_to_orcl.sql
+--insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(nextval('lookup_sq'),true,'Условия доставки','FREIGHT TERMS',true);
 
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(2,true,'Граница Украина-Венгрия',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(4,'Граница Украина-Венгрия','Граница Украина-Венгрия','RU',2);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(5,'Граница Украина-Венгрия','Граница Украина-Венгрия','UA',2);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(6,'Граница Украина-Венгрия','Граница Украина-Венгрия','US',2);
 
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(3,true,'Граница Украина-Молдова',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(7,'Граница Украина-Молдова','Граница Украина-Молдова','RU',3);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(8,'Граница Украина-Молдова','Граница Украина-Молдова','UA',3);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(9,'Граница Украина-Молдова','Граница Украина-Молдова','US',3);
 
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(4,true,'Граница Украина-Польша',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(10,'Граница Украина-Польша','Граница Украина-Польша','RU',4);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(11,'Граница Украина-Польша','Граница Украина-Польша','UA',4);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(12,'Граница Украина-Польша','Граница Украина-Польша','US',4);
 
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(5,true,'Граница Украина-Румыния',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(13,'Граница Украина-Румыния','Граница Украина-Румыния','RU',5);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(14,'Граница Украина-Румыния','Граница Украина-Румыния','UA',5);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(15,'Граница Украина-Румыния','Граница Украина-Румыния','US',5);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(6,true,'Граница Украина-РФ',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(16,'Граница Украина-РФ','Граница Украина-РФ','RU',6);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(17,'Граница Украина-РФ','Граница Украина-РФ','UA',6);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(18,'Граница Украина-РФ','Граница Украина-РФ','US',6);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(7,true,'Граница Украина-Словакия',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(19,'Граница Украина-Словакия','Граница Украина-Словакия','RU',7);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(20,'Граница Украина-Словакия','Граница Украина-Словакия','UA',7);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(21,'Граница Украина-Словакия','Граница Украина-Словакия','US',7);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(8,true,'Грузополучатель',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(22,'Грузополучатель','Грузополучатель','RU',8);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(23,'Грузополучатель','Грузополучатель','UA',8);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(24,'Грузополучатель','Грузополучатель','US',8);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(9,true,'Порт Бердянск',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(25,'Порт Бердянск','Порт Бердянск','RU',9);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(26,'Порт Бердянск','Порт Бердянск','UA',9);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(27,'Порт Бердянск','Порт Бердянск','US',9);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(10,true,'Порт Измаил',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(28,'Порт Измаил','Порт Измаил','RU',10);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(29,'Порт Измаил','Порт Измаил','UA',10);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(30,'Порт Измаил','Порт Измаил','US',10);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(11,true,'Порт Ильичевск',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(31,'Порт Ильичевск','Порт Ильичевск','RU',11);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(32,'Порт Ильичевск','Порт Ильичевск','UA',11);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(33,'Порт Ильичевск','Порт Ильичевск','US',11);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(12,true,'Порт Ильичевск-Паромная',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(34,'Порт Ильичевск-Паромная','Порт Ильичевск-Паромная','RU',12);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(35,'Порт Ильичевск-Паромная','Порт Ильичевск-Паромная','UA',12);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(36,'Порт Ильичевск-Паромная','Порт Ильичевск-Паромная','US',12);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(13,true,'Порт Ильичевск-Рыбный',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(37,'Порт Ильичевск-Рыбный','Порт Ильичевск-Рыбный','RU',13);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(38,'Порт Ильичевск-Рыбный','Порт Ильичевск-Рыбный','UA',13);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(39,'Порт Ильичевск-Рыбный','Порт Ильичевск-Рыбный','US',13);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(14,true,'Порт Мариуполь',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(40,'Порт Мариуполь','Порт Мариуполь','RU',14);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(41,'Порт Мариуполь','Порт Мариуполь','UA',14);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(42,'Порт Мариуполь','Порт Мариуполь','US',14);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(15,true,'Порт Николаев',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(43,'Порт Николаев','Порт Николаев','RU',15);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(44,'Порт Николаев','Порт Николаев','UA',15);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(45,'Порт Николаев','Порт Николаев','US',15);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(16,true,'Порт Одесса',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(46,'Порт Одесса','Порт Одесса','RU',16);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(47,'Порт Одесса','Порт Одесса','UA',16);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(48,'Порт Одесса','Порт Одесса','US',16);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(17,true,'Порт Южный',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(49,'Порт Южный','Порт Южный','RU',17);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(50,'Порт Южный','Порт Южный','UA',17);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(51,'Порт Южный','Порт Южный','US',17);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(18,true,'Склад АМК',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(52,'Склад АМК','Склад АМК','RU',18);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(53,'Склад АМК','Склад АМК','UA',18);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(54,'Склад АМК','Склад АМК','US',18);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(19,true,'Склад ДМКД',1);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(55,'Склад ДМКД','Склад ДМКД','RU',19);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(56,'Склад ДМКД','Склад ДМКД','UA',19);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(57,'Склад ДМКД','Склад ДМКД','US',19);
 --UOM
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(20,true,'Тн',2);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(58,'Тонны','Тонны','RU',20);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(59,'Тонны','Тонны','US',20);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(60,'Тонны','Тонны','UA',20);
+insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(nextval('lookup_sq'),true,'Единицы измерения','UOM',true);
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'Тн',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Тонны','Тонны','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Тонны','Тонны','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Тонны','Тонны','UA',currval('lookupitem_sq'));
 
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(21,true,'Пч',2);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(61,'Пачки','Пачки','RU',21);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(62,'Пачки','Пачки','US',21);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(63,'Пачки','Пачки','UA',21);
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'Пч',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Пачки','Пачки','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Пачки','Пачки','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Пачки','Пачки','UA',currval('lookupitem_sq'));
 
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(22,true,'Шт',2);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(64,'Штуки','Штуки','RU',22);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(65,'Штуки','Штуки','US',22);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(66,'Штуки','Штуки','UA',22);
-
---FREIGHT TERMS
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(23,true,'CFR',3);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(67,'Стоимость и фрахт','Стоимость и фрахт','RU',23);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(68,'Стоимость и фрахт','Стоимость и фрахт','US',23);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(69,'Стоимость и фрахт','Стоимость и фрахт','UA',23);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(24,true,'CIF',3);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(70,'Стоимость, страхование и фрахт','Стоимость, страхование и фрахт','RU',24);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(71,'Стоимость, страхование и фрахт','Стоимость, страхование и фрахт','US',24);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(72,'Стоимость, страхование и фрахт','Стоимость, страхование и фрахт','UA',24);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(25,true,'CIP',3);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(73,'Фрахт/перевозка и страхование оплачены до','Фрахт/перевозка и страхование оплачены до','RU',25);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(74,'Фрахт/перевозка и страхование оплачены до','Фрахт/перевозка и страхование оплачены до','US',25);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(75,'Фрахт/перевозка и страхование оплачены до','Фрахт/перевозка и страхование оплачены до','UA',25);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(26,true,'CPT',3);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(76,'Фрахт/перевозка оплачены до','Фрахт/перевозка оплачены до','RU',26);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(77,'Фрахт/перевозка оплачены до','Фрахт/перевозка оплачены до','US',26);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(78,'Фрахт/перевозка оплачены до','Фрахт/перевозка оплачены до','UA',26);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(27,true,'DAF',3);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(79,'Поставка до границы','Поставка до границы','RU',27);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(80,'Поставка до границы','Поставка до границы','US',27);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(81,'Поставка до границы','Поставка до границы','UA',27);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(28,true,'DAP',3);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(82,'Поставка в месте назначения','Поставка в месте назначения','RU',28);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(83,'Поставка в месте назначения','Поставка в месте назначения','US',28);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(84,'Поставка в месте назначения','Поставка в месте назначения','UA',28);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(29,true,'DDP',3);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(85,'Поставка с оплатой пошлины','Поставка с оплатой пошлины','RU',29);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(86,'Поставка с оплатой пошлины','Поставка с оплатой пошлины','US',29);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(87,'Поставка с оплатой пошлины','Поставка с оплатой пошлины','UA',29);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(30,true,'DDU',3);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(88,'Поставка без оплаты пошлины','Поставка без оплаты пошлины','RU',30);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(89,'Поставка без оплаты пошлины','Поставка без оплаты пошлины','US',30);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(90,'Поставка без оплаты пошлины','Поставка без оплаты пошлины','UA',30);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(31,true,'DEQ',3);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(91,'Поставка с пристани','Поставка с пристани','RU',31);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(92,'Поставка с пристани','Поставка с пристани','US',31);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(93,'Поставка с пристани','Поставка с пристани','UA',31);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(32,true,'DES',3);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(94,'Поставка с судна','Поставка с судна','RU',32);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(95,'Поставка с судна','Поставка с судна','US',32);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(96,'Поставка с судна','Поставка с судна','UA',32);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(33,true,'EXW',3);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(97,'Франко завод','Франко завод','RU',33);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(98,'Франко завод','Франко завод','US',33);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(99,'Франко завод','Франко завод','UA',33);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(34,true,'FAS',3);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(100,'Поставка в доль борта судна','Поставка в доль борта судна','RU',34);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(101,'Поставка в доль борта судна','Поставка в доль борта судна','US',34);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(102,'Поставка в доль борта судна','Поставка в доль борта судна','UA',34);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(35,true,'FCA',3);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(103,'Франко перевозчик','Франко перевозчик','RU',35);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(104,'Франко перевозчик','Франко перевозчик','US',35);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(105,'Франко перевозчик','Франко перевозчик','UA',35);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(36,true,'FOB',3);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(106,'Франко борт','Франко борт','RU',36);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(107,'Франко борт','Франко борт','US',36);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(108,'Франко борт','Франко борт','UA',36);
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(37,true,'FOB ST L/S/D',3);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(109,'Стоимость укладки груза на борту судна включена','Стоимость укладки груза на борту судна включена','RU',37);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(110,'Стоимость укладки груза на борту судна включена','Стоимость укладки груза на борту судна включена','US',37);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(111,'Стоимость укладки груза на борту судна включена','Стоимость укладки груза на борту судна включена','UA',37);
-
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'Шт',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Штуки','Штуки','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Штуки','Штуки','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Штуки','Штуки','UA',currval('lookupitem_sq'));
 --DAYTYPES
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(38,true,'BANKING',4);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(112,'Банковские','Банковские','RU',38);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(113,'Банковские','Банковские','US',38);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(114,'Банковские','Банковские','UA',38);
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(39,true,'CALENDAR',4);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(115,'Календарные','Календарные','RU',39);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(116,'Календарные','Календарные','US',39);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(117,'Календарные','Календарные','UA',39);
+insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(nextval('lookup_sq'),true,'Календарные/Банковские дни','DAYTYPES',true);
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'BANKING',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Банковские','Банковские','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Банковские','Банковские','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Банковские','Банковские','UA',currval('lookupitem_sq'));
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'CALENDAR',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Календарные','Календарные','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Календарные','Календарные','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Календарные','Календарные','UA',currval('lookupitem_sq'));
 --LANGUAGES
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(40,true,'RU',5);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(118,'Русский','Русский','RU',40);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(119,'Русский','Русский','US',40);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(120,'Русский','Русский','UA',40);
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(41,true,'US',5);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(121,'Английский','Английский','RU',41);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(122,'Английский','Английский','US',41);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(123,'Английский','Английский','UA',41);
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(42,true,'UA',5);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(124,'Украинский','Украинский','RU',42);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(125,'Украинский','Украинский','US',42);
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(126,'Украинский','Украинский','UA',42);
+insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(nextval('lookup_sq'),true,'Языки системы','LANGUAGES',true);
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'RU',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Русский','Русский','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Русский','Русский','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Русский','Русский','UA',currval('lookupitem_sq'));
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'US',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Английский','Английский','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Английский','Английский','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Английский','Английский','UA',currval('lookupitem_sq'));
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'UA',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Украинский','Украинский','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Украинский','Украинский','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Украинский','Украинский','UA',currval('lookupitem_sq'));
 
 
 

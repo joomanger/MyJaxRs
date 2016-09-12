@@ -4,8 +4,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -25,75 +24,96 @@
                             <p:outputLabel value="ИНН"/>
                             <p:inputText value="#{openCustomerView.entity.inn}" style="width: 100px;text-align: center"/>
                         </h:panelGrid>
-                        <h:inputHidden id="setRWAddressId" value="#{openCustomerView.rwaddress_id}"/>
-                        <p:dataTable id="dTable" var="ord" value="#{openCustomerView.entity.rwAddressVL}" selection="#{openCustomerView.selectedEntityLines}" 
-                                     rowSelectMode="checkbox" scrollable="true"  reflow="true" rows="20" paginator="true"  rowKey="#{ord.rwaddress_id}" 
+                        <p:dataTable id="dTable" var="ord" value="#{openCustomerView.entity.RWAddresses}" 
+                                     widgetVar="rwAddrTable"
+                                     selection="#{openCustomerView.selectedEntityLines}" 
+                                     rowSelectMode="checkbox" editMode="cell" editable="true"
+                                     scrollable="true"  reflow="true" rows="20" paginator="true"  
+                                     rowKey="#{ord}" 
                                      style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="false">
+                            <f:facet name="header">
+                                ЖД адреса
+                                <p:inputText id="globalFilter" onkeyup="PF('rwAddrTable').filter()" style="width:150px" placeholder="Поиск"/>
+                            </f:facet>
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                            <p:column headerText="Станция" style="width:200px;text-align: center">
-                                <p:commandLink value="#{ord.rws_name}"  oncomplete="PF('changeRWAddress').show()"  
-                                               onclick="document.getElementById('setRWAddressId').value =#{ord.rwaddress_id};" update="ccc"/>
-                            </p:column>
+                            <p:column filterBy="#{ord.station.getTranslateObject(sessionActions.language).getName()}" filterMatchMode="contains"  headerText="Станция" style="width:200px;text-align: left">
+                                <f:facet name="filter">
+                                    <h:inputHidden/>
+                                </f:facet>
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <p:outputLabel value="#{ord.station.getTranslateObject(sessionActions.language).getName()}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:autoComplete value="#{ord.station}" maxResults="20" 
+                                                        completeMethod="#{stationConverter.completeItem}"
+                                                        var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
+                                                        itemValue="#{m}" converter="#{stationConverter}" 
+                                                        forceSelection="true" size="40">
 
-                            <p:column headerText="Код получателя" style="width:45px;text-align: center">
-                                <p:outputLabel value="#{ord.rwrcvcode}"/>
+                                        </p:autoComplete>
+                                    </f:facet>
+                                </p:cellEditor>
                             </p:column>
-                            <p:column headerText="Ветка" style="width:450px;">
-                                <p:outputLabel value="#{ord.rwbranch}"/>
+                            <p:column headerText="Код получателя" filterBy="#{ord.rwrcvcode}" filterMatchMode="contains" style="width:45px;text-align: center">
+                                <f:facet name="filter">
+                                    <h:inputHidden/>
+                                </f:facet>
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <p:outputLabel value="#{ord.rwrcvcode}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText value="#{ord.rwrcvcode}" size="3" style="text-align: center"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Ветка" filterBy="#{ord.rwbranch}" filterMatchMode="contains" style="width:450px;">
+                                <f:facet name="filter">
+                                    <h:inputHidden/>
+                                </f:facet>
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <p:outputLabel value="#{ord.rwbranch}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText value="#{ord.rwbranch}" size="80"/>
+                                    </f:facet>
+                                </p:cellEditor>
                             </p:column>
                             <p:column headerText="Активный" style="width:56px; text-align: center" >
                                 <p:selectBooleanCheckbox value="#{ord.activeStatus}"/>
                             </p:column>
                             <f:facet name="footer" >
-                                <p:commandButton value="Добавить" actionListener="#{customerCBean.addRWAddressOCV()}" update="dTable mainMSG"/>
+                                <p:autoComplete value="#{openCustomerView.station}" maxResults="20"
+                                                completeMethod="#{stationConverter.completeItem}"
+                                                var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
+                                                itemValue="#{m}" converter="#{stationConverter}" 
+                                                forceSelection="true" size="40" placeholder="ЖД станция">
+                                </p:autoComplete>
+                                <p:inputText value="#{openCustomerView.rwRcvCode}" size="3" placeholder="код" style="text-align: center"/>
+                                <p:inputText value="#{openCustomerView.rwBranch}" size="80" placeholder="ветка"/>
+                                <p:commandButton value="Добавить" actionListener="#{customerCBean.addRWAddressOV()}" update="dTable mainMSG"/>
                                 <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
                             </f:facet>
                         </p:dataTable>
-
-                        <p:dialog header="Редактирование" widgetVar="changeRWAddress" modal="true"
-                                  showEffect="fade" hideEffect="fade" 
-                                  resizable="false" width="900">
-                            <p:dataTable id="ccc" var="a" value="#{openCustomerView.rwaddress}" >
-                                <p:column headerText="Станция" style="width:250px;">
-                                    <p:autoComplete value="#{a.station}" maxResults="20"
-                                                    completeMethod="#{stationConverter.completeItem}"
-                                                    var="m" itemLabel="#{m.rws_code}" itemValue="#{m}" converter="#{stationConverter}" 
-                                                    forceSelection="true">
-                                    </p:autoComplete>
-                                </p:column>
-                                <p:column headerText="Код получателя" style="width:45px;text-align: center">
-                                    <p:outputLabel value="#{a.rwrcvcode}"/>
-                                </p:column>
-                                <p:column headerText="Ветка" style="width:450px;text-align: center">
-                                    <p:outputLabel value="#{a.rwbranch}"/>
-                                </p:column>
-                                <p:column headerText="Активный" style="width:56px; text-align: center" >
-                                    <p:selectBooleanCheckbox value="#{a.activeStatus}"/>
-                                </p:column>
-                            </p:dataTable>
-                            <p:commandButton oncomplete="PF('changeRWAddress').hide()" immediate="true" value='No'/>
-                        </p:dialog>
-
                         <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="1200">
                             <p:outputPanel id="selectedParams" style="text-align:center;">
                                 <p:dataTable value="#{openCustomerView.selectedEntityLines}" var="v">
                                     <p:column headerText="Станция" style="width:200px;text-align: center">
-                                        <p:outputLabel value="#{v.rws_name}"/>
+                                        <p:outputLabel value="#{v.station.getTranslateObject(sessionActions.language).getName()}"/>
                                     </p:column>
-
                                     <p:column headerText="Код получателя" style="width:45px;text-align: center">
                                         <p:outputLabel value="#{v.rwrcvcode}"/>
                                     </p:column>
                                     <p:column headerText="Ветка" style="width:450px;">
                                         <p:outputLabel value="#{v.rwbranch}"/>
                                     </p:column>
-
                                 </p:dataTable>
                                 <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>
-                                <p:commandButton value="Yes" actionListener="#{lookupCBean.deleteLookupItemsOLV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
+                                <p:commandButton value="Yes" actionListener="#{customerCBean.deleteRWAddressesOV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
                             </p:outputPanel>
                         </p:dialog>
-
                         <p:commandButton id="btnBack" value="Back" action="customers" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
                         <p:commandButton id="btnSave" value="Сохранить" actionListener="#{customerCBean.changeEntity()}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
                     </p:fieldset> 

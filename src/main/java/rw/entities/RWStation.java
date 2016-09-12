@@ -7,10 +7,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import org.eclipse.persistence.annotations.PrivateOwned;
 
@@ -19,8 +20,12 @@ import org.eclipse.persistence.annotations.PrivateOwned;
  * @author savin
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = RWStation.FIND_ALL_STATIONS, query = "select t from RWStation t, RWStationTL tl where tl.rwstation.rws_code=t.rws_code and tl.language=:p_lang  order by tl.name")
+})
 public class RWStation implements Serializable {
 
+    public static final String FIND_ALL_STATIONS = "FIND_ALL_RWStation";
     @Id
     protected String rws_code;
     private Long location_id_orc;
@@ -32,27 +37,16 @@ public class RWStation implements Serializable {
     @PrivateOwned
     @OrderBy("language asc")
     private List<RWStationTL> rwstationTL = new ArrayList<>();
-    @Transient
-    protected String name;
 
-    public RWStation() {
+    public RWStationTL getTranslateObject(String lang) {
+        for (RWStationTL tl : getRwstationTL()) {
+            if (tl.getLanguage().equals(lang)) {
+                return tl;
+            }
+        }
+        return null;
     }
 
-    public RWStation(String rws_code, Long location_id_orc, RWRoad rwroad, List<RWStationTL> rwstationTL) {
-        this.rws_code = rws_code;
-        this.rwroad = rwroad;
-        this.rwstationTL = rwstationTL;
-        this.location_id_orc = location_id_orc;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    
 //    public String getFullName() {
 //        return fullName;
 //    }
@@ -60,7 +54,6 @@ public class RWStation implements Serializable {
 //    public void setFullName(String fullName) {
 //        this.fullName = fullName;
 //    }
-
     public Long getLocation_id_orc() {
         return location_id_orc;
     }

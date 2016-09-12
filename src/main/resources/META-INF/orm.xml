@@ -13,16 +13,6 @@
             <column name="iso_code"/>
         </constructor-result>
     </sql-result-set-mapping>
-    <sql-result-set-mapping name="RWStationVLMapping">
-        <constructor-result target-class="rw.entities.RWStationVL">
-            <column name="rws_code"/>
-            <column name="name"/>
-            <column name="rwr_code"/>
-            <column name="fullname"/>
-            <column name="shortname"/>
-            <column name="country_id"/>
-        </constructor-result>
-    </sql-result-set-mapping>
     <sql-result-set-mapping name="LookupItemVLMapping">
         <constructor-result target-class="lookup.entities.LookupItem">
             <column name="lookupitem_id"/>
@@ -32,15 +22,4 @@
             <column name="description"/>
         </constructor-result>
     </sql-result-set-mapping>
-     <sql-result-set-mapping name="RWAddressVLMapping">
-        <constructor-result target-class="customer.entities.RWAddressVL">
-            <column name="rwaddress_id" class="java.lang.Long"/>
-            <column name="rws_code" class="java.lang.String"/>
-            <column name="rwrcvcode" class="java.lang.String"/>
-            <column name="rwbranch" class="java.lang.String"/>
-            <column name="activestatus" class="java.lang.Boolean"/>
-            <column name="rws_name" class="java.lang.String"/>
-        </constructor-result>
-    </sql-result-set-mapping>
-    
 </entity-mappings>

@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import org.eclipse.persistence.annotations.PrivateOwned;
 
@@ -34,15 +34,14 @@ public class Customer implements Serializable{
     private String inn;
     private Boolean resident;
     
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "customer")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "customer",fetch = FetchType.LAZY)
     @PrivateOwned
     private List<Address> addresses = new ArrayList<>();
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "customer")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "customer",fetch = FetchType.LAZY)
     @PrivateOwned
     private List<RWAddress> RWAddresses = new ArrayList<>();
     private Boolean activeStatus = true;
-    @Transient
-    private List<RWAddressVL> rwAddressVL=new ArrayList<>();
+    
 
     public void addAddress(Address adr) {
         addAddress(adr, true);
@@ -148,14 +147,6 @@ public class Customer implements Serializable{
 
     public void setResident(Boolean resident) {
         this.resident = resident;
-    }
-
-    public List<RWAddressVL> getRwAddressVL() {
-        return rwAddressVL;
-    }
-
-    public void setRwAddressVL(List<RWAddressVL> rwAddressVL) {
-        this.rwAddressVL = rwAddressVL;
     }
 
 }

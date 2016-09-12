@@ -2,11 +2,16 @@ package customer.beans;
 
 import customer.entities.Customer;
 import customer.entities.RWAddress;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import rw.entities.RWStation;
 import service.AbstractView;
+import service.SessionActions;
 
 /**
  *
@@ -20,18 +25,29 @@ public class OpenCustomerView extends AbstractView<Customer> {
     private CustomerCBean client;
     @Inject
     private FindCustomerSession fls;
-    
+    @Inject
+    private SessionActions sa;
     private Customer openedEntity;
-    private Long rwaddress_id;
-    private RWAddress rwaddress;
+
     //Поля для создания новой строки
+    private RWStation station;
+    private String rwBranch;
+    private String rwRcvCode;
 
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     @Override
     protected void init() {
         openedEntity = client.find(fls.getCustomer_id());
-        openedEntity.setRwAddressVL(client.findRWAddressVL(openedEntity.getCustomer_id()));
+        // openedEntity.setRwAddressVL(client.findRWAddressVL(openedEntity.getCustomer_id()));
+        List<RWAddress> rw = openedEntity.getRWAddresses();
+        Collections.sort(rw, new Comparator<RWAddress>() {
+            @Override
+            public int compare(RWAddress o1, RWAddress o2) {
+                return o1.getStation().getTranslateObject(sa.getLanguage()).getName().
+                        compareTo(o2.getStation().getTranslateObject(sa.getLanguage()).getName());
+            }
+        });
         super.setEntity(openedEntity);
     }
 
@@ -43,31 +59,28 @@ public class OpenCustomerView extends AbstractView<Customer> {
         this.openedEntity = openedEntity;
     }
 
-    public Long getRwaddress_id() {
-        return rwaddress_id;
+    public RWStation getStation() {
+        return station;
     }
 
-    public void setRwaddress_id(Long rwaddress_id) {
-        this.rwaddress_id = rwaddress_id;
-        if(rwaddress_id!=null){
-            for(RWAddress r:getEntity().getRWAddresses()){
-                if(r.getRwaddress_id().equals(rwaddress_id)){
-                    System.out.println("equals r="+r.getRwrcvcode());
-                    rwaddress=r;
-                    break;
-                }
-            }
-//            rwaddress=client.findRWAddressByID(rwaddress_id);
-            System.out.println("!!!!!!setRwaddress("+rwaddress_id+")"+" asas="+rwaddress.getRwrcvcode());
-        }
+    public void setStation(RWStation station) {
+        this.station = station;
     }
 
-    public RWAddress getRwaddress() {
-        return rwaddress;
+    public String getRwBranch() {
+        return rwBranch;
     }
 
-    public void setRwaddress(RWAddress rwaddress) {
-        this.rwaddress = rwaddress;
+    public void setRwBranch(String rwBranch) {
+        this.rwBranch = rwBranch;
     }
-    
+
+    public String getRwRcvCode() {
+        return rwRcvCode;
+    }
+
+    public void setRwRcvCode(String rwRcvCode) {
+        this.rwRcvCode = rwRcvCode;
+    }
+
 }

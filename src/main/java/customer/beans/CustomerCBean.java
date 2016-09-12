@@ -2,7 +2,6 @@ package customer.beans;
 
 import customer.entities.Customer;
 import customer.entities.RWAddress;
-import customer.entities.RWAddressVL;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -59,14 +58,6 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
     //----------------------//
     //Дополнительные методы 
     //----------------------//
-    public List<RWAddressVL> findRWAddressVL(Long p_customer_id) {
-        return ejb.findRWAddressVL(p_customer_id);
-    }
-
-    public RWAddress findRWAddressByID(Long p_id) {
-        return rwAddrEJB.find(p_id);
-    }
-
     @Override
     public List<Customer> findAll() {
         List<Customer> l = super.findAll();
@@ -79,8 +70,28 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
         return l;
     }
 
-    public void addRWAddressOCV() {
+    public void addRWAddressOV() {
+        RWAddress rw = new RWAddress();
+        rw.setActiveStatus(Boolean.TRUE);
+        rw.setRwbranch(olv.getRwBranch());
+        rw.setRwrcvcode(olv.getRwRcvCode());
+        rw.setStation(olv.getStation());
 
+        String validation = rwAddrEJB.validateMyEntity(rw);
+        if (validation.equals(ejb.SUCCESSFUL)) {
+            olv.getEntity().addRWAddress(rw);
+            changeEntity();
+            olv.setStation(null);
+            olv.setRwBranch(null);
+            olv.setRwRcvCode(null);
+        } else {
+            ejb.sendMessage(validation, null);
+        }
+    }
+
+    public void deleteRWAddressesOV() {
+        olv.getEntity().getRWAddresses().removeAll(olv.getSelectedEntityLines());
+        changeEntity();
     }
 
 }

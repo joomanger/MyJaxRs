@@ -12,7 +12,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import rw.beans.RWStationCBean;
 import rw.entities.RWStation;
-import rw.entities.RWStationVL;
+import service.SessionActions;
 
 /**
  *
@@ -24,6 +24,8 @@ public class StationConverter implements Converter {
 
     @Inject
     private RWStationCBean client;
+    @Inject
+    private SessionActions sa;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -47,14 +49,21 @@ public class StationConverter implements Converter {
         }
     }
 
-    public List<RWStationVL> completeItem(String query) {
-        List<RWStationVL> allItems = client.findAllVL();
-        List<RWStationVL> filteredItems = new ArrayList<>();
+    public List<RWStation> completeItem(String query) {
+        List<RWStation> allItems = client.findAll();
+        List<RWStation> filteredItems = new ArrayList<>();
 
-        allItems.stream().filter((item) -> item.getName().toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
-            filteredItems.add(item);
-        });
+        for (RWStation rw : allItems) {
+            try {
+                if (rw.getTranslateObject(sa.getLanguage()).getName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredItems.add(rw);
+                }
+            } catch (NullPointerException ex) {
+                return filteredItems;
+            }
+        }
         return filteredItems;
+
     }
 
 }

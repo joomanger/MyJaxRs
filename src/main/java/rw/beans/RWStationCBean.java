@@ -1,12 +1,10 @@
 package rw.beans;
 
-import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import rw.entities.RWStation;
 import rw.entities.RWStationTL;
-import rw.entities.RWStationVL;
 import service.AbstractClientBean;
 import service.AbstractEJB;
 import service.AbstractView;
@@ -45,30 +43,30 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
 
     @Override
     protected AbstractView<RWStation> getFindView() {
-        return null;
+        return fcv;
     }
 
     @Override
     protected AbstractView<RWStation> getNewView() {
         return ncv;
-    }
+    }   
 
     //Дополнительные методы
-    @Override
-    public void deleteSelectedEntities() {
-        for (RWStationVL entity : fcv.getSelectedEntities()) {
-
-            RWStation cc = new RWStation(entity.getRws_code(), entity.getLocation_id_orc(), entity.getRwroad(), entity.getRwstationTL());
-
-            String status = getEJB().remove(cc);
-            if (status.equals(getEJB().SUCCESSFUL)) {
-                getEJB().sendMessage(status, "Объект удален успешно");
-                fcv.getEntities().remove(entity);
-            } else {
-                getEJB().sendMessage(status, null);
-            }
-        }
-    }
+//    @Override
+//    public void deleteSelectedEntities() {
+//        for (RWStationVL entity : fcv.getSelectedEntities()) {
+//
+//            RWStation cc = new RWStation(entity.getRws_code(), entity.getLocation_id_orc(), entity.getRwroad(), entity.getRwstationTL());
+//
+//            String status = getEJB().remove(cc);
+//            if (status.equals(getEJB().SUCCESSFUL)) {
+//                getEJB().sendMessage(status, "Объект удален успешно");
+//                fcv.getEntities().remove(entity);
+//            } else {
+//                getEJB().sendMessage(status, null);
+//            }
+//        }
+//    }
 
     public void addRWStationTLOCV() {
         RWStationTL tl = new RWStationTL();
@@ -90,9 +88,9 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
         }
     }
 
-    public List<RWStationVL> findAllVL() {
-        return ejb.findAllVL();
-    }
+//    public List<RWStationVL> findAllVL() {
+//        return ejb.findAllVL();
+//    }
 
     @Override
     public String createEntity(String backURL) {
