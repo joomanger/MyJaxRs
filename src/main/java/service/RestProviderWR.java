@@ -28,7 +28,7 @@ import javax.ws.rs.ext.MessageBodyWriter;
  * @author savin
  * @param <T>
  */
-public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, MessageBodyReader<T>, ClientOperations<T> {
+public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, MessageBodyReader<T> {
 
     private Client client;
     private WebTarget target;
@@ -79,7 +79,7 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
         return gson.fromJson(reader, type);
     }
 
-    @Override
+    
     public Response editItem(Object obj, String success_msg) {
         Response t = getTarget()
                 .register(this)
@@ -95,7 +95,7 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
         return t;
     }
 
-    @Override
+
     public Response deleteItem(Object obj, String success_msg) {
         Response t = getTarget()
                 .path("{itemId}")
@@ -110,17 +110,17 @@ public abstract class RestProviderWR<T> implements MessageBodyWriter<T>, Message
         return t;
     }
 
-    @Override
+
     public T getItem(Class<T> type, Object value) {
         return getTarget().path("{item}").resolveTemplate("item", value).request().get(type);
     }
 
-    @Override
+
     public T[] getItems(Class<?> type) {
         return (T[]) getTarget().request().get(type);
     }
 
-    @Override
+    
     public Response addItem(Object obj, String success_msg) {
         Response t
                 = getTarget()

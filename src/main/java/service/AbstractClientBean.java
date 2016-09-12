@@ -7,13 +7,7 @@ import java.util.List;
  * @author savin
  * @param <T>
  */
-public abstract class AbstractClientBean<T> implements IClientBean<T> {
-
-    //private final Class<T> entity;
-
-//    public AbstractClientBean(Class<T> entity) {
-//        this.entity = entity;
-//    }
+public abstract class AbstractClientBean<T> {
 
     protected abstract AbstractEJB<T> getEJB();
 
@@ -23,17 +17,17 @@ public abstract class AbstractClientBean<T> implements IClientBean<T> {
 
     protected abstract AbstractView<T> getNewView();
 
-    @Override
+
     public T find(Object p_id) {
         return getEJB().find(p_id);
     }
 
-    @Override
+
     public List<T> findAll() {
         return getEJB().findAll();
     }
 
-    @Override
+
     public String createEntity(String backURL) {
 
         String result = getEJB().validateMyEntity(getNewView().getEntity());
@@ -52,25 +46,20 @@ public abstract class AbstractClientBean<T> implements IClientBean<T> {
         }
     }
 
-    @Override
+    
     public void changeEntity() {
         String result = getEJB().validateMyEntity(getOpenView().getEntity());
         if (result.equals(getEJB().SUCCESSFUL)) {
-//            System.out.println("validation is OK");
             String status = getEJB().edit(getOpenView().getEntity());
-//            System.out.println("status after create =>"+status);
             getEJB().sendMessage(status, "Объект обновлен успешно");
             if (!status.equals(getEJB().SUCCESSFUL)) {
-//                System.out.println("status unsuccessful =>"+status);
                 getEJB().sendMessage(status, null);
             }
         } else {
-//            System.out.println("validation is not OK");
             getEJB().sendMessage(result, null);
         }
     }
 
-    @Override
     public void deleteSelectedEntities() {
         for (T entity : getFindView().getSelectedEntities()) {
             String status = getEJB().remove(entity);
@@ -82,6 +71,5 @@ public abstract class AbstractClientBean<T> implements IClientBean<T> {
             }
         }
     }
-    
-    
+
 }

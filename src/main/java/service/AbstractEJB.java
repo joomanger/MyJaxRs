@@ -15,7 +15,7 @@ import javax.validation.Validator;
  * @author savin
  * @param <T>
  */
-public abstract class AbstractEJB<T> implements IEJB<T>{
+public abstract class AbstractEJB<T> {
 
     @Inject
     @MyValidator
@@ -30,14 +30,12 @@ public abstract class AbstractEJB<T> implements IEJB<T>{
     }
 
     protected abstract EntityManager getEntityManager();
-    
+
     /**
      *
      * @param entity
      * @return
      */
-    
-    @Override
     public String validateMyEntity(T entity) {
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(entity);
         StringBuilder sb = new StringBuilder();
@@ -52,7 +50,6 @@ public abstract class AbstractEJB<T> implements IEJB<T>{
         return SUCCESSFUL;
     }
 
-    @Override
     public String create(T entity) {
         try {
             String result = validateMyEntity(entity);
@@ -67,7 +64,6 @@ public abstract class AbstractEJB<T> implements IEJB<T>{
         }
     }
 
-    @Override
     public String edit(T entity) {
         try {
             String result = validateMyEntity(entity);
@@ -82,7 +78,6 @@ public abstract class AbstractEJB<T> implements IEJB<T>{
         }
     }
 
-    @Override
     public String remove(T entity) {
         try {
             getEntityManager().remove(getEntityManager().merge(entity));
@@ -92,7 +87,6 @@ public abstract class AbstractEJB<T> implements IEJB<T>{
         }
     }
 
-    @Override
     public T find(Object id) {
         if (id != null) {
             return getEntityManager().find(entityClass, id);
@@ -101,7 +95,6 @@ public abstract class AbstractEJB<T> implements IEJB<T>{
         }
     }
 
-    @Override
     public List<T> findAll() {
         javax.persistence.criteria.CriteriaQuery cq;
 
@@ -130,7 +123,6 @@ public abstract class AbstractEJB<T> implements IEJB<T>{
         return ((Long) q.getSingleResult()).intValue();
     }
 
-    @Override
     public void sendMessage(String status, String success_msg) {
         try {
             if (status != null) {
