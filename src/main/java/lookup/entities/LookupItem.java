@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -40,7 +41,7 @@ public class LookupItem implements Serializable {
     @JoinColumn(name = "LOOKUP_ID")
     private Lookup lookup;
 
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "lookupItem")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "lookupItem",fetch = FetchType.LAZY)
     @PrivateOwned
     @OrderBy("language asc")
     private List<LookupItemTL> lookupItemTL = new ArrayList<>();
@@ -58,6 +59,15 @@ public class LookupItem implements Serializable {
         this.valuez = valuez;
         this.meaning = meaning;
         this.description = description;
+    }
+    
+    public LookupItemTL getTranslateObject(String lang) {
+        for (LookupItemTL tl : getLookupItemTL()) {
+            if (tl.getLanguage().equals(lang)) {
+                return tl;
+            }
+        }
+        return null;
     }
 
     public List<LookupItemTL> getLookupItemTL() {

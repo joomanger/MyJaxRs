@@ -42,15 +42,15 @@ public class OpenLookupView extends AbstractView<Lookup> {
 
     public void updateEntityVL() {
         openedLookup = client.find(fls.getLookup_id());
-        for (LookupItem l : openedLookup.getLookupItems()) {
-            for (LookupItem l2 : client.findLookupItemVL(fls.getLookup_id())) {
-                if (l.equals(l2)) {
-                    l.setMeaning(l2.getMeaning());
-                    l.setDescription(l2.getDescription());
-                    break;
-                }
-            }
-        }
+//        for (LookupItem l : openedLookup.getLookupItems()) {
+//            for (LookupItem l2 : client.findLookupItemVL(fls.getLookup_id())) {
+//                if (l.equals(l2)) {
+//                    l.setMeaning(l2.getMeaning());
+//                    l.setDescription(l2.getDescription());
+//                    break;
+//                }
+//            }
+//        }
         super.setEntity(openedLookup);
     }
 

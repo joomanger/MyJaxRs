@@ -36,6 +36,14 @@ public class Address implements Serializable {
     private String fullAddress;
     private String postCode;
 
+    private Boolean ship_to;
+    private Boolean bill_to;
+    private Boolean vendor;
+    private Boolean activeStatus;
+
+    private String shipuses_id;
+    private String billuses_id;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
@@ -102,4 +110,55 @@ public class Address implements Serializable {
     public void setPostCode(String postCode) {
         this.postCode = postCode;
     }
+
+    public Boolean getActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(Boolean activeStatus) {
+        this.activeStatus = activeStatus;
+    }
+
+    public Boolean getShip_to() {
+        return ship_to;
+    }
+
+    public void setShip_to(Boolean ship_to) {
+        this.ship_to = ship_to;
+    }
+
+    public Boolean getBill_to() {
+        return bill_to;
+    }
+
+    public void setBill_to(Boolean bill_to) {
+        this.bill_to = bill_to;
+    }
+
+    public Boolean getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(Boolean vendor) {
+        this.vendor = vendor;
+    }
+
+    public String getShipuses_id() {
+        return shipuses_id;
+    }
+
+    public void setShipuses_id(String shipuses_id) {
+        this.shipuses_id = shipuses_id;
+    }
+
+    public String getBilluses_id() {
+        return billuses_id;
+    }
+
+    public void setBilluses_id(String billuses_id) {
+        this.billuses_id = billuses_id;
+    }
+
+    
+
 }

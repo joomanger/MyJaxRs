@@ -32,10 +32,10 @@
 
                             </p:column>
                             <p:column headerText="Расшифровка" style="width:200px;">
-                                <p:outputLabel value="#{ord.meaning}"/>
+                                <p:outputLabel value="#{ord.getTranslateObject(sessionActions.language).getMeaning()}"/>
                             </p:column>
                             <p:column headerText="Описание" style="width:450px;">
-                                <p:outputLabel value="#{ord.description}"/>
+                                <p:outputLabel value="#{ord.getTranslateObject(sessionActions.language).getDescription()}"/>
                             </p:column>
                             <p:column headerText="Показ." style="width:56px; text-align: center" >
                                 <p:selectBooleanCheckbox value="#{ord.activeStatus}"/>
