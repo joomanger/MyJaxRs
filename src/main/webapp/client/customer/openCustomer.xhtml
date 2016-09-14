@@ -34,10 +34,10 @@
                             <f:facet name="header">
                                 Адреса
                                 <p:inputText id="globalFilter" onkeyup="PF('addrTable').filter()" style="width:150px" placeholder="Поиск"/>
-                                
+
                             </f:facet>   
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                            <p:column filterBy="#{ord.country}" filterMatchMode="contains"  headerText="Страна" style="width:150px;text-align: left">
+                            <p:column filterBy="#{ord.country}" filterMatchMode="contains"  headerText="Страна" style="width:110px;text-align: left">
                                 <f:facet name="filter">
                                     <h:inputHidden/>
                                 </f:facet>
@@ -89,7 +89,7 @@
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column filterBy="#{ord.fullAddress}" filterMatchMode="contains"  headerText="Улица" style="width:100px;text-align: left">
+                            <p:column filterBy="#{ord.fullAddress}" filterMatchMode="contains"  headerText="Улица" style="width:140px;text-align: left">
                                 <f:facet name="filter">
                                     <h:inputHidden/>
                                 </f:facet>
@@ -101,6 +101,15 @@
                                         <p:inputText value="#{ord.fullAddress}"/>
                                     </f:facet>
                                 </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="S" style="width:20px;text-align: center">
+                                <p:selectBooleanCheckbox value="#{ord.ship_to}"/>
+                            </p:column>
+                            <p:column headerText="B" style="width:20px;text-align: center">
+                                <p:selectBooleanCheckbox value="#{ord.bill_to}"/>
+                            </p:column>
+                            <p:column headerText="V" style="width:20px;text-align: center">
+                                <p:selectBooleanCheckbox value="#{ord.vendor}"/>
                             </p:column>
                         </p:dataTable>
                         <p:dataTable id="dTable" var="ord" value="#{openCustomerView.entity.RWAddresses}" 
