@@ -1,7 +1,9 @@
 package customer.beans;
 
+import customer.entities.Address;
 import customer.entities.Customer;
 import customer.entities.RWAddress;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -28,7 +30,8 @@ public class OpenCustomerView extends AbstractView<Customer> {
     @Inject
     private SessionActions sa;
     private Customer openedEntity;
-
+    private List<Address> selectedAddresses=new ArrayList<>();
+    
     //Поля для создания новой строки
     private RWStation station;
     private String rwBranch;
@@ -83,4 +86,14 @@ public class OpenCustomerView extends AbstractView<Customer> {
         this.rwRcvCode = rwRcvCode;
     }
 
+    public List<Address> getSelectedAddresses() {
+        return selectedAddresses;
+    }
+
+    public void setSelectedAddresses(List<Address> selectedAddresses) {
+        this.selectedAddresses = selectedAddresses;
+    }
+
+    
+    
 }
