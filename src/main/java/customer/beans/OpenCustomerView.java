@@ -29,9 +29,14 @@ public class OpenCustomerView extends AbstractView<Customer> {
     private FindCustomerSession fls;
     @Inject
     private SessionActions sa;
-    private Customer openedEntity;
-    private List<Address> selectedAddresses=new ArrayList<>();
     
+    private Customer openedEntity;
+    
+    private List<Address> selectedAddresses = new ArrayList<>();
+    private List<RWAddress> selectedRWAddresses = new ArrayList<>();
+    private List<RWAddress> filteredRWAddresses = new ArrayList<>();
+    private List<Address> filteredAddresses = new ArrayList<>();
+
     //Поля для создания новой строки
     private RWStation station;
     private String rwBranch;
@@ -42,8 +47,9 @@ public class OpenCustomerView extends AbstractView<Customer> {
     @Override
     protected void init() {
         openedEntity = client.find(fls.getCustomer_id());
-        // openedEntity.setRwAddressVL(client.findRWAddressVL(openedEntity.getCustomer_id()));
+
         List<RWAddress> rw = openedEntity.getRWAddresses();
+
         Collections.sort(rw, new Comparator<RWAddress>() {
             @Override
             public int compare(RWAddress o1, RWAddress o2) {
@@ -94,6 +100,28 @@ public class OpenCustomerView extends AbstractView<Customer> {
         this.selectedAddresses = selectedAddresses;
     }
 
-    
-    
+    public List<RWAddress> getFilteredRWAddresses() {
+        return filteredRWAddresses;
+    }
+
+    public void setFilteredRWAddresses(List<RWAddress> filteredRWAddresses) {
+        this.filteredRWAddresses = filteredRWAddresses;
+    }
+
+    public List<Address> getFilteredAddresses() {
+        return filteredAddresses;
+    }
+
+    public void setFilteredAddresses(List<Address> filteredAddresses) {
+        this.filteredAddresses = filteredAddresses;
+    }
+
+    public List<RWAddress> getSelectedRWAddresses() {
+        return selectedRWAddresses;
+    }
+
+    public void setSelectedRWAddresses(List<RWAddress> selectedRWAddresses) {
+        this.selectedRWAddresses = selectedRWAddresses;
+    }
+
 }

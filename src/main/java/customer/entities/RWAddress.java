@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 import rw.entities.RWStation;
 
 /**
@@ -29,6 +30,7 @@ public class RWAddress implements Serializable{
     private Long rwaddress_id_orc;
     @OneToOne(cascade = {CascadeType.DETACH})
     @JoinColumn(name = "rws_code")
+    @NotNull(message = "Поле ЖД Станция обязательна для заполнения")
     private RWStation station;
     protected String rwbranch;
     protected String rwrcvcode;

@@ -24,125 +24,119 @@
                             <p:outputLabel value="ИНН"/>
                             <p:inputText value="#{openCustomerView.entity.inn}" style="width: 100px;text-align: center"/>
                         </h:panelGrid>
-                        <p:dataTable id="addresses" var="ord" value="#{openCustomerView.entity.addresses}" 
+                        <p:dataTable id="addresses" var="a" value="#{openCustomerView.entity.addresses}" 
                                      widgetVar="addrTable"
                                      selection="#{openCustomerView.selectedAddresses}" 
                                      rowSelectMode="checkbox" editMode="cell" editable="true"
-                                     scrollable="true"  reflow="true" rows="20" paginator="true"  
-                                     rowKey="#{ord}" 
-                                     style="width: 1300px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="false">
+                                     reflow="true" rows="20" paginator="true"
+                                     rowKey="#{a.address_id}" filteredValue="#{openCustomerView.filteredAddresses}"
+                                     style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="false">
                             <f:facet name="header">
                                 Адреса
-                                <p:inputText id="globalFilter" onkeyup="PF('addrTable').filter()" style="width:150px" placeholder="Поиск"/>
+                                <p:inputText onkeyup="PF('addrTable').filter()" style="width:150px" placeholder="Поиск"/>
                             </f:facet>   
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                            <p:column filterBy="#{ord.country}" filterMatchMode="contains"  
-                                      headerText="Страна" style="width:110px;text-align: left">
+                            <p:column filterBy="#{a.country}" filterMatchMode="contains" headerText="Страна" style="width:110px;text-align: left">
                                 <f:facet name="filter">
                                     <h:inputHidden/>
                                 </f:facet>
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <p:outputLabel value="#{ord.country}"/>
+                                        <p:outputLabel value="#{a.country}"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText value="#{ord.country}"/>
+                                        <p:inputText value="#{a.country}"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column filterBy="#{ord.region}" filterMatchMode="contains"  
-                                      headerText="Область" style="width:80px;text-align: left">
+                            <p:column filterBy="#{a.region}" filterMatchMode="contains" headerText="Область" style="width:80px;text-align: left">
                                 <f:facet name="filter">
                                     <h:inputHidden/>
                                 </f:facet>
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <p:outputLabel value="#{ord.region}"/>
+                                        <p:outputLabel value="#{a.region}"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText value="#{ord.region}"/>
+                                        <p:inputText value="#{a.region}"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column filterBy="#{ord.city}" filterMatchMode="contains"  
-                                      headerText="Город" style="width:80px;text-align: left">
+                            <p:column filterBy="#{a.city}" filterMatchMode="contains" headerText="Город" style="width:80px;text-align: left">
                                 <f:facet name="filter">
                                     <h:inputHidden/>
                                 </f:facet>
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <p:outputLabel value="#{ord.city}"/>
+                                        <p:outputLabel value="#{a.city}"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText value="#{ord.city}"/>
+                                        <p:inputText value="#{a.city}"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column filterBy="#{ord.postCode}" filterMatchMode="contains"  
-                                      headerText="Индекс" style="width:30px;text-align: center">
+                            <p:column filterBy="#{a.postCode}" filterMatchMode="contains" headerText="Индекс" style="width:30px;text-align: center">
                                 <f:facet name="filter">
                                     <h:inputHidden/>
                                 </f:facet>
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <p:outputLabel value="#{ord.postCode}"/>
+                                        <p:outputLabel value="#{a.postCode}"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText value="#{ord.postCode}"/>
+                                        <p:inputText value="#{a.postCode}"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column filterBy="#{ord.fullAddress}" filterMatchMode="contains"  
-                                      headerText="Улица" style="width:140px;text-align: left">
+                            <p:column filterBy="#{a.fullAddress}" filterMatchMode="contains" headerText="Улица" style="width:140px;text-align: left">
                                 <f:facet name="filter">
                                     <h:inputHidden/>
                                 </f:facet>
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <p:outputLabel value="#{ord.fullAddress}"/>
+                                        <p:outputLabel value="#{a.fullAddress}"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText value="#{ord.fullAddress}"/>
+                                        <p:inputText value="#{a.fullAddress}"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
                             <p:column headerText="S"  style="width:20px;text-align: center">
-                                <p:selectBooleanCheckbox value="#{ord.ship_to}"/>
+                                <p:selectBooleanCheckbox value="#{a.ship_to}"/>
                             </p:column>
                             <p:column headerText="B" style="width:20px;text-align: center">
-                                <p:selectBooleanCheckbox value="#{ord.bill_to}"/>
+                                <p:selectBooleanCheckbox value="#{a.bill_to}"/>
                             </p:column>
                             <p:column headerText="V" style="width:20px;text-align: center">
-                                <p:selectBooleanCheckbox value="#{ord.vendor}"/>
+                                <p:selectBooleanCheckbox value="#{a.vendor}"/>
                             </p:column>
-                            <p:column filterBy="#{ord.duferco_site_use_id}" filterMatchMode="contains"  
-                                      headerText="Код Дуферко" style="width:50px;text-align: center">
+                            <p:column filterBy="#{a.duferco_site_use_id}" filterMatchMode="contains" headerText="Код Дуферко" style="width:30px;text-align: center">
                                 <f:facet name="filter">
                                     <h:inputHidden/>
                                 </f:facet>
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <p:outputLabel value="#{ord.duferco_site_use_id}"/>
+                                        <p:outputLabel value="#{a.duferco_site_use_id}"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText value="#{ord.duferco_site_use_id}"/>
+                                        <p:inputText value="#{a.duferco_site_use_id}"/>
                                     </f:facet>
                                 </p:cellEditor>
-                            </p:column>
+                            </p:column> 
                             <p:column headerText="Акт" style="width:20px;text-align: center">
-                                <p:selectBooleanCheckbox value="#{ord.activeStatus}"/>
+                                <p:selectBooleanCheckbox value="#{a.activeStatus}"/>
                             </p:column>
                         </p:dataTable>
                         <p:dataTable id="dTable" var="ord" value="#{openCustomerView.entity.RWAddresses}" 
-                                     widgetVar="rwAddrTable"
+                                     widgetVar="rwAddrTable" emptyMessage="Данные не найдены"
                                      selection="#{openCustomerView.selectedEntityLines}" 
                                      rowSelectMode="checkbox" editMode="cell" editable="true"
-                                     scrollable="true"  reflow="true" rows="20" paginator="true"  
+                                     rows="20" paginator="true"  
                                      rowKey="#{ord}" 
-                                     style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="false">
+                                     style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100">
                             <f:facet name="header">
                                 ЖД адреса
-                                <p:inputText id="globalFilter" onkeyup="PF('rwAddrTable').filter()" style="width:150px" placeholder="Поиск"/>
+                                <p:inputText onkeyup="PF('rwAddrTable').filter()" style="width:150px" placeholder="Поиск"/>
                             </f:facet>
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                             <p:column filterBy="#{ord.station.getTranslateObject(sessionActions.language).getName()}" filterMatchMode="contains"  headerText="Станция" style="width:200px;text-align: left">
