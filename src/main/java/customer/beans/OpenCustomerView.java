@@ -30,12 +30,12 @@ public class OpenCustomerView extends AbstractView<Customer> {
     @Inject
     private SessionActions sa;
     
-    private Customer openedEntity;
+    private Customer openedEntity=new Customer();
     
     private List<Address> selectedAddresses = new ArrayList<>();
     private List<RWAddress> selectedRWAddresses = new ArrayList<>();
-    private List<RWAddress> filteredRWAddresses = new ArrayList<>();
-    private List<Address> filteredAddresses = new ArrayList<>();
+    private List<RWAddress> filteredRWAddresses;
+    private List<Address> filteredAddresses;
 
     //Поля для создания новой строки
     private RWStation station;

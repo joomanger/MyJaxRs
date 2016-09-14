@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
 
@@ -23,14 +24,15 @@
                             <p:inputText id="globalFilter" onkeyup="PF('countrTable').filter()" style="width:150px" placeholder="Поиск"/>
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column filterBy="#{ord.name}" filterMatchMode="contains" headerText="Наименование" style="width: 150px;text-align: left">
+                        <c:set var="tl" value="#{ord.getTranslateObject(sessionActions.language)}"/>
+                        <p:column filterBy="#{tl.getName()}" filterMatchMode="contains" headerText="Наименование" style="width: 150px;text-align: left">
                             <f:facet name="filter">
                                 <h:inputHidden/>
                             </f:facet>
-                            <h:commandLink action="openCountry" value="#{ord.name}" onclick="document.getElementById('setCountryId').value = '#{ord.country_id}';"/>
+                            <h:commandLink action="openCountry" value="#{tl.getName()}" onclick="document.getElementById('setCountryId').value = '#{ord.country_id}';"/>
                         </p:column>
                         <p:column headerText="Описание" style="width: 750px;text-align: left">
-                            <h:outputText value="#{ord.description}"/>
+                            <h:outputText value="#{tl.getDescription()}"/>
                         </p:column>
                         <p:column filterBy="#{ord.country_id}" filterMatchMode="contains" headerText="Код" style="width: 35px;text-align: center">
                             <f:facet name="filter">
@@ -56,7 +58,7 @@
                                     <h:outputText value="#{v.country_id}"/>
                                 </p:column>
                                 <p:column headerText="Наименование">
-                                    <h:outputText value="#{v.name}" style="text-align: left"/>
+                                    <h:outputText value="#{v.getTranslateObject(sessionActions.language).getName()}" style="text-align: left"/>
                                 </p:column>
                             </p:dataTable>
                             <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>

@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import org.eclipse.persistence.annotations.PrivateOwned;
 
@@ -21,30 +20,37 @@ public class Country implements Serializable {
 
     @Id
     @Size(min = 2, max = 2, message = "Значение КОД должно быть 2-буквенным")
-    protected String country_id;
+    private String country_id;
 
     @Size(min = 0, max = 3, message = "Значение EU-код должно быть не более 3-х символов")
-    protected String eu_code;
+    private String eu_code;
     @Size(min = 3, max = 3, message = "Значение ISO-код должно быть 3-буквенным")
-    protected String iso_code;
+    private String iso_code;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "country")
     @PrivateOwned
     @OrderBy("language asc")
     private List<CountryTL> countryTL = new ArrayList<>();
-    @Transient
-    private String name;
-
-    public Country() {
+//    @Transient
+//    private String name;
+//
+//    public Country() {
+//    }
+//
+//    public Country(String country_id, String eu_code, String iso_code, List<CountryTL> countryTL) {
+//        this.country_id = country_id;
+//        this.eu_code = eu_code;
+//        this.iso_code = iso_code;
+//        this.countryTL = countryTL;
+//    }
+    public CountryTL getTranslateObject(String lang) {
+        for (CountryTL tl : getCountryTL()) {
+            if (tl.getLanguage().equals(lang)) {
+                return tl;
+            }
+        }
+        return null;
     }
-
-    public Country(String country_id, String eu_code, String iso_code, List<CountryTL> countryTL) {
-        this.country_id = country_id;
-        this.eu_code = eu_code;
-        this.iso_code = iso_code;
-        this.countryTL = countryTL;
-    }
-
     public String getCountry_id() {
         return country_id;
     }
@@ -91,12 +97,12 @@ public class Country implements Serializable {
         }
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 
 }

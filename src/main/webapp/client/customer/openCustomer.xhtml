@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
 
@@ -33,19 +34,23 @@
                                      style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="false">
                             <f:facet name="header">
                                 Адреса
-                                <p:inputText onkeyup="PF('addrTable').filter()" style="width:150px" placeholder="Поиск"/>
+                                <p:inputText id="globalFilter" onkeyup="PF('addrTable').filter()" style="width:150px" placeholder="Поиск"/>
                             </f:facet>   
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                            <p:column filterBy="#{a.country}" filterMatchMode="contains" headerText="Страна" style="width:110px;text-align: left">
+                            <p:column filterBy="#{a.country.getTranslateObject(sessionActions.language).getName()}" filterMatchMode="contains" headerText="Страна" style="width:110px;text-align: left">
                                 <f:facet name="filter">
                                     <h:inputHidden/>
                                 </f:facet>
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <p:outputLabel value="#{a.country}"/>
+                                        <p:outputLabel value="#{a.country.getTranslateObject(sessionActions.language).getName()}"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText value="#{a.country}"/>
+                                        <p:autoComplete value="#{a.country}" maxResults="20"
+                                                        completeMethod="#{countryConverter.completeItem}"
+                                                        var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" itemValue="#{m}" converter="#{countryConverter}" 
+                                                        forceSelection="true" style="margin-right: 50px" >
+                                        </p:autoComplete>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
@@ -58,7 +63,9 @@
                                         <p:outputLabel value="#{a.region}"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText value="#{a.region}"/>
+                                        <p:autoComplete size="15" value="#{a.region}" completeMethod="#{regionLOV.completeItem}" 
+                                                        forceSelection="true" rendered="#{a.country.country_id=='UA'}"/>
+                                        <p:inputText size="15" value="#{a.region}" rendered="#{!(a.country.country_id=='UA')}"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
@@ -128,15 +135,15 @@
                             </p:column>
                         </p:dataTable>
                         <p:dataTable id="dTable" var="ord" value="#{openCustomerView.entity.RWAddresses}" 
-                                     widgetVar="rwAddrTable" emptyMessage="Данные не найдены"
+                                     widgetVar="rwaddr" emptyMessage="Данные не найдены"
                                      selection="#{openCustomerView.selectedEntityLines}" 
                                      rowSelectMode="checkbox" editMode="cell" editable="true"
                                      rows="20" paginator="true"  
-                                     rowKey="#{ord}" 
-                                     style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100">
+                                     rowKey="#{ord}" filteredValue="#{openCustomerView.filteredRWAddresses}"
+                                     style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" >
                             <f:facet name="header">
                                 ЖД адреса
-                                <p:inputText onkeyup="PF('rwAddrTable').filter()" style="width:150px" placeholder="Поиск"/>
+                                <p:inputText id="globalFilter" onkeyup="PF('rwaddr').filter()" style="width:150px" placeholder="Поиск"/>
                             </f:facet>
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                             <p:column filterBy="#{ord.station.getTranslateObject(sessionActions.language).getName()}" filterMatchMode="contains"  headerText="Станция" style="width:200px;text-align: left">

@@ -2,7 +2,6 @@ package converters;
 
 import customer.beans.CountryCBean;
 import customer.entities.Country;
-import customer.entities.CountryVL;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import service.SessionActions;
 
 /**
  *
@@ -24,6 +24,8 @@ public class CountryConverter implements Converter {
 
     @Inject
     private CountryCBean client;
+    @Inject
+    private SessionActions sa;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -47,11 +49,11 @@ public class CountryConverter implements Converter {
         }
     }
 
-    public List<CountryVL> completeItem(String query) {
-        List<CountryVL> allItems = client.findAllVL();
-        List<CountryVL> filteredItems = new ArrayList<>();
+    public List<Country> completeItem(String query) {
+        List<Country> allItems = client.findAll();
+        List<Country> filteredItems = new ArrayList<>();
 
-        allItems.stream().filter((item) -> item.getName().toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
+        allItems.stream().filter((item) -> item.getTranslateObject(sa.getLanguage()).getName().toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
             filteredItems.add(item);
         });
         return filteredItems;

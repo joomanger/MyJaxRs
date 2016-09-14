@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -33,10 +34,10 @@ public class Customer implements Serializable{
     private String inn;
     private Boolean resident;
     
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "customer")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "customer", fetch = FetchType.LAZY)
     @PrivateOwned
     private List<Address> addresses = new ArrayList<>();
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "customer")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "customer",fetch = FetchType.LAZY)
     @PrivateOwned
     private List<RWAddress> RWAddresses = new ArrayList<>();
     private Boolean activeStatus = true;

@@ -21,7 +21,7 @@
                             <p:outputLabel value="Страна"/>
                             <p:autoComplete value="#{openRoadView.entity.country}" maxResults="20"
                                             completeMethod="#{countryConverter.completeItem}"
-                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{countryConverter}" 
+                                            var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" itemValue="#{m}" converter="#{countryConverter}" 
                                             forceSelection="true" style="margin-right: 50px" >
                             </p:autoComplete>
                         </h:panelGrid>

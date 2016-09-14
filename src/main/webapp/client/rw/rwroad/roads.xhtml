@@ -18,7 +18,7 @@
                                  value="#{findRoadView.entities}" filteredValue="#{findRoadView.filteredEntities}" 
                                  emptyMessage="Данные не найдены"
                                  editable="true"  selection="#{findRoadView.selectedEntities}" 
-                                 rows="20" paginator="true" style="width: 700px;"
+                                 rows="20" paginator="true" style="width: 900px;"
                                  rowsPerPageTemplate="20,40,100">
                         <f:facet name="header">
                             Справочник железных дорог СНГ, Балтии и России
@@ -40,11 +40,11 @@
                             </f:facet>
                             <h:outputText value="#{ord.rwr_code}"/>
                         </p:column>
-                        <p:column filterBy="#{ord.country.country_id}" filterMatchMode="contains" headerText="Страна" style="width: 50px;text-align: center">
+                        <p:column filterBy="#{ord.country.getTranslateObject(sessionActions.language).getName()}" filterMatchMode="contains" headerText="Страна" style="width: 150px;text-align: left">
                             <f:facet name="filter">
                                 <h:inputHidden/>
                             </f:facet>
-                            <h:outputText value="#{ord.country.country_id}"/>
+                            <h:outputText value="#{ord.country.getTranslateObject(sessionActions.language).getName()}"/>
                         </p:column>
                         <f:facet name="footer" >
                             <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />

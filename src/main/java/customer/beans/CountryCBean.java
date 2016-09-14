@@ -2,8 +2,6 @@ package customer.beans;
 
 import customer.entities.Country;
 import customer.entities.CountryTL;
-import customer.entities.CountryVL;
-import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -46,7 +44,7 @@ public class CountryCBean extends AbstractClientBean<Country> {
 
     @Override
     protected AbstractView<Country> getFindView() {
-        return null;
+        return fcv;
     }
 
     @Override
@@ -55,20 +53,20 @@ public class CountryCBean extends AbstractClientBean<Country> {
     }
 
     //Дополнительные методы
-    @Override
-    public void deleteSelectedEntities() {
-        for (CountryVL entity : fcv.getSelectedEntities()) {
-            Country cc = new Country(entity.getCountry_id(), entity.getEu_code(), entity.getIso_code(), entity.getCountryTL());
-
-            String status = getEJB().remove(cc);
-            if (status.equals(getEJB().SUCCESSFUL)) {
-                getEJB().sendMessage(status, "Объект удален успешно");
-                fcv.getEntities().remove(entity);
-            } else {
-                getEJB().sendMessage(status, null);
-            }
-        }
-    }
+//    @Override
+//    public void deleteSelectedEntities() {
+//        for (CountryVL entity : fcv.getSelectedEntities()) {
+//            Country cc = new Country(entity.getCountry_id(), entity.getEu_code(), entity.getIso_code(), entity.getCountryTL());
+//
+//            String status = getEJB().remove(cc);
+//            if (status.equals(getEJB().SUCCESSFUL)) {
+//                getEJB().sendMessage(status, "Объект удален успешно");
+//                fcv.getEntities().remove(entity);
+//            } else {
+//                getEJB().sendMessage(status, null);
+//            }
+//        }
+//    }
 
     public void addCountryTLOCV() {
         CountryTL tl = new CountryTL();
@@ -92,13 +90,13 @@ public class CountryCBean extends AbstractClientBean<Country> {
         }
     }
 
-    public List<CountryVL> findAllVL() {
-        return ejb.findAllVL();
-    }
-
-    public CountryVL findVL(String country_id) {
-        return ejb.findVL(country_id);
-    }
+//    public List<CountryVL> findAllVL() {
+//        return ejb.findAllVL();
+//    }
+//
+//    public CountryVL findVL(String country_id) {
+//        return ejb.findVL(country_id);
+//    }
 
     @Override
     public String createEntity(String backURL) {
