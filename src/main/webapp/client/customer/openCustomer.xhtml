@@ -30,14 +30,14 @@
                                      rowSelectMode="checkbox" editMode="cell" editable="true"
                                      scrollable="true"  reflow="true" rows="20" paginator="true"  
                                      rowKey="#{ord}" 
-                                     style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="false">
+                                     style="width: 1300px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="false">
                             <f:facet name="header">
                                 Адреса
                                 <p:inputText id="globalFilter" onkeyup="PF('addrTable').filter()" style="width:150px" placeholder="Поиск"/>
-
                             </f:facet>   
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                            <p:column filterBy="#{ord.country}" filterMatchMode="contains"  headerText="Страна" style="width:110px;text-align: left">
+                            <p:column filterBy="#{ord.country}" filterMatchMode="contains"  
+                                      headerText="Страна" style="width:110px;text-align: left">
                                 <f:facet name="filter">
                                     <h:inputHidden/>
                                 </f:facet>
@@ -50,7 +50,8 @@
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column filterBy="#{ord.region}" filterMatchMode="contains"  headerText="Область" style="width:80px;text-align: left">
+                            <p:column filterBy="#{ord.region}" filterMatchMode="contains"  
+                                      headerText="Область" style="width:80px;text-align: left">
                                 <f:facet name="filter">
                                     <h:inputHidden/>
                                 </f:facet>
@@ -63,7 +64,8 @@
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column filterBy="#{ord.city}" filterMatchMode="contains"  headerText="Город" style="width:80px;text-align: left">
+                            <p:column filterBy="#{ord.city}" filterMatchMode="contains"  
+                                      headerText="Город" style="width:80px;text-align: left">
                                 <f:facet name="filter">
                                     <h:inputHidden/>
                                 </f:facet>
@@ -76,7 +78,8 @@
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column filterBy="#{ord.postCode}" filterMatchMode="contains"  headerText="Индекс" style="width:30px;text-align: center">
+                            <p:column filterBy="#{ord.postCode}" filterMatchMode="contains"  
+                                      headerText="Индекс" style="width:30px;text-align: center">
                                 <f:facet name="filter">
                                     <h:inputHidden/>
                                 </f:facet>
@@ -89,7 +92,8 @@
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column filterBy="#{ord.fullAddress}" filterMatchMode="contains"  headerText="Улица" style="width:140px;text-align: left">
+                            <p:column filterBy="#{ord.fullAddress}" filterMatchMode="contains"  
+                                      headerText="Улица" style="width:140px;text-align: left">
                                 <f:facet name="filter">
                                     <h:inputHidden/>
                                 </f:facet>
@@ -110,6 +114,23 @@
                             </p:column>
                             <p:column headerText="V" style="width:20px;text-align: center">
                                 <p:selectBooleanCheckbox value="#{ord.vendor}"/>
+                            </p:column>
+                            <p:column filterBy="#{ord.duferco_site_use_id}" filterMatchMode="contains"  
+                                      headerText="Код Дуферко" style="width:50px;text-align: center">
+                                <f:facet name="filter">
+                                    <h:inputHidden/>
+                                </f:facet>
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <p:outputLabel value="#{ord.duferco_site_use_id}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText value="#{ord.duferco_site_use_id}"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Акт" style="width:20px;text-align: center">
+                                <p:selectBooleanCheckbox value="#{ord.activeStatus}"/>
                             </p:column>
                         </p:dataTable>
                         <p:dataTable id="dTable" var="ord" value="#{openCustomerView.entity.RWAddresses}" 

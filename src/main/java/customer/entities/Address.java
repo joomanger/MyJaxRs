@@ -43,6 +43,8 @@ public class Address implements Serializable {
 
     private String shipuses_id;
     private String billuses_id;
+    
+    private Long duferco_site_use_id;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -159,6 +161,13 @@ public class Address implements Serializable {
         this.billuses_id = billuses_id;
     }
 
-    
+    public Long getDuferco_site_use_id() {
+        return duferco_site_use_id;
+    }
+
+    public void setDuferco_site_use_id(Long duferco_site_use_id) {
+        this.duferco_site_use_id = duferco_site_use_id;
+    }
+   
 
 }
