@@ -76,9 +76,9 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
         rw.setRwbranch(olv.getRwBranch());
         rw.setRwrcvcode(olv.getRwRcvCode());
         rw.setStation(olv.getStation());
-        rw.setCustomer(olv.getEntity());
         String validation = rwAddrEJB.validateMyEntity(rw);
         if (validation.equals(ejb.SUCCESSFUL)) {
+            rw.setCustomer(olv.getEntity());
             //olv.getEntity().addRWAddress(rw);
             String result=rwAddrEJB.create(rw);
             if(result.equals(rwAddrEJB.SUCCESSFUL)){
