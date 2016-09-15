@@ -65,7 +65,7 @@
                                     <f:facet name="input">
                                         <p:autoComplete size="15" value="#{a.region}" completeMethod="#{regionLOV.completeItem}" 
                                                         forceSelection="true" rendered="#{a.country.country_id=='UA'}"/>
-                                        <p:inputText size="15" value="#{a.region}" rendered="#{!(a.country.country_id=='UA')}"/>
+                                        <p:inputText  size="15" value="#{a.region}" rendered="#{!(a.country.country_id=='UA')}"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
