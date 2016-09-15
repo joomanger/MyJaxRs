@@ -18,7 +18,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.inject.Inject;
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -175,7 +174,7 @@ public class OpenSaleOrderView implements Serializable {
                 }
             }
 
-            Collections.sort(cl);
+//            Collections.sort(cl);
             for (ConfigurationLine l : cl) {
                 set.add(l.getParameter().getAttribute());
             }

@@ -19,7 +19,7 @@ import javax.persistence.UniqueConstraint;
         = @UniqueConstraint(columnNames = {"viewName"}))
 @SqlResultSetMapping(name = "users_views_v", entities = {
     @EntityResult(entityClass = View.class)})
-public class View implements Serializable, Comparable<View> {
+public class View implements Serializable {
 
     @Id
     @SequenceGenerator(name = "view_sq", initialValue = 1, allocationSize = 1)
@@ -69,15 +69,6 @@ public class View implements Serializable, Comparable<View> {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    @Override
-    public int compareTo(View o) {
-        if (viewName.charAt(0) > o.viewName.charAt(0)) {
-            return 1;
-        } else {
-            return -1;
-        }
     }
 
 }

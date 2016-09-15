@@ -2,6 +2,7 @@ package sys.beans;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,7 +36,14 @@ public class UserEJB extends AbstractEJB<SysUser> {
     @Override
     public List<SysUser> findAll() {
         List<SysUser> l = super.findAll();
-        Collections.sort(l);
+//        Collections.sort(l);
+        Collections.sort(l, new Comparator<SysUser>() {
+            @Override
+            public int compare(SysUser o1, SysUser o2) {
+                return o1.getUsername().
+                        compareTo(o2.getUsername());
+            }
+        });
         return l;
     }
 

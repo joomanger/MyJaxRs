@@ -41,8 +41,11 @@ public class Customer implements Serializable{
     @PrivateOwned
     private List<RWAddress> RWAddresses = new ArrayList<>();
     private Boolean activeStatus = true;
-    
 
+    public Customer() {
+    }
+    
+    
     public void addAddress(Address adr) {
         addAddress(adr, true);
     }

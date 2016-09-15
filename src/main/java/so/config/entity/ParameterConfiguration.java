@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @XmlRootElement
-public class ParameterConfiguration implements Serializable, Comparable<ParameterConfiguration> {
+public class ParameterConfiguration implements Serializable {
 
     public enum ParameterType {
         INTEGER,
@@ -97,19 +97,19 @@ public class ParameterConfiguration implements Serializable, Comparable<Paramete
         this.attribute = attribute;
     }
 
-    @Override
-    public int compareTo(ParameterConfiguration p_parameter) {
-        Byte a = Byte.parseByte(this.getAttribute().toLowerCase().replace("attribute", ""));
-        Byte b = Byte.parseByte(p_parameter.getAttribute().toLowerCase().replace("attribute", ""));
-        if (a > b) {
-            return 1;
-        } else if (a == b) {
-            return 0;
-        } else {
-            return -1;
-        }
-
-    }
+//    @Override
+//    public int compareTo(ParameterConfiguration p_parameter) {
+//        Byte a = Byte.parseByte(this.getAttribute().toLowerCase().replace("attribute", ""));
+//        Byte b = Byte.parseByte(p_parameter.getAttribute().toLowerCase().replace("attribute", ""));
+//        if (a > b) {
+//            return 1;
+//        } else if (a == b) {
+//            return 0;
+//        } else {
+//            return -1;
+//        }
+//
+//    }
 
     public Short getSize() {
         return size;

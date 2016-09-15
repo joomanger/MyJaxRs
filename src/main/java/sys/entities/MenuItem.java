@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
         = @UniqueConstraint(columnNames = {"menuItem","menu_id"}))
 @NamedQueries(
         @NamedQuery(name = MenuItem.FIND_BY_MENU_ID, query = "select t from MenuItem t where t.menu.menu_id=:p_menu_id order by t.line_num"))
-public class MenuItem implements Serializable, Comparable<MenuItem> {
+public class MenuItem implements Serializable{
 
     public static final String FIND_BY_MENU_ID = "MenuItem.findByMenuId";
     @Id
@@ -97,15 +97,6 @@ public class MenuItem implements Serializable, Comparable<MenuItem> {
 
     public void setVisibleItem(Boolean visibleItem) {
         this.visibleItem = visibleItem;
-    }
-
-    @Override
-    public int compareTo(MenuItem o) {
-        if (line_num > o.getLine_num()) {
-            return 1;
-        } else {
-            return -1;
-        }
     }
 
 }

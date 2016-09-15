@@ -1,6 +1,7 @@
 package sys.beans;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -30,7 +31,14 @@ public class ViewEJB extends AbstractEJB<View> {
     @Override
     public List<View> findAll() {
         List<View> l = super.findAll();
-        Collections.sort(l);
+//        Collections.sort(l);
+        Collections.sort(l, new Comparator<View>() {
+            @Override
+            public int compare(View o1, View o2) {
+                return o1.getViewName().
+                        compareTo(o2.getViewName());
+            }
+        });
         return l;
     }
 

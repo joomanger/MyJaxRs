@@ -26,7 +26,7 @@ import org.eclipse.persistence.annotations.PrivateOwned;
         = @UniqueConstraint(columnNames = {"menuName"}))
 @NamedQueries(
         @NamedQuery(name = Menu.LAST_LINE_NUM, query = "select max(t.line_num) from MenuItem t where t.menu.menu_id=:p_menu_id"))
-public class Menu implements Serializable, Comparable<Menu> {
+public class Menu implements Serializable{
 
     public static final String LAST_LINE_NUM = "Menu.LAST_LINE_NUM";
     @Id
@@ -95,14 +95,4 @@ public class Menu implements Serializable, Comparable<Menu> {
     public void setMenuItems(List<MenuItem> menuItems) {
         this.menuItems = menuItems;
     }
-
-    @Override
-    public int compareTo(Menu o) {
-        if (menuName.charAt(0) > o.menuName.charAt(0)) {
-            return 1;
-        } else {
-            return -1;
-        }
-    }
-
 }

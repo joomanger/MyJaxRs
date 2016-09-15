@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(uniqueConstraints
         = @UniqueConstraint(columnNames = {"name"}))
-public class Payment implements Serializable, Comparable<Payment> {
+public class Payment implements Serializable{
 
     @Id
     @SequenceGenerator(name = "payment_sq", initialValue = 1, allocationSize = 1)
@@ -94,15 +94,6 @@ public class Payment implements Serializable, Comparable<Payment> {
 
     public void setDayType(String dayType) {
         this.dayType = dayType;
-    }
-
-    @Override
-    public int compareTo(Payment o) {
-        if (this.condition.charAt(0) > o.condition.charAt(0)) {
-            return 1;
-        } else {
-            return -1;
-        }
     }
 
 }

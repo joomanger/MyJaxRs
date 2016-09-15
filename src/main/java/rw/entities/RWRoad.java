@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(uniqueConstraints
         = @UniqueConstraint(columnNames = {"fullName"}))
-public class RWRoad implements Serializable, Comparable<RWRoad> {
+public class RWRoad implements Serializable {
 
     @Id
     @Size(min = 2, max = 3, message = "Значение КОД должно быть 2- или 3- значным")
@@ -78,21 +78,6 @@ public class RWRoad implements Serializable, Comparable<RWRoad> {
 
     public String getNameForReport() {
         return shortName + "(" + rwr_code + ")";
-    }
-
-    @Override
-    public int compareTo(RWRoad o) {
-        try {
-            if (this.fullName.charAt(0) > o.fullName.charAt(0)) {
-                return 1;
-            } else if (this.fullName.charAt(0) == o.fullName.charAt(0)) {
-                return 0;
-            } else {
-                return -1;
-            }
-        } catch (Exception ex) {
-            return 0;
-        }
     }
 
 }

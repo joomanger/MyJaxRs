@@ -13,40 +13,24 @@
             <ui:define name="content">
                 <h:form prependId="false">
                     <h:inputHidden id="setCustomerId" value="#{findCustomerSession.customer_id}"/>
-                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.customer_id}" var="ord" value="#{findCustomerView.entities}" 
-                                 editable="true" reflow="true" selection="#{findCustomerView.selectedEntities}" rows="20" paginator="true" style="width: 1400px;"
-                                 rowsPerPageTemplate="20,40,100" widgetVar="myTable" filteredValue="#{findCustomerView.filteredEntities}" 
-                                 emptyMessage="Данные не найдены">
-                        <f:facet name="header">
-                            Справочик заказчиков
-                            <p:inputText id="globalFilter" onkeyup="PF('myTable').filter()" style="width:150px" placeholder="Поиск"/>
-                        </f:facet>
+                    <p:dataTable rowSelectMode="checkbox"  id="dTable" var="ord" value="#{findCustomerView.lazyModel}" 
+                                 selection="#{findCustomerView.selectedEntities}" rows="20" paginator="true" style="width: 1400px;"
+                                 rowsPerPageTemplate="20,40,100" widgetVar="myTable"
+                                 emptyMessage="Данные не найдены" lazy="true">
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column filterBy="#{ord.name}" filterMatchMode="contains" headerText="Наименование" style="width: 150px;text-align: left">
-                            <f:facet name="filter">
-                                <h:inputHidden/>
-                            </f:facet>
+                        <p:column filterBy="#{ord.name}" filterMatchMode="contains"  headerText="Наименование" style="width: 150px">
                             <h:commandLink action="openCustomer" value="#{ord.name}" onclick="document.getElementById('setCustomerId').value =#{ord.customer_id};"/>
                         </p:column>
-                        <p:column filterBy="#{ord.fullName}" filterMatchMode="contains" headerText="Полн.наименование" style="width: 250px;text-align: left">
-                            <f:facet name="filter">
-                                <h:inputHidden/>
-                            </f:facet>
+                        <p:column filterBy="#{ord.fullName}" filterMatchMode="contains" headerText="Полн.наименование" style="width: 250px">
                             <h:outputText value="#{ord.fullName}"/>
                         </p:column>
-                        <p:column filterBy="#{ord.okpo}" filterMatchMode="contains" headerText="ОКПО" style="width: 80px;text-align: right">
-                            <f:facet name="filter">
-                                <h:inputHidden/>
-                            </f:facet>
+                        <p:column filterBy="#{ord.okpo}" filterMatchMode="contains" headerText="ОКПО" style="width: 80px;text-align:center">
                             <h:outputText value="#{ord.okpo}"/>
                         </p:column>
-                        <p:column filterBy="#{ord.inn}" filterMatchMode="contains" headerText="ИНН" style="width: 80px;text-align: right">
-                            <f:facet name="filter">
-                                <h:inputHidden/>
-                            </f:facet>
+                        <p:column filterBy="#{ord.inn}" filterMatchMode="contains" headerText="ИНН" style="width: 80px;text-align:center">
                             <h:outputText value="#{ord.inn}"/>
                         </p:column>
-                        <p:column headerText="Активное" style="width: 50px;text-align: center">
+                        <p:column headerText="Активное" style="width: 50px;text-align:center">
                             <p:selectBooleanCheckbox disabled="true" value="#{ord.activeStatus}" />
                         </p:column>
                         <f:facet name="footer" >

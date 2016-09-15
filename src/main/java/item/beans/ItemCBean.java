@@ -2,6 +2,7 @@ package item.beans;
 
 import item.entities.Item;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -56,9 +57,16 @@ public class ItemCBean extends AbstractClientBean<Item> {
 
     @Override
     public List<Item> findAll() {
-        List<Item> items = super.findAll();
-        Collections.sort(items);
-        return items;
+        List<Item> l = super.findAll();
+        Collections.sort(l, new Comparator<Item>() {
+            @Override
+            public int compare(Item o1, Item o2) {
+                return o1.getName().
+                        compareTo(o2.getName());
+            }
+        });
+        //Collections.sort(items);
+        return l;
     }
 
 }

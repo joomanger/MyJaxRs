@@ -28,7 +28,7 @@ import org.eclipse.persistence.annotations.PrivateOwned;
 )
 @Table(uniqueConstraints
         = @UniqueConstraint(columnNames = {"name"}))
-public class Lookup implements Serializable, Comparable<Lookup> {
+public class Lookup implements Serializable{
 
     public static final String FIND_BY_NAME = "Lookup.FIND_BY_NAME";
     @Id
@@ -112,13 +112,13 @@ public class Lookup implements Serializable, Comparable<Lookup> {
         this.systemLookup = systemLookup;
     }
 
-    @Override
-    public int compareTo(Lookup o) {
-        if (this.name.charAt(0) > o.name.charAt(0)) {
-            return 1;
-        } else {
-            return -1;
-        }
-    }
+//    @Override
+//    public int compareTo(Lookup o) {
+//        if (this.name.charAt(0) > o.name.charAt(0)) {
+//            return 1;
+//        } else {
+//            return -1;
+//        }
+//    }
 
 }

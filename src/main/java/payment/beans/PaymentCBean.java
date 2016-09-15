@@ -1,6 +1,5 @@
 package payment.beans;
 
-import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -57,7 +56,7 @@ public class PaymentCBean extends AbstractClientBean<Payment> {
     @Override
     public List<Payment> findAll() {
         List<Payment> l = super.findAll();
-        Collections.sort(l);
+//        Collections.sort(l);
         return l;
     }
 

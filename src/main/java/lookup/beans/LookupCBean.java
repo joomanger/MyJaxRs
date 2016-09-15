@@ -1,6 +1,7 @@
 package lookup.beans;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -46,7 +47,6 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
 //    public LookupCBean() {
 //        super(Lookup.class);
 //    }
-
     @Override
     protected AbstractEJB<Lookup> getEJB() {
         return ejb;
@@ -70,7 +70,14 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
     @Override
     public List<Lookup> findAll() {
         List<Lookup> l = super.findAll();
-        Collections.sort(l);
+//        Collections.sort(l);
+        Collections.sort(l, new Comparator<Lookup>() {
+            @Override
+            public int compare(Lookup o1, Lookup o2) {
+                return o1.getName().
+                        compareTo(o2.getName());
+            }
+        });
         return l;
     }
 
@@ -84,7 +91,7 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
     public void addLookupItemNLV() {
 
         LookupItem li = new LookupItem();
-        
+
         li.setLookupItem_id(itemEJB.getNextLookupItemID());
         li.setValuez(nlv.getValue());
         li.setActiveStatus(Boolean.TRUE);
@@ -176,8 +183,7 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
     public List<LookupItem> findLookupItemVL(Long p_lookup_id) {
         return ejb.findLookupItemVL(p_lookup_id);
     }
-    
-    
+
     @Override
     public void changeEntity() {
         super.changeEntity();

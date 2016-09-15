@@ -1,6 +1,7 @@
 package sys.beans;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -31,7 +32,14 @@ public class MenuEJB extends AbstractEJB<Menu> {
     @Override
     public List<Menu> findAll() {
         List<Menu> l = super.findAll();
-        Collections.sort(l);
+//        Collections.sort(l);
+        Collections.sort(l, new Comparator<Menu>() {
+            @Override
+            public int compare(Menu o1, Menu o2) {
+                return o1.getMenuName().
+                        compareTo(o2.getMenuName());
+            }
+        });
         return l;
     }
 

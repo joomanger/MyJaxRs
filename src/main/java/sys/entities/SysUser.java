@@ -26,7 +26,7 @@ import javax.persistence.UniqueConstraint;
     @NamedQuery(name = SysUser.FIND_VIEWS_BY_USERNAME, query = "select u from SysUser u where u.username=:p_username")
 }
 )
-public class SysUser implements Serializable, Comparable<SysUser> {
+public class SysUser implements Serializable {
 
     public static final String FIND_BY_USERNAME = "SysUser.FIND_BY_USERNAME";
     public static final String FIND_VIEWS_BY_USERNAME = "SysUser.FIND_VIEWS_BY_USERNAME";
@@ -95,15 +95,6 @@ public class SysUser implements Serializable, Comparable<SysUser> {
 
     public void setRoles(List<SysRole> roles) {
         this.roles = roles;
-    }
-
-    @Override
-    public int compareTo(SysUser o) {
-        if (username.charAt(0) > o.username.charAt(0)) {
-            return 1;
-        } else {
-            return -1;
-        }
     }
 
 }

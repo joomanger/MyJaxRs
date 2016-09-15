@@ -1,6 +1,5 @@
 package sys.beans;
 
-import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -29,7 +28,6 @@ public class MenuCBean {
 
     public List<Menu> findAll() {
         List<Menu> menus = ejb.findAll();
-        Collections.sort(menus);
         return menus;
     }
 

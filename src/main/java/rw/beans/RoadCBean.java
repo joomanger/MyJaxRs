@@ -1,6 +1,5 @@
 package rw.beans;
 
-import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -57,7 +56,7 @@ public class RoadCBean extends AbstractClientBean<RWRoad> {
     @Override
     public List<RWRoad> findAll() {
         List<RWRoad> l = super.findAll();
-        Collections.sort(l);
+//        Collections.sort(l);
         return l;
     }
 

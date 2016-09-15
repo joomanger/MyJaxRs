@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-public class Item implements Serializable, Comparable<Item> {
+public class Item implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -70,15 +70,6 @@ public class Item implements Serializable, Comparable<Item> {
 
     public void setUom2(String uom2) {
         this.uom2 = uom2;
-    }
-
-    @Override
-    public int compareTo(Item o) {
-        if (this.name.charAt(0) > o.name.charAt(0)) {
-            return 1;
-        } else {
-            return -1;
-        }
     }
 
 }
