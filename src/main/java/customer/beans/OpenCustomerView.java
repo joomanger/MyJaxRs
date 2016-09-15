@@ -41,6 +41,8 @@ public class OpenCustomerView extends AbstractView<Customer> {
     private RWStation station;
     private String rwBranch;
     private String rwRcvCode;
+    
+    private String region;
 
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
@@ -123,5 +125,15 @@ public class OpenCustomerView extends AbstractView<Customer> {
     public void setSelectedRWAddresses(List<RWAddress> selectedRWAddresses) {
         this.selectedRWAddresses = selectedRWAddresses;
     }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+    
+    
 
 }

@@ -1,8 +1,12 @@
 package lovs;
 
-import service.AbstractLookupLOV;
+import customer.beans.OpenCustomerView;
+import java.util.ArrayList;
+import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+import lookup.beans.LookupCBean;
 
 /**
  *
@@ -10,11 +14,22 @@ import javax.inject.Named;
  */
 @Named
 @RequestScoped
-public class CityLOV extends AbstractLookupLOV{
+public class CityLOV {
 
-    @Override
-    protected String getLookupName() {
-        return "UKRAINIAN CITIES";
+    @Inject
+    private LookupCBean client;
+
+    @Inject
+    private OpenCustomerView ocv;
+
+    public List<String> completeItem(String query) {
+        List<String> allItems = client.getCitiesByRegion(ocv.getRegion());
+        List<String> filteredItems = new ArrayList<>();
+
+        allItems.stream().filter((item) -> item.toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
+            filteredItems.add(item);
+        });
+        return filteredItems;
     }
-    
+
 }

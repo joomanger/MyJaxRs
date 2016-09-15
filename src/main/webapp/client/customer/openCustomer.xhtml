@@ -49,6 +49,7 @@
                                                         completeMethod="#{countryConverter.completeItem}"
                                                         var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" itemValue="#{m}" converter="#{countryConverter}" 
                                                         forceSelection="true" style="margin-right: 50px" >
+                                            <p:ajax event="itemSelect" update="region city"/>
                                         </p:autoComplete>
                                     </f:facet>
                                 </p:cellEditor>
@@ -57,13 +58,15 @@
                                 <f:facet name="filter">
                                     <h:inputHidden/>
                                 </f:facet>
-                                <p:cellEditor>
+                                <p:cellEditor id="region">
                                     <f:facet name="output">
                                         <p:outputLabel value="#{a.region}"/>
                                     </f:facet>
                                     <f:facet name="input">
                                         <p:autoComplete size="15" value="#{a.region}" completeMethod="#{regionLOV.completeItem}" 
-                                                        forceSelection="true" rendered="#{a.country.country_id=='UA'}"/>
+                                                        forceSelection="true" rendered="#{a.country.country_id=='UA'}">
+                                            <p:ajax event="itemSelect" update="city"/>
+                                        </p:autoComplete>
                                         <p:inputText  size="15" value="#{a.region}" rendered="#{!(a.country.country_id=='UA')}"/>
                                     </f:facet>
                                 </p:cellEditor>
@@ -72,12 +75,14 @@
                                 <f:facet name="filter">
                                     <h:inputHidden/>
                                 </f:facet>
-                                <p:cellEditor>
+                                <p:cellEditor id="city">
                                     <f:facet name="output">
                                         <p:outputLabel value="#{a.city}"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText value="#{a.city}"/>
+                                        <p:autoComplete size="15" value="#{a.city}" completeMethod="#{cityLOV.completeItem}" 
+                                                        forceSelection="true" rendered="#{a.country.country_id=='UA'}" onclick="#{openCustomerView.setRegion(a.region)}"/>
+                                        <p:inputText  size="15" value="#{a.city}" rendered="#{!(a.country.country_id=='UA')}"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>

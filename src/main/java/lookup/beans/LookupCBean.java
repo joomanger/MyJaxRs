@@ -189,4 +189,8 @@ public class LookupCBean extends AbstractClientBean<Lookup> {
         super.changeEntity();
         olv.updateEntityVL();
     }
+
+    public List<String> getCitiesByRegion(String p_region) {
+        return itemEJB.getCitiesByRegion(p_region);
+    }
 }
