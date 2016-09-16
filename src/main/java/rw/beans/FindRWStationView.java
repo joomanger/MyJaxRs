@@ -1,10 +1,10 @@
 package rw.beans;
 
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.model.LazyDataModel;
 import rw.entities.RWStation;
 import service.AbstractView;
 
@@ -18,27 +18,23 @@ public class FindRWStationView extends AbstractView<RWStation> {
 
     @Inject
     private RWStationCBean client;
-//    @Inject
-//    private SessionActions sa;
+    private LazyDataModel<RWStation> lazyModel;
 
-//    public FindRWStationView() {
-//        super(RWStationVL.class);
-//    }
     @PostConstruct
     @Override
+
     protected void init() {
-        List<RWStation> rw = client.findAll();
-//       try{
-//        Collections.sort(rw, new Comparator() {
-//            @Override
-//            public int compare(Object l1, Object l2) {
-//                return ((RWStation) l1).getTranslateObject(sa.getLanguage()).getName().compareTo(((RWStation) l2).getTranslateObject(sa.getLanguage()).getName());
-//            }
-//        });
-//       }catch(Exception ex){
-//           System.out.println(ex.getStackTrace());
-//       }
-        setEntities(rw);
+//        List<RWStation> rw = client.findAll();
+        try {
+            lazyModel = new LazyRWSDataModel(client.findAll(), RWStation.class);
+        } catch (IllegalAccessException | InstantiationException ex) {
+            System.out.println(ex);
+        }
+        //setEntities(rw);
+    }
+
+    public LazyDataModel<RWStation> getLazyModel() {
+        return lazyModel;
     }
 
 }

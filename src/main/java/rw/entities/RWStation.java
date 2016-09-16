@@ -27,12 +27,12 @@ public class RWStation implements Serializable {
 
     public static final String FIND_ALL_STATIONS = "FIND_ALL_RWStation";
     @Id
-    protected String rws_code;
+    private String rws_code;
     private Long location_id_orc;
     @OneToOne(cascade = {CascadeType.DETACH})
     @JoinColumn(name = "rwroad_code")
     @NotNull(message = "ЖД Дорога обязательна")
-    protected RWRoad rwroad;
+    private RWRoad rwroad;
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "rwstation")
     @PrivateOwned
     @OrderBy("language asc")

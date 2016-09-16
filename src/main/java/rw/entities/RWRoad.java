@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,19 +31,11 @@ public class RWRoad implements Serializable {
     private String fullName;
     @OneToOne(cascade = {CascadeType.DETACH})
     @JoinColumn(name = "country_id")
-    @NotNull(message = "Значение СТРА@OneToOne(cascade = {CascadeType.DETACH})\n" +
-"    @JoinColumn(name = \"country_id\")НА обязательно")
+    @NotNull(message = "Значение поля СТРАНА обязательно")
     private Country country;
-
-    public RWRoad() {
-    }
-
-    public RWRoad(String rwr_code, String shortName, String fullName, Country country) {
-        this.rwr_code = rwr_code;
-        this.shortName = shortName;
-        this.fullName = fullName;
-        this.country = country;
-    }
+    
+    @Transient
+    private String name;
 
     public String getRwr_code() {
         return rwr_code;
@@ -79,5 +72,15 @@ public class RWRoad implements Serializable {
     public String getNameForReport() {
         return shortName + "(" + rwr_code + ")";
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    
 
 }

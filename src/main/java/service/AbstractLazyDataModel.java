@@ -18,7 +18,7 @@ import org.primefaces.model.SortOrder;
 public abstract class AbstractLazyDataModel<T> extends LazyDataModel<T> {
 
     private List<T> datasource;
-    private String getIDMethodName;
+    private String getIDMethodName=null;
 
     public AbstractLazyDataModel(List<T> datasource, Class<T> clazz) throws InstantiationException, IllegalAccessException {
         this.datasource = datasource;
@@ -29,11 +29,11 @@ public abstract class AbstractLazyDataModel<T> extends LazyDataModel<T> {
                     break;
                 }
             }
-            if (!this.getIDMethodName.isEmpty()) {
+            if (!(this.getIDMethodName==null)) {
                 break;
             }
         }
-        if (this.getIDMethodName.isEmpty()) {
+        if (this.getIDMethodName==null) {
             throw new IllegalAccessException("For " + clazz.getSimpleName() + " the getIDMethodName is not detected!");
         }
     }
@@ -42,7 +42,8 @@ public abstract class AbstractLazyDataModel<T> extends LazyDataModel<T> {
     public T getRowData(String rowKey) {
         for (T t : datasource) {
             try {
-                String o = t.getClass().getDeclaredMethod(this.getIDMethodName, null).invoke(t, null).toString();
+                String o = t.getClass().getDeclaredMethod(this.getIDMethodName, (Class<?>[]) null).invoke(t, (Object[]) null).toString();
+                System.out.println("o="+o);
                 if (o.equals(rowKey)) {
                     return t;
                 }
@@ -56,7 +57,7 @@ public abstract class AbstractLazyDataModel<T> extends LazyDataModel<T> {
     @Override
     public Object getRowKey(T c) {
         try {
-            return c.getClass().getDeclaredMethod(this.getIDMethodName, null).invoke(c, null);
+            return c.getClass().getDeclaredMethod(this.getIDMethodName, (Class<?>[]) null).invoke(c, (Object[]) null);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ex) {
             System.out.println("getRowKey: " + ex);
         }

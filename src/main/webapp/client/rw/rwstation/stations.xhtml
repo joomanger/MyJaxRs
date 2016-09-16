@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
 
@@ -13,34 +14,24 @@
             <ui:define name="content">
                 <h:form prependId="false">
                     <h:inputHidden id="setID" value="#{findRWStationSession.rws_code}"/>
-                    <p:dataTable rowSelectMode="checkbox"  id="dTable" var="ord" rowKey="#{ord.rws_code}"
-                                 widgetVar="myTable" value="#{findRWStationView.entities}" 
-                                 emptyMessage="Данные не найдены" filteredValue="#{findRWStationView.filteredEntities}" 
-                                 editable="true"  selection="#{findRWStationView.selectedEntities}" 
+                    <p:dataTable rowSelectMode="checkbox"  id="dTable" var="ord" 
+                                 widgetVar="myTable" value="#{findRWStationView.lazyModel}" 
+                                 emptyMessage="Данные не найдены" rowKey="#{ord.rws_code}"
+                                 selection="#{findRWStationView.selectedEntities}" 
                                  rows="20" paginator="true" style="width: 700px;"
-                                 rowsPerPageTemplate="20,40,100">
+                                 rowsPerPageTemplate="20,40,100" lazy="true">
                         <f:facet name="header">
                             Справочник ЖД станций
-                            <p:inputText id="globalFilter" onkeyup="PF('myTable').filter()" style="width:150px" placeholder="Поиск"/>
                         </f:facet>
+                        <c:set var="a" value="#{getTranslateObject(sessionActions.language)}"/>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column filterBy="#{ord.getTranslateObject(sessionActions.language).name}" filterMatchMode="contains" headerText="Наименование" style="width: 80px;text-align: left">
-                            <f:facet name="filter">
-                                <h:inputHidden/>
-                            </f:facet>
-
+                        <p:column filterBy="#{a.name}" filterMatchMode="contains" headerText="Наименование" style="width: 80px;" filterStyle="text-align: center">
                             <h:commandLink action="openStation" value="#{ord.getTranslateObject(sessionActions.language).name}" onclick="document.getElementById('setID').value = '#{ord.rws_code}';"/>
                         </p:column>
-                        <p:column filterBy="#{ord.rws_code}" filterMatchMode="contains"  headerText="Код" style="width: 30px;text-align: center">
-                            <f:facet name="filter">
-                                <h:inputHidden/>
-                            </f:facet>
+                        <p:column filterBy="#{ord.rws_code}" filterMatchMode="contains"  headerText="Код" style="width: 30px;text-align: center" filterStyle="width: 50px;text-align: center">
                             <h:outputText value="#{ord.rws_code}"/>
                         </p:column>
-                        <p:column filterBy="#{ord.rwroad.fullName}" filterMatchMode="contains" headerText="ЖД дорога" style="width: 100px;text-align: left">
-                            <f:facet name="filter">
-                                <h:inputHidden/>
-                            </f:facet>
+                        <p:column filterBy="#{ord.rwroad.fullName}" filterMatchMode="contains" headerText="ЖД дорога" style="width: 100px;" filterStyle="text-align: center">
                             <h:outputText value="#{ord.rwroad.fullName}"/>
                         </p:column>
                         <f:facet name="footer" >
