@@ -18,19 +18,25 @@ public class FindCustomerView extends AbstractView<Customer> {
 
     @Inject
     private CustomerCBean client;
-    
+
     private LazyDataModel<Customer> lazyModel;
 
     @Override
     @PostConstruct
     protected void init() {
-        lazyModel=new LazyCustomerDataModel(client.findAll());
-        //super.setEntities(client.findAll());
+        updateLazyDataModel();
+    }
+
+    public void updateLazyDataModel() {
+        try {
+            lazyModel = new LazyCustomerDataModel(client.findAll(), Customer.class);
+        } catch (IllegalAccessException | InstantiationException ex) {
+            System.out.println(ex);
+        }
     }
 
     public LazyDataModel<Customer> getLazyModel() {
         return lazyModel;
     }
- 
 
 }

@@ -86,7 +86,6 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
             }else{
                 rwAddrEJB.sendMessage(result, null);
             }
-            //changeEntity();
             olv.setStation(null);
             olv.setRwBranch(null);
             olv.setRwRcvCode(null);
@@ -99,5 +98,13 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
         olv.getEntity().getRWAddresses().removeAll(olv.getSelectedEntityLines());
         changeEntity();
     }
+
+    @Override
+    public void deleteSelectedEntities() {
+        super.deleteSelectedEntities(); 
+        flv.updateLazyDataModel();
+    }
+    
+    
 
 }
