@@ -26,7 +26,7 @@
                         <p:dataTable id="dTable" var="ord" value="#{openRWStationView.entity.rwstationTL}"
                                      editMode="cell" editable="true"
                                      scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.rwstationtl_id}" 
-                                     style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                                     style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="false">
                             <p:column headerText="Язык" style="width:35px; text-align: center">
                                 <p:outputLabel value="#{ord.language}"/>
                             </p:column>

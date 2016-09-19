@@ -1,7 +1,7 @@
 package rw.beans;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import rw.entities.RWStationVL;
@@ -12,7 +12,7 @@ import service.AbstractView;
  * @author savin
  */
 @Named
-@RequestScoped
+@ViewScoped
 public class FindRWStationView extends AbstractView<RWStationVL> {
 
     @Inject

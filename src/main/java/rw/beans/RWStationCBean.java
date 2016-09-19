@@ -30,9 +30,6 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
     @Inject
     private OpenRWStationView ocv;
 
-//    public RWStationCBean() {
-//        super(RWStation.class);
-//    }
     @Override
     protected AbstractEJB<RWStation> getEJB() {
         return ejb;
@@ -57,7 +54,6 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
     @Override
     public void deleteSelectedEntities() {
         for (RWStationVL entity : fcv.getSelectedEntities()) {
-
             RWStation cc = ejb.find(entity.getRws_code());
             String status = getEJB().remove(cc);
             if (status.equals(getEJB().SUCCESSFUL)) {

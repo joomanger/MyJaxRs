@@ -15,7 +15,7 @@
                     <h:inputHidden id="setID" value="#{findRWStationSession.rws_code}"/>
                     <p:dataTable rowSelectMode="checkbox"  id="dTable" var="ord" 
                                  widgetVar="myTable" value="#{findRWStationView.lazyModel}" 
-                                 emptyMessage="Данные не найдены" 
+                                 emptyMessage="Данные не найдены" rowKey="#{ord.rws_code}"
                                  selection="#{findRWStationView.selectedEntities}" 
                                  rows="20" paginator="true" style="width: 700px;"
                                  rowsPerPageTemplate="20,40,100" lazy="true">
@@ -24,7 +24,7 @@
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:column filterBy="#{ord.rws_name}" filterMatchMode="contains" headerText="Наименование" style="width: 80px;" filterStyle="text-align: center">
-                            <h:commandLink action="openStation" value="#{ord.rws_name}" onclick="document.getElementById('setID').value = '#{ord.rws_code}';"/>
+                            <h:commandLink action="openStation"  value="#{ord.rws_name}" onclick="document.getElementById('setID').value = '#{ord.rws_code}';"/>
                         </p:column>
                         <p:column filterBy="#{ord.rws_code}" filterMatchMode="contains"  headerText="Код" style="width: 30px;text-align: center" filterStyle="width: 50px;text-align: center">
                             <h:outputText value="#{ord.rws_code}"/>

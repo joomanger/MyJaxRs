@@ -31,6 +31,7 @@ public class OpenRWStationView extends AbstractView<RWStation> {
     @PostConstruct
     @Override
     protected void init() {
+        System.out.println("rws_code="+fls.getRws_code());
         super.setEntity(client.find(fls.getRws_code()));
     }
 
