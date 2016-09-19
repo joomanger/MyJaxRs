@@ -18,13 +18,21 @@ import org.primefaces.model.SortOrder;
 public abstract class AbstractLazyDataModel<T> extends LazyDataModel<T> {
 
     private List<T> datasource;
-    private String getIDMethodName=null;
+    private String getIDMethodName;
+
+    public List<T> getDatasource() {
+        return datasource;
+    }
+
+    public void setDatasource(List<T> datasource) {
+        this.datasource = datasource;
+    }
 
     public AbstractLazyDataModel(List<T> datasource, Class<T> clazz) throws InstantiationException, IllegalAccessException {
         this.datasource = datasource;
         for (Field f : clazz.getDeclaredFields()) {
             for (Annotation a : f.getDeclaredAnnotations()) {
-                if (a.annotationType().getSimpleName().equals("Id")) {
+                if (a.annotationType().getSimpleName().equals("Id")||a.annotationType().getSimpleName().equals("VLIDField")) {
                     this.getIDMethodName = "get" + Character.toUpperCase(f.getName().charAt(0)) + f.getName().substring(1);
                     break;
                 }
@@ -42,9 +50,7 @@ public abstract class AbstractLazyDataModel<T> extends LazyDataModel<T> {
     public T getRowData(String rowKey) {
         for (T t : datasource) {
             try {
-                String o = t.getClass().getDeclaredMethod(this.getIDMethodName, (Class<?>[]) null).invoke(t, (Object[]) null).toString();
-                System.out.println("o="+o);
-                if (o.equals(rowKey)) {
+                if (t.getClass().getDeclaredMethod(this.getIDMethodName, (Class<?>[]) null).invoke(t, (Object[]) null).toString().equals(rowKey)) {
                     return t;
                 }
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ex) {

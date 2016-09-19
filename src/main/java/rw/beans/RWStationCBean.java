@@ -1,10 +1,12 @@
 package rw.beans;
 
+import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import rw.entities.RWStation;
 import rw.entities.RWStationTL;
+import rw.entities.RWStationVL;
 import service.AbstractClientBean;
 import service.AbstractEJB;
 import service.AbstractView;
@@ -43,30 +45,33 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
 
     @Override
     protected AbstractView<RWStation> getFindView() {
-        return fcv;
+        return null;
     }
 
     @Override
     protected AbstractView<RWStation> getNewView() {
         return ncv;
-    }   
+    }
 
     //Дополнительные методы
-//    @Override
-//    public void deleteSelectedEntities() {
-//        for (RWStationVL entity : fcv.getSelectedEntities()) {
-//
-//            RWStation cc = new RWStation(entity.getRws_code(), entity.getLocation_id_orc(), entity.getRwroad(), entity.getRwstationTL());
-//
-//            String status = getEJB().remove(cc);
-//            if (status.equals(getEJB().SUCCESSFUL)) {
-//                getEJB().sendMessage(status, "Объект удален успешно");
-//                fcv.getEntities().remove(entity);
-//            } else {
-//                getEJB().sendMessage(status, null);
-//            }
-//        }
-//    }
+    @Override
+    public void deleteSelectedEntities() {
+        for (RWStationVL entity : fcv.getSelectedEntities()) {
+
+            RWStation cc = ejb.find(entity.getRws_code());
+            String status = getEJB().remove(cc);
+            if (status.equals(getEJB().SUCCESSFUL)) {
+                getEJB().sendMessage(status, "Объект удален успешно");
+                fcv.getLazyModel().setDatasource(ejb.findAllVL());
+            } else {
+                getEJB().sendMessage(status, null);
+            }
+        }
+    }
+
+    public List<RWStationVL> findAllVL() {
+        return ejb.findAllVL();
+    }
 
     public void addRWStationTLOCV() {
         RWStationTL tl = new RWStationTL();
@@ -91,7 +96,6 @@ public class RWStationCBean extends AbstractClientBean<RWStation> {
 //    public List<RWStationVL> findAllVL() {
 //        return ejb.findAllVL();
 //    }
-
     @Override
     public String createEntity(String backURL) {
         if (ncv.getEntity().getRws_code().trim().isEmpty()) {

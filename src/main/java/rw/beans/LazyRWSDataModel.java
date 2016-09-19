@@ -1,16 +1,16 @@
 package rw.beans;
 
 import java.util.List;
-import rw.entities.RWStation;
+import rw.entities.RWStationVL;
 import service.AbstractLazyDataModel;
 
 /**
  *
  * @author savin
  */
-public class LazyRWSDataModel extends AbstractLazyDataModel<RWStation> {
+public class LazyRWSDataModel extends AbstractLazyDataModel<RWStationVL> {
 
-    public LazyRWSDataModel(List<RWStation> datasource, Class<RWStation> clazz) throws InstantiationException, IllegalAccessException {
+    public LazyRWSDataModel(List<RWStationVL> datasource, Class<RWStationVL> clazz) throws InstantiationException, IllegalAccessException {
         super(datasource, clazz);
     }
 

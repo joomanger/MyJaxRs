@@ -7,8 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
@@ -20,12 +18,7 @@ import org.eclipse.persistence.annotations.PrivateOwned;
  * @author savin
  */
 @Entity
-@NamedQueries({
-    @NamedQuery(name = RWStation.FIND_ALL_STATIONS, query = "select t from RWStation t, RWStationTL tl where tl.rwstation.rws_code=t.rws_code and tl.language=:p_lang  order by tl.name")
-})
 public class RWStation implements Serializable {
-
-    public static final String FIND_ALL_STATIONS = "FIND_ALL_RWStation";
     @Id
     private String rws_code;
     private Long location_id_orc;

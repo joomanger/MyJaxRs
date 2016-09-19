@@ -4,8 +4,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.primefaces.model.LazyDataModel;
-import rw.entities.RWStation;
+import rw.entities.RWStationVL;
 import service.AbstractView;
 
 /**
@@ -14,26 +13,23 @@ import service.AbstractView;
  */
 @Named
 @RequestScoped
-public class FindRWStationView extends AbstractView<RWStation> {
+public class FindRWStationView extends AbstractView<RWStationVL> {
 
     @Inject
     private RWStationCBean client;
-    private LazyDataModel<RWStation> lazyModel;
+    private LazyRWSDataModel lazyModel;
 
     @PostConstruct
     @Override
-
     protected void init() {
-//        List<RWStation> rw = client.findAll();
         try {
-            lazyModel = new LazyRWSDataModel(client.findAll(), RWStation.class);
+            lazyModel = new LazyRWSDataModel(client.findAllVL(), RWStationVL.class);
         } catch (IllegalAccessException | InstantiationException ex) {
             System.out.println(ex);
         }
-        //setEntities(rw);
     }
 
-    public LazyDataModel<RWStation> getLazyModel() {
+    public LazyRWSDataModel getLazyModel() {
         return lazyModel;
     }
 
