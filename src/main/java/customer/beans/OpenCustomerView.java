@@ -34,7 +34,7 @@ public class OpenCustomerView extends AbstractView<Customer> {
     private Customer openedEntity = new Customer();
 
     private List<Address> selectedAddresses = new ArrayList<>();
-    private List<RWAddress> selectedRWAddresses = new ArrayList<>();
+    //private List<RWAddress> selectedRWAddresses = new ArrayList<>();
     private List<RWAddress> filteredRWAddresses;
     private List<Address> filteredAddresses;
 
@@ -129,13 +129,13 @@ public class OpenCustomerView extends AbstractView<Customer> {
         this.filteredAddresses = filteredAddresses;
     }
 
-    public List<RWAddress> getSelectedRWAddresses() {
-        return selectedRWAddresses;
-    }
-
-    public void setSelectedRWAddresses(List<RWAddress> selectedRWAddresses) {
-        this.selectedRWAddresses = selectedRWAddresses;
-    }
+//    public List<RWAddress> getSelectedRWAddresses() {
+//        return selectedRWAddresses;
+//    }
+//
+//    public void setSelectedRWAddresses(List<RWAddress> selectedRWAddresses) {
+//        this.selectedRWAddresses = selectedRWAddresses;
+//    }
 
     public String getRegion() {
         return region;

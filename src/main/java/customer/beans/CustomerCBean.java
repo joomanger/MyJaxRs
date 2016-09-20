@@ -1,5 +1,6 @@
 package customer.beans;
 
+import customer.entities.Address;
 import customer.entities.Customer;
 import customer.entities.RWAddress;
 import java.util.Collections;
@@ -25,6 +26,9 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
 
     @Inject
     private RWAddressEJB rwAddrEJB;
+
+    @Inject
+    private AddressEJB addrEJB;
 
     @Inject
     private FindCustomerView flv;
@@ -70,6 +74,39 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
         return l;
     }
 
+    public void deleteAddressesOV() {
+        olv.getEntity().getAddresses().removeAll(olv.getSelectedAddresses());
+        changeEntity();
+    }
+
+    public void addAddressesOV() {
+        Address ar = new Address();
+        ar.setActiveStatus(Boolean.TRUE);
+        ar.setBill_to(olv.getBill_to());
+        ar.setShip_to(olv.getShip_to());
+        ar.setVendor(olv.getVendor());
+        ar.setFullAddress(olv.getFullAddress());
+        ar.setDuferco_site_use_id(olv.getDuferco_site_use_id());
+        ar.setCity(olv.getCity());
+        ar.setCountry(olv.getCountry());
+        ar.setRegion(olv.getRegion2());
+        ar.setPostCode(olv.getPostCode());
+        String validation = addrEJB.validateMyEntity(ar);
+        if (validation.equals(addrEJB.SUCCESSFUL)) {
+            ar.setCustomer(olv.getEntity());
+            String result = addrEJB.create(ar);
+            if (result.equals(addrEJB.SUCCESSFUL)) {
+                addrEJB.sendMessage(result, "Адрес добавлен успешно");
+            } else {
+                addrEJB.sendMessage(result, null);
+            }
+            olv.setCountry(null);
+            olv.clearAddressFields();
+        } else {
+            addrEJB.sendMessage(validation, null);
+        }
+    }
+
     public void addRWAddressOV() {
         RWAddress rw = new RWAddress();
         rw.setActiveStatus(Boolean.TRUE);
@@ -80,10 +117,10 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
         if (validation.equals(ejb.SUCCESSFUL)) {
             rw.setCustomer(olv.getEntity());
             //olv.getEntity().addRWAddress(rw);
-            String result=rwAddrEJB.create(rw);
-            if(result.equals(rwAddrEJB.SUCCESSFUL)){
-              rwAddrEJB.sendMessage(result, "ЖД Адрес добавлен успешно");
-            }else{
+            String result = rwAddrEJB.create(rw);
+            if (result.equals(rwAddrEJB.SUCCESSFUL)) {
+                rwAddrEJB.sendMessage(result, "ЖД Адрес добавлен успешно");
+            } else {
                 rwAddrEJB.sendMessage(result, null);
             }
             olv.setStation(null);
@@ -101,10 +138,8 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
 
     @Override
     public void deleteSelectedEntities() {
-        super.deleteSelectedEntities(); 
+        super.deleteSelectedEntities();
         flv.updateLazyDataModel();
     }
-    
-    
 
 }

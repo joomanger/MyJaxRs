@@ -81,7 +81,9 @@
                                     </f:facet>
                                     <f:facet name="input">
                                         <p:autoComplete size="15" value="#{a.city}" completeMethod="#{cityLOV.completeItem}" 
-                                                        forceSelection="true" rendered="#{a.country.country_id=='UA'}" onclick="#{openCustomerView.setRegion(a.region)}"/>
+                                                        forceSelection="true" rendered="#{a.country.country_id=='UA'}">
+                                            <p:ajax event="keypress"  listener="#{openCustomerView.setRegion(a.region)}" />
+                                        </p:autoComplete>
                                         <p:inputText  size="15" value="#{a.city}" rendered="#{!(a.country.country_id=='UA')}"/>
                                     </f:facet>
                                 </p:cellEditor>
@@ -138,12 +140,13 @@
                                 <p:selectBooleanCheckbox value="#{a.activeStatus}"/>
                             </p:column>
                             <f:facet name="footer" >
-                                <p:commandButton process="dTable" update="selectedParams" value="Новый" actionListener="#{openCustomerView.clearAddressFields()}" oncomplete="PF('addAddress').show()" style="margin-left: 10px">
+                                <p:commandButton process="addresses" update="selectedParams" value="Новый" actionListener="#{openCustomerView.clearAddressFields()}" oncomplete="PF('addAddress').show()" style="margin-left: 10px">
                                     <p:ajax update="qqq"/>
                                 </p:commandButton>
-                                <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
+                                <p:commandButton process="addresses" update="selectedAddress" value="Удалить"  oncomplete="PF('addressDelete').show()" style="margin-left: 10px"/>
                             </f:facet> 
                         </p:dataTable>
+                        <!--Добавить новый юр.адрес-->
                         <p:dialog header="Новый адрес" widgetVar="addAddress" modal="true" showEffect="fade" 
                                   hideEffect="fade" resizable="false" width="500">
                             <p:outputPanel>
@@ -157,15 +160,19 @@
                                         <p:ajax event="itemSelect" listener="#{openCustomerView.clearAddressFields()}" update="qqq"/>
                                     </p:autoComplete>
                                     <p:outputLabel value="Регион"/>
-                                    <p:autoComplete id="region1" size="25" value="#{openCustomerView.region2}" completeMethod="#{regionLOV.completeItem}" 
+                                    <p:autoComplete size="25" value="#{openCustomerView.region2}" completeMethod="#{regionLOV.completeItem}" 
                                                     forceSelection="true" rendered="#{openCustomerView.country.country_id=='UA'}">
                                         <p:ajax event="itemSelect" update="qqq"/>
                                     </p:autoComplete>
-                                    <p:inputText id="region2" size="25" value="#{openCustomerView.region2}" rendered="#{!(openCustomerView.country.country_id=='UA')}"/>
+                                    <p:inputText size="25" value="#{openCustomerView.region2}" rendered="#{!(openCustomerView.country.country_id=='UA')}"/>
                                     <p:outputLabel value="Город"/>
-                                    <p:autoComplete id="city1" size="25" value="#{openCustomerView.city}" completeMethod="#{cityLOV.completeItem}" 
-                                                    forceSelection="true" rendered="#{openCustomerView.country.country_id=='UA'}" onclick="#{openCustomerView.setRegion(openCustomerView.region2)}"/>
-                                    <p:inputText id="city2"  size="25" value="#{openCustomerView.city}" rendered="#{!(openCustomerView.country.country_id=='UA')}"/>
+                                    <p:autoComplete size="25" value="#{openCustomerView.city}" completeMethod="#{cityLOV.completeItem}" 
+                                                    forceSelection="true" rendered="#{openCustomerView.country.country_id=='UA'}" >
+                                        <p:ajax event="keypress"  listener="#{openCustomerView.setRegion(openCustomerView.region2)}" />
+                                        <p:ajax event="itemSelect"/>
+                                        <p:ajax event="itemUnselect"/>
+                                    </p:autoComplete>
+                                    <p:inputText size="25" value="#{openCustomerView.city}" rendered="#{!(openCustomerView.country.country_id=='UA')}"/>
                                     <p:outputLabel value="Индекс"/>
                                     <p:inputText value="#{openCustomerView.postCode}" size="10"/>
                                     <p:outputLabel value="Адрес"/>
@@ -182,8 +189,29 @@
                             </p:outputPanel>
                             <p:outputPanel style="margin: 5px;text-align: center">
                                 <p:commandButton oncomplete="PF('addAddress').hide()" immediate="true" value='Отмена' style="margin-right: 15px"/>
-                                <p:commandButton value="Добавить" actionListener="#{customerCBean.deleteRWAddressesOV()}" 
+                                <p:commandButton value="Добавить" actionListener="#{customerCBean.addAddressesOV()}" 
                                                  oncomplete="PF('addAddress').hide()" update="addresses mainMSG" />
+                            </p:outputPanel>
+                        </p:dialog>
+                        <!--Удалить выбранные юр.адреса -->
+                        <p:dialog header="Are you Sure?" widgetVar="addressDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="900">
+                            <p:outputPanel id="selectedAddress" style="text-align:center;">
+                                <p:dataTable value="#{openCustomerView.selectedAddresses}" var="v">
+                                    <p:column headerText="Страна" style="width:150px;text-align: center">
+                                        <p:outputLabel value="#{v.country.getTranslateObject(sessionActions.language).getName()}"/>
+                                    </p:column>
+                                    <p:column headerText="Область" style="width:100px;text-align: center">
+                                        <p:outputLabel value="#{v.region}"/>
+                                    </p:column>
+                                    <p:column headerText="Индекс" style="width:60px;text-align: center">
+                                        <p:outputLabel value="#{v.postCode}"/>
+                                    </p:column>
+                                    <p:column headerText="Адрес" style="width:250px;">
+                                        <p:outputLabel value="#{v.fullAddress}"/>
+                                    </p:column>
+                                </p:dataTable>
+                                <p:commandButton oncomplete="PF('addressDelete').hide()" immediate="true" value='No'/>
+                                <p:commandButton value="Yes" actionListener="#{customerCBean.deleteAddressesOV()}" oncomplete="PF('addressDelete').hide()" update="addresses mainMSG" />
                             </p:outputPanel>
                         </p:dialog>
                         <!--Список ЖД адресов клиента  -->
@@ -260,6 +288,7 @@
                                 <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
                             </f:facet>
                         </p:dataTable>
+                        <!--Удалить выбранные ЖД адреса-->
                         <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="1200">
                             <p:outputPanel id="selectedParams" style="text-align:center;">
                                 <p:dataTable value="#{openCustomerView.selectedEntityLines}" var="v">
