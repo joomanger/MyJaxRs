@@ -24,6 +24,7 @@
                             <p:outputLabel value="ИНН"/>
                             <p:inputText value="#{openCustomerView.entity.inn}" style="width: 100px;text-align: center"/>
                         </h:panelGrid>
+                        <!--Список юридических аресов клиента  -->
                         <p:dataTable id="addresses" var="a" value="#{openCustomerView.entity.addresses}" 
                                      widgetVar="addrTable"
                                      selection="#{openCustomerView.selectedAddresses}" 
@@ -47,7 +48,8 @@
                                     <f:facet name="input">
                                         <p:autoComplete value="#{a.country}" maxResults="20"
                                                         completeMethod="#{countryConverter.completeItem}"
-                                                        var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" itemValue="#{m}" converter="#{countryConverter}" 
+                                                        var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
+                                                        itemValue="#{m}" converter="#{countryConverter}" 
                                                         forceSelection="true" style="margin-right: 50px" >
                                             <p:ajax event="itemSelect" update="region city"/>
                                         </p:autoComplete>
@@ -64,9 +66,7 @@
                                     </f:facet>
                                     <f:facet name="input">
                                         <p:autoComplete size="15" value="#{a.region}" completeMethod="#{regionLOV.completeItem}" 
-                                                        forceSelection="true" rendered="#{a.country.country_id=='UA'}">
-                                            <p:ajax event="itemSelect" update="city"/>
-                                        </p:autoComplete>
+                                                        forceSelection="true" rendered="#{a.country.country_id=='UA'}"/>
                                         <p:inputText  size="15" value="#{a.region}" rendered="#{!(a.country.country_id=='UA')}"/>
                                     </f:facet>
                                 </p:cellEditor>
@@ -137,7 +137,56 @@
                             <p:column headerText="Акт" style="width:20px;text-align: center">
                                 <p:selectBooleanCheckbox value="#{a.activeStatus}"/>
                             </p:column>
+                            <f:facet name="footer" >
+                                <p:commandButton process="dTable" update="selectedParams" value="Новый" actionListener="#{openCustomerView.clearAddressFields()}" oncomplete="PF('addAddress').show()" style="margin-left: 10px">
+                                    <p:ajax update="qqq"/>
+                                </p:commandButton>
+                                <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
+                            </f:facet> 
                         </p:dataTable>
+                        <p:dialog header="Новый адрес" widgetVar="addAddress" modal="true" showEffect="fade" 
+                                  hideEffect="fade" resizable="false" width="500">
+                            <p:outputPanel>
+                                <p:panelGrid id="qqq" columns="2">
+                                    <p:outputLabel value="Страна"/>
+                                    <p:autoComplete value="#{openCustomerView.country}" maxResults="20"
+                                                    completeMethod="#{countryConverter.completeItem}"
+                                                    var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
+                                                    itemValue="#{m}" converter="#{countryConverter}" 
+                                                    forceSelection="true" style="margin-right: 50px" size="30" >
+                                        <p:ajax event="itemSelect" listener="#{openCustomerView.clearAddressFields()}" update="qqq"/>
+                                    </p:autoComplete>
+                                    <p:outputLabel value="Регион"/>
+                                    <p:autoComplete id="region1" size="25" value="#{openCustomerView.region2}" completeMethod="#{regionLOV.completeItem}" 
+                                                    forceSelection="true" rendered="#{openCustomerView.country.country_id=='UA'}">
+                                        <p:ajax event="itemSelect" update="qqq"/>
+                                    </p:autoComplete>
+                                    <p:inputText id="region2" size="25" value="#{openCustomerView.region2}" rendered="#{!(openCustomerView.country.country_id=='UA')}"/>
+                                    <p:outputLabel value="Город"/>
+                                    <p:autoComplete id="city1" size="25" value="#{openCustomerView.city}" completeMethod="#{cityLOV.completeItem}" 
+                                                    forceSelection="true" rendered="#{openCustomerView.country.country_id=='UA'}" onclick="#{openCustomerView.setRegion(openCustomerView.region2)}"/>
+                                    <p:inputText id="city2"  size="25" value="#{openCustomerView.city}" rendered="#{!(openCustomerView.country.country_id=='UA')}"/>
+                                    <p:outputLabel value="Индекс"/>
+                                    <p:inputText value="#{openCustomerView.postCode}" size="10"/>
+                                    <p:outputLabel value="Адрес"/>
+                                    <p:inputText value="#{openCustomerView.fullAddress}" size="40"/>
+                                    <p:outputLabel value="Получатель товара"/>
+                                    <p:selectBooleanCheckbox value="#{openCustomerView.ship_to}"/>
+                                    <p:outputLabel value="Получатель счета"/>
+                                    <p:selectBooleanCheckbox value="#{openCustomerView.bill_to}"/>
+                                    <p:outputLabel value="Поставщик"/>
+                                    <p:selectBooleanCheckbox value="#{openCustomerView.vendor}"/>
+                                    <p:outputLabel value="Код Duferco"/>
+                                    <p:inputText value="#{openCustomerView.duferco_site_use_id}" size="10"/>
+                                </p:panelGrid>
+                            </p:outputPanel>
+                            <p:outputPanel style="margin: 5px;text-align: center">
+                                <p:commandButton oncomplete="PF('addAddress').hide()" immediate="true" value='Отмена' style="margin-right: 15px"/>
+                                <p:commandButton value="Добавить" actionListener="#{customerCBean.deleteRWAddressesOV()}" 
+                                                 oncomplete="PF('addAddress').hide()" update="addresses mainMSG" />
+                            </p:outputPanel>
+                        </p:dialog>
+                        <!--Список ЖД адресов клиента  -->
                         <p:dataTable id="dTable" var="ord" value="#{openCustomerView.entity.RWAddresses}" 
                                      widgetVar="rwaddr" emptyMessage="Данные не найдены"
                                      selection="#{openCustomerView.selectedEntityLines}" 

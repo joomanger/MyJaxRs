@@ -17,6 +17,9 @@
                                  selection="#{findCustomerView.selectedEntities}" rows="20" paginator="true" style="width: 1400px;"
                                  rowsPerPageTemplate="20,40,100" widgetVar="myTable"
                                  emptyMessage="Данные не найдены" lazy="true">
+                        <f:facet name="header">
+                            Справочник заказчиков
+                        </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:column filterBy="#{ord.name}" filterStyle="width:250px" filterMatchMode="contains"  headerText="Наименование" style="width: 150px">
                             <h:commandLink action="openCustomer" value="#{ord.name}" onclick="document.getElementById('setCustomerId').value =#{ord.customer_id};"/>
