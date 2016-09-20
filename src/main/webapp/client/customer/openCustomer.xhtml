@@ -194,9 +194,10 @@
                             </p:outputPanel>
                         </p:dialog>
                         <!--Удалить выбранные юр.адреса -->
-                        <p:dialog header="Are you Sure?" widgetVar="addressDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="900">
+                        <p:dialog header="Вы уверены?" widgetVar="addressDelete" modal="true" showEffect="fade"
+                                  hideEffect="fade" resizable="false" width="900">
                             <p:outputPanel id="selectedAddress" style="text-align:center;">
-                                <p:dataTable value="#{openCustomerView.selectedAddresses}" var="v">
+                                <p:dataTable value="#{openCustomerView.selectedAddresses}" var="v" style="margin: 15px">
                                     <p:column headerText="Страна" style="width:150px;text-align: center">
                                         <p:outputLabel value="#{v.country.getTranslateObject(sessionActions.language).getName()}"/>
                                     </p:column>
@@ -210,8 +211,8 @@
                                         <p:outputLabel value="#{v.fullAddress}"/>
                                     </p:column>
                                 </p:dataTable>
-                                <p:commandButton oncomplete="PF('addressDelete').hide()" immediate="true" value='No'/>
-                                <p:commandButton value="Yes" actionListener="#{customerCBean.deleteAddressesOV()}" oncomplete="PF('addressDelete').hide()" update="addresses mainMSG" />
+                                <p:commandButton oncomplete="PF('addressDelete').hide()" immediate="true" value='Отмена' style="margin-right: 15px"/>
+                                <p:commandButton value="Удалить" actionListener="#{customerCBean.deleteAddressesOV()}" oncomplete="PF('addressDelete').hide()" update="addresses mainMSG" />
                             </p:outputPanel>
                         </p:dialog>
                         <!--Список ЖД адресов клиента  -->
@@ -289,21 +290,22 @@
                             </f:facet>
                         </p:dataTable>
                         <!--Удалить выбранные ЖД адреса-->
-                        <p:dialog header="Are you Sure?" widgetVar="itemForDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="1200">
+                        <p:dialog header="Вы уверены?" widgetVar="itemForDelete" modal="true" showEffect="fade" 
+                                  hideEffect="fade" resizable="false" width="700">
                             <p:outputPanel id="selectedParams" style="text-align:center;">
-                                <p:dataTable value="#{openCustomerView.selectedEntityLines}" var="v">
-                                    <p:column headerText="Станция" style="width:200px;text-align: center">
+                                <p:dataTable value="#{openCustomerView.selectedEntityLines}" var="v" style="margin: 15px">
+                                    <p:column headerText="Станция" style="width:150px;text-align: center">
                                         <p:outputLabel value="#{v.station.getTranslateObject(sessionActions.language).getName()}"/>
                                     </p:column>
                                     <p:column headerText="Код получателя" style="width:45px;text-align: center">
                                         <p:outputLabel value="#{v.rwrcvcode}"/>
                                     </p:column>
-                                    <p:column headerText="Ветка" style="width:450px;">
+                                    <p:column headerText="Ветка" style="width:250px;">
                                         <p:outputLabel value="#{v.rwbranch}"/>
                                     </p:column>
                                 </p:dataTable>
-                                <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='No'/>
-                                <p:commandButton value="Yes" actionListener="#{customerCBean.deleteRWAddressesOV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
+                                <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='Отмена'/>
+                                <p:commandButton value="Удалить" actionListener="#{customerCBean.deleteRWAddressesOV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
                             </p:outputPanel>
                         </p:dialog>
                         <p:commandButton id="btnBack" value="Back" action="customers" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
