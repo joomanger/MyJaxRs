@@ -42,17 +42,17 @@
                                     <p:menuitem action="/client/rw/rwstation/stations" value="ЖД станции" />
                                     <p:menuitem action="/client/customer/customers" value="Справочник заказчиков" />
                                 </p:submenu> 
-                                <p:submenu label="Заказы">
+                                <p:submenu label="Заказы" >
                                     <p:menuitem action="newOrder" outcome="newOrder" value="Создать заказ"/>
                                     <p:menuitem action="/client/saleorders/orders" value="Заказы"/>
                                 </p:submenu>
                                 <c:forEach var="role" items="#{userCBean.findUserByUserName(request.remoteUser).roles}">
                                     <c:forEach var="menu" items="#{role.menus}">
-                                        <p:submenu label="#{menu.menuName}">
+                                        <p:submenu label="#{menu.menuName}"  expanded="false">
                                             <c:forEach var="item" items="#{menu.menuItems}">
                                                 <c:if test="#{(item.visibleItem) and (menu.activeStatus)}">
                                                     <c:set var="view" value="#{viewCBean.findViewById(item.view_id)}"/>
-                                                    <p:menuitem action="#{view.getUrl()}" value="#{item.menuItem}"/> 
+                                                    <p:menuitem action="#{view.getUrl()}" value="#{item.menuItem}" /> 
                                                 </c:if>
                                             </c:forEach>  
                                         </p:submenu>

@@ -51,7 +51,8 @@
                             <p:commandButton value="New" action="newRoad" immediate="true" style="margin-left: 15px"/>
                         </f:facet>
                     </p:dataTable> 
-                    <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="500px">
+                    <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" 
+                              hideEffect="fade" resizable="false" width="500px">
                         <p:outputPanel id="selectedParams" style="text-align: center">
                             <p:dataTable value="#{findRoadView.selectedEntities}" var="v">
                                 <p:column headerText="Наименование" style="text-align: left;width: 50px">

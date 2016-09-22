@@ -44,7 +44,7 @@ public class OpenCustomerView extends AbstractView<Customer> {
     private String rwRcvCode;
     //Поля для создания новой строки юр. адреса
     private Country country;
-    private String region;
+    
     private String region2;
     private String postCode;
     private String city;
@@ -137,13 +137,7 @@ public class OpenCustomerView extends AbstractView<Customer> {
 //        this.selectedRWAddresses = selectedRWAddresses;
 //    }
 
-    public String getRegion() {
-        return region;
-    }
-
-    public void setRegion(String region) {
-        this.region = region;
-    }
+    
 
     public Country getCountry() {
         return country;
@@ -226,7 +220,7 @@ public class OpenCustomerView extends AbstractView<Customer> {
     }
 
     public void clearAddressFields() {
-        region = null;
+        fls.setRegion(null);
         region2 = null;
         postCode = null;
         city = null;

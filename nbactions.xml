@@ -12,7 +12,7 @@
             </goals>
             <properties>
                 <netbeans.deploy>true</netbeans.deploy>
-                <argLine>-Dfile.encoding=UTF-8 -Djava.util.Arrays.useLegacyMergeSort=true</argLine>
+                <argLine>-Dconsole.encoding=UTF-8 -Dfile.encoding=UTF-8 -Djava.util.Arrays.useLegacyMergeSort=true</argLine>
                 <resourceEncoding>UTF-8</resourceEncoding>
                 
                 
@@ -57,5 +57,27 @@
                 <netbeans.deploy.clientUrlPart>${webpagePath}</netbeans.deploy.clientUrlPart>
                 <argLine>-Dfile.encoding=UTF-8</argLine>
             </properties>
+        </action>
+        <action>
+            <actionName>build</actionName>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>install</goal>
+            </goals>
+            <properties>
+                <argLine>-Dconsole.encoding=UTF-8 -Dfile.encoding=UTF-8</argLine>
+            </properties>
+        </action>
+        <action>
+            <actionName>rebuild</actionName>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>clean</goal>
+                <goal>install</goal>
+            </goals>
         </action>
     </actions>

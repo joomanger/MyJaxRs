@@ -16,7 +16,8 @@
                         <h:outputLabel value="number" />
                         <h:outputLabel value="customer"/>
                         <c:forEach var="ord" items="#{saleOrderBean.items}">
-                            <h:commandLink action="openOrder" value="#{ord.order_number}" onclick="document.getElementById('setHeaderId').value =#{ord.header_id}"/>
+                            <h:commandLink action="openOrder" value="#{ord.order_number}" 
+                                           onclick="document.getElementById('setHeaderId').value =#{ord.header_id}"/>
                             <h:outputText value="#{ord.customer}"/>
                         </c:forEach>
                     </h:panelGrid>

@@ -1,10 +1,16 @@
 package customer.beans;
 
+import customer.entities.Address;
+import customer.entities.Country;
 import customer.entities.Customer;
+import customer.entities.RWAddress;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
-import lookup.entities.LookupItem;
+import rw.entities.RWStation;
 import service.AbstractView;
 
 /**
@@ -15,88 +21,211 @@ import service.AbstractView;
 @ViewScoped
 public class NewCustomerView extends AbstractView<Customer> {
 
-    private final Customer entity = new Customer();
+//    @Inject
+//    private CustomerCBean client;
+    @Inject
+    private FindCustomerSession fls;
+//    @Inject
+//    private SessionActions sa;
 
-    //Поля для создания новой строки
-    private String value;
-    private String meaning;
-    private String description;
+    private Customer entity;
 
-    private Long lookupItem_id;
-    private LookupItem li;
+    private List<Address> selectedAddresses = new ArrayList<>();
+    //private List<RWAddress> selectedRWAddresses = new ArrayList<>();
+    private List<RWAddress> filteredRWAddresses;
+    private List<Address> filteredAddresses;
 
-//    public NewLookupView() {
-//        super(Lookup.class);
-//    }
+    //Поля для создания новой строки ЖД адреса
+    private RWStation station;
+    private String rwBranch;
+    private String rwRcvCode;
+    //Поля для создания новой строки юр. адреса
+    private Country country;
+    private String region;
+    private String region2;
+    private String postCode;
+    private String city;
+    private String fullAddress;
+    private Boolean ship_to;
+    private Boolean bill_to;
+    private Boolean vendor;
+    private Boolean activeStatus;
+    private Long duferco_site_use_id;
 
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     @Override
     protected void init() {
-        entity.setActiveStatus(Boolean.TRUE);
+        entity = new Customer();
+
+//        List<RWAddress> rw = entity.getRWAddresses();
+//
+//        Collections.sort(rw, new Comparator<RWAddress>() {
+//            @Override
+//            public int compare(RWAddress o1, RWAddress o2) {
+//                return o1.getStation().getTranslateObject(sa.getLanguage()).getName().
+//                        compareTo(o2.getStation().getTranslateObject(sa.getLanguage()).getName());
+//            }
+//        });
         super.setEntity(entity);
     }
+    
 
-    public String getValue() {
-        return value;
+    public RWStation getStation() {
+        return station;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setStation(RWStation station) {
+        this.station = station;
     }
 
-    public String getMeaning() {
-        return meaning;
+    public String getRwBranch() {
+        return rwBranch;
     }
 
-    public void setMeaning(String meaning) {
-        this.meaning = meaning;
+    public void setRwBranch(String rwBranch) {
+        this.rwBranch = rwBranch;
     }
 
-    public String getDescription() {
-        return description;
+    public String getRwRcvCode() {
+        return rwRcvCode;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setRwRcvCode(String rwRcvCode) {
+        this.rwRcvCode = rwRcvCode;
     }
 
-    public Long getLookupItem_id() {
-        return lookupItem_id;
+    public List<Address> getSelectedAddresses() {
+        return selectedAddresses;
     }
 
-    public void setLookupItem_id(Long lookupItem_id) {
-        this.lookupItem_id = lookupItem_id;
-//        if (lookupItem_id != null) {
-//            for (LookupItem j : getEntity().getLookupItems()) {
-//                if (j.getLookupItem_id().equals(lookupItem_id)) {
-//                    li = j;
-//                    break;
-//                }
-//            }
-//        }
+    public void setSelectedAddresses(List<Address> selectedAddresses) {
+        this.selectedAddresses = selectedAddresses;
     }
 
-    public LookupItem getLi() {
-        return li;
+    public List<RWAddress> getFilteredRWAddresses() {
+        return filteredRWAddresses;
     }
 
-    public void setLi(LookupItem li) {
-        this.li = li;
+    public void setFilteredRWAddresses(List<RWAddress> filteredRWAddresses) {
+        this.filteredRWAddresses = filteredRWAddresses;
     }
 
-    public void updateEntityVL() {
-        //openedLookup = client.find(fls.getLookup_id());
-//        for (LookupItem l : getEntity().getLookupItems()) {
-//            for (LookupItemTL tl : li.getLookupItemTL()) {
-//                if (l.getLookupItem_id().equals(tl.getLookupItem().getLookupItem_id())) {
-//                    l.setMeaning(tl.getMeaning());
-//                    l.setDescription(tl.getDescription());
-//                    break;
-//                }
-//            }
-//        }
-        //super.setEntity(openedLookup);
+    public List<Address> getFilteredAddresses() {
+        return filteredAddresses;
+    }
+
+    public void setFilteredAddresses(List<Address> filteredAddresses) {
+        this.filteredAddresses = filteredAddresses;
+    }
+
+//    public List<RWAddress> getSelectedRWAddresses() {
+//        return selectedRWAddresses;
+//    }
+//
+//    public void setSelectedRWAddresses(List<RWAddress> selectedRWAddresses) {
+//        this.selectedRWAddresses = selectedRWAddresses;
+//    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getFullAddress() {
+        return fullAddress;
+    }
+
+    public void setFullAddress(String fullAddress) {
+        this.fullAddress = fullAddress;
+    }
+
+    public Boolean getShip_to() {
+        return ship_to;
+    }
+
+    public void setShip_to(Boolean ship_to) {
+        this.ship_to = ship_to;
+    }
+
+    public Boolean getBill_to() {
+        return bill_to;
+    }
+
+    public void setBill_to(Boolean bill_to) {
+        this.bill_to = bill_to;
+    }
+
+    public Boolean getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(Boolean vendor) {
+        this.vendor = vendor;
+    }
+
+    public Boolean getActiveStatus() {
+        return activeStatus;
+    }
+
+    public void setActiveStatus(Boolean activeStatus) {
+        this.activeStatus = activeStatus;
+    }
+
+    public Long getDuferco_site_use_id() {
+        return duferco_site_use_id;
+    }
+
+    public void setDuferco_site_use_id(Long duferco_site_use_id) {
+        this.duferco_site_use_id = duferco_site_use_id;
+    }
+
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
+
+    public String getRegion2() {
+        return region2;
+    }
+
+    public void setRegion2(String region2) {
+        this.region2 = region2;
+    }
+
+    public void clearAddressFields() {
+        fls.setRegion(null);
+        region2 = null;
+        postCode = null;
+        city = null;
+        fullAddress = null;
+        ship_to = false;
+        bill_to = false;
+        vendor = false;
+        activeStatus = false;
+        duferco_site_use_id = null;
     }
 
 }

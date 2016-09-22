@@ -1,6 +1,6 @@
 package lovs;
 
-import customer.beans.OpenCustomerView;
+import customer.beans.FindCustomerSession;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -20,10 +20,10 @@ public class CityLOV {
     private LookupCBean client;
 
     @Inject
-    private OpenCustomerView ocv;
+    private FindCustomerSession fcs;
 
     public List<String> completeItem(String query) {
-        List<String> allItems = client.getCitiesByRegion(ocv.getRegion());
+        List<String> allItems = client.getCitiesByRegion(fcs.getRegion());
         List<String> filteredItems = new ArrayList<>();
 
         allItems.stream().filter((item) -> item.toLowerCase().contains(query.toLowerCase())).forEach((item) -> {

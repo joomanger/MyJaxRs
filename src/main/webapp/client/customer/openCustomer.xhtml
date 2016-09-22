@@ -23,6 +23,8 @@
                             <p:inputText value="#{openCustomerView.entity.okpo}" style="width: 70px;text-align: center"/>
                             <p:outputLabel value="ИНН"/>
                             <p:inputText value="#{openCustomerView.entity.inn}" style="width: 100px;text-align: center"/>
+                            <p:outputLabel value="Резидент"/>
+                            <p:inputSwitch value="#{openCustomerView.entity.resident}"/>
                         </h:panelGrid>
                         <!--Список юридических аресов клиента  -->
                         <p:dataTable id="addresses" var="a" value="#{openCustomerView.entity.addresses}" 
@@ -82,7 +84,7 @@
                                     <f:facet name="input">
                                         <p:autoComplete size="15" value="#{a.city}" completeMethod="#{cityLOV.completeItem}" 
                                                         forceSelection="true" rendered="#{a.country.country_id=='UA'}">
-                                            <p:ajax event="keypress"  listener="#{openCustomerView.setRegion(a.region)}" />
+                                            <p:ajax event="keypress"  listener="#{findCustomerSession.setRegion(a.region)}" />
                                         </p:autoComplete>
                                         <p:inputText  size="15" value="#{a.city}" rendered="#{!(a.country.country_id=='UA')}"/>
                                     </f:facet>
@@ -168,7 +170,7 @@
                                     <p:outputLabel value="Город"/>
                                     <p:autoComplete size="25" value="#{openCustomerView.city}" completeMethod="#{cityLOV.completeItem}" 
                                                     forceSelection="true" rendered="#{openCustomerView.country.country_id=='UA'}" >
-                                        <p:ajax event="keypress"  listener="#{openCustomerView.setRegion(openCustomerView.region2)}" />
+                                        <p:ajax event="keypress"  listener="#{findCustomerSession.setRegion(openCustomerView.region2)}" />
                                         <p:ajax event="itemSelect"/>
                                         <p:ajax event="itemUnselect"/>
                                     </p:autoComplete>

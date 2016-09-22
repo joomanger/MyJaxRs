@@ -78,6 +78,31 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
         olv.getEntity().getAddresses().removeAll(olv.getSelectedAddresses());
         changeEntity();
     }
+    public void deleteAddressesNV() {
+        nlv.getEntity().getAddresses().removeAll(nlv.getSelectedAddresses());
+     
+    }
+
+    public void addAddressesNV() {
+        Address ar = new Address();
+        ar.setActiveStatus(Boolean.TRUE);
+        ar.setBill_to(nlv.getBill_to());
+        ar.setShip_to(nlv.getShip_to());
+        ar.setVendor(nlv.getVendor());
+        ar.setFullAddress(nlv.getFullAddress());
+        ar.setDuferco_site_use_id(nlv.getDuferco_site_use_id());
+        ar.setCity(nlv.getCity());
+        ar.setCountry(nlv.getCountry());
+        ar.setRegion(nlv.getRegion2());
+        ar.setPostCode(nlv.getPostCode());
+        String validation = addrEJB.validateMyEntity(ar);
+        if (validation.equals(addrEJB.SUCCESSFUL)) {
+            nlv.getEntity().addAddress(ar);
+        }else{
+            addrEJB.sendMessage(validation, null);
+        }
+
+    }
 
     public void addAddressesOV() {
         Address ar = new Address();
@@ -130,10 +155,31 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
             ejb.sendMessage(validation, null);
         }
     }
+    
+    public void addRWAddressNV() {
+        RWAddress rw = new RWAddress();
+        rw.setActiveStatus(Boolean.TRUE);
+        rw.setRwbranch(nlv.getRwBranch());
+        rw.setRwrcvcode(nlv.getRwRcvCode());
+        rw.setStation(nlv.getStation());
+        String validation = rwAddrEJB.validateMyEntity(rw);
+        if (validation.equals(ejb.SUCCESSFUL)) {
+            nlv.getEntity().addRWAddress(rw);
+            nlv.setStation(null);
+            nlv.setRwBranch(null);
+            nlv.setRwRcvCode(null);
+        } else {
+            ejb.sendMessage(validation, null);
+        }
+    }
 
     public void deleteRWAddressesOV() {
         olv.getEntity().getRWAddresses().removeAll(olv.getSelectedEntityLines());
         changeEntity();
+    }
+    
+    public void deleteRWAddressesNV() {
+        nlv.getEntity().getRWAddresses().removeAll(olv.getSelectedEntityLines());
     }
 
     @Override

@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Size;
 import org.eclipse.persistence.annotations.PrivateOwned;
 
 /**
@@ -28,7 +29,9 @@ public class Customer implements Serializable{
     @GeneratedValue(generator = "customer_sq")
     private Long customer_id;
     private Long customer_id_orc;
+    @Size(min=2,message = "НАИМЕНОВАНИЕ обязательно для заполнения")
     private String name;
+    @Size(min=2,message = "ПОЛНОЕ НАИМЕНОВАНИЕ обязательно для заполнения")
     private String fullName;
     private String okpo;
     private String inn;
