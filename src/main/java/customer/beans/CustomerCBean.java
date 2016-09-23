@@ -3,6 +3,7 @@ package customer.beans;
 import customer.entities.Address;
 import customer.entities.Customer;
 import customer.entities.RWAddress;
+import customer.entities.Relationship;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -29,6 +30,9 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
 
     @Inject
     private AddressEJB addrEJB;
+    
+    @Inject
+    private RelationshipEJB rlsEJB;
 
     @Inject
     private FindCustomerView flv;
@@ -186,6 +190,30 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
     public void deleteSelectedEntities() {
         super.deleteSelectedEntities();
         flv.updateLazyDataModel();
+    }
+    
+    public void deleteRelsOV(){
+        olv.getEntity().getRelationships().removeAll(olv.getSelectedRelationships());
+        changeEntity();
+    }
+    public void addRelsOV(){
+        Relationship rls=new Relationship();
+        rls.setActiveStatus(Boolean.TRUE);
+        rls.setRelatedCustomer(olv.getRelatedCustomer());
+        rls.setBill_to(olv.getBill_to2());
+        rls.setShip_to(olv.getShip_to2());
+        String validation=rlsEJB.validateMyEntity(rls);
+        if (validation.equals(rlsEJB.SUCCESSFUL)) {
+            rls.setCustomer(olv.getEntity());
+            String result = rlsEJB.create(rls);
+            if (result.equals(rlsEJB.SUCCESSFUL)) {
+                rlsEJB.sendMessage(result, "Отношение добавлено успешно");
+            } else {
+                rlsEJB.sendMessage(result, null);
+            }
+        } else {
+            rlsEJB.sendMessage(validation, null);
+        }
     }
 
 }

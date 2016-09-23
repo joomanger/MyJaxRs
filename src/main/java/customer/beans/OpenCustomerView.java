@@ -32,11 +32,16 @@ public class OpenCustomerView extends AbstractView<Customer> {
     private SessionActions sa;
 
     private Customer openedEntity = new Customer();
+    private Customer relatedCustomer;
+    private Boolean ship_to2;
+    private Boolean bill_to2;
+    private Boolean activeStatus2;
 
     private List<Address> selectedAddresses = new ArrayList<>();
-    //private List<RWAddress> selectedRWAddresses = new ArrayList<>();
+    private List<Address> selectedRelationships = new ArrayList<>();
     private List<RWAddress> filteredRWAddresses;
     private List<Address> filteredAddresses;
+    private List<Address> filteredRelationships;
 
     //Поля для создания новой строки ЖД адреса
     private RWStation station;
@@ -44,7 +49,7 @@ public class OpenCustomerView extends AbstractView<Customer> {
     private String rwRcvCode;
     //Поля для создания новой строки юр. адреса
     private Country country;
-    
+
     private String region2;
     private String postCode;
     private String city;
@@ -136,9 +141,6 @@ public class OpenCustomerView extends AbstractView<Customer> {
 //    public void setSelectedRWAddresses(List<RWAddress> selectedRWAddresses) {
 //        this.selectedRWAddresses = selectedRWAddresses;
 //    }
-
-    
-
     public Country getCountry() {
         return country;
     }
@@ -219,6 +221,54 @@ public class OpenCustomerView extends AbstractView<Customer> {
         this.region2 = region2;
     }
 
+    public List<Address> getSelectedRelationships() {
+        return selectedRelationships;
+    }
+
+    public void setSelectedRelationships(List<Address> selectedRelationships) {
+        this.selectedRelationships = selectedRelationships;
+    }
+
+    public List<Address> getFilteredRelationships() {
+        return filteredRelationships;
+    }
+
+    public void setFilteredRelationships(List<Address> filteredRelationships) {
+        this.filteredRelationships = filteredRelationships;
+    }
+
+    public Customer getRelatedCustomer() {
+        return relatedCustomer;
+    }
+
+    public void setRelatedCustomer(Customer relatedCustomer) {
+        this.relatedCustomer = relatedCustomer;
+    }
+
+    public Boolean getShip_to2() {
+        return ship_to2;
+    }
+
+    public void setShip_to2(Boolean ship_to2) {
+        this.ship_to2 = ship_to2;
+    }
+
+    public Boolean getBill_to2() {
+        return bill_to2;
+    }
+
+    public void setBill_to2(Boolean bill_to2) {
+        this.bill_to2 = bill_to2;
+    }
+
+    public Boolean getActiveStatus2() {
+        return activeStatus2;
+    }
+
+    public void setActiveStatus2(Boolean activeStatus2) {
+        this.activeStatus2 = activeStatus2;
+    }
+
     public void clearAddressFields() {
         fls.setRegion(null);
         region2 = null;
@@ -232,4 +282,10 @@ public class OpenCustomerView extends AbstractView<Customer> {
         duferco_site_use_id = null;
     }
 
+    public void clearRelsFields() {
+        ship_to2 = null;
+        bill_to2 = null;
+        relatedCustomer = null;
+    }
+   
 }

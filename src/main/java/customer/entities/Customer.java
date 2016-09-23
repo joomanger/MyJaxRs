@@ -22,33 +22,57 @@ import org.eclipse.persistence.annotations.PrivateOwned;
 @Entity
 @Table(uniqueConstraints
         = @UniqueConstraint(columnNames = {"name"}))
-public class Customer implements Serializable{
+public class Customer implements Serializable {
 
     @Id
     @SequenceGenerator(name = "customer_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "customer_sq")
     private Long customer_id;
     private Long customer_id_orc;
-    @Size(min=2,message = "НАИМЕНОВАНИЕ обязательно для заполнения")
+    @Size(min = 2, message = "НАИМЕНОВАНИЕ обязательно для заполнения")
     private String name;
-    @Size(min=2,message = "ПОЛНОЕ НАИМЕНОВАНИЕ обязательно для заполнения")
+    @Size(min = 2, message = "ПОЛНОЕ НАИМЕНОВАНИЕ обязательно для заполнения")
     private String fullName;
     private String okpo;
     private String inn;
     private Boolean resident;
-    
+
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "customer", fetch = FetchType.LAZY)
     @PrivateOwned
     private List<Address> addresses = new ArrayList<>();
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "customer",fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "customer", fetch = FetchType.LAZY)
     @PrivateOwned
     private List<RWAddress> RWAddresses = new ArrayList<>();
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "customer", fetch = FetchType.LAZY)
+    @PrivateOwned
+    private List<Relationship> relationships = new ArrayList<>();
+
     private Boolean activeStatus = true;
 
     public Customer() {
     }
-    
-    
+
+    public List<Relationship> getRelationships() {
+        return relationships;
+    }
+
+    public void setRelationships(List<Relationship> relationships) {
+        this.relationships = relationships;
+    }
+
+    public void addRelationship(Relationship rls) {
+        addRelationship(rls, true);
+    }
+
+    public void addRelationship(Relationship rls, boolean add) {
+        if (rls != null) {
+            getRelationships().add(rls);
+            if (add) {
+                rls.setCustomer(this, false);
+            }
+        }
+    }
+
     public void addAddress(Address adr) {
         addAddress(adr, true);
     }
