@@ -152,7 +152,7 @@
                                 </p:dataTable>
                                 <!--Добавить новый юр.адрес-->
                                 <p:dialog header="Новый адрес" widgetVar="addAddress" modal="true" showEffect="fade" 
-                                          hideEffect="fade" resizable="false" width="500">
+                                          resizable="false" width="500">
                                     <p:outputPanel>
                                         <p:panelGrid id="qqq" columns="2">
                                             <p:outputLabel value="Страна"/>
@@ -199,7 +199,7 @@
                                 </p:dialog>
                                 <!--Удалить выбранные юр.адреса -->
                                 <p:dialog header="Вы уверены?" widgetVar="addressDelete" modal="true" showEffect="fade"
-                                          hideEffect="fade" resizable="false" width="900">
+                                          resizable="false" width="900">
                                     <p:outputPanel id="selectedAddress" style="text-align:center;">
                                         <p:dataTable value="#{openCustomerView.selectedAddresses}" var="v" style="margin: 15px">
                                             <p:column headerText="Страна" style="width:150px;text-align: center">
@@ -297,7 +297,7 @@
                                 </p:dataTable>
                                 <!--Удалить выбранные ЖД адреса-->
                                 <p:dialog header="Вы уверены?" widgetVar="itemForDelete" modal="true" showEffect="fade" 
-                                          hideEffect="fade" resizable="false" width="700">
+                                          resizable="false" width="700">
                                     <p:outputPanel id="selectedParams" style="text-align:center;">
                                         <p:dataTable value="#{openCustomerView.selectedEntityLines}" var="v" style="margin: 15px">
                                             <p:column headerText="Станция" style="width:150px;text-align: center">
@@ -387,7 +387,7 @@
                                 </p:dialog>
                                 <!--Удалить выбранные отношения-->
                                 <p:dialog header="Вы уверены?" widgetVar="deleteRels" modal="true" showEffect="fade" 
-                                          hideEffect="fade" resizable="false" width="500">
+                                           resizable="false" width="500">
                                     <p:outputPanel id="selectedRels" style="text-align:center;">
                                         <p:dataTable value="#{openCustomerView.selectedRelationships}" var="v" style="margin: 15px">
                                             <p:column headerText="Клиент" style="width:250px;text-align: center">
