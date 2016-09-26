@@ -26,286 +26,383 @@
                             <p:outputLabel value="Резидент"/>
                             <p:inputSwitch value="#{newCustomerView.entity.resident}"/>
                         </h:panelGrid>
-                        <!--Список юридических аресов клиента  -->
-                        <p:dataTable id="addresses" var="a" value="#{newCustomerView.entity.addresses}" 
-                                     widgetVar="addrTable"
-                                     selection="#{newCustomerView.selectedAddresses}" 
-                                     rowSelectMode="checkbox" editMode="cell" editable="true"
-                                     reflow="true" rows="20" paginator="true"
-                                     rowKey="#{a.fullAddress}" filteredValue="#{newCustomerView.filteredAddresses}"
-                                     style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="false">
-                            <f:facet name="header">
-                                Адреса
-                                <p:inputText id="globalFilter" onkeyup="PF('addrTable').filter()" style="width:150px" placeholder="Поиск"/>
-                            </f:facet>   
-                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                            <p:column filterBy="#{a.country.getTranslateObject(sessionActions.language).getName()}" filterMatchMode="contains" headerText="Страна" style="width:110px;text-align: left">
-                                <f:facet name="filter">
-                                    <h:inputHidden/>
-                                </f:facet>
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <p:outputLabel value="#{a.country.getTranslateObject(sessionActions.language).getName()}"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:autoComplete value="#{a.country}" maxResults="20"
-                                                        completeMethod="#{countryConverter.completeItem}"
-                                                        var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
-                                                        itemValue="#{m}" converter="#{countryConverter}" 
-                                                        forceSelection="true" style="margin-right: 50px" >
-                                            <p:ajax event="itemSelect" update="region city"/>
-                                        </p:autoComplete>
-                                    </f:facet>
-                                </p:cellEditor>
-                            </p:column>
-                            <p:column filterBy="#{a.region}" filterMatchMode="contains" headerText="Область" style="width:80px;text-align: left">
-                                <f:facet name="filter">
-                                    <h:inputHidden/>
-                                </f:facet>
-                                <p:cellEditor id="region">
-                                    <f:facet name="output">
-                                        <p:outputLabel value="#{a.region}"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:autoComplete size="15" value="#{a.region}" completeMethod="#{regionLOV.completeItem}" 
-                                                        forceSelection="true" rendered="#{a.country.country_id=='UA'}"/>
-                                        <p:inputText  size="15" value="#{a.region}" rendered="#{!(a.country.country_id=='UA')}"/>
-                                    </f:facet>
-                                </p:cellEditor>
-                            </p:column>
-                            <p:column filterBy="#{a.city}" filterMatchMode="contains" headerText="Город" style="width:80px;text-align: left">
-                                <f:facet name="filter">
-                                    <h:inputHidden/>
-                                </f:facet>
-                                <p:cellEditor id="city">
-                                    <f:facet name="output">
-                                        <p:outputLabel value="#{a.city}"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:autoComplete size="15" value="#{a.city}" completeMethod="#{cityLOV.completeItem}" 
-                                                        forceSelection="true" rendered="#{a.country.country_id=='UA'}">
-                                            <p:ajax event="keypress"  listener="#{findCustomerSession.setRegion(a.region)}" />
-                                        </p:autoComplete>
-                                        <p:inputText  size="15" value="#{a.city}" rendered="#{!(a.country.country_id=='UA')}"/>
-                                    </f:facet>
-                                </p:cellEditor>
-                            </p:column>
-                            <p:column filterBy="#{a.postCode}" filterMatchMode="contains" headerText="Индекс" style="width:30px;text-align: center">
-                                <f:facet name="filter">
-                                    <h:inputHidden/>
-                                </f:facet>
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <p:outputLabel value="#{a.postCode}"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:inputText value="#{a.postCode}"/>
-                                    </f:facet>
-                                </p:cellEditor>
-                            </p:column>
-                            <p:column filterBy="#{a.fullAddress}" filterMatchMode="contains" headerText="Улица" style="width:140px;text-align: left">
-                                <f:facet name="filter">
-                                    <h:inputHidden/>
-                                </f:facet>
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <p:outputLabel value="#{a.fullAddress}"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:inputText value="#{a.fullAddress}"/>
-                                    </f:facet>
-                                </p:cellEditor>
-                            </p:column>
-                            <p:column headerText="S"  style="width:20px;text-align: center">
-                                <p:selectBooleanCheckbox value="#{a.ship_to}"/>
-                            </p:column>
-                            <p:column headerText="B" style="width:20px;text-align: center">
-                                <p:selectBooleanCheckbox value="#{a.bill_to}"/>
-                            </p:column>
-                            <p:column headerText="V" style="width:20px;text-align: center">
-                                <p:selectBooleanCheckbox value="#{a.vendor}"/>
-                            </p:column>
-                            <p:column filterBy="#{a.duferco_site_use_id}" filterMatchMode="contains" headerText="Код Дуферко" style="width:30px;text-align: center">
-                                <f:facet name="filter">
-                                    <h:inputHidden/>
-                                </f:facet>
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <p:outputLabel value="#{a.duferco_site_use_id}"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:inputText value="#{a.duferco_site_use_id}"/>
-                                    </f:facet>
-                                </p:cellEditor>
-                            </p:column> 
-                            <p:column headerText="Акт" style="width:20px;text-align: center">
-                                <p:selectBooleanCheckbox value="#{a.activeStatus}"/>
-                            </p:column>
-                            <f:facet name="footer" >
-                                <p:commandButton process="addresses" update="qqq" value="Новый" actionListener="#{newCustomerView.clearAddressFields()}" oncomplete="PF('addAddress').show()" style="margin-left: 10px"/>
-                                <p:commandButton process="addresses" update="selectedAddress" value="Удалить"  oncomplete="PF('addressDelete').show()" style="margin-left: 10px"/>
-                            </f:facet> 
-                        </p:dataTable>
-                        <!--Добавить новый юр.адрес-->
-                        <p:dialog header="Новый адрес" widgetVar="addAddress" modal="true" showEffect="fade" 
-                                   resizable="false" width="500">
-                            <p:outputPanel>
-                                <p:panelGrid id="qqq" columns="2">
-                                    <p:outputLabel value="Страна"/>
-                                    <p:autoComplete value="#{newCustomerView.country}" maxResults="20"
-                                                    completeMethod="#{countryConverter.completeItem}"
-                                                    var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
-                                                    itemValue="#{m}" converter="#{countryConverter}" 
-                                                    forceSelection="true" style="margin-right: 50px" size="30" >
-                                        <p:ajax event="itemSelect" listener="#{newCustomerView.clearAddressFields()}" update="qqq"/>
-                                    </p:autoComplete>
-                                    <p:outputLabel value="Регион"/>
-                                    <p:autoComplete size="25" value="#{newCustomerView.region2}" completeMethod="#{regionLOV.completeItem}" 
-                                                    forceSelection="true" rendered="#{newCustomerView.country.country_id=='UA'}">
-                                        <p:ajax event="itemSelect" update="qqq"/>
-                                    </p:autoComplete>
-                                    <p:inputText size="25" value="#{newCustomerView.region2}" rendered="#{!(newCustomerView.country.country_id=='UA')}"/>
-                                    <p:outputLabel value="Город"/>
-                                    <p:autoComplete size="25" value="#{newCustomerView.city}" completeMethod="#{cityLOV.completeItem}" 
-                                                    forceSelection="true" rendered="#{newCustomerView.country.country_id=='UA'}" >
-                                        <p:ajax event="keypress"  listener="#{findCustomerSession.setRegion(newCustomerView.region2)}" />
-                                    </p:autoComplete>
-                                    <p:inputText size="25" value="#{newCustomerView.city}" rendered="#{!(newCustomerView.country.country_id=='UA')}"/>
-                                    <p:outputLabel value="Индекс"/>
-                                    <p:inputText value="#{newCustomerView.postCode}" size="10"/>
-                                    <p:outputLabel value="Адрес"/>
-                                    <p:inputText value="#{newCustomerView.fullAddress}" size="40"/>
-                                    <p:outputLabel value="Получатель товара"/>
-                                    <p:selectBooleanCheckbox value="#{newCustomerView.ship_to}"/>
-                                    <p:outputLabel value="Получатель счета"/>
-                                    <p:selectBooleanCheckbox value="#{newCustomerView.bill_to}"/>
-                                    <p:outputLabel value="Поставщик"/>
-                                    <p:selectBooleanCheckbox value="#{newCustomerView.vendor}"/>
-                                    <p:outputLabel value="Код Duferco"/>
-                                    <p:inputText value="#{newCustomerView.duferco_site_use_id}" size="10"/>
-                                </p:panelGrid>
-                            </p:outputPanel>
-                            <p:outputPanel style="margin: 5px;text-align: center">
-                                <p:commandButton oncomplete="PF('addAddress').hide()" immediate="true" value='Отмена' style="margin-right: 15px"/>
-                                <p:commandButton value="Добавить" actionListener="#{customerCBean.addAddressesNV()}" 
-                                                 oncomplete="PF('addAddress').hide()" update="addresses mainMSG" />
-                            </p:outputPanel>
-                        </p:dialog>
-                        <!--Удалить выбранные юр.адреса -->
-                        <p:dialog header="Вы уверены?" widgetVar="addressDelete" modal="true" showEffect="fade"
-                                  hideEffect="fade" resizable="false" width="900">
-                            <p:outputPanel id="selectedAddress" style="text-align:center;">
-                                <p:dataTable value="#{newCustomerView.selectedAddresses}" var="v" style="margin: 15px">
-                                    <p:column headerText="Страна" style="width:150px;text-align: center">
-                                        <p:outputLabel value="#{v.country.getTranslateObject(sessionActions.language).getName()}"/>
+                        <p:tabView prependId="false">
+                            <p:tab id="adr" title="Адреса">
+                                <!--Список юридических аресов клиента  -->
+                                <p:dataTable id="addresses" var="a" value="#{newCustomerView.entity.addresses}" 
+                                             widgetVar="addrTable"
+                                             selection="#{newCustomerView.selectedAddresses}" 
+                                             rowSelectMode="checkbox" editMode="cell" editable="true"
+                                             reflow="true" rows="20" paginator="true"
+                                             rowKey="#{a.fullAddress}" filteredValue="#{newCustomerView.filteredAddresses}"
+                                             style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="false">
+                                    <f:facet name="header">
+                                        Адреса
+                                        <p:inputText id="globalFilter" onkeyup="PF('addrTable').filter()" style="width:150px" placeholder="Поиск"/>
+                                    </f:facet>   
+                                    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                    <p:column filterBy="#{a.country.getTranslateObject(sessionActions.language).getName()}" filterMatchMode="contains" headerText="Страна" style="width:110px;text-align: left">
+                                        <f:facet name="filter">
+                                            <h:inputHidden/>
+                                        </f:facet>
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <p:outputLabel value="#{a.country.getTranslateObject(sessionActions.language).getName()}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:autoComplete value="#{a.country}" maxResults="20"
+                                                                completeMethod="#{countryConverter.completeItem}"
+                                                                var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
+                                                                itemValue="#{m}" converter="#{countryConverter}" 
+                                                                forceSelection="true" style="margin-right: 50px" >
+                                                    <p:ajax event="itemSelect" update="region city"/>
+                                                </p:autoComplete>
+                                            </f:facet>
+                                        </p:cellEditor>
                                     </p:column>
-                                    <p:column headerText="Область" style="width:100px;text-align: center">
-                                        <p:outputLabel value="#{v.region}"/>
+                                    <p:column filterBy="#{a.region}" filterMatchMode="contains" headerText="Область" style="width:80px;text-align: left">
+                                        <f:facet name="filter">
+                                            <h:inputHidden/>
+                                        </f:facet>
+                                        <p:cellEditor id="region">
+                                            <f:facet name="output">
+                                                <p:outputLabel value="#{a.region}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:autoComplete size="15" value="#{a.region}" completeMethod="#{regionLOV.completeItem}" 
+                                                                forceSelection="true" rendered="#{a.country.country_id=='UA'}"/>
+                                                <p:inputText  size="15" value="#{a.region}" rendered="#{!(a.country.country_id=='UA')}"/>
+                                            </f:facet>
+                                        </p:cellEditor>
                                     </p:column>
-                                    <p:column headerText="Индекс" style="width:60px;text-align: center">
-                                        <p:outputLabel value="#{v.postCode}"/>
+                                    <p:column filterBy="#{a.city}" filterMatchMode="contains" headerText="Город" style="width:80px;text-align: left">
+                                        <f:facet name="filter">
+                                            <h:inputHidden/>
+                                        </f:facet>
+                                        <p:cellEditor id="city">
+                                            <f:facet name="output">
+                                                <p:outputLabel value="#{a.city}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:autoComplete size="15" value="#{a.city}" completeMethod="#{cityLOV.completeItem}" 
+                                                                forceSelection="true" rendered="#{a.country.country_id=='UA'}">
+                                                    <p:ajax event="keypress"  listener="#{findCustomerSession.setRegion(a.region)}" />
+                                                </p:autoComplete>
+                                                <p:inputText  size="15" value="#{a.city}" rendered="#{!(a.country.country_id=='UA')}"/>
+                                            </f:facet>
+                                        </p:cellEditor>
                                     </p:column>
-                                    <p:column headerText="Адрес" style="width:250px;">
-                                        <p:outputLabel value="#{v.fullAddress}"/>
+                                    <p:column filterBy="#{a.postCode}" filterMatchMode="contains" headerText="Индекс" style="width:30px;text-align: center">
+                                        <f:facet name="filter">
+                                            <h:inputHidden/>
+                                        </f:facet>
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <p:outputLabel value="#{a.postCode}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:inputText value="#{a.postCode}"/>
+                                            </f:facet>
+                                        </p:cellEditor>
                                     </p:column>
+                                    <p:column filterBy="#{a.fullAddress}" filterMatchMode="contains" headerText="Улица" style="width:140px;text-align: left">
+                                        <f:facet name="filter">
+                                            <h:inputHidden/>
+                                        </f:facet>
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <p:outputLabel value="#{a.fullAddress}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:inputText value="#{a.fullAddress}"/>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column headerText="S"  style="width:20px;text-align: center">
+                                        <p:selectBooleanCheckbox value="#{a.ship_to}"/>
+                                    </p:column>
+                                    <p:column headerText="B" style="width:20px;text-align: center">
+                                        <p:selectBooleanCheckbox value="#{a.bill_to}"/>
+                                    </p:column>
+                                    <p:column headerText="V" style="width:20px;text-align: center">
+                                        <p:selectBooleanCheckbox value="#{a.vendor}"/>
+                                    </p:column>
+                                    <p:column filterBy="#{a.duferco_site_use_id}" filterMatchMode="contains" headerText="Код Дуферко" style="width:30px;text-align: center">
+                                        <f:facet name="filter">
+                                            <h:inputHidden/>
+                                        </f:facet>
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <p:outputLabel value="#{a.duferco_site_use_id}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:inputText value="#{a.duferco_site_use_id}"/>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column> 
+                                    <p:column headerText="Акт" style="width:20px;text-align: center">
+                                        <p:selectBooleanCheckbox value="#{a.activeStatus}"/>
+                                    </p:column>
+                                    <f:facet name="footer" >
+                                        <p:commandButton process="addresses" update="qqq" value="Новый" actionListener="#{newCustomerView.clearAddressFields()}" oncomplete="PF('addAddress').show()" style="margin-left: 10px"/>
+                                        <p:commandButton process="addresses" update="selectedAddress" value="Удалить"  oncomplete="PF('addressDelete').show()" style="margin-left: 10px"/>
+                                    </f:facet> 
                                 </p:dataTable>
-                                <p:commandButton oncomplete="PF('addressDelete').hide()" immediate="true" value='Отмена' style="margin-right: 15px"/>
-                                <p:commandButton value="Удалить" actionListener="#{customerCBean.deleteAddressesNV()}" oncomplete="PF('addressDelete').hide()" update="addresses mainMSG" />
-                            </p:outputPanel>
-                        </p:dialog>
-                        <!--Список ЖД адресов клиента  -->
-                        <p:dataTable id="dTable" var="ord" value="#{newCustomerView.entity.RWAddresses}" 
-                                     widgetVar="rwaddr" emptyMessage="Данные не найдены"
-                                     selection="#{newCustomerView.selectedEntityLines}" 
-                                     rowSelectMode="checkbox" editMode="cell" editable="true"
-                                     rows="20" paginator="true"  
-                                     rowKey="#{ord}" filteredValue="#{newCustomerView.filteredRWAddresses}"
-                                     style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" >
-                            <f:facet name="header">
-                                ЖД адреса
-                                <p:inputText id="globalFilter" onkeyup="PF('rwaddr').filter()" style="width:150px" placeholder="Поиск"/>
-                            </f:facet>
-                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                            <p:column filterBy="#{ord.station.getTranslateObject(sessionActions.language).getName()}" filterMatchMode="contains"  headerText="Станция" style="width:200px;text-align: left">
-                                <f:facet name="filter">
-                                    <h:inputHidden/>
-                                </f:facet>
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <p:outputLabel value="#{ord.station.getTranslateObject(sessionActions.language).getName()}"/>
+                                <!--Добавить новый юр.адрес-->
+                                <p:dialog header="Новый адрес" widgetVar="addAddress" modal="true" showEffect="fade" 
+                                          resizable="false" width="500">
+                                    <p:outputPanel>
+                                        <p:panelGrid id="qqq" columns="2">
+                                            <p:outputLabel value="Страна"/>
+                                            <p:autoComplete value="#{newCustomerView.country}" maxResults="20"
+                                                            completeMethod="#{countryConverter.completeItem}"
+                                                            var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
+                                                            itemValue="#{m}" converter="#{countryConverter}" 
+                                                            forceSelection="true" style="margin-right: 50px" size="30" >
+                                                <p:ajax event="itemSelect" listener="#{newCustomerView.clearAddressFields()}" update="qqq"/>
+                                            </p:autoComplete>
+                                            <p:outputLabel value="Регион"/>
+                                            <p:autoComplete size="25" value="#{newCustomerView.region2}" completeMethod="#{regionLOV.completeItem}" 
+                                                            forceSelection="true" rendered="#{newCustomerView.country.country_id=='UA'}">
+                                                <p:ajax event="itemSelect" update="qqq"/>
+                                            </p:autoComplete>
+                                            <p:inputText size="25" value="#{newCustomerView.region2}" rendered="#{!(newCustomerView.country.country_id=='UA')}"/>
+                                            <p:outputLabel value="Город"/>
+                                            <p:autoComplete size="25" value="#{newCustomerView.city}" completeMethod="#{cityLOV.completeItem}" 
+                                                            forceSelection="true" rendered="#{newCustomerView.country.country_id=='UA'}" >
+                                                <p:ajax event="keypress"  listener="#{findCustomerSession.setRegion(newCustomerView.region2)}" />
+                                            </p:autoComplete>
+                                            <p:inputText size="25" value="#{newCustomerView.city}" rendered="#{!(newCustomerView.country.country_id=='UA')}"/>
+                                            <p:outputLabel value="Индекс"/>
+                                            <p:inputText value="#{newCustomerView.postCode}" size="10"/>
+                                            <p:outputLabel value="Адрес"/>
+                                            <p:inputText value="#{newCustomerView.fullAddress}" size="40"/>
+                                            <p:outputLabel value="Получатель товара"/>
+                                            <p:selectBooleanCheckbox value="#{newCustomerView.ship_to}"/>
+                                            <p:outputLabel value="Получатель счета"/>
+                                            <p:selectBooleanCheckbox value="#{newCustomerView.bill_to}"/>
+                                            <p:outputLabel value="Поставщик"/>
+                                            <p:selectBooleanCheckbox value="#{newCustomerView.vendor}"/>
+                                            <p:outputLabel value="Код Duferco"/>
+                                            <p:inputText value="#{newCustomerView.duferco_site_use_id}" size="10"/>
+                                        </p:panelGrid>
+                                    </p:outputPanel>
+                                    <p:outputPanel style="margin: 5px;text-align: center">
+                                        <p:commandButton oncomplete="PF('addAddress').hide()" immediate="true" value='Отмена' style="margin-right: 15px"/>
+                                        <p:commandButton value="Добавить" actionListener="#{customerCBean.addAddressesNV()}" 
+                                                         oncomplete="PF('addAddress').hide()" update="addresses mainMSG" />
+                                    </p:outputPanel>
+                                </p:dialog>
+                                <!--Удалить выбранные юр.адреса -->
+                                <p:dialog header="Вы уверены?" widgetVar="addressDelete" modal="true" showEffect="fade"
+                                          hideEffect="fade" resizable="false" width="900">
+                                    <p:outputPanel id="selectedAddress" style="text-align:center;">
+                                        <p:dataTable value="#{newCustomerView.selectedAddresses}" var="v" style="margin: 15px">
+                                            <p:column headerText="Страна" style="width:150px;text-align: center">
+                                                <p:outputLabel value="#{v.country.getTranslateObject(sessionActions.language).getName()}"/>
+                                            </p:column>
+                                            <p:column headerText="Область" style="width:100px;text-align: center">
+                                                <p:outputLabel value="#{v.region}"/>
+                                            </p:column>
+                                            <p:column headerText="Индекс" style="width:60px;text-align: center">
+                                                <p:outputLabel value="#{v.postCode}"/>
+                                            </p:column>
+                                            <p:column headerText="Адрес" style="width:250px;">
+                                                <p:outputLabel value="#{v.fullAddress}"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                        <p:commandButton oncomplete="PF('addressDelete').hide()" immediate="true" value='Отмена' style="margin-right: 15px"/>
+                                        <p:commandButton value="Удалить" actionListener="#{customerCBean.deleteAddressesNV()}" oncomplete="PF('addressDelete').hide()" update="addresses mainMSG" />
+                                    </p:outputPanel>
+                                </p:dialog>
+                            </p:tab>
+                            <p:tab title="ЖД адреса">
+                                <!--Список ЖД адресов клиента  -->
+                                <p:dataTable id="dTable" var="ord" value="#{newCustomerView.entity.RWAddresses}" 
+                                             widgetVar="rwaddr" emptyMessage="Данные не найдены"
+                                             selection="#{newCustomerView.selectedEntityLines}" 
+                                             rowSelectMode="checkbox" editMode="cell" editable="true"
+                                             rows="20" paginator="true"  
+                                             rowKey="#{ord}" filteredValue="#{newCustomerView.filteredRWAddresses}"
+                                             style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" >
+                                    <f:facet name="header">
+                                        ЖД адреса
+                                        <p:inputText id="globalFilter" onkeyup="PF('rwaddr').filter()" style="width:150px" placeholder="Поиск"/>
                                     </f:facet>
-                                    <f:facet name="input">
-                                        <p:autoComplete value="#{ord.station}" maxResults="20" 
+                                    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                    <p:column filterBy="#{ord.station.getTranslateObject(sessionActions.language).getName()}" filterMatchMode="contains"  headerText="Станция" style="width:200px;text-align: left">
+                                        <f:facet name="filter">
+                                            <h:inputHidden/>
+                                        </f:facet>
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <p:outputLabel value="#{ord.station.getTranslateObject(sessionActions.language).getName()}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:autoComplete value="#{ord.station}" maxResults="20" 
+                                                                completeMethod="#{stationConverter.completeItem}"
+                                                                var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
+                                                                itemValue="#{m}" converter="#{stationConverter}" 
+                                                                forceSelection="true" size="40">
+
+                                                </p:autoComplete>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column headerText="Код получателя" filterBy="#{ord.rwrcvcode}" filterMatchMode="contains" style="width:45px;text-align: center">
+                                        <f:facet name="filter">
+                                            <h:inputHidden/>
+                                        </f:facet>
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <p:outputLabel value="#{ord.rwrcvcode}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:inputText value="#{ord.rwrcvcode}" size="3" style="text-align: center"/>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column headerText="Ветка" filterBy="#{ord.rwbranch}" filterMatchMode="contains" style="width:450px;">
+                                        <f:facet name="filter">
+                                            <h:inputHidden/>
+                                        </f:facet>
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <p:outputLabel value="#{ord.rwbranch}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:inputText value="#{ord.rwbranch}" size="80"/>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column filterable="false" headerText="Активный" style="width:56px; text-align: center" >
+                                        <p:selectBooleanCheckbox value="#{ord.activeStatus}" rendered="true"/>
+                                    </p:column>
+                                    <f:facet name="footer" >
+                                        <p:autoComplete value="#{newCustomerView.station}" maxResults="20"
                                                         completeMethod="#{stationConverter.completeItem}"
                                                         var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
                                                         itemValue="#{m}" converter="#{stationConverter}" 
-                                                        forceSelection="true" size="40">
-
+                                                        forceSelection="true" size="40" placeholder="ЖД станция">
                                         </p:autoComplete>
+                                        <p:inputText value="#{newCustomerView.rwRcvCode}" size="3" placeholder="код" style="text-align: center"/>
+                                        <p:inputText value="#{newCustomerView.rwBranch}" size="80" placeholder="ветка"/>
+                                        <p:commandButton value="Добавить" actionListener="#{customerCBean.addRWAddressNV()}" update="dTable mainMSG"/>
+                                        <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
                                     </f:facet>
-                                </p:cellEditor>
-                            </p:column>
-                            <p:column headerText="Код получателя" filterBy="#{ord.rwrcvcode}" filterMatchMode="contains" style="width:45px;text-align: center">
-                                <f:facet name="filter">
-                                    <h:inputHidden/>
-                                </f:facet>
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <p:outputLabel value="#{ord.rwrcvcode}"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:inputText value="#{ord.rwrcvcode}" size="3" style="text-align: center"/>
-                                    </f:facet>
-                                </p:cellEditor>
-                            </p:column>
-                            <p:column headerText="Ветка" filterBy="#{ord.rwbranch}" filterMatchMode="contains" style="width:450px;">
-                                <f:facet name="filter">
-                                    <h:inputHidden/>
-                                </f:facet>
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <p:outputLabel value="#{ord.rwbranch}"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:inputText value="#{ord.rwbranch}" size="80"/>
-                                    </f:facet>
-                                </p:cellEditor>
-                            </p:column>
-                            <p:column filterable="false" headerText="Активный" style="width:56px; text-align: center" >
-                                <p:selectBooleanCheckbox value="#{ord.activeStatus}" rendered="true"/>
-                            </p:column>
-                            <f:facet name="footer" >
-                                <p:autoComplete value="#{newCustomerView.station}" maxResults="20"
-                                                completeMethod="#{stationConverter.completeItem}"
-                                                var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
-                                                itemValue="#{m}" converter="#{stationConverter}" 
-                                                forceSelection="true" size="40" placeholder="ЖД станция">
-                                </p:autoComplete>
-                                <p:inputText value="#{newCustomerView.rwRcvCode}" size="3" placeholder="код" style="text-align: center"/>
-                                <p:inputText value="#{newCustomerView.rwBranch}" size="80" placeholder="ветка"/>
-                                <p:commandButton value="Добавить" actionListener="#{customerCBean.addRWAddressNV()}" update="dTable mainMSG"/>
-                                <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('itemForDelete').show()" style="margin-left: 10px"/>
-                            </f:facet>
-                        </p:dataTable>
-                        <!--Удалить выбранные ЖД адреса-->
-                        <p:dialog header="Вы уверены?" widgetVar="itemForDelete" modal="true" showEffect="fade" 
-                                  hideEffect="fade" resizable="false" width="700">
-                            <p:outputPanel id="selectedParams" style="text-align:center;">
-                                <p:dataTable value="#{newCustomerView.selectedEntityLines}" var="v" style="margin: 15px">
-                                    <p:column headerText="Станция" style="width:150px;text-align: center">
-                                        <p:outputLabel value="#{v.station.getTranslateObject(sessionActions.language).getName()}"/>
-                                    </p:column>
-                                    <p:column headerText="Код получателя" style="width:45px;text-align: center">
-                                        <p:outputLabel value="#{v.rwrcvcode}"/>
-                                    </p:column>
-                                    <p:column headerText="Ветка" style="width:250px;">
-                                        <p:outputLabel value="#{v.rwbranch}"/>
-                                    </p:column>
                                 </p:dataTable>
-                                <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='Отмена'/>
-                                <p:commandButton value="Удалить" actionListener="#{customerCBean.deleteRWAddressesOV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
-                            </p:outputPanel>
-                        </p:dialog>
+                                <!--Удалить выбранные ЖД адреса-->
+                                <p:dialog header="Вы уверены?" widgetVar="itemForDelete" modal="true" showEffect="fade" 
+                                          hideEffect="fade" resizable="false" width="700">
+                                    <p:outputPanel id="selectedParams" style="text-align:center;">
+                                        <p:dataTable value="#{newCustomerView.selectedEntityLines}" var="v" style="margin: 15px">
+                                            <p:column headerText="Станция" style="width:150px;text-align: center">
+                                                <p:outputLabel value="#{v.station.getTranslateObject(sessionActions.language).getName()}"/>
+                                            </p:column>
+                                            <p:column headerText="Код получателя" style="width:45px;text-align: center">
+                                                <p:outputLabel value="#{v.rwrcvcode}"/>
+                                            </p:column>
+                                            <p:column headerText="Ветка" style="width:250px;">
+                                                <p:outputLabel value="#{v.rwbranch}"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                        <p:commandButton oncomplete="PF('itemForDelete').hide()" immediate="true" value='Отмена'/>
+                                        <p:commandButton value="Удалить" actionListener="#{customerCBean.deleteRWAddressesOV()}" oncomplete="PF('itemForDelete').hide()" update="dTable mainMSG" />
+                                    </p:outputPanel>
+                                </p:dialog>
+                            </p:tab>
+                            <p:tab title="Отношения">
+                                <!--Отношения межу клиентами клиента  -->
+                                <p:dataTable id="rels" var="a" value="#{newCustomerView.entity.relationships}" 
+                                             selection="#{newCustomerView.selectedRelationships}" 
+                                             rowSelectMode="checkbox" editMode="cell" editable="true"
+                                             reflow="true" rows="20" rowKey="#{a}" 
+                                             filteredValue="#{newCustomerView.filteredRelationships}"
+                                             style="width: 800px;margin-top:20px" 
+                                             lazy="false">
+                                    <f:facet name="header">
+                                        Отношения
+                                    </f:facet>
+                                    <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                    <p:column headerText="Клиент" style="width:250px;text-align: left">
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <p:outputLabel value="#{a.relatedCustomer.name}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:autoComplete value="#{a.relatedCustomer}" maxResults="20"
+                                                                completeMethod="#{customerConverter.completeItem}"
+                                                                var="m" itemLabel="#{m.name}" size="70"
+                                                                itemValue="#{m}" converter="#{customerConverter}" 
+                                                                forceSelection="true" style="margin-right: 50px"/>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column headerText="Товар"  style="width:20px;text-align: center">
+                                        <p:selectBooleanCheckbox value="#{a.ship_to}"/>
+                                    </p:column>
+                                    <p:column headerText="Счет" style="width:20px;text-align: center">
+                                        <p:selectBooleanCheckbox value="#{a.bill_to}"/>
+                                    </p:column>
+                                    <p:column headerText="Актив." style="width:20px;text-align: center">
+                                        <p:selectBooleanCheckbox value="#{a.activeStatus}"/>
+                                    </p:column>
+                                    <f:facet name="footer" >
+                                        <p:commandButton process="rels" value="Новый" 
+                                                         actionListener="#{newCustomerView.clearRelsFields()}" 
+                                                         oncomplete="PF('addRels').show()" style="margin-left: 10px" 
+                                                         update="addRels"/>
+                                        <p:commandButton process="rels" update="selectedRels" value="Удалить"  
+                                                         oncomplete="PF('deleteRels').show()" style="margin-left: 10px"/>
+                                    </f:facet>
+                                </p:dataTable>
+
+                                <!--Добавить новое отношение-->
+                                <p:dialog header="Новое отношение" widgetVar="addRels" modal="true" showEffect="fade" 
+                                          resizable="false" width="700">
+                                    <p:outputPanel>
+                                        <p:panelGrid id="addRels" columns="2">
+                                            <p:outputLabel value="Клиент"/>
+                                            <p:autoComplete value="#{newCustomerView.relatedCustomer}" maxResults="20"
+                                                            completeMethod="#{customerConverter.completeItem}"
+                                                            var="m" itemLabel="#{m.name}" size="70"
+                                                            itemValue="#{m}" converter="#{customerConverter}" 
+                                                            forceSelection="true" />
+                                            <p:outputLabel value="Товар"/>
+                                            <p:selectBooleanCheckbox value="#{newCustomerView.ship_to2}" />
+                                            <p:outputLabel value="Счет"/>
+                                            <p:selectBooleanCheckbox value="#{newCustomerView.bill_to2}"/>
+                                        </p:panelGrid>
+                                    </p:outputPanel>
+                                    <p:outputPanel style="margin: 5px;text-align: center">
+                                        <p:commandButton oncomplete="PF('addRels').hide()" immediate="true" 
+                                                         value='Отмена' style="margin-right: 15px"/>
+                                        <p:commandButton value="Добавить" actionListener="#{customerCBean.addRelsNV()}" 
+                                                         oncomplete="PF('addRels').hide()" update="rels mainMSG" />
+                                    </p:outputPanel>
+                                </p:dialog>
+                                <!--Удалить выбранные отношения-->
+                                <p:dialog header="Вы уверены?" widgetVar="deleteRels" modal="true" showEffect="fade" 
+                                           resizable="false" width="500">
+                                    <p:outputPanel id="selectedRels" style="text-align:center;">
+                                        <p:dataTable value="#{newCustomerView.selectedRelationships}" var="v" style="margin: 15px">
+                                            <p:column headerText="Клиент" style="width:250px;text-align: center">
+                                                <p:outputLabel value="#{v.relatedCustomer.name}"/>
+                                            </p:column>
+                                            <p:column headerText="Товар" style="width:45px;text-align: center">
+                                                <p:outputLabel value="#{v.ship_to}"/>
+                                            </p:column>
+                                            <p:column headerText="Счет" style="width:45px;">
+                                                <p:outputLabel value="#{v.bill_to}"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                        <p:commandButton oncomplete="PF('deleteRels').hide()" immediate="true" value='Отмена'/>
+                                        <p:commandButton value="Удалить" actionListener="#{customerCBean.deleteRelsNV()}" 
+                                                         oncomplete="PF('deleteRels').hide()" update="rels mainMSG" />
+                                    </p:outputPanel>
+                                </p:dialog>
+                            </p:tab>
+                        </p:tabView>
                         <p:commandButton id="btnBack" value="Back" action="customers" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
                         <p:commandButton id="btnSave" value="Сохранить" action="#{customerCBean.createEntity('customers')}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
                     </p:fieldset> 

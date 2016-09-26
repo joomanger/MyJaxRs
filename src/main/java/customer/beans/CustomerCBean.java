@@ -30,7 +30,7 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
 
     @Inject
     private AddressEJB addrEJB;
-    
+
     @Inject
     private RelationshipEJB rlsEJB;
 
@@ -82,9 +82,10 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
         olv.getEntity().getAddresses().removeAll(olv.getSelectedAddresses());
         changeEntity();
     }
+
     public void deleteAddressesNV() {
         nlv.getEntity().getAddresses().removeAll(nlv.getSelectedAddresses());
-     
+
     }
 
     public void addAddressesNV() {
@@ -102,7 +103,7 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
         String validation = addrEJB.validateMyEntity(ar);
         if (validation.equals(addrEJB.SUCCESSFUL)) {
             nlv.getEntity().addAddress(ar);
-        }else{
+        } else {
             addrEJB.sendMessage(validation, null);
         }
 
@@ -159,7 +160,7 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
             ejb.sendMessage(validation, null);
         }
     }
-    
+
     public void addRWAddressNV() {
         RWAddress rw = new RWAddress();
         rw.setActiveStatus(Boolean.TRUE);
@@ -181,7 +182,7 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
         olv.getEntity().getRWAddresses().removeAll(olv.getSelectedEntityLines());
         changeEntity();
     }
-    
+
     public void deleteRWAddressesNV() {
         nlv.getEntity().getRWAddresses().removeAll(olv.getSelectedEntityLines());
     }
@@ -191,18 +192,23 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
         super.deleteSelectedEntities();
         flv.updateLazyDataModel();
     }
-    
-    public void deleteRelsOV(){
+
+    public void deleteRelsOV() {
         olv.getEntity().getRelationships().removeAll(olv.getSelectedRelationships());
         changeEntity();
     }
-    public void addRelsOV(){
-        Relationship rls=new Relationship();
+
+    public void deleteRelsNV() {
+        nlv.getEntity().getRelationships().removeAll(nlv.getSelectedRelationships());
+    }
+
+    public void addRelsOV() {
+        Relationship rls = new Relationship();
         rls.setActiveStatus(Boolean.TRUE);
         rls.setRelatedCustomer(olv.getRelatedCustomer());
         rls.setBill_to(olv.getBill_to2());
         rls.setShip_to(olv.getShip_to2());
-        String validation=rlsEJB.validateMyEntity(rls);
+        String validation = rlsEJB.validateMyEntity(rls);
         if (validation.equals(rlsEJB.SUCCESSFUL)) {
             rls.setCustomer(olv.getEntity());
             String result = rlsEJB.create(rls);
@@ -211,6 +217,20 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
             } else {
                 rlsEJB.sendMessage(result, null);
             }
+        } else {
+            rlsEJB.sendMessage(validation, null);
+        }
+    }
+
+    public void addRelsNV() {
+        Relationship rls = new Relationship();
+        rls.setActiveStatus(Boolean.TRUE);
+        rls.setRelatedCustomer(nlv.getRelatedCustomer());
+        rls.setBill_to(nlv.getBill_to2());
+        rls.setShip_to(nlv.getShip_to2());
+        String validation = rlsEJB.validateMyEntity(rls);
+        if (validation.equals(rlsEJB.SUCCESSFUL)) {
+            rls.setCustomer(nlv.getEntity());
         } else {
             rlsEJB.sendMessage(validation, null);
         }

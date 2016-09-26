@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 
@@ -26,6 +27,7 @@ public class Address implements Serializable {
 
     @OneToOne(cascade = {CascadeType.DETACH})
     @JoinColumn(name = "country_id")
+    @NotNull(message = "поле Страна обязательна для заполнения")
     private Country country;
     private String region;
 
