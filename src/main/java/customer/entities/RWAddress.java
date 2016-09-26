@@ -20,21 +20,21 @@ import rw.entities.RWStation;
  */
 @Entity
 @Table(uniqueConstraints
-        = @UniqueConstraint(columnNames = {"rws_code","rwRcvCode","rwbranch"}))
+        = @UniqueConstraint(columnNames = {"customer_id","rws_code","rwRcvCode","rwbranch"}))
 public class RWAddress implements Serializable{
 
     @Id
     @SequenceGenerator(name = "rwaddress_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "rwaddress_sq")
-    protected Long rwaddress_id;
+    private Long rwaddress_id;
     private Long rwaddress_id_orc;
     @OneToOne(cascade = {CascadeType.DETACH})
     @JoinColumn(name = "rws_code")
     @NotNull(message = "Поле ЖД Станция обязательна для заполнения")
     private RWStation station;
-    protected String rwbranch;
-    protected String rwrcvcode;
-    protected Boolean activeStatus = true;
+    private String rwbranch;
+    private String rwrcvcode;
+    private Boolean activeStatus = true;
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
@@ -101,5 +101,6 @@ public class RWAddress implements Serializable{
             customer.addRWAddress(this, false);
         }
     }
+ 
 
 }

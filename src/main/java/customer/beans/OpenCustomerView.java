@@ -4,6 +4,7 @@ import customer.entities.Address;
 import customer.entities.Country;
 import customer.entities.Customer;
 import customer.entities.RWAddress;
+import customer.entities.Relationship;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -32,10 +33,6 @@ public class OpenCustomerView extends AbstractView<Customer> {
     private SessionActions sa;
 
     private Customer openedEntity = new Customer();
-    private Customer relatedCustomer;
-    private Boolean ship_to2;
-    private Boolean bill_to2;
-    private Boolean activeStatus2;
 
     private List<Address> selectedAddresses = new ArrayList<>();
     private List<Address> selectedRelationships = new ArrayList<>();
@@ -49,7 +46,6 @@ public class OpenCustomerView extends AbstractView<Customer> {
     private String rwRcvCode;
     //Поля для создания новой строки юр. адреса
     private Country country;
-
     private String region2;
     private String postCode;
     private String city;
@@ -59,6 +55,11 @@ public class OpenCustomerView extends AbstractView<Customer> {
     private Boolean vendor;
     private Boolean activeStatus;
     private Long duferco_site_use_id;
+    //Поля для создания отношения
+    private Customer relatedCustomer;
+    private Boolean ship_to2;
+    private Boolean bill_to2;
+    private Boolean activeStatus2;
 
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
@@ -67,6 +68,7 @@ public class OpenCustomerView extends AbstractView<Customer> {
         openedEntity = client.find(fls.getCustomer_id());
 
         List<RWAddress> rw = openedEntity.getRWAddresses();
+        List<Relationship> rl = openedEntity.getRelationships();
 
         Collections.sort(rw, new Comparator<RWAddress>() {
             @Override
@@ -75,6 +77,14 @@ public class OpenCustomerView extends AbstractView<Customer> {
                         compareTo(o2.getStation().getTranslateObject(sa.getLanguage()).getName());
             }
         });
+        Collections.sort(rl, new Comparator<Relationship>() {
+            @Override
+            public int compare(Relationship o1, Relationship o2) {
+                return o1.getRelatedCustomer().getName().
+                        compareTo(o2.getRelatedCustomer().getName());
+            }
+        });
+
         super.setEntity(openedEntity);
     }
 
@@ -134,13 +144,6 @@ public class OpenCustomerView extends AbstractView<Customer> {
         this.filteredAddresses = filteredAddresses;
     }
 
-//    public List<RWAddress> getSelectedRWAddresses() {
-//        return selectedRWAddresses;
-//    }
-//
-//    public void setSelectedRWAddresses(List<RWAddress> selectedRWAddresses) {
-//        this.selectedRWAddresses = selectedRWAddresses;
-//    }
     public Country getCountry() {
         return country;
     }
@@ -287,5 +290,5 @@ public class OpenCustomerView extends AbstractView<Customer> {
         bill_to2 = null;
         relatedCustomer = null;
     }
-   
+
 }
