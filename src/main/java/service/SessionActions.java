@@ -38,7 +38,7 @@ public class SessionActions implements Serializable {
 
     private SysUser user;
     
-    private String language="RU";
+    private String language="US";
 
     private final Map<String, String> viewsMap = new HashMap<>();
     @SuppressWarnings("PMD.UnusedPrivateMethod")

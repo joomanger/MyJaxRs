@@ -151,6 +151,27 @@ insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextv
 insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Украинский','Украинский','RU',currval('lookupitem_sq'));
 insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Украинский','Украинский','US',currval('lookupitem_sq'));
 insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Украинский','Украинский','UA',currval('lookupitem_sq'));
+--CURRENCY
+insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(nextval('lookup_sq'),true,'Валюты','Currency',true);
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'UAH',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Гривня','Гривня','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Гривня','Гривня','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Гривня','Гривня','UA',currval('lookupitem_sq'));
+
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'USD',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Доллар США','Доллар США','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Доллар США','Доллар США','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Доллар США','Доллар США','UA',currval('lookupitem_sq'));
+
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'RUB',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Росс.рубль','Росс.рубль','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Росс.рубль','Росс.рубль','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Росс.рубль','Росс.рубль','UA',currval('lookupitem_sq'));
+
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'EUR',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'ЕВРО','ЕВРО','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'ЕВРО','ЕВРО','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'ЕВРО','ЕВРО','UA',currval('lookupitem_sq'));
 
 
 

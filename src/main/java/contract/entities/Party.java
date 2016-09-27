@@ -1,13 +1,16 @@
 package contract.entities;
 
+import customer.entities.Customer;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -20,10 +23,14 @@ public class Party implements Serializable {
     @SequenceGenerator(name = "party_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "party_sq")
     private Long party_id;
-    @OneToOne(cascade = CascadeType.DETACH)
+    @ManyToOne
     @JoinColumn(name = "contract_id")
     private Contract contract;
-    //лукапы
+    @OneToOne(cascade = {CascadeType.DETACH})
+    @JoinColumn(name = "customer_id")
+    @NotNull(message = "Поле КЛИЕНТ обязательно для заполнения")
+    private Customer customer;
+    @NotNull(message = "Поле РОЛЬ обязательно для заполнения")
     private String role;
 
     public Long getParty_id() {
@@ -55,6 +62,14 @@ public class Party implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
 }

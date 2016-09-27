@@ -15,6 +15,26 @@
         <link
             href="${facesContext.externalContext.requestContextPath}/resources/css/cssLayout.css"
             rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            PrimeFaces.locales ['ru'] =
+            { closeText: 'Закрыть',
+               prevText: 'Назад', 
+               nextText: 'Вперёд', 
+               monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май',
+                            'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 
+                            'Ноябрь', 'Декабрь' ], 
+               monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр',
+                                 'Май', 'Июн', 'Июл', 'Авг', 
+                                 'Сен', 'Окт', 'Ноя', 'Дек' ], 
+               dayNames: ['Воскресенье', 'Понедельник', 'Вторник', 
+                          'Среда', 'Четверг', 'Пятница', 'Субота'], 
+               dayNamesShort: ['Вск', 'Пон', 'Втр', 'Срд', 'Чтв', 'Птн', 'Суб'], 
+               dayNamesMin: ['В', 'П', 'Вт', 'С ', 'Ч', 'П ', 'Сб'], 
+               weekHeader: 'Неделя', firstDay: 1, isRTL: false, showMonthAfterYear: false, yearSuffix:'', 
+               timeOnlyTitle: 'Только время', timeText: 'Время', hourText: 'Час', 
+               minuteText: 'Минута', secondText: 'Секунда', currentText: 'Сегодня', 
+               ampm: false, month: 'Месяц', week: 'неделя', day: 'День', allDayText: 'Весь день' };
+        </script>  
     </h:head>
     <h:body>
         <p:growl id="mainMSG" autoUpdate="true"/>

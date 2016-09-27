@@ -14,15 +14,18 @@
                 <h:form prependId="false">
                     <h:inputHidden id="setEntityId" value="#{findContractSession.contract_id}"/>
                     <p:dataTable rowSelectMode="checkbox"  id="dTable" var="v" value="#{findContractView.lazyModel}" 
-                                 selection="#{findContractView.selectedEntities}" rows="20" paginator="true" style="width: 700px;"
-                                 rowsPerPageTemplate="20,40,100" widgetVar="myTable"
+                                 selection="#{findContractView.selectedEntities}" rows="20" paginator="true" 
+                                 rowsPerPageTemplate="20,40,100" widgetVar="myTable" reflow="true" style="width: 750px"
                                  emptyMessage="Данные не найдены" lazy="true">
                         <f:facet name="header">
                             Справочник контрактов
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column filterBy="#{ord.contractNumber}" filterStyle="width:250px" filterMatchMode="contains"  headerText="Номер" style="width: 150px">
+                        <p:column filterBy="#{ord.contractNumber}" filterStyle="width:150px" filterMatchMode="contains"  headerText="Номер" style="width: 150px">
                             <h:commandLink action="openContract" value="#{ord.contractNumber}" onclick="document.getElementById('setEntityId').value =#{ord.customer_id};"/>
+                        </p:column>
+                        <p:column headerText="Группа" style="width: 150px">
+                            <h:outputText value="#{ord.contractGroup}"/>
                         </p:column>
                         <p:column headerText="Дата начала" style="width: 50px">
                             <h:outputText value="#{ord.startDate}"/>
@@ -32,7 +35,7 @@
                         </p:column>
                         <f:facet name="footer" >
                             <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('deleteDialog').show()" />
-                            <p:commandButton id="newBtn" value="Новый" action="newCustomer" immediate="true" style="margin-left: 15px"/>
+                            <p:commandButton id="newBtn" value="Новый" action="newContract" immediate="true" style="margin-left: 15px"/>
                         </f:facet>
                     </p:dataTable> 
                     <p:dialog header="Вы уверены?" widgetVar="deleteDialog" modal="true" 
