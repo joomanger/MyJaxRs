@@ -28,11 +28,11 @@
                                             completeMethod="#{currencyLOV.completeItem}" 
                                             forceSelection="true" dropdown="true" />
                             <p:outputLabel value="Цель"/>
+                            <c:set var="tl" value="#{contractPurposeLOV.getTranslateObject(m)}"/>
                             <p:autoComplete id="purposeContract" size="10" var="m" value="#{newContractView.entity.purpose}" 
                                             completeMethod="#{contractPurposeLOV.completeItem}" itemValue="#{m}" 
-                                            itemLabel="#{contractPurposeLOV.getTranslateObject(m).getMeaning()}"
+                                            itemLabel="#{tl.getMeaning()}"
                                             forceSelection="true" dropdown="true" >
-                                <c:set var="tl" value="#{contractPurposeLOV.getTranslateObject(m)}"/>
                                 <p:column>
                                     <p:outputLabel value="#{m}"/>
                                 </p:column>
