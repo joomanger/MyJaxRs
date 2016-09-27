@@ -4,37 +4,47 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
 
         <ui:composition template="./../../WEB-INF/template.xhtml">
             <ui:define name="content">
                 <h:form  prependId="false">
-                    <p:fieldset legend="Новый клиент" style="width: 250px; margin-bottom: 10px"> 
-                        <h:panelGrid id="yyy" columns="4" cellpadding="5" cellspacing="5">
-                            <p:outputLabel value="Номер контракта"/>
-                            <p:inputText value="#{newContractView.entity.contractNumber}" style="width: 250px"/>
+                    <p:fieldset legend="Новый контракт" style="width: 250px; margin-bottom: 10px"> 
+                        <h:panelGrid id="yyy" columns="4" cellpadding="5" cellspacing="10">
+                            <p:outputLabel value="Номер"/>
+                            <p:inputText value="#{newContractView.entity.contractNumber}" size="10"/>
                             <p:outputLabel value="Группа"/>
                             <p:autoComplete id="groupContract" size="40" value="#{newContractView.entity.contractGroup}" 
                                             completeMethod="#{contractGroupLOV.completeItem}" 
                                             forceSelection="true" dropdown="true" />
-                            <p:outputLabel value="Цель"/>
-                            <p:autoComplete id="purposeContract" size="10" value="#{newContractView.entity.purpose}" 
-                                            completeMethod="#{contractPurposeLOV.completeItem}" 
-                                            forceSelection="true" dropdown="true" />
+                            <p:outputLabel value="Сумма"/>
+                            <p:inputNumber decimalSeparator="." thousandSeparator="," value="#{newContractView.entity.amount}"
+                                           size="10"/>
                             <p:outputLabel value="Валюта"/>
                             <p:autoComplete id="currency" size="5" value="#{newContractView.entity.currency}" 
                                             completeMethod="#{currencyLOV.completeItem}" 
                                             forceSelection="true" dropdown="true" />
-                            <p:outputLabel value="Сумма"/>
-                            <p:inputNumber decimalSeparator="." thousandSeparator="," value="#{newContractView.entity.amount}"
-                                           size="10"/>
+                            <p:outputLabel value="Цель"/>
+                            <p:autoComplete id="purposeContract" size="10" var="m" value="#{newContractView.entity.purpose}" 
+                                            completeMethod="#{contractPurposeLOV.completeItem}" itemValue="#{m}" 
+                                            itemLabel="#{contractPurposeLOV.getTranslateObject(m).getMeaning()}"
+                                            forceSelection="true" dropdown="true" >
+                                <c:set var="tl" value="#{contractPurposeLOV.getTranslateObject(m)}"/>
+                                <p:column>
+                                    <p:outputLabel value="#{m}"/>
+                                </p:column>
+                                <p:column>
+                                    <p:outputLabel value="#{tl.getMeaning()}"/>
+                                </p:column>
+                            </p:autoComplete>                             
                             <p:outputLabel value="Дата начала"/>
                             <p:calendar id="date1" value="#{newContractView.entity.startDate}" showOn="button" 
                                         pattern="dd.MM.yyyy" locale="#{sessionActions.language.toLowerCase()}" size="7"/>
                             <p:outputLabel value="Дата окончания"/>
-                            <p:calendar id="date2" value="#{newContractView.entity.endDate}" showOn="button" size="7"
+                            <p:calendar id="date2"  value="#{newContractView.entity.endDate}" showOn="button" size="7"
                                         pattern="dd.MM.yyyy" locale="#{sessionActions.language.toLowerCase()}" />
                         </h:panelGrid>
 

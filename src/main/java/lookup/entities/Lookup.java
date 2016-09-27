@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 import org.eclipse.persistence.annotations.PrivateOwned;
@@ -28,7 +29,7 @@ import org.eclipse.persistence.annotations.PrivateOwned;
 )
 @Table(uniqueConstraints
         = @UniqueConstraint(columnNames = {"name"}))
-public class Lookup implements Serializable{
+public class Lookup implements Serializable {
 
     public static final String FIND_BY_NAME = "Lookup.FIND_BY_NAME";
     @Id
@@ -41,11 +42,11 @@ public class Lookup implements Serializable{
     private Boolean activeStatus = true;
     private Boolean systemLookup = false;
 
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "lookup",fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "lookup", fetch = FetchType.LAZY)
     @PrivateOwned
     @OrderBy("valuez asc")
     private List<LookupItem> lookupItems = new ArrayList<>();
-    
+
     public void addLookupItem(LookupItem li) {
         addLookupItem(li, true);
     }
@@ -57,6 +58,20 @@ public class Lookup implements Serializable{
                 li.setLookup(this, false);
             }
         }
+    }
+
+    @Transient
+    public LookupItemTL getTranslateObject(String p_value, String p_lang) {
+        for (LookupItem i : getLookupItems()) {
+            if (i.getValuez().equals(p_value)) {
+                for (LookupItemTL tl : i.getLookupItemTL()) {
+                    if (tl.getLanguage().equals(p_lang)) {
+                        return tl;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     public void removeLookupItem(LookupItem li) {
@@ -120,5 +135,4 @@ public class Lookup implements Serializable{
 //            return -1;
 //        }
 //    }
-
 }

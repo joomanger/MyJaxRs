@@ -172,7 +172,17 @@ insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextv
 insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'ЕВРО','ЕВРО','RU',currval('lookupitem_sq'));
 insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'ЕВРО','ЕВРО','US',currval('lookupitem_sq'));
 insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'ЕВРО','ЕВРО','UA',currval('lookupitem_sq'));
+--Contract Purposes
+insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(nextval('lookup_sq'),true,'Цели контракта','Contract purposes',true);
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'PURCHASE',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Покупака','Покупака','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Purchase','Purchase','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Покупака','Покупака','UA',currval('lookupitem_sq'));
 
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'SALE',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Продажа','Продажа','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Sale','Sale','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Продажа','Продажа','UA',currval('lookupitem_sq'));
 
 
 

@@ -13,7 +13,7 @@ import service.AbstractView;
 @Named
 @ViewScoped
 public class NewContractView extends AbstractView<Contract> {
-
+    
     private final Contract contract = new Contract();
 
     @PostConstruct

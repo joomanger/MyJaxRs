@@ -1,8 +1,8 @@
 package lovs;
 
-import service.AbstractLookupLOV;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
+import service.AbstractLookupLOV;
 
 /**
  *
@@ -10,11 +10,11 @@ import javax.inject.Named;
  */
 @Named
 @RequestScoped
-public class ContractPurposeLOV extends AbstractLookupLOV{
+public class ContractPurposeLOV extends AbstractLookupLOV {
 
     @Override
     protected String getLookupName() {
-        return "ContractPurpose";
+        return "Contract purposes";
     }
-    
+
 }
