@@ -33,12 +33,6 @@
                                             completeMethod="#{contractPurposeLOV.completeItem}" itemValue="#{m}" 
                                             itemLabel="#{tl.getMeaning()}"
                                             forceSelection="true" dropdown="true" >
-                                <p:column>
-                                    <p:outputLabel value="#{m}"/>
-                                </p:column>
-                                <p:column>
-                                    <p:outputLabel value="#{tl.getMeaning()}"/>
-                                </p:column>
                             </p:autoComplete>                             
                             <p:outputLabel value="Дата начала"/>
                             <p:calendar id="date1" value="#{newContractView.entity.startDate}" showOn="button" 
