@@ -45,5 +45,11 @@ public class ContractCBean extends AbstractClientBean<Contract> {
     protected AbstractView<Contract> getNewView() {
         return nv;
     }
+    
+    @Override
+    public void deleteSelectedEntities() {
+        super.deleteSelectedEntities();
+        fv.updateLazyDataModel();
+    }
 
 }

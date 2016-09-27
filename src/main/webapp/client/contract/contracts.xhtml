@@ -21,40 +21,51 @@
                             Справочник контрактов
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column filterBy="#{ord.contractNumber}" filterStyle="width:150px" filterMatchMode="contains"  headerText="Номер" style="width: 150px">
-                            <h:commandLink action="openContract" value="#{ord.contractNumber}" onclick="document.getElementById('setEntityId').value =#{ord.customer_id};"/>
+                        <p:column filterBy="#{v.contractNumber}" filterStyle="width:150px" 
+                                  filterMatchMode="contains"  headerText="Номер" style="width: 150px">
+                            <h:commandLink action="openContract" value="#{v.contractNumber}" 
+                                           onclick="document.getElementById('setEntityId').value =#{v.contract_id};"/>
                         </p:column>
                         <p:column headerText="Группа" style="width: 150px">
-                            <h:outputText value="#{ord.contractGroup}"/>
+                            <h:outputText value="#{v.contractGroup}"/>
                         </p:column>
                         <p:column headerText="Дата начала" style="width: 50px">
-                            <h:outputText value="#{ord.startDate}"/>
+                            <h:outputText value="#{v.startDate}">
+                                <f:convertDateTime pattern="dd.MM.yyyy"/>
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Дата окончания" style="width: 50px">
-                            <h:outputText value="#{ord.endDate}"/>
+                            <h:outputText value="#{v.endDate}">
+                                <f:convertDateTime pattern="dd.MM.yyyy"/>
+                            </h:outputText>    
                         </p:column>
                         <f:facet name="footer" >
-                            <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('deleteDialog').show()" />
-                            <p:commandButton id="newBtn" value="Новый" action="newContract" immediate="true" style="margin-left: 15px"/>
+                            <p:commandButton process="dTable" update="selectedParams" value="Удалить" 
+                                             oncomplete="PF('deleteDialog').show()" />
+                            <p:commandButton id="newBtn" value="Новый" action="newContract" 
+                                             immediate="true" style="    margin-left: 15px"/>
                         </f:facet>
                     </p:dataTable> 
                     <p:dialog header="Вы уверены?" widgetVar="deleteDialog" modal="true" 
-                              showEffect="fade" hideEffect="fade" resizable="false" width="700">
+                              showEffect="fade" hideEffect="fade" resizable="false" width="500">
                         <p:outputPanel id="selectedParams" style="text-align: center">
-                            <p:dataTable value="#{findContractView.selectedEntities}" var="v" >
-                                <p:column headerText="Номер">
-                                    <h:outputText value="#{v.contractNumber}" style="width: 80px;text-align: left"/>
+                            <p:dataTable value="#{findContractView.selectedEntities}" var="v"  style="margin: 5px">
+                                <p:column headerText="Номер" style="width: 150px">
+                                    <h:outputText value="#{v.contractNumber}" />
                                 </p:column>
-                                <p:column headerText="Дата начала" style="width: 50px;text-align: right">
-                                    <h:outputText value="#{v.startDate}"/>
+                                <p:column headerText="Дата начала" >
+                                    <h:outputText value="#{v.startDate}">
+                                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                                    </h:outputText>    
                                 </p:column>
-                                <p:column headerText="Дата окончания" style="width: 50px;text-align: right">
-                                    <h:outputText value="#{v.endDate}"/>
+                                <p:column headerText="Дата окончания" >
+                                    <h:outputText value="#{v.endDate}">
+                                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                                    </h:outputText>    
                                 </p:column>
                             </p:dataTable>
-                            <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='Нет'/>
-                            <p:commandButton value="Удалить" actionListener="#{contractCBean.deleteSelectedEntities()}" 
-                                             oncomplete="PF('deleteDialog').hide()" update="dTable" />
+                            <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='Нет' style="margin-right: 15px"/>
+                            <p:commandButton value="Удалить" actionListener="#{contractCBean.deleteSelectedEntities()}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
                         </p:outputPanel>
                     </p:dialog>
                 </h:form>

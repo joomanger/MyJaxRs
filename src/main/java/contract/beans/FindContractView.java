@@ -20,9 +20,13 @@ public class FindContractView extends AbstractView<Contract> {
     private ContractCBean client;
     private LazyDataModel<Contract> lazyModel;
 
-    @PostConstruct
     @Override
+    @PostConstruct
     protected void init() {
+        updateLazyDataModel();
+    }
+
+    public void updateLazyDataModel() {
         try {
             lazyModel = new LazyContractDataModel(client.findAll(), Contract.class);
         } catch (IllegalAccessException | InstantiationException ex) {
