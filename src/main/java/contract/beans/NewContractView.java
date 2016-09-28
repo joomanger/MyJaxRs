@@ -4,8 +4,13 @@ import contract.entities.Contract;
 import customer.entities.Customer;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+import lookup.beans.LookupCBean;
+import lookup.entities.Lookup;
+import lookup.entities.LookupItemTL;
 import service.AbstractView;
+import service.SessionActions;
 
 /**
  *
@@ -15,6 +20,12 @@ import service.AbstractView;
 @ViewScoped
 public class NewContractView extends AbstractView<Contract> {
 
+    @Inject
+    private LookupCBean client;
+    @Inject
+    private SessionActions sa;
+    
+    private Lookup lookupContractRoles;
     private final Contract contract = new Contract();
 
     //private Party newParty = new Party();
@@ -25,15 +36,17 @@ public class NewContractView extends AbstractView<Contract> {
     @Override
     protected void init() {
         super.setEntity(contract);
+        lookupContractRoles = client.findByName("Contract roles");
+    }
+    
+    public LookupItemTL getTranslateObject(String p_value) {
+        try {
+            return lookupContractRoles.getTranslateObject(p_value, sa.getLanguage());
+        } catch (NullPointerException ex) {
+            return null;
+        }
     }
 
-//    public Party getNewParty() {
-//        return newParty;
-//    }
-//
-//    public void setNewParty(Party newParty) {
-//        this.newParty = newParty;
-//    }
     public Customer getCustomer() {
         return customer;
     }
