@@ -114,19 +114,19 @@ insert into users_roles values(2,2);
 --UOM
 insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(nextval('lookup_sq'),true,'Единицы измерения','UOM',true);
 insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'Тн',currval('lookup_sq'));
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Тонны','Тонны','RU',currval('lookupitem_sq'));
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Тонны','Тонны','US',currval('lookupitem_sq'));
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Тонны','Тонны','UA',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Тонна','','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Ton','','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Тонна','','UA',currval('lookupitem_sq'));
 
 insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'Пч',currval('lookup_sq'));
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Пачки','Пачки','RU',currval('lookupitem_sq'));
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Пачки','Пачки','US',currval('lookupitem_sq'));
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Пачки','Пачки','UA',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Пачка','','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Pack','','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Пачка','','UA',currval('lookupitem_sq'));
 
 insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'Шт',currval('lookup_sq'));
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Штуки','Штуки','RU',currval('lookupitem_sq'));
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Штуки','Штуки','US',currval('lookupitem_sq'));
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Штуки','Штуки','UA',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Штука','','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Piece','','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Штука','','UA',currval('lookupitem_sq'));
 --DAYTYPES
 insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(nextval('lookup_sq'),true,'Календарные/Банковские дни','DAYTYPES',true);
 insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'BANKING',currval('lookup_sq'));
@@ -194,6 +194,17 @@ insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextv
 insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'ПАО ДМК','ПАО ДМК','RU',currval('lookupitem_sq'));
 insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'ПАО ДМК','ПАО ДМК','US',currval('lookupitem_sq'));
 insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'ПАО ДМК','ПАО ДМК','UA',currval('lookupitem_sq'));
+--Contract Roles
+insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(nextval('lookup_sq'),true,'Роли в контрактах','Contract roles',true);
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'SUPPLIER',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Поставщик','','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Supplier','','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Постачальник','','UA',currval('lookupitem_sq'));
+
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'BUYER',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Покупатель','','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Buyer','','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Покупець','','UA',currval('lookupitem_sq'));
 
 
 
