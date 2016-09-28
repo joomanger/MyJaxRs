@@ -67,7 +67,7 @@
                             <p:column headerText="Роль" style="width:100px;text-align: left">
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <p:outputLabel value="#{a.role}"/>
+                                        <p:outputLabel value="#{contractRoleLOV.getTranslateObject(a.role).getMeaning()}"/>
                                     </f:facet>
                                     <f:facet name="input">
                                         <p:autoComplete size="10" value="#{a.role}" 
