@@ -39,7 +39,7 @@ public class NewContractView extends AbstractView<Contract> {
         lookupContractRoles = client.findByName("Contract roles");
     }
     
-    public LookupItemTL getTranslateObject(String p_value) {
+    public LookupItemTL getContractRolesTL(String p_value) {
         try {
             return lookupContractRoles.getTranslateObject(p_value, sa.getLanguage());
         } catch (NullPointerException ex) {
