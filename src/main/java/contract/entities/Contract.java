@@ -16,6 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.eclipse.persistence.annotations.PrivateOwned;
 
 /**
@@ -32,9 +33,8 @@ public class Contract implements Serializable {
     @GeneratedValue(generator = "contract_sq")
     private Long contract_id;
     private Long contract_id_orc;
-    @NotNull(message = "поле НОМЕР обязательно для заполнения")
+    @Size(min = 1,message = "поле НОМЕР обязательно для заполнения")
     private String contractNumber;
-    //лукапы
     @NotNull(message = "поле ГРУППА обязательно для заполнения")
     private String contractGroup;
     @NotNull(message = "поле ЦЕЛЬ обязательно для заполнения")
