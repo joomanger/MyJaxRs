@@ -60,11 +60,16 @@ public class ContractCBean extends AbstractClientBean<Contract> {
     }
     
     public void addPartyNV() {
-        Party party = nv.getNewParty();
+        Party party = new Party(); 
+        party.setCustomer(nv.getCustomer());
+        party.setRole(nv.getPartyRole());
+        
         String validation = partyEJB.validateMyEntity(party);
         if (validation.equals(partyEJB.SUCCESSFUL)) {
             nv.getEntity().addParty(party);
-            nv.setNewParty(new Party());
+            nv.setCustomer(null);
+            nv.setPartyRole(null);
+            //nv.setNewParty(new Party());
         } else {
             partyEJB.sendMessage(validation, null);
         }

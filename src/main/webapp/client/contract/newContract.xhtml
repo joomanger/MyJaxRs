@@ -10,9 +10,9 @@
 
         <ui:composition template="./../../WEB-INF/template.xhtml">
             <ui:define name="content">
-                <h:form  prependId="false">
-                    <p:fieldset legend="Новый контракт" style="width: 250px; margin-bottom: 10px"> 
-                        <h:panelGrid id="yyy" columns="4" cellpadding="5" cellspacing="10">
+                <h:form prependId="false">
+                    <p:fieldset id="header" legend="Новый контракт" style="width: 250px; margin-bottom: 10px"> 
+                        <h:panelGrid  columns="4" cellpadding="5" cellspacing="10">
                             <p:outputLabel value="Номер"/>
                             <p:inputText value="#{newContractView.entity.contractNumber}" size="10"/>
                             <p:outputLabel value="Группа"/>
@@ -45,11 +45,9 @@
                         <p:dataTable id="party" var="a" value="#{newContractView.entity.parties}" 
                                      selection="#{newContractView.selectedEntityLines}" 
                                      rowSelectMode="checkbox" editMode="cell" editable="true"
-                                     reflow="true" 
-                                     rowKey="#{a}" 
-                                     style="width: 600px;margin-top:20px" lazy="false">
+                                     reflow="true" rowKey="#{a}" style="width: 800px;margin-top:20px" lazy="false">
                             <f:facet name="header">
-                                Отношения
+                                Стороны
                             </f:facet>
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                             <p:column headerText="Клиент" style="width:250px;text-align: left">
@@ -66,33 +64,36 @@
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column headerText="Роль" style="width:250px;text-align: left">
+                            <p:column headerText="Роль" style="width:100px;text-align: left">
                                 <p:cellEditor>
                                     <f:facet name="output">
                                         <p:outputLabel value="#{a.role}"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:autoComplete id="role" size="10" value="#{a.role}" 
-                                                        completeMethod="#{contractPartyRoleLOV.completeItem}" 
-                                                        forceSelection="true" dropdown="true" style="margin-right: 60px;"/>
+                                        <p:autoComplete size="10" value="#{a.role}" 
+                                                        completeMethod="#{contractRoleLOV.completeItem}" 
+                                                        var="m" itemValue="#{m}" 
+                                                        itemLabel="#{contractRoleLOV.getTranslateObject(m).getMeaning()}"
+                                                        forceSelection="true" dropdown="true" />
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
                             <f:facet name="footer" >
-                                <p:autoComplete value="#{newContractView.newParty.customer}" maxResults="20"
+                                <p:autoComplete value="#{newContractView.customer}" maxResults="20"
                                                 completeMethod="#{customerConverter.completeItem}"
                                                 var="m" itemLabel="#{m.name}" size="40"
                                                 itemValue="#{m}" converter="#{customerConverter}" 
-                                                forceSelection="true" placeholder="Клиент" required="false"/>
-                                <p:autoComplete  size="10" value="#{newContractView.newParty.role}" 
+                                                forceSelection="true" placeholder="Клиент" />
+                                <p:autoComplete  size="10" value="#{newContractView.partyRole}"
                                                  completeMethod="#{contractRoleLOV.completeItem}" 
-                                                 forceSelection="true" dropdown="true" placeholder="Роль" required="false"/>
-
-                                <p:commandButton value="Добавить" 
+                                                 var="m" itemValue="#{m}" 
+                                                 itemLabel="#{contractRoleLOV.getTranslateObject(m).getMeaning()}"
+                                                 forceSelection="true" dropdown="true" placeholder="Роль"/>
+                                <p:commandButton value="Добавить" process="party"
                                                  actionListener="#{contractCBean.addPartyNV()}" 
                                                  style="margin-left: 10px" 
-                                                 update="party"/>
-                                <p:commandButton process="party" update="selectedParties" value="Удалить"  
+                                                 update="party" />
+                                <p:commandButton id="delParties" process="party" update="selectedParties" value="Удалить"
                                                  oncomplete="PF('deleteParties').show()" style="margin-left: 10px"/>
                             </f:facet>
                         </p:dataTable>
@@ -109,8 +110,8 @@
                                     </p:column>
                                 </p:dataTable>
                                 <p:commandButton oncomplete="PF('deleteParties').hide()" immediate="true" value='Отмена'/>
-                                <p:commandButton value="Удалить" actionListener="#{contractCBean.deletePartyNV()}" 
-                                                 oncomplete="PF('deleteParties').hide()" update="party" />
+                                <p:commandButton id="delPartiesY" value="Удалить" actionListener="#{contractCBean.deletePartyNV()}" 
+                                                 oncomplete="PF('deleteParties').hide()" update="party" disabled="#{newContractView.selectedEntityLines.size()==0}" />
                             </p:outputPanel>
                         </p:dialog>
                         <p:commandButton id="btnBack" value="Назад" action="contracts" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
