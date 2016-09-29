@@ -27,7 +27,7 @@
                                            onclick="document.getElementById('setEntityId').value =#{v.contract_id};"/>
                         </p:column>
                         <p:column headerText="Группа" style="width: 150px">
-                            <h:outputText value="#{v.contractGroup}"/>
+                            <h:outputText value="#{findContractView.getContractGroupTL(v.contractGroup).getMeaning()}"/>
                         </p:column>
                         <p:column headerText="Дата начала" style="width: 50px">
                             <h:outputText value="#{v.startDate}">

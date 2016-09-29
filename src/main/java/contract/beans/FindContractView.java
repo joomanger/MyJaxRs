@@ -5,8 +5,12 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import lookup.beans.LookupCBean;
+import lookup.entities.Lookup;
+import lookup.entities.LookupItemTL;
 import org.primefaces.model.LazyDataModel;
 import service.AbstractView;
+import service.SessionActions;
 
 /**
  *
@@ -18,12 +22,19 @@ public class FindContractView extends AbstractView<Contract> {
 
     @Inject
     private ContractCBean client;
+    @Inject
+    private LookupCBean lookupCBean;
+    @Inject
+    private SessionActions sa;
+    
     private LazyDataModel<Contract> lazyModel;
+    private Lookup contractGroup;
 
     @Override
     @PostConstruct
     protected void init() {
         updateLazyDataModel();
+        contractGroup = lookupCBean.findByName("Contract groups");
     }
 
     public void updateLazyDataModel() {
@@ -36,6 +47,14 @@ public class FindContractView extends AbstractView<Contract> {
 
     public LazyDataModel<Contract> getLazyModel() {
         return lazyModel;
+    }
+
+    public LookupItemTL getContractGroupTL(String value) {
+        try {
+            return contractGroup.getTranslateObject(value, sa.getLanguage());
+        } catch (NullPointerException ex) {
+            return null;
+        }
     }
 
 }

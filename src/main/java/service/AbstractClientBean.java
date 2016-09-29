@@ -1,6 +1,9 @@
 package service;
 
 import java.util.List;
+import javax.inject.Inject;
+import lookup.beans.LookupCBean;
+import lookup.entities.LookupItemTL;
 
 /**
  *
@@ -8,6 +11,11 @@ import java.util.List;
  * @param <T>
  */
 public abstract class AbstractClientBean<T> {
+
+    @Inject
+    private LookupCBean client;
+    @Inject
+    private SessionActions sa;
 
     protected abstract AbstractEJB<T> getEJB();
 
@@ -17,16 +25,13 @@ public abstract class AbstractClientBean<T> {
 
     protected abstract AbstractView<T> getNewView();
 
-
     public T find(Object p_id) {
         return getEJB().find(p_id);
     }
 
-
     public List<T> findAll() {
         return getEJB().findAll();
     }
-
 
     public String createEntity(String backURL) {
 
@@ -46,7 +51,6 @@ public abstract class AbstractClientBean<T> {
         }
     }
 
-    
     public void changeEntity() {
         String result = getEJB().validateMyEntity(getOpenView().getEntity());
         if (result.equals(getEJB().SUCCESSFUL)) {
@@ -70,6 +74,10 @@ public abstract class AbstractClientBean<T> {
                 getEJB().sendMessage(status, null);
             }
         }
+    }
+
+    public LookupItemTL getLookupItemTL(String lookupName, String value) {
+        return client.findByName(lookupName).getTranslateObject(value, sa.getLanguage());
     }
 
 }

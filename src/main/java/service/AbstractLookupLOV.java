@@ -6,7 +6,6 @@ import javax.inject.Inject;
 import lookup.beans.LookupCBean;
 import lookup.entities.Lookup;
 import lookup.entities.LookupItem;
-import lookup.entities.LookupItemTL;
 
 /**
  *
@@ -16,20 +15,20 @@ public abstract class AbstractLookupLOV {
 
     @Inject
     private LookupCBean client;
-    @Inject
-    private SessionActions sa;
+//    @Inject
+//    private SessionActions sa;
 
     private Lookup lookup;
 
     protected abstract String getLookupName();
 
-    public LookupItemTL getTranslateObject(String p_value) {
-        try {
-            return lookup.getTranslateObject(p_value, sa.getLanguage());
-        } catch (NullPointerException ex) {
-            return null;
-        }
-    }
+//    public LookupItemTL getTranslateObject(String p_value) {
+//        try {
+//            return lookup.getTranslateObject(p_value, sa.getLanguage());
+//        } catch (NullPointerException ex) {
+//            return null;
+//        }
+//    }
 
     public List<String> completeItem(String query) {
         lookup = client.findByName(getLookupName());

@@ -60,7 +60,7 @@ public class ContractCBean extends AbstractClientBean<Contract> {
     }
     
     public void addPartyNV() {
-        Party party = new Party(); 
+        Party party = new Party();        
         party.setCustomer(nv.getCustomer());
         party.setRole(nv.getPartyRole());
         
