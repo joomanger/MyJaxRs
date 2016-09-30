@@ -12,13 +12,13 @@ import javax.inject.Named;
 @SessionScoped
 public class FindContractSession implements Serializable {
 
-    private String contract_id;
+    private Long contract_id;
 
-    public String getContract_id() {
+    public Long getContract_id() {
         return contract_id;
     }
 
-    public void setContract_id(String contract_id) {
+    public void setContract_id(Long contract_id) {
         this.contract_id = contract_id;
     }
 

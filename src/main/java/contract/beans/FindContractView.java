@@ -2,7 +2,7 @@ package contract.beans;
 
 import contract.entities.Contract;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import lookup.beans.LookupCBean;
@@ -17,7 +17,7 @@ import service.SessionActions;
  * @author savin
  */
 @Named
-@RequestScoped
+@ViewScoped
 public class FindContractView extends AbstractView<Contract> {
 
     @Inject
