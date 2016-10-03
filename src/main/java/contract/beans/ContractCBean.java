@@ -2,6 +2,9 @@ package contract.beans;
 
 import contract.entities.Contract;
 import contract.entities.Party;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -47,6 +50,18 @@ public class ContractCBean extends AbstractClientBean<Contract> {
     @Override
     protected AbstractView<Contract> getNewView() {
         return nv;
+    }
+
+    @Override
+    public List<Contract> findAll() {
+        List<Contract> l = super.findAll();
+        Collections.sort(l, new Comparator<Contract>() {
+            @Override
+            public int compare(Contract l1, Contract l2) {
+                return l1.getContractNumber().compareTo(l2.getContractNumber());
+            }
+        });
+        return l;
     }
 
     @Override

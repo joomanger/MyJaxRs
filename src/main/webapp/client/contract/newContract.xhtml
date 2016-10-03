@@ -14,7 +14,7 @@
                     <p:fieldset id="header" legend="Новый контракт" style="width: 250px; margin-bottom: 10px"> 
                         <h:panelGrid  columns="4" cellpadding="5" cellspacing="10">
                             <p:outputLabel value="Номер"/>
-                            <p:inputText value="#{newContractView.entity.contractNumber}" size="10"/>
+                            <p:inputText value="#{newContractView.entity.contractNumber}" size="20"/>
                             <p:outputLabel value="Группа"/>
                             <p:autoComplete  size="25" var="m" value="#{newContractView.entity.contractGroup}" 
                                              completeMethod="#{contractGroupLOV.completeItem}" itemValue="#{m}" 

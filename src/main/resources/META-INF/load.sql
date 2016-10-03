@@ -185,15 +185,10 @@ insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem
 insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Продажа','Продажа','UA',currval('lookupitem_sq'));
 --Contract Groups
 insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(nextval('lookup_sq'),true,'Группы контрактов','Contract groups',true);
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'AMK',currval('lookup_sq'));
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'ПАО АМК','ПАО АМК','RU',currval('lookupitem_sq'));
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'ПАО АМК','ПАО АМК','US',currval('lookupitem_sq'));
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'ПАО АМК','ПАО АМК','UA',currval('lookupitem_sq'));
-
-insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'DMK',currval('lookup_sq'));
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'ПАО ДМК','ПАО ДМК','RU',currval('lookupitem_sq'));
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'ПАО ДМК','ПАО ДМК','US',currval('lookupitem_sq'));
-insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'ПАО ДМК','ПАО ДМК','UA',currval('lookupitem_sq'));
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'METAL_GROUP',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Поставка металлопродукции','','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Поставка металлопродукции','','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Поставка металлопродукции','','UA',currval('lookupitem_sq'));
 --Contract Roles
 insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(nextval('lookup_sq'),true,'Роли в контрактах','Contract roles',true);
 insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'SUPPLIER',currval('lookup_sq'));
