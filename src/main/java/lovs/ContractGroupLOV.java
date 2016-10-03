@@ -14,7 +14,7 @@ public class ContractGroupLOV extends AbstractLookupLOV{
 
     @Override
     protected String getLookupName() {
-        return "Contract groups";
+        return "CONTRACT GROUPS";
     }
     
 }

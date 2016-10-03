@@ -14,7 +14,7 @@ public class ContractRoleLOV extends AbstractLookupLOV{
 
     @Override
     protected String getLookupName() {
-        return "Contract roles";
+        return "CONTRACT ROLES";
     }
     
 }

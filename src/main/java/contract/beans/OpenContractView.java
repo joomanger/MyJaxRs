@@ -43,9 +43,9 @@ public class OpenContractView extends AbstractView<Contract> {
     @Override
     protected void init() {
         super.setEntity(client.find(fs.getContract_id()));
-        contractRoles = clientLookup.findByName("Contract roles");
-        contractGroup = clientLookup.findByName("Contract groups");
-        contractPurpose = clientLookup.findByName("Contract purposes");
+        contractRoles = clientLookup.findByName("CONTRACT ROLES");
+        contractGroup = clientLookup.findByName("CONTRACT GROUPS");
+        contractPurpose = clientLookup.findByName("CONTRACT PURPOSES");
     }
 
     public Customer getCustomer() {

@@ -14,7 +14,7 @@ public class CurrencyLOV extends AbstractLookupLOV{
 
     @Override
     protected String getLookupName() {
-        return "Currency";
+        return "CURRENCY";
     }
     
 }

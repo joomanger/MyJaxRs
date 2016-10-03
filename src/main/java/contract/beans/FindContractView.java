@@ -36,7 +36,7 @@ public class FindContractView extends AbstractView<Contract> {
     @PostConstruct
     protected void init() {
         updateLazyDataModel();
-        contractGroup = lookupCBean.findByName("Contract groups");
+        contractGroup = lookupCBean.findByName("CONTRACT GROUPS");
     }
 
     public void updateLazyDataModel() {

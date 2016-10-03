@@ -40,9 +40,9 @@ public class NewContractView extends AbstractView<Contract> {
     @Override
     protected void init() {
         super.setEntity(contract);
-        contractRoles = client.findByName("Contract roles");
-        contractGroup = client.findByName("Contract groups");
-        contractPurpose = client.findByName("Contract purposes");
+        contractRoles = client.findByName("CONTRACT ROLES");
+        contractGroup = client.findByName("CONTRACT GROUPS");
+        contractPurpose = client.findByName("CONTRACT PURPOSES");
     }
 
     public Customer getCustomer() {
