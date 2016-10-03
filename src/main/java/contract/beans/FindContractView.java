@@ -10,6 +10,7 @@ import lookup.entities.Lookup;
 import lookup.entities.LookupItemTL;
 import org.primefaces.model.LazyDataModel;
 import service.AbstractView;
+import service.Secure;
 import service.SessionActions;
 
 /**
@@ -18,6 +19,7 @@ import service.SessionActions;
  */
 @Named
 @ViewScoped
+@Secure
 public class FindContractView extends AbstractView<Contract> {
 
     @Inject

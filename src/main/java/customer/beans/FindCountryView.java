@@ -5,17 +5,19 @@ package customer.beans;
 
 import customer.entities.Country;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import service.AbstractView;
+import service.Secure;
 
 /**
  *
  * @author savin
  */
 @Named
-@RequestScoped
+@ViewScoped
+@Secure
 public class FindCountryView extends AbstractView<Country> {
 
     @Inject

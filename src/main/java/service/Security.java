@@ -45,11 +45,11 @@ public class Security implements Serializable {
 
             if (!sc.getViewsMap().containsValue(req.getPathInfo().replace(".xhtml", "")) && !sc.getCurrentUser().getUsername().equals("admin")) {
                 HttpServletResponse res = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+                log.log(Level.SEVERE, "For user [{0}] access denied into {1}", new Object[]{sc.getCurrentUser().getUsername(), req.getPathInfo()});
                 try {
-                    log.log(Level.SEVERE, "For user [{0}] access denied into {1}", new Object[]{sc.getCurrentUser().getUsername(), req.getPathInfo()});
                     res.sendRedirect(req.getContextPath() + "/faces/index.xhtml?message=Access denied");
                 } catch (IllegalStateException ex) {
-                    System.out.println(ex.getMessage());
+                    System.out.println("IllegalStateException");
                 }
             }
             return ic.proceed();

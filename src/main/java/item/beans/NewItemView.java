@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import service.AbstractView;
+import service.Secure;
 
 /**
  *
@@ -12,6 +13,7 @@ import service.AbstractView;
  */
 @Named
 @ViewScoped
+@Secure
 public class NewItemView extends AbstractView<Item> {
     
 //    public NewItemView() {

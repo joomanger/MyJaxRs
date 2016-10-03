@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import rw.entities.RWStationVL;
 import service.AbstractView;
+import service.Secure;
 
 /**
  *
@@ -13,6 +14,7 @@ import service.AbstractView;
  */
 @Named
 @ViewScoped
+@Secure
 public class FindRWStationView extends AbstractView<RWStationVL> {
 
     @Inject

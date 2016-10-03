@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import rw.entities.RWStation;
 import service.AbstractView;
+import service.Secure;
 
 /**
  *
@@ -19,6 +20,7 @@ import service.AbstractView;
  */
 @Named
 @ViewScoped
+@Secure
 public class NewCustomerView extends AbstractView<Customer> {
 
 //    @Inject

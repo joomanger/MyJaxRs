@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import rw.entities.RWStation;
 import service.AbstractView;
+import service.Secure;
 import service.SessionActions;
 
 /**
@@ -23,6 +24,7 @@ import service.SessionActions;
  */
 @Named
 @ViewScoped
+@Secure
 public class OpenCustomerView extends AbstractView<Customer> {
 
     @Inject

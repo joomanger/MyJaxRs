@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.model.LazyDataModel;
 import service.AbstractView;
+import service.Secure;
 
 /**
  *
@@ -14,6 +15,7 @@ import service.AbstractView;
  */
 @Named
 @ViewScoped
+@Secure
 public class FindCustomerView extends AbstractView<Customer> {
 
     @Inject

@@ -5,6 +5,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import rw.entities.RWRoad;
 import service.AbstractView;
+import service.Secure;
 
 /**
  *
@@ -12,6 +13,7 @@ import service.AbstractView;
  */
 @Named
 @ViewScoped
+@Secure
 public class NewRoadView extends AbstractView<RWRoad> {
 
     private final RWRoad entity = new RWRoad();

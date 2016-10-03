@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import lookup.entities.Lookup;
 import service.AbstractView;
+import service.Secure;
 
 /**
  *
@@ -14,6 +15,7 @@ import service.AbstractView;
 
 @Named
 @ViewScoped
+@Secure
 public class FindLookupView extends AbstractView<Lookup> {
 
     @Inject

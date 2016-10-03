@@ -7,6 +7,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import service.AbstractView;
+import service.Secure;
 import service.SessionActions;
 
 /**
@@ -15,6 +16,7 @@ import service.SessionActions;
  */
 @Named
 @ViewScoped
+@Secure
 public class NewCountryView extends AbstractView<Country> {
     @Inject
     private SessionActions sa;

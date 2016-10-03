@@ -7,6 +7,7 @@ import lookup.entities.Lookup;
 import lookup.entities.LookupItem;
 import lookup.entities.LookupItemTL;
 import service.AbstractView;
+import service.Secure;
 
 /**
  *
@@ -14,6 +15,7 @@ import service.AbstractView;
  */
 @Named
 @ViewScoped
+@Secure
 public class NewLookupView extends AbstractView<Lookup> {
 
     private final Lookup lookup = new Lookup();

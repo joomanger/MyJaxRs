@@ -5,6 +5,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import payment.entities.Payment;
 import service.AbstractView;
+import service.Secure;
 
 /**
  *
@@ -12,6 +13,7 @@ import service.AbstractView;
  */
 @Named
 @ViewScoped
+@Secure
 public class NewPaymentView extends AbstractView<Payment> {
 
     private final Payment entity = new Payment();

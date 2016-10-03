@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import payment.entities.Payment;
 import service.AbstractView;
+import service.Secure;
 
 /**
  *
@@ -13,6 +14,7 @@ import service.AbstractView;
  */
 @Named
 @ViewScoped
+@Secure
 public class OpenPaymentView extends AbstractView<Payment> {
     
     @Inject
