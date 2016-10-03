@@ -9,7 +9,6 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -28,6 +27,7 @@ public class Security implements Serializable {
     @AroundInvoke
     public Object logMethod(InvocationContext ic) throws Exception {
         HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+
         if (FacesContext.getCurrentInstance().getExternalContext().getInitParameter("logging").equals("true")) {
             String action = ic.getTarget().getClass().getSimpleName().replace("$Proxy$_$$_WeldSubclass", "") + "." + ic.getMethod().getName();
             log.log(Level.INFO, "User [{0}] entered to {1}", new Object[]{sc.getCurrentUser().getUsername(), action});
@@ -44,13 +44,8 @@ public class Security implements Serializable {
         try {
 
             if (!sc.getViewsMap().containsValue(req.getPathInfo().replace(".xhtml", "")) && !sc.getCurrentUser().getUsername().equals("admin")) {
-                HttpServletResponse res = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
                 log.log(Level.SEVERE, "For user [{0}] access denied into {1}", new Object[]{sc.getCurrentUser().getUsername(), req.getPathInfo()});
-                try {
-                    res.sendRedirect(req.getContextPath() + "/faces/index.xhtml?message=Access denied");
-                } catch (IllegalStateException ex) {
-                    System.out.println("IllegalStateException");
-                }
+                throw new AccessDeniedException(req.getPathInfo());
             }
             return ic.proceed();
         } finally {
@@ -59,5 +54,7 @@ public class Security implements Serializable {
 
             }
         }
+
     }
+
 }

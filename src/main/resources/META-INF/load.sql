@@ -67,6 +67,38 @@ insert into views(view_id,description,viewname,url) values(16,'','users','/clien
 insert into views(view_id,description,viewname,url) values(17,'','openUser','/client/sys/user/openUser');
 insert into views(view_id,description,viewname,url) values(18,'','newUser','/client/sys/user/newUser');
 
+insert into views(view_id,description,viewname,url) values(19,'','items','/client/item/items');
+insert into views(view_id,description,viewname,url) values(20,'','openItem','/client/item/openItem');
+insert into views(view_id,description,viewname,url) values(21,'','newItem','/client/item/newItem');
+
+insert into views(view_id,description,viewname,url) values(22,'','lookups','/client/lookup/lookups');
+insert into views(view_id,description,viewname,url) values(23,'','openLookup','/client/lookup/openLookup');
+insert into views(view_id,description,viewname,url) values(24,'','newLookup','/client/lookup/newLookup');
+
+insert into views(view_id,description,viewname,url) values(25,'','payments','/client/payments/payments');
+insert into views(view_id,description,viewname,url) values(26,'','openPayment','/client/payments/openPayment');
+insert into views(view_id,description,viewname,url) values(27,'','newPayment','/client/payments/newPayment');
+
+insert into views(view_id,description,viewname,url) values(28,'','countries','/client/country/countries');
+insert into views(view_id,description,viewname,url) values(29,'','openCountry','/client/country/openCountry');
+insert into views(view_id,description,viewname,url) values(30,'','newCountry','/client/country/newCountry');
+
+insert into views(view_id,description,viewname,url) values(31,'','roads','/client/rw/rwroad/roads');
+insert into views(view_id,description,viewname,url) values(32,'','openRoad','/client/rw/rwroad/openRoad');
+insert into views(view_id,description,viewname,url) values(33,'','newRoad','/client/rw/rwroad/newRoad');
+
+insert into views(view_id,description,viewname,url) values(34,'','stations','/client/rw/rwstation/stations');
+insert into views(view_id,description,viewname,url) values(35,'','openStation','/client/rw/rwstation/openStation');
+insert into views(view_id,description,viewname,url) values(36,'','newStation','/client/rw/rwstation/newStation');
+
+insert into views(view_id,description,viewname,url) values(37,'','customers','/client/customer/customers');
+insert into views(view_id,description,viewname,url) values(38,'','openCustomer','/client/customer/openCustomer');
+insert into views(view_id,description,viewname,url) values(39,'','newCustomer','/client/customer/newCustomer');
+
+insert into views(view_id,description,viewname,url) values(40,'','contracts','/client/contract/contracts');
+insert into views(view_id,description,viewname,url) values(41,'','openContract','/client/contract/openContract');
+insert into views(view_id,description,viewname,url) values(42,'','newContract','/client/contract/newContract');
+
 -- Заполним менюхи
 insert into menu values(1,true, 'System Administrator');
 insert into menuitem(menuitem_id,menuitem,line_num, menu_id, view_id, visibleitem) values(1,'Конфигурации',1,1,1,true);
