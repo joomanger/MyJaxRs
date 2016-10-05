@@ -16,7 +16,7 @@
                             <p:outputLabel value="Номер"/>
                             <p:inputText value="#{newContractView.entity.contractNumber}" size="20"/>
                             <p:outputLabel value="Группа"/>
-                            <p:autoComplete  size="25" var="m" value="#{newContractView.entity.contractGroup}" 
+                            <p:autoComplete  size="25" var="m"  value="#{newContractView.entity.contractGroup}" 
                                              completeMethod="#{contractGroupLOV.completeItem}" itemValue="#{m}" 
                                              itemLabel="#{newContractView.getContractGroupTL(m).getMeaning()}"
                                              forceSelection="true" dropdown="true"/>

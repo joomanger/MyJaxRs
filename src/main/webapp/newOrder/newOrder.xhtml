@@ -18,7 +18,7 @@
                         <p:outputLabel value="Customer"/>
                         <p:inputText maxlength="150" value="#{createSaleOrderFlow.customer}" required="true" style="width:350px"/>
                         <p:commandButton value="Lines" action="newOrderLines"/>
-                        <p:button id="back" value="Cancel" outcome="goHome" />
+                        <p:commandButton value="Cancel" action="goHome" immediate="true"/>
                     </h:panelGrid>
                 </h:form>
             </ui:define>
