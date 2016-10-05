@@ -2,10 +2,15 @@ package payment.beans;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
-import payment.entities.Payment;
+import lookup.beans.LookupCBean;
+import lookup.entities.Lookup;
+import lookup.entities.LookupItemTL;
+import payment.entities.PaymentTerm;
 import service.AbstractView;
 import service.Secure;
+import service.SessionActions;
 
 /**
  *
@@ -14,18 +19,31 @@ import service.Secure;
 @Named
 @ViewScoped
 @Secure
-public class NewPaymentView extends AbstractView<Payment> {
+public class NewPaymentView extends AbstractView<PaymentTerm> {
 
-    private final Payment entity = new Payment();
-   
-//    public NewPaymentView() {
-//        super(Payment.class);
-//    }
+    //Справочники
+    private Lookup dayType;
+    @Inject
+    private LookupCBean lookupClient;
+    @Inject
+    private SessionActions sa;
+
+    private final PaymentTerm entity = new PaymentTerm();
+
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     @Override
     protected void init() {
         super.setEntity(entity);
+        dayType = lookupClient.findByName("DAYTYPES");
+    }
+
+    public LookupItemTL getDayTypeTL(String value) {
+        try {
+            return dayType.getTranslateObject(value, sa.getLanguage());
+        } catch (NullPointerException ex) {
+            return null;
+        }
     }
 
 }

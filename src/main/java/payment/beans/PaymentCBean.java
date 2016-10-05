@@ -1,10 +1,12 @@
 package payment.beans;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import payment.entities.Payment;
+import payment.entities.PaymentTerm;
 import service.AbstractClientBean;
 import service.AbstractEJB;
 import service.AbstractView;
@@ -15,7 +17,7 @@ import service.AbstractView;
  */
 @Named
 @RequestScoped
-public class PaymentCBean extends AbstractClientBean<Payment> {
+public class PaymentCBean extends AbstractClientBean<PaymentTerm> {
 
     @Inject
     private PaymentEJB ejb;
@@ -34,29 +36,35 @@ public class PaymentCBean extends AbstractClientBean<Payment> {
 //    }
 
     @Override
-    protected AbstractEJB<Payment> getEJB() {
+    protected AbstractEJB<PaymentTerm> getEJB() {
         return ejb;
     }
 
     @Override
-    protected AbstractView<Payment> getOpenView() {
+    protected AbstractView<PaymentTerm> getOpenView() {
         return olv;
     }
 
     @Override
-    protected AbstractView<Payment> getFindView() {
+    protected AbstractView<PaymentTerm> getFindView() {
         return flv;
     }
 
     @Override
-    protected AbstractView<Payment> getNewView() {
+    protected AbstractView<PaymentTerm> getNewView() {
         return nlv;
     }
 
     @Override
-    public List<Payment> findAll() {
-        List<Payment> l = super.findAll();
-//        Collections.sort(l);
+    public List<PaymentTerm> findAll() {
+        List<PaymentTerm> l=ejb.findAll();
+        Collections.sort(l, new Comparator<PaymentTerm>(){
+            @Override
+            public int compare(PaymentTerm o1, PaymentTerm o2) {
+                return  o1.getCondition().compareTo(o2.getCondition());
+            }
+            
+        });
         return l;
     }
 

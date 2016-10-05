@@ -24,6 +24,8 @@
                             <p:inputText value="#{newPaymentView.entity.delayDaysAfterShp}" style="width: 30px;text-align: right"/>
                             <p:outputLabel value="Тип дней отсрочки"/>
                             <p:autoComplete id="dayTypes" size="15" value="#{newPaymentView.entity.dayType}" completeMethod="#{daysTypesLOV.completeItem}" 
+                                            var="m" itemValue="#{m}" 
+                                            itemLabel="#{newPaymentView.getDayTypeTL(m).getMeaning()}"
                                             forceSelection="true" dropdown="true" style="margin-right: 40px"/>
                         </h:panelGrid>
                         <p:commandButton id="btnBack" value="Back" action="payments" immediate="true" style="margin-top: 10px;margin-right: 20px"/>

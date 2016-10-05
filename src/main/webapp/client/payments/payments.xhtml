@@ -15,12 +15,17 @@
                     <h:inputHidden id="setPaymentId" value="#{findPaymentSession.payment_id}"/>
                     <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.payment_id}" var="ord" value="#{findPaymentView.entities}" 
                                  editable="true" reflow="true" selection="#{findPaymentView.selectedEntities}" rows="20" paginator="true" style="width: 1000px;"
-                                 rowsPerPageTemplate="20,40,100" lazy="true">
+                                 rowsPerPageTemplate="20,40,100" widgetVar="paymentTable"
+                                 filteredValue="#{findPaymentView.filteredEntities}" emptyMessage="Данные не найдены">
                         <f:facet name="header">
                             Условия платежа
+                            <p:inputText id="globalFilter" onkeyup="PF('paymentTable').filter()" style="width:150px" placeholder="Поиск"/>
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column headerText="Наименование" style="width: 800px;text-align: left">
+                        <p:column filterBy="#{ord.condition}" filterMatchMode="contains" headerText="Наименование" style="width: 800px;text-align: left">
+                            <f:facet name="filter">
+                                <h:inputHidden/>
+                            </f:facet>
                             <h:commandLink action="openPayment" value="#{ord.condition}" onclick="document.getElementById('setPaymentId').value =#{ord.payment_id};"/>
                         </p:column>
                         <f:facet name="footer" >

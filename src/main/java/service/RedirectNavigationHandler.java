@@ -19,10 +19,13 @@ public class RedirectNavigationHandler extends ConfigurableNavigationHandler {
         this.parent = parent;
     }
 
+    @SuppressWarnings("PMD.CollapsibleIfStatements")
     @Override
     public void handleNavigation(FacesContext context, String from, String outcome) {
-        if (!outcome.contains("goHome") && outcome != null && !outcome.endsWith("?faces-redirect=true")) {
-            outcome += "?faces-redirect=true";
+        if (outcome != null) {
+            if (!outcome.contains("goHome") && !outcome.endsWith("?faces-redirect=true")) {
+                outcome += "?faces-redirect=true";
+            }
         }
         parent.handleNavigation(context, from, outcome);
     }

@@ -4,7 +4,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import payment.entities.Payment;
+import payment.entities.PaymentTerm;
 import service.AbstractView;
 import service.Secure;
 
@@ -15,11 +15,11 @@ import service.Secure;
 @Named
 @ViewScoped
 @Secure
-public class FindPaymentView extends AbstractView<Payment> {
+public class FindPaymentView extends AbstractView<PaymentTerm> {
 
     @Inject
     private PaymentCBean client;
-
+    
 //    public FindPaymentView() {
 //        super(Payment.class);
 //    }

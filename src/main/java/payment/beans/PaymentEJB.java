@@ -3,7 +3,7 @@ package payment.beans;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import payment.entities.Payment;
+import payment.entities.PaymentTerm;
 import service.AbstractEJB;
 
 /**
@@ -11,13 +11,13 @@ import service.AbstractEJB;
  * @author savin
  */
 @Stateless
-public class PaymentEJB extends AbstractEJB<Payment> {
+public class PaymentEJB extends AbstractEJB<PaymentTerm> {
 
     @Inject
     private EntityManager em;
 
     public PaymentEJB() {
-        super(Payment.class);
+        super(PaymentTerm.class);
     }
 
     @Override

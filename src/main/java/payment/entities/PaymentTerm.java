@@ -19,25 +19,26 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(uniqueConstraints
         = @UniqueConstraint(columnNames = {"name"}))
-public class Payment implements Serializable{
+public class PaymentTerm implements Serializable {
 
     @Id
-    @SequenceGenerator(name = "payment_sq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(generator = "payment_sq")
+    @SequenceGenerator(name = "paymentterm_sq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(generator = "paymentterm_sq")
     private Long payment_id;
+    private Long payment_id_orc;
     @NotNull
-    @Size(min=5, max = 255,message = "Размер УСЛОВИЯ от 5 до 255 символов")
+    @Size(min = 5, max = 255, message = "Размер УСЛОВИЯ от 5 до 255 символов")
     private String condition;
     @NotNull
-    private Boolean prepayShip=false;
+    private Boolean prepayShip = false;
     @NotNull
-    private Boolean prepayManuf=false;
+    private Boolean prepayManuf = false;
     @NotNull
-    @Max(value = 100,message = "Предоплата не должна превышать 100%")
-    @Min(value=0,message = "Предоплата не должна быть меньше 0%")
+    @Max(value = 100, message = "Предоплата не должна превышать 100%")
+    @Min(value = 0, message = "Предоплата не должна быть меньше 0%")
     private Integer prepayValue;
     private Integer delayDaysAfterShp;
-    @Size(min=0,max=15)
+    @Size(min = 0, max = 15)
     private String dayType;
 
     public Long getPayment_id() {
@@ -46,6 +47,14 @@ public class Payment implements Serializable{
 
     public void setPayment_id(Long payment_id) {
         this.payment_id = payment_id;
+    }
+
+    public Long getPayment_id_orc() {
+        return payment_id_orc;
+    }
+
+    public void setPayment_id_orc(Long payment_id_orc) {
+        this.payment_id_orc = payment_id_orc;
     }
 
     public String getCondition() {

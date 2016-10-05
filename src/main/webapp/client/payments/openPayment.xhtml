@@ -23,8 +23,11 @@
                             <p:outputLabel value="Отсрочка после отгрузки, дни"/>
                             <p:inputText value="#{openPaymentView.entity.delayDaysAfterShp}" style="width: 30px;text-align: right"/>
                             <p:outputLabel value="Тип дней отсрочки"/>
-                            <p:autoComplete id="dayTypes" size="15" value="#{openPaymentView.entity.dayType}" completeMethod="#{daysTypesLOV.completeItem}" 
-                                            forceSelection="true" dropdown="true" style="margin-right: 40px"/>
+                            <p:autoComplete id="dayTypes" size="15" value="#{openPaymentView.entity.dayType}" 
+                                            completeMethod="#{daysTypesLOV.completeItem}" var="m"
+                                            forceSelection="true" itemValue="#{m}" 
+                                            itemLabel="#{openPaymentView.getDayTypeTL(m).getMeaning()}"
+                                            dropdown="true" style="margin-right: 40px"/>
                         </h:panelGrid>
                         <p:commandButton id="btnBack" value="Back" action="payments" immediate="true" style="margin-top: 10px;margin-right: 20px"/>
                         <p:commandButton id="btnSave" value="Сохранить" actionListener="#{paymentCBean.changeEntity()}"  style="margin-top: 10px;margin-right: 20px" update="mainMSG"/>
