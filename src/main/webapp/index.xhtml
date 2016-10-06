@@ -5,7 +5,7 @@
     <body>
         <ui:composition template="./WEB-INF/template.xhtml">
             <ui:define name="content">
-                <p>Сейчас позиций в базе данных: #{itemClientBean.count}</p>
+                <p>Сейчас позиций в базе данных: #{itemCBean.findAll().size()}</p>
                 <p>#{request.getParameter('message')}</p>
             </ui:define>
         </ui:composition>
