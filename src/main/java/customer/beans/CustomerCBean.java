@@ -66,6 +66,15 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
     //----------------------//
     //Дополнительные методы 
     //----------------------//
+    public List<Customer> getRelCustomersByCustomerID(Long p_customer_id, Boolean p_ship_to, Boolean p_bill_to) {
+        try {
+            return ejb.getRelCustomersByCustomerID(p_customer_id, p_ship_to, p_bill_to);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            return null;
+        }
+    }
+
     @Override
     public List<Customer> findAll() {
         List<Customer> l = super.findAll();

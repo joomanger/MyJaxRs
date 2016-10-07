@@ -9,19 +9,53 @@
 
         <ui:composition template="./../WEB-INF/template.xhtml">
             <ui:define name="content">
-                <h:form>
+                <h:form prependId="false">
                     <p:steps style="width: 1200px" activeIndex="0" styleClass="custom" readonly="false" >
                         <p:menuitem value="Основные данные" action="newOrder" url="newOrder" />
-                        <p:menuitem value="Дополнительные данные" action="newOrderLines" url="newOrderLines"/>
-                        <p:menuitem value="Аттачменты" />
-                        <p:menuitem value="Строки заказа" />
+                        <p:menuitem value="Доп.сведения" action="newOrderLines" url="newOrderLines"/>
+                        <p:menuitem value="Дополнения" />
+                        <p:menuitem value="Позиции" />
                         <p:menuitem value="Подтверждение" />
                     </p:steps>   
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <p:outputLabel value="Number" />
-                        <p:inputText id="orderNumber" readonly="true"  value="#{createSaleOrderFlow.order_number}" required="true" style="width:5em;text-align: right "/>
-                        <p:outputLabel value="Customer"/>
-                        <p:inputText maxlength="150" value="#{createSaleOrderFlow.customer}" required="true" style="width:350px"/>
+                    <h:panelGrid columns="4" cellpadding="5">
+                        <p:outputLabel value="Заказчик"/>
+                        <p:autoComplete value="#{createSaleOrderFlow.order.customer}" maxResults="20"
+                                        completeMethod="#{customerConverter.completeItem}"
+                                        var="m" itemLabel="#{m.name}" size="70"
+                                        itemValue="#{m}" converter="#{customerConverter}" 
+                                        forceSelection="true">
+                             <p:ajax event="itemSelect" 
+                                    listener="#{findCustomerSession.setCustomer_id(createSaleOrderFlow.order.customer.customer_id)}"
+                                    />
+                        </p:autoComplete>    
+
+                        <p:outputLabel value="Номер заказа" />
+                        <p:outputLabel id="orderNumber" value="#{createSaleOrderFlow.order.header_id}" style="width:30px;text-align: right "/>
+
+                        <p:outputLabel value="Грузополучатель"/>
+                        <p:autoComplete value="#{createSaleOrderFlow.order.shp_customer}" maxResults="20"
+                                        completeMethod="#{customerConverter.completeSHP}"
+                                        var="m" itemLabel="#{m.name}" size="70"
+                                        itemValue="#{m}" converter="#{customerConverter}" 
+                                        forceSelection="true" dropdown="true">
+                        </p:autoComplete>    
+
+                        <p:outputLabel value="Валюта"/>
+                        <p:autoComplete  size="5" value="#{createSaleOrderFlow.order.currency}" 
+                                         completeMethod="#{currencyLOV.completeItem}" 
+                                         forceSelection="true" dropdown="true" />
+
+                        <p:outputLabel value="Адрес грузополучателя"/>
+                        <p:autoComplete value="#{createSaleOrderFlow.order.shp_customer.addresses}" 
+                                        maxResults="20"
+                                        completeMethod="#{addressConverter.completeAddressSHP}" size="70"
+                                        var="m" 
+                                        itemValue="#{m}" 
+                                        itemLabel="#{m.country.getTranslateObject(sessionActions.language).getName()} #{m.region} #{m.city} #{m.fullAddress}" 
+                                        converter="#{addressConverter}" 
+                                        forceSelection="true" dropdown="true">
+                        </p:autoComplete>  
+
                         <p:commandButton value="Lines" action="newOrderLines"/>
                         <p:commandButton value="Cancel" action="goHome" immediate="true"/>
                     </h:panelGrid>

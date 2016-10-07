@@ -1,7 +1,5 @@
 package ws.so;
 
-import so.saleorder.flows.CreateSaleOrderFlow;
-import so.saleorder.flows.CreateSaleOrderLineFlow;
 import so.entities.SaleOrder;
 import so.entities.SaleOrderLine;
 import java.util.List;
@@ -28,10 +26,10 @@ import service.RestProviderWR;
 @Produces(MediaType.APPLICATION_JSON)
 public class SaleOrderBean extends RestProviderWR<SaleOrder> {
 
-    @Inject
-    private CreateSaleOrderFlow orderHeader;
-    @Inject
-    private CreateSaleOrderLineFlow orderLines;
+//    @Inject
+//    private CreateSaleOrderFlow orderHeader;
+//    @Inject
+//    private CreateSaleOrderLineFlow orderLines;
     @Inject
     private FindSaleOrderBackingBean sob;
     @Inject
@@ -66,11 +64,11 @@ public class SaleOrderBean extends RestProviderWR<SaleOrder> {
 
     public String addItem() {
 
-        SaleOrder order = new SaleOrder();
-        order.setOrder_number(orderHeader.getOrder_number());
-        order.setCustomer(orderHeader.getCustomer());
-        order.setLines(orderLines.getLines());
-        super.addItem(order, "Заказ №" + orderHeader.getOrder_number() + " добавлен успешно");
+//        SaleOrder order = new SaleOrder();
+//        order.setOrder_number(orderHeader.getOrder_number());
+//        order.setCustomer(orderHeader.getCustomer());
+//        order.setLines(orderLines.getLines());
+//        super.addItem(order, "Заказ №" + orderHeader.getOrder_number() + " добавлен успешно");
         return "goHome";
     }
 

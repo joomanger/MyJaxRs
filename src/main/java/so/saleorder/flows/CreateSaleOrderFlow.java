@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import so.entities.Order;
 import so.saleorder.beans.SaleOrderCBean;
 
 /**
@@ -18,38 +19,21 @@ public class CreateSaleOrderFlow implements Serializable {
     @Inject
     private SaleOrderCBean sob;
 
-    private long header_id;
-    private long order_number;
-    private String customer;
-    
+    private Order order;
+
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     private void init() {
-        order_number = sob.getNewOrderNumber();
+        order = new Order();
+        order.setHeader_id(sob.getNewOrderNumber());
     }
 
-    public long getHeader_id() {
-        return header_id;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setHeader_id(long header_id) {
-        this.header_id = header_id;
-    }
-
-    public long getOrder_number() {
-        return order_number;
-    }
-
-    public void setOrder_number(long order_number) {
-        this.order_number = order_number;
-    }
-
-    public String getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(String customer) {
-        this.customer = customer;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
 }

@@ -13,6 +13,8 @@ import javax.inject.Named;
 public class FindCustomerSession implements Serializable {
 
     private Long customer_id;
+    private Long shpCustomer_id;
+    private Long invCustomer_id;
     private String region;
 
     public Long getCustomer_id() {
@@ -29,6 +31,22 @@ public class FindCustomerSession implements Serializable {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public Long getShpCustomer_id() {
+        return shpCustomer_id;
+    }
+
+    public void setShpCustomer_id(Long shpCustomer_id) {
+        this.shpCustomer_id = shpCustomer_id;
+    }
+
+    public Long getInvCustomer_id() {
+        return invCustomer_id;
+    }
+
+    public void setInvCustomer_id(Long invCustomer_id) {
+        this.invCustomer_id = invCustomer_id;
     }
 
 }

@@ -1,6 +1,7 @@
 package customer.beans;
 
 import customer.entities.Customer;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -18,7 +19,6 @@ public class CustomerEJB extends AbstractEJB<Customer> {
 
 //    @Inject
 //    private SessionActions sa;
-
     public CustomerEJB() {
         super(Customer.class);
     }
@@ -26,6 +26,18 @@ public class CustomerEJB extends AbstractEJB<Customer> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+
+    public List<Customer> getRelCustomersByCustomerID(Long p_customer_id, Boolean p_ship_to, Boolean p_bill_to) {
+       return em.createNativeQuery("select rc.*\n"
+                + "from customer c,customer rc, relationship r\n"
+                + " where c.customer_id=?1\n"
+                + " and r.bill_to=?2 and r.ship_to=?3\n"
+                + " and r.customer_id=c.customer_id\n"
+                + " and rc.customer_id=r.related_customer_id",Customer.class)
+                .setParameter(1, p_customer_id)
+                .setParameter(2, p_bill_to)
+                .setParameter(3, p_ship_to).getResultList();
     }
 
 //    public Lookup findByName(String name) {
@@ -43,5 +55,4 @@ public class CustomerEJB extends AbstractEJB<Customer> {
 //                setParameter(2, sa.getLanguage()).getResultList();
 //        return a;
 //    }
-
 }

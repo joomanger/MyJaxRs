@@ -7,19 +7,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 
 /**
  *
  * @author savin
  */
 @Entity
+@NamedQueries(
+        @NamedQuery(name = Address.FIND_BY_CUSTOMER_ID, query = "select t from Address t where t.customer.customer_id=:p_customer_id"))
 public class Address implements Serializable {
 
+    public static final String FIND_BY_CUSTOMER_ID = "Address.FIND_BY_CUSTOMER_ID";
     @Id
     @SequenceGenerator(name = "address_sq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(generator = "address_sq")
@@ -31,10 +35,10 @@ public class Address implements Serializable {
     private Country country;
     private String region;
 
-    @Size(min = 2,message = "поле Город обязательно для заполнения")
+    @Size(min = 2, message = "поле Город обязательно для заполнения")
     private String city;
 
-    @Size(min = 2,message = "поле Адрес обязательно для заполнения")
+    @Size(min = 2, message = "поле Адрес обязательно для заполнения")
     private String fullAddress;
     private String postCode;
 
@@ -45,7 +49,7 @@ public class Address implements Serializable {
 
     private String shipuses_id;
     private String billuses_id;
-    
+
     private Long duferco_site_use_id;
 
     @ManyToOne
@@ -170,6 +174,5 @@ public class Address implements Serializable {
     public void setDuferco_site_use_id(Long duferco_site_use_id) {
         this.duferco_site_use_id = duferco_site_use_id;
     }
-   
 
 }

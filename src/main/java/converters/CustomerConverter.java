@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import so.saleorder.flows.CreateSaleOrderFlow;
 
 /**
  *
@@ -23,6 +24,8 @@ public class CustomerConverter implements Converter {
 
     @Inject
     private CustomerCBean client;
+    @Inject
+    private CreateSaleOrderFlow of;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -49,6 +52,24 @@ public class CustomerConverter implements Converter {
 
     public List<Customer> completeItem(String query) {
         List<Customer> all = client.findAll();
+        List<Customer> filtered = new ArrayList<>();
+        all.stream().filter((item) -> item.getName().toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
+            filtered.add(item);
+        });
+        return filtered;
+    }
+    
+    public List<Customer> completeSHP(String query) {
+        List<Customer> all =client.getRelCustomersByCustomerID(of.getOrder().getCustomer().getCustomer_id(), Boolean.TRUE, Boolean.FALSE);
+        List<Customer> filtered = new ArrayList<>();
+        all.stream().filter((item) -> item.getName().toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
+            filtered.add(item);
+        });
+        return filtered;
+    }
+    
+    public List<Customer> completeINV(String query) {
+        List<Customer> all = client.getRelCustomersByCustomerID(of.getOrder().getCustomer().getCustomer_id(), Boolean.FALSE, Boolean.TRUE);
         List<Customer> filtered = new ArrayList<>();
         all.stream().filter((item) -> item.getName().toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
             filtered.add(item);

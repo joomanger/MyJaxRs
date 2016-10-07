@@ -7,8 +7,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import so.config.beans.ConfigCBean;
-import so.saleorder.flows.CreateSaleOrderFlow;
-import so.saleorder.flows.CreateSaleOrderLineFlow;
 import so.saleorderline.beans.SaleOrderLineCBean;
 
 /**
@@ -19,10 +17,10 @@ import so.saleorderline.beans.SaleOrderLineCBean;
 @RequestScoped
 public class SaleOrderCBean {
 
-    @Inject
-    private CreateSaleOrderFlow orderHeader;
-    @Inject
-    private CreateSaleOrderLineFlow orderLines;
+//    @Inject
+//    private CreateSaleOrderFlow orderHeader;
+//    @Inject
+//    private CreateSaleOrderLineFlow orderLines;
     @Inject
     private FindSaleOrderBackingBean sessionBean;
     @Inject
@@ -59,12 +57,12 @@ public class SaleOrderCBean {
 
     public String addItem() {
 
-        SaleOrder order = new SaleOrder();
-        order.setOrder_number(orderHeader.getOrder_number());
-        order.setCustomer(orderHeader.getCustomer());
-        order.setLines(orderLines.getLines());
-        String status = orderEJB.create(order);
-        orderEJB.sendMessage(status, "Заказ №" + orderHeader.getOrder_number() + " добавлен успешно");
+//        SaleOrder order = new SaleOrder();
+//        order.setOrder_number(orderHeader.getOrder_number());
+//        order.setCustomer(orderHeader.getCustomer());
+//        order.setLines(orderLines.getLines());
+//        String status = orderEJB.create(order);
+//        orderEJB.sendMessage(status, "Заказ №" + orderHeader.getOrder_number() + " добавлен успешно");
         return "goHome";
     }
 
