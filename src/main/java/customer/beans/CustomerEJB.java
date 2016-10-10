@@ -30,23 +30,29 @@ public class CustomerEJB extends AbstractEJB<Customer> {
 
     public List<Customer> getRelCustomersByCustomerID(Long p_customer_id, Boolean p_ship_to, Boolean p_bill_to) {
         if (p_ship_to) {
-            return em.createNativeQuery("select c.*\n"
+            return em.createNativeQuery("select c.* from customer c where c.customer_id=?1 \n"
+                    + "  and exists (select 1 from address s where s.customer_id=c.customer_id and s.ship_to=true)\n"
+                    + "union all  \n"
+                    + "select c.*\n"
                     + "from relationship r,\n"
                     + "     customer c \n"
                     + "where r.related_customer_id=?1 \n"
                     + "  and r.ship_to=true \n"
                     + "  and c.customer_id=r.customer_id\n"
-                    + "  and c.activestatus=true;", Customer.class)
+                    + "  and c.activestatus=true", Customer.class)
                     .setParameter(1, p_customer_id)
                     .getResultList();
         } else {
-            return em.createNativeQuery("select c.*\n"
+            return em.createNativeQuery("select c.* from customer c where c.customer_id=?1 \n"
+                    + "  and exists (select 1 from address s where s.customer_id=c.customer_id and s.bill_to=true)\n"
+                    + "union all  \n"
+                    + "select c.*\n"
                     + "from relationship r,\n"
                     + "     customer c \n"
                     + "where r.related_customer_id=?1 \n"
                     + "  and r.bill_to=true \n"
                     + "  and c.customer_id=r.customer_id\n"
-                    + "  and c.activestatus=true;", Customer.class)
+                    + "  and c.activestatus=true", Customer.class)
                     .setParameter(1, p_customer_id)
                     .getResultList();
         }
