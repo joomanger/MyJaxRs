@@ -2,7 +2,6 @@ package converters;
 
 import customer.beans.CustomerCBean;
 import customer.entities.Address;
-import customer.entities.Customer;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -55,11 +54,8 @@ public class AddressConverter implements Converter {
 
     public List<Address> completeAddressSHP(String query) {
        try{ 
-        List<Address> allItems = null;//of.getOrder().getShp_customer().getAddresses();
-        Customer r=of.getOrder().getShp_customer();
-           System.out.println(r.getName());
+        List<Address> allItems =  of.getOrder().getShp_customer().getAddresses();
         List<Address> filteredItems = new ArrayList<>();
-
         allItems.stream().filter((item) -> (item.getCountry().getTranslateObject(sa.getLanguage()).getName()
                 + " " + item.getCity() + " " + item.getFullAddress() + " " + item.getRegion())
                 .toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
@@ -75,9 +71,7 @@ public class AddressConverter implements Converter {
     public List<Address> completeAddressINV(String query) {
        try{ 
         List<Address> allItems = of.getOrder().getInv_customer().getAddresses();
-        // client.getAddressByCustomerID(fs.getCustomer_id());
         List<Address> filteredItems = new ArrayList<>();
-
         allItems.stream().filter((item) -> (item.getCountry().getTranslateObject(sa.getLanguage()).getName()
                 + " " + item.getCity() + " " + item.getFullAddress() + " " + item.getRegion())
                 .toLowerCase().contains(query.toLowerCase())).forEach((item) -> {

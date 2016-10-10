@@ -24,20 +24,19 @@
                                         var="m" itemLabel="#{m.name}" size="70"
                                         itemValue="#{m}" converter="#{customerConverter}" 
                                         forceSelection="true">
-                             <p:ajax event="itemSelect" 
-                                    listener="#{findCustomerSession.setCustomer_id(createSaleOrderFlow.order.customer.customer_id)}"
-                                    />
+                            <p:ajax event="itemSelect" listener="#{createSaleOrderFlow.order.setShp_customer(null)}" update="shp ashp"/>
                         </p:autoComplete>    
 
                         <p:outputLabel value="Номер заказа" />
                         <p:outputLabel id="orderNumber" value="#{createSaleOrderFlow.order.header_id}" style="width:30px;text-align: right "/>
 
                         <p:outputLabel value="Грузополучатель"/>
-                        <p:autoComplete value="#{createSaleOrderFlow.order.shp_customer}" maxResults="20"
+                        <p:autoComplete id="shp" value="#{createSaleOrderFlow.order.shp_customer}" maxResults="20"
                                         completeMethod="#{customerConverter.completeSHP}"
                                         var="m" itemLabel="#{m.name}" size="70"
                                         itemValue="#{m}" converter="#{customerConverter}" 
                                         forceSelection="true" dropdown="true">
+                            <p:ajax event="itemSelect" listener="#{createSaleOrderFlow.order.setShp_address(null)}" update="ashp"/>
                         </p:autoComplete>    
 
                         <p:outputLabel value="Валюта"/>
@@ -46,12 +45,12 @@
                                          forceSelection="true" dropdown="true" />
 
                         <p:outputLabel value="Адрес грузополучателя"/>
-                        <p:autoComplete value="#{createSaleOrderFlow.order.shp_customer.addresses}" 
+                        <p:autoComplete id="ashp" value="#{createSaleOrderFlow.order.shp_address}" 
                                         maxResults="20"
                                         completeMethod="#{addressConverter.completeAddressSHP}" size="70"
                                         var="m" 
                                         itemValue="#{m}" 
-                                        itemLabel="#{m.country.getTranslateObject(sessionActions.language).getName()} #{m.region} #{m.city} #{m.fullAddress}" 
+                                        itemLabel="#{m.country.getTranslateObject(sessionActions.language).getName()} #{m.postCode} #{m.region} #{m.city} #{m.fullAddress}" 
                                         converter="#{addressConverter}" 
                                         forceSelection="true" dropdown="true">
                         </p:autoComplete>  

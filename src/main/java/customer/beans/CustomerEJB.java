@@ -29,15 +29,27 @@ public class CustomerEJB extends AbstractEJB<Customer> {
     }
 
     public List<Customer> getRelCustomersByCustomerID(Long p_customer_id, Boolean p_ship_to, Boolean p_bill_to) {
-       return em.createNativeQuery("select rc.*\n"
-                + "from customer c,customer rc, relationship r\n"
-                + " where c.customer_id=?1\n"
-                + " and r.bill_to=?2 and r.ship_to=?3\n"
-                + " and r.customer_id=c.customer_id\n"
-                + " and rc.customer_id=r.related_customer_id",Customer.class)
-                .setParameter(1, p_customer_id)
-                .setParameter(2, p_bill_to)
-                .setParameter(3, p_ship_to).getResultList();
+        if (p_ship_to) {
+            return em.createNativeQuery("select c.*\n"
+                    + "from relationship r,\n"
+                    + "     customer c \n"
+                    + "where r.related_customer_id=?1 \n"
+                    + "  and r.ship_to=true \n"
+                    + "  and c.customer_id=r.customer_id\n"
+                    + "  and c.activestatus=true;", Customer.class)
+                    .setParameter(1, p_customer_id)
+                    .getResultList();
+        } else {
+            return em.createNativeQuery("select c.*\n"
+                    + "from relationship r,\n"
+                    + "     customer c \n"
+                    + "where r.related_customer_id=?1 \n"
+                    + "  and r.bill_to=true \n"
+                    + "  and c.customer_id=r.customer_id\n"
+                    + "  and c.activestatus=true;", Customer.class)
+                    .setParameter(1, p_customer_id)
+                    .getResultList();
+        }
     }
 
 //    public Lookup findByName(String name) {
