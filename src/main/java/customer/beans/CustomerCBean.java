@@ -70,7 +70,7 @@ public class CustomerCBean extends AbstractClientBean<Customer> {
         try {
             return ejb.getRelCustomersByCustomerID(p_customer_id, p_ship_to, p_bill_to);
         } catch (Exception ex) {
-            System.out.println(ex);
+            //System.out.println(ex.getMessage());
             return null;
         }
     }

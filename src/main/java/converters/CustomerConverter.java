@@ -58,23 +58,31 @@ public class CustomerConverter implements Converter {
         });
         return filtered;
     }
-    
+
     public List<Customer> completeSHP(String query) {
-        List<Customer> all =client.getRelCustomersByCustomerID(of.getOrder().getCustomer().getCustomer_id(), Boolean.TRUE, Boolean.FALSE);
-        List<Customer> filtered = new ArrayList<>();
-        all.stream().filter((item) -> item.getName().toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
-            filtered.add(item);
-        });
-        return filtered;
+        if (of.getOrder().getCustomer() != null) {
+            List<Customer> all = client.getRelCustomersByCustomerID(of.getOrder().getCustomer().getCustomer_id(), Boolean.TRUE, Boolean.FALSE);
+            List<Customer> filtered = new ArrayList<>();
+            all.stream().filter((item) -> item.getName().toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
+                filtered.add(item);
+            });
+            return filtered;
+        } else {
+            return null;
+        }
     }
-    
+
     public List<Customer> completeINV(String query) {
-        List<Customer> all = client.getRelCustomersByCustomerID(of.getOrder().getCustomer().getCustomer_id(), Boolean.FALSE, Boolean.TRUE);
-        List<Customer> filtered = new ArrayList<>();
-        all.stream().filter((item) -> item.getName().toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
-            filtered.add(item);
-        });
-        return filtered;
+        if (of.getOrder().getCustomer() != null) {
+            List<Customer> all = client.getRelCustomersByCustomerID(of.getOrder().getCustomer().getCustomer_id(), Boolean.FALSE, Boolean.TRUE);
+            List<Customer> filtered = new ArrayList<>();
+            all.stream().filter((item) -> item.getName().toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
+                filtered.add(item);
+            });
+            return filtered;
+        } else {
+            return null;
+        }
     }
 
 }

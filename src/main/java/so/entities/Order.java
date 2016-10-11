@@ -6,17 +6,20 @@ import customer.entities.Customer;
 import customer.entities.RWAddress;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import payment.entities.PaymentTerm;
 
 /**
  *
@@ -31,33 +34,44 @@ public class Order implements Serializable {
     @GeneratedValue(generator = "zakaz_sq")
     private Long header_id;
 
-    @Transient
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "customer_id")
     private Customer customer;
-    private Long customer_id;
 
-    @Transient
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "shp_customer_id")
     private Customer shp_customer;
-    private Long shp_customer_id;
-    @Transient
+
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "shp_address_id")
     private Address shp_address;
-    private Long shp_address_id;
-    @Transient
+
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "shp_rwaddress_id")
     private RWAddress shp_rwaddress;
-    private Long shp_rwaddress_id;
 
-    @Transient
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "inv_customer_id")
     private Customer inv_customer;
-    private Long inv_customer_id;
-    @Transient
-    private Address inv_address;
-    private Long inv_address_id;
 
-    @Transient
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "inv_address_id")
+    private Address inv_address;
+
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "contract_id")
     private Contract contract;
-    private Long contract_id;
+
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "payment_term_id")
+    private PaymentTerm paymentTerm;
 
     @Size(min = 3, max = 3, message = "ВАЛЮТА: длина три символа")
     private String currency;
+
+    private String fob;
+    private String freightTerm;
+    private String cust_po_number;
 
     @Temporal(TemporalType.DATE)
     @NotNull(message = "ДАТА ЗАКАЗА: обязательно для заполнения")
@@ -80,28 +94,12 @@ public class Order implements Serializable {
         this.customer = customer;
     }
 
-    public Long getCustomer_id() {
-        return customer_id;
-    }
-
-    public void setCustomer_id(Long customer_id) {
-        this.customer_id = customer_id;
-    }
-
     public Customer getShp_customer() {
         return shp_customer;
     }
 
     public void setShp_customer(Customer shp_customer) {
         this.shp_customer = shp_customer;
-    }
-
-    public Long getShp_customer_id() {
-        return shp_customer_id;
-    }
-
-    public void setShp_customer_id(Long shp_customer_id) {
-        this.shp_customer_id = shp_customer_id;
     }
 
     public Address getShp_address() {
@@ -112,28 +110,12 @@ public class Order implements Serializable {
         this.shp_address = shp_address;
     }
 
-    public Long getShp_address_id() {
-        return shp_address_id;
-    }
-
-    public void setShp_address_id(Long shp_address_id) {
-        this.shp_address_id = shp_address_id;
-    }
-
     public RWAddress getShp_rwaddress() {
         return shp_rwaddress;
     }
 
     public void setShp_rwaddress(RWAddress shp_rwaddress) {
         this.shp_rwaddress = shp_rwaddress;
-    }
-
-    public Long getShp_rwaddress_id() {
-        return shp_rwaddress_id;
-    }
-
-    public void setShp_rwaddress_id(Long shp_rwaddress_id) {
-        this.shp_rwaddress_id = shp_rwaddress_id;
     }
 
     public Customer getInv_customer() {
@@ -144,14 +126,6 @@ public class Order implements Serializable {
         this.inv_customer = inv_customer;
     }
 
-    public Long getInv_customer_id() {
-        return inv_customer_id;
-    }
-
-    public void setInv_customer_id(Long inv_customer_id) {
-        this.inv_customer_id = inv_customer_id;
-    }
-
     public Address getInv_address() {
         return inv_address;
     }
@@ -160,28 +134,12 @@ public class Order implements Serializable {
         this.inv_address = inv_address;
     }
 
-    public Long getInv_address_id() {
-        return inv_address_id;
-    }
-
-    public void setInv_address_id(Long inv_address_id) {
-        this.inv_address_id = inv_address_id;
-    }
-
     public Contract getContract() {
         return contract;
     }
 
     public void setContract(Contract contract) {
         this.contract = contract;
-    }
-
-    public Long getContract_id() {
-        return contract_id;
-    }
-
-    public void setContract_id(Long contract_id) {
-        this.contract_id = contract_id;
     }
 
     public String getCurrency() {
@@ -199,7 +157,37 @@ public class Order implements Serializable {
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
-    
-    
+
+    public PaymentTerm getPaymentTerm() {
+        return paymentTerm;
+    }
+
+    public void setPaymentTerm(PaymentTerm paymentTerm) {
+        this.paymentTerm = paymentTerm;
+    }
+
+    public String getFob() {
+        return fob;
+    }
+
+    public void setFob(String fob) {
+        this.fob = fob;
+    }
+
+    public String getFreightTerm() {
+        return freightTerm;
+    }
+
+    public void setFreightTerm(String freightTerm) {
+        this.freightTerm = freightTerm;
+    }
+
+    public String getCust_po_number() {
+        return cust_po_number;
+    }
+
+    public void setCust_po_number(String cust_po_number) {
+        this.cust_po_number = cust_po_number;
+    }
 
 }

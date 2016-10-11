@@ -56,36 +56,36 @@ public class AddressConverter implements Converter {
     }
 
     public List<Address> completeAddressSHP(String query) {
-        try {
+        if (of.getOrder().getShp_customer() != null) {
             List<Address> allItems = of.getOrder().getShp_customer().getAddresses();
             List<Address> filteredItems = new ArrayList<>();
             allItems.stream().filter((item) -> (item.getCountry().getTranslateObject(sa.getLanguage()).getName()
                     + " " + item.getCity() + " " + item.getFullAddress() + " " + item.getRegion())
                     .toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
-                if (item.getShip_to()&&item.getActiveStatus()) {
+                if (item.getShip_to() && item.getActiveStatus()) {
                     filteredItems.add(item);
                 }
             });
             return filteredItems;
-        } catch (Exception ex) {
-            System.out.println(ex);
+        } else {
             return null;
         }
+
     }
 
     public List<Address> completeAddressINV(String query) {
-        try {
+        if (of.getOrder().getInv_customer() != null) {
             List<Address> allItems = of.getOrder().getInv_customer().getAddresses();
             List<Address> filteredItems = new ArrayList<>();
             allItems.stream().filter((item) -> (item.getCountry().getTranslateObject(sa.getLanguage()).getName()
                     + " " + item.getCity() + " " + item.getFullAddress() + " " + item.getRegion())
                     .toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
-                if (item.getBill_to()&&item.getActiveStatus()) {
+                if (item.getBill_to() && item.getActiveStatus()) {
                     filteredItems.add(item);
                 }
             });
             return filteredItems;
-        } catch (Exception ex) {
+        } else {
             return null;
         }
     }

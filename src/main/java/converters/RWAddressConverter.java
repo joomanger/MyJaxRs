@@ -53,7 +53,7 @@ public class RWAddressConverter implements Converter {
     }
 
     public List<RWAddress> completeRWAddress(String query) {
-        try {
+        if (of.getOrder().getShp_customer() != null) {
             List<RWAddress> allItems = of.getOrder().getShp_customer().getRWAddresses();
             List<RWAddress> filteredItems = new ArrayList<>();
             allItems.stream().filter((item) -> (item.getStation().getTranslateObject(sa.getLanguage()).getName()
@@ -64,8 +64,7 @@ public class RWAddressConverter implements Converter {
                 }
             });
             return filteredItems;
-        } catch (Exception ex) {
-            System.out.println(ex);
+        } else {
             return null;
         }
     }

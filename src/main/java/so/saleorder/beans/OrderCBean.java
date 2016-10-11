@@ -7,7 +7,6 @@ import service.AbstractClientBean;
 import service.AbstractEJB;
 import service.AbstractView;
 import so.entities.Order;
-import so.saleorder.flows.CreateSaleOrderFlow;
 
 /**
  *
@@ -17,8 +16,8 @@ import so.saleorder.flows.CreateSaleOrderFlow;
 @RequestScoped
 public class OrderCBean extends AbstractClientBean<Order> {
 
-    @Inject
-    private CreateSaleOrderFlow orderFlow;
+//    @Inject
+//    private CreateSaleOrderFlow orderFlow;
 
     @Inject
     private OrderEJB ejb;
@@ -45,12 +44,7 @@ public class OrderCBean extends AbstractClientBean<Order> {
 
     /*После выбора нового Заказчика обнуляются все зависимые поля*/
     public void clearFieldsHeader() {
-        orderFlow.getOrder().setShp_customer(null);
-        orderFlow.getOrder().setShp_address(null);
-        orderFlow.getOrder().setShp_rwaddress(null);
-        orderFlow.getOrder().setInv_customer(null);
-        orderFlow.getOrder().setInv_address(null);
-
+        ejb.clearFieldsHeader();
     }
 
 }
