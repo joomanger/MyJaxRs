@@ -1,7 +1,5 @@
 package converters;
 
-import customer.beans.RWAddressEJB;
-import customer.entities.RWAddress;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -12,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import service.SessionActions;
-import so.saleorder.flows.CreateSaleOrderFlow;
+import payment.beans.PaymentCBean;
+import payment.entities.PaymentTerm;
 
 /**
  *
@@ -21,14 +19,10 @@ import so.saleorder.flows.CreateSaleOrderFlow;
  */
 @Named
 @RequestScoped
-public class RWAddressConverter implements Converter {
+public class PaymentTermConverter implements Converter {
 
     @Inject
-    private RWAddressEJB client;
-    @Inject
-    private SessionActions sa;
-    @Inject
-    private CreateSaleOrderFlow of;
+    private PaymentCBean client;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -46,27 +40,27 @@ public class RWAddressConverter implements Converter {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
-            return String.valueOf(((RWAddress) value).getRwaddress_id());
+            return String.valueOf(((PaymentTerm) value).getPayment_id());
         } else {
             return null;
         }
     }
 
-    public List<RWAddress> completeRWAddress(String query) {
-        if (of.getOrder().getShp_customer() != null) {
-            List<RWAddress> allItems = of.getOrder().getShp_customer().getRWAddresses();
-            List<RWAddress> filteredItems = new ArrayList<>();
-            allItems.stream().filter((item) -> (item.getStation().getTranslateObject(sa.getLanguage()).getName()
-                    + item.getRwrcvcode() + item.getRwbranch())
-                    .toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
-                if (item.getActiveStatus()) {
-                    filteredItems.add(item);
+    public List<PaymentTerm> completeItem(String query) {
+        List<PaymentTerm> allItems = client.findAll();
+        List<PaymentTerm> filteredItems = new ArrayList<>();
+
+        for (PaymentTerm pt : allItems) {
+            try {
+                if (pt.getCondition().toLowerCase().contains(query.toLowerCase())) {
+                    filteredItems.add(pt);
                 }
-            });
-            return filteredItems;
-        } else {
-            return null;
+            } catch (NullPointerException ex) {
+                return null;
+            }
         }
+        return filteredItems;
+
     }
 
 }

@@ -20,6 +20,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import payment.entities.PaymentTerm;
+import sys.entities.SysUser;
 
 /**
  *
@@ -73,10 +74,19 @@ public class Order implements Serializable {
     private String freightTerm;
     private String cust_po_number;
 
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "trader_user_id")
+    private SysUser traderUser;
+
     @Temporal(TemporalType.DATE)
     @NotNull(message = "ДАТА ЗАКАЗА: обязательно для заполнения")
     @Column(name = "order_date")
     private Date orderDate;
+
+    @Temporal(TemporalType.DATE)
+    @NotNull(message = "ДАТА ЗАПРОСА: обязательно для заполнения")
+    @Column(name = "request_date")
+    private Date requestDate;
 
     public Long getHeader_id() {
         return header_id;
@@ -188,6 +198,22 @@ public class Order implements Serializable {
 
     public void setCust_po_number(String cust_po_number) {
         this.cust_po_number = cust_po_number;
+    }
+
+    public Date getRequestDate() {
+        return requestDate;
+    }
+
+    public void setRequestDate(Date requestDate) {
+        this.requestDate = requestDate;
+    }
+
+    public SysUser getTraderUser() {
+        return traderUser;
+    }
+
+    public void setTraderUser(SysUser traderUser) {
+        this.traderUser = traderUser;
     }
 
 }

@@ -7,12 +7,15 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import service.AbstractClientBean;
+import service.AbstractEJB;
+import service.AbstractView;
 import service.SessionActions;
 import sys.entities.SysUser;
 
 @Named
 @RequestScoped
-public class UserCBean {
+public class UserCBean extends AbstractClientBean<SysUser>{
 
     @Inject
     private UserEJB ejb;
@@ -25,6 +28,26 @@ public class UserCBean {
     @Inject
     private SessionActions sc;
 
+    @Override
+    protected AbstractEJB<SysUser> getEJB() {
+        return ejb;
+    }
+
+    @Override
+    protected AbstractView<SysUser> getOpenView() {
+        return ouv;
+    }
+
+    @Override
+    protected AbstractView<SysUser> getFindView() {
+        return fuv;
+    }
+
+    @Override
+    protected AbstractView<SysUser> getNewView() {
+        return nuv;
+    }
+    
     public SysUser findUserById(Long p_id) {
         return ejb.find(p_id);
     }
@@ -39,7 +62,7 @@ public class UserCBean {
 
     public void deleteUsers() {
         String username = sc.getCurrentUser().getUsername();
-        for (SysUser u : fuv.getSelectedUsers()) {
+        for (SysUser u : fuv.getSelectedEntities()) {
             if (!u.getUsername().equals("admin")&&!u.getUsername().equals(username)) {
                 //if (!u.getUsername().equals(username)) {
                     String status = ejb.remove(u);
@@ -50,7 +73,7 @@ public class UserCBean {
     }
 
     public void addRoleOUV() {
-        SysUser user = ouv.getUser();
+        SysUser user = ouv.getEntity();
         user.getRoles().add(ouv.getNewRole());
         String status = ejb.edit(user);
         ejb.sendMessage(status, "Роль добавлена успешно");
@@ -58,30 +81,31 @@ public class UserCBean {
 
     public void addRoleNUV() {
         try {
-            SysUser user = nuv.getUser();
+            SysUser user = nuv.getEntity();
             user.getRoles().add(nuv.getNewRole());
-            String status = ejb.edit(user);
-            ejb.sendMessage(status, "Роль добавлена успешно");
+//            String status = ejb.edit(user);
+//            ejb.sendMessage(status, "Роль добавлена успешно");
         } catch (NullPointerException ex) {
             System.out.println("sys.beans.UserCBean.addRoleNUV(): " + ex.getMessage());
         }
     }
 
     public void deleteRolesOUV() {
-        SysUser user = ouv.getUser();
-        user.getRoles().removeAll(ouv.getSelectedRoles());
+        SysUser user = ouv.getEntity();
+        user.getRoles().removeAll(ouv.getSelectedEntityLines());
         String status = ejb.edit(user);
         ejb.sendMessage(status, "Роли удалены успешно");
     }
 
     public void deleteRolesNUV() {
-        SysUser user = nuv.getUser();
-        user.getRoles().removeAll(nuv.getSelectedRoles());
-        String status = ejb.edit(user);
-        ejb.sendMessage(status, "Роли удалены успешно");
+        SysUser user = nuv.getEntity();
+        user.getRoles().removeAll(nuv.getSelectedEntityLines());
+//        String status = ejb.edit(user);
+//        ejb.sendMessage(status, "Роли удалены успешно");
     }
 
-    public String createNewUser(SysUser user) {
+    public String createNewUser() {
+        SysUser user=nuv.getEntity();
         user.setPassword(digestPassword(nuv.getNewPassword()));
         SysUser u = ejb.registerNewUser(user);
         String result = ejb.create(user);
@@ -108,7 +132,7 @@ public class UserCBean {
 
     public void changePassword() {
         if (ouv.isPasswordsEqual()) {
-            SysUser user = ouv.getUser();
+            SysUser user = ouv.getEntity();
             user.setPassword(digestPassword(ouv.getNewPassword()));
             String status = ejb.edit(user);
             ejb.sendMessage(status, "Пароль изменен успешно");

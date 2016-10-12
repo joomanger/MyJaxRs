@@ -37,6 +37,7 @@ public class OrderEJB extends AbstractEJB<Order> {
         orderFlow.getOrder().setShp_rwaddress(null);
         orderFlow.getOrder().setInv_customer(null);
         orderFlow.getOrder().setInv_address(null);
+        orderFlow.getOrder().setContract(null);
     }
 
 }

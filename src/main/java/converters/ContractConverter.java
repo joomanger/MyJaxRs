@@ -1,7 +1,7 @@
 package converters;
 
-import customer.beans.RWAddressEJB;
-import customer.entities.RWAddress;
+import contract.beans.ContractCBean;
+import contract.entities.Contract;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import service.SessionActions;
 import so.saleorder.flows.CreateSaleOrderFlow;
 
 /**
@@ -21,12 +20,12 @@ import so.saleorder.flows.CreateSaleOrderFlow;
  */
 @Named
 @RequestScoped
-public class RWAddressConverter implements Converter {
+public class ContractConverter implements Converter {
 
     @Inject
-    private RWAddressEJB client;
-    @Inject
-    private SessionActions sa;
+    private ContractCBean client;
+//    @Inject
+//    private SessionActions sa;
     @Inject
     private CreateSaleOrderFlow of;
 
@@ -46,22 +45,29 @@ public class RWAddressConverter implements Converter {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null) {
-            return String.valueOf(((RWAddress) value).getRwaddress_id());
+            return String.valueOf(((Contract) value).getContract_id());
         } else {
             return null;
         }
     }
 
-    public List<RWAddress> completeRWAddress(String query) {
-        if (of.getOrder().getShp_customer() != null) {
-            List<RWAddress> allItems = of.getOrder().getShp_customer().getRWAddresses();
-            List<RWAddress> filteredItems = new ArrayList<>();
-            allItems.stream().filter((item) -> (item.getStation().getTranslateObject(sa.getLanguage()).getName()
-                    + item.getRwrcvcode() + item.getRwbranch())
-                    .toLowerCase().contains(query.toLowerCase())).forEach((item) -> {
-                if (item.getActiveStatus()) {
-                    filteredItems.add(item);
-                }
+    public List<Contract> completeItem(String query) {
+        List<Contract> allItems = client.findAll();
+        List<Contract> filteredItems = new ArrayList<>();
+        allItems.stream().filter((item) -> item.getContractNumber().toLowerCase()
+                .contains(query.toLowerCase())).forEach((Contract item) -> {
+            filteredItems.add(item);
+        });
+        return filteredItems;
+
+    }
+
+    public List<Contract> completeItemByINV(String query) {
+        if (of.getOrder().getInv_customer() != null) {
+            List<Contract> allItems = client.findByINV(of.getOrder().getInv_customer().getCustomer_id());
+            List<Contract> filteredItems = new ArrayList<>();
+            allItems.stream().filter((item) -> item.getContractNumber().toLowerCase().contains(query.toLowerCase())).forEach((Contract item) -> {
+                filteredItems.add(item);
             });
             return filteredItems;
         } else {

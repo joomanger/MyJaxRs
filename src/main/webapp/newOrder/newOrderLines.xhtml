@@ -39,8 +39,8 @@
                 </h:form>    
                 <br/>
                 <h1>Order Header</h1>
-                <p>Order number: #{createSaleOrderFlow.order_number}</p>
-                <p>Customer: #{createSaleOrderFlow.customer}</p>
+                <p>Order number: #{createSaleOrderFlow.order.header_id}</p>
+                <p>Customer: #{createSaleOrderFlow.order.customer.name}</p>
                 <br/>
                 <h1>Order Lines</h1>
                 <h:form id="flines" prependId="false">

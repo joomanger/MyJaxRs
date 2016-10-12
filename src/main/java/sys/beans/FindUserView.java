@@ -1,10 +1,10 @@
 package sys.beans;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+import service.AbstractView;
 import service.Secure;
 import sys.entities.SysUser;
 
@@ -15,19 +15,14 @@ import sys.entities.SysUser;
 @Named
 @ViewScoped
 @Secure
-public class FindUserView implements Serializable {
+public class FindUserView extends AbstractView<SysUser> {
 
-//    @Inject
-//    private UserEJB ejb;
+    @Inject
+    private UserCBean client;
 
-    private List<SysUser> selectedUsers = new ArrayList<>();
-
-    public List<SysUser> getSelectedUsers() {
-        return selectedUsers;
+    @Override
+    @PostConstruct
+    protected void init() {
+        super.setEntities(client.findAll());
     }
-
-    public void setSelectedUsers(List<SysUser> selectedUsers) {
-        this.selectedUsers = selectedUsers;
-    }
-
 }

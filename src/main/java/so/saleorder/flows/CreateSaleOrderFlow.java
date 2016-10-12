@@ -1,6 +1,7 @@
 package so.saleorder.flows;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import javax.annotation.PostConstruct;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Inject;
@@ -26,6 +27,7 @@ public class CreateSaleOrderFlow implements Serializable {
     private void init() {
         order = new Order();
         order.setHeader_id(sob.getNewOrderNumber());
+        order.setOrderDate(Calendar.getInstance().getTime());
     }
 
     public Order getOrder() {

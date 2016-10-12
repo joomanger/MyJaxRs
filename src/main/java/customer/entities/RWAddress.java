@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import rw.entities.RWStation;
@@ -20,8 +21,8 @@ import rw.entities.RWStation;
  */
 @Entity
 @Table(uniqueConstraints
-        = @UniqueConstraint(columnNames = {"customer_id","rws_code","rwRcvCode","rwbranch"}))
-public class RWAddress implements Serializable{
+        = @UniqueConstraint(columnNames = {"customer_id", "rws_code", "rwRcvCode", "rwbranch"}))
+public class RWAddress implements Serializable {
 
     @Id
     @SequenceGenerator(name = "rwaddress_sq", initialValue = 1, allocationSize = 1)
@@ -101,6 +102,12 @@ public class RWAddress implements Serializable{
             customer.addRWAddress(this, false);
         }
     }
- 
+
+    @Transient
+    public String getRWAddressLabel(String lang) {
+        return getStation().getTranslateObject(lang).getName()
+                + ((getRwrcvcode() == null) ? "" : "/" + getRwrcvcode())
+                + ((getRwbranch() == null) ? "" : "/" + getRwbranch());
+    }
 
 }

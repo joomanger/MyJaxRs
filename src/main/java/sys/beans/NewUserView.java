@@ -1,11 +1,9 @@
 package sys.beans;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import service.AbstractView;
 import service.Secure;
 import sys.entities.SysRole;
 import sys.entities.SysUser;
@@ -17,18 +15,18 @@ import sys.entities.SysUser;
 @Named
 @ViewScoped
 @Secure
-public class NewUserView implements Serializable {
+public class NewUserView extends AbstractView<SysUser>{
 
 //    @Inject
 //    private FindUserSession fus;
 //    @Inject
 //    private UserCBean client;
 
-    private List<SysRole> selectedRoles = new ArrayList<>();
+//    private List<SysRole> selectedRoles = new ArrayList<>();
 
-    private SysUser user;
+    private SysUser entity=new SysUser();
 
-    private SysRole newRole;
+    private SysRole newRole=new SysRole();
 
     private String newPassword;
     private String reNewPassword;
@@ -39,8 +37,9 @@ public class NewUserView implements Serializable {
     
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
-    private void init() {
-        user = new SysUser();
+    @Override
+    protected void init() {
+        super.setEntity(entity);
     }
 
     public String getNewPassword() {
@@ -59,21 +58,21 @@ public class NewUserView implements Serializable {
         this.reNewPassword = reNewPassword;
     }
 
-    public SysUser getUser() {
-        return user;
-    }
-
-    public void setUser(SysUser user) {
-        this.user = user;
-    }
-
-    public List<SysRole> getSelectedRoles() {
-        return selectedRoles;
-    }
-
-    public void setSelectedRoles(List<SysRole> selectedRoles) {
-        this.selectedRoles = selectedRoles;
-    }
+//    public SysUser getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(SysUser user) {
+//        this.user = user;
+//    }
+//
+//    public List<SysRole> getSelectedRoles() {
+//        return selectedRoles;
+//    }
+//
+//    public void setSelectedRoles(List<SysRole> selectedRoles) {
+//        this.selectedRoles = selectedRoles;
+//    }
 
     public SysRole getNewRole() {
         return newRole;

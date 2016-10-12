@@ -11,6 +11,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -173,6 +174,15 @@ public class Address implements Serializable {
 
     public void setDuferco_site_use_id(Long duferco_site_use_id) {
         this.duferco_site_use_id = duferco_site_use_id;
+    }
+
+    @Transient
+    public String getAddressLabel(String lang) {
+        return getCountry().getTranslateObject(lang).getName()
+                + ((getPostCode() == null) ? "" : "/"+getPostCode()) 
+                + ((getRegion() == null) ? "" : "/"+getRegion()) 
+                + ((getCity() == null) ? "" : "/"+getCity())
+                + ((getFullAddress() == null) ? "" : "/"+getFullAddress());
     }
 
 }

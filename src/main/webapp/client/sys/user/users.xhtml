@@ -13,8 +13,8 @@
             <ui:define name="content">
                 <h:form prependId="false">
                     <h:inputHidden id="setUserId" value="#{findUserSession.user_id}"/>
-                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.user_id}" var="ord" value="#{userCBean.findAll()}" 
-                                 editable="true" reflow="true" selection="#{findUserView.selectedUsers}" rows="20" paginator="true" style="width: 600px;"
+                    <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.user_id}" var="ord" value="#{findUserView.entities}" 
+                                 editable="true" reflow="true" selection="#{findUserView.selectedEntities}" rows="20" paginator="true" style="width: 600px;"
                                  rowsPerPageTemplate="20,40,100" lazy="true">
                         <f:facet name="header">
                             Список пользователей
@@ -33,7 +33,7 @@
                     </p:dataTable> 
                     <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
                         <p:outputPanel id="selectedParams" style="text-align:center;">
-                            <p:dataTable value="#{findUserView.selectedUsers}" var="v">
+                            <p:dataTable value="#{findUserView.selectedEntities}" var="v">
                                 <p:column headerText="Пользователь">
                                     <h:outputText value="#{v.username}"/>
                                 </p:column>
@@ -42,7 +42,7 @@
                                 </p:column>
                             </p:dataTable>
                             <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
-                            <p:commandButton value="Yes" actionListener="#{userCBean.deleteUsers()}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
+                            <p:commandButton value="Yes" actionListener="#{userCBean.deleteSelectedEntities()}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
                         </p:outputPanel>
                     </p:dialog>
                 </h:form>

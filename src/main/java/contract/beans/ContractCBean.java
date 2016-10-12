@@ -64,6 +64,10 @@ public class ContractCBean extends AbstractClientBean<Contract> {
         return l;
     }
 
+    public List<Contract> findByINV(Long p_customer_id) {
+        return ejb.findByINV(p_customer_id);
+    }
+
     @Override
     public void deleteSelectedEntities() {
         super.deleteSelectedEntities();
