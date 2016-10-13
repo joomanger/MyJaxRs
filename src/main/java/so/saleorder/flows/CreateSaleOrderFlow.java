@@ -14,7 +14,7 @@ import so.saleorder.beans.SaleOrderCBean;
  * @author savin
  */
 @Named
-@FlowScoped("newOrder")
+@FlowScoped("Order")
 public class CreateSaleOrderFlow implements Serializable {
 
     @Inject

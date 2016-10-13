@@ -69,9 +69,13 @@ public class Order implements Serializable {
 
     @Size(min = 3, max = 3, message = "ВАЛЮТА: длина три символа")
     private String currency;
-
+    
+    @Column(name="fob_code")
     private String fob;
+    
+    @Column(name="freight_term_code")
     private String freightTerm;
+    
     private String cust_po_number;
 
     @OneToOne(cascade = CascadeType.DETACH)

@@ -11,18 +11,19 @@
             <ui:define name="content">
                 <h:form prependId="false">
                     <p:steps style="width: 1200px" activeIndex="0" styleClass="custom" readonly="false" >
-                        <p:menuitem value="Основные данные" action="newOrder" url="newOrder" />
-                        <p:menuitem value="Доп.сведения" action="newOrderLines" url="newOrderLines"/>
+                        <p:menuitem value="Основные данные" action="Order" />
+                        <p:menuitem value="Доп.сведения" action="AdditionalHeaderInfo"/>
                         <p:menuitem value="Дополнения" />
                         <p:menuitem value="Позиции" />
                         <p:menuitem value="Подтверждение" />
                     </p:steps>   
+                    
                     <h:panelGrid columns="4" cellpadding="7" cellspacing="7">
                         <p:outputLabel value="Номер заказа" />
                         <p:outputLabel id="orderNumber" value="#{createSaleOrderFlow.order.header_id}" />
                         <p:outputLabel/>
                         <p:outputLabel/>
-                        <p:outputLabel value="Дата заказа"/>
+                        <p:outputLabel value="Дата заказа" style="text-align: right"/>
                         <p:calendar value="#{createSaleOrderFlow.order.orderDate}" showOn="button" 
                                     pattern="dd.MM.yyyy" locale="#{sessionActions.language.toLowerCase()}" size="7"/>
                         <p:outputLabel value="Дата запроса"/>
@@ -174,9 +175,11 @@
                                         itemValue="#{m}" converter="#{contractConverter}" 
                                         forceSelection="true" dropdown="true"/>
                     </h:panelGrid> 
+                    <h:panelGrid cellspacing="10" columns="2">
+                        <p:commandButton value="Выход" action="goHome" immediate="true"/>
+                        <p:commandButton value="Дальше" action="AdditionalHeaderInfo"/>
+                    </h:panelGrid>
 
-                    <p:commandButton value="Lines" action="newOrderLines"/>
-                    <p:commandButton value="Cancel" action="goHome" immediate="true"/>
                 </h:form>
             </ui:define>
 
