@@ -22,7 +22,7 @@ public class RWStation implements Serializable {
     @Id
     private String rws_code;
     private Long location_id_orc;
-    @OneToOne(cascade = {CascadeType.DETACH})
+    @OneToOne
     @JoinColumn(name = "rwroad_code")
     @NotNull(message = "ЖД Дорога обязательна")
     private RWRoad rwroad;

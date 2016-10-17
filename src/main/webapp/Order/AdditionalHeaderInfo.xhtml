@@ -20,64 +20,96 @@
                     </p:steps>
                 </h:form>
                 <h:form>
-                    <p:panel header="Сертификат и другие документы" toggleable="true" closeSpeed="0" collapsed="false"
+                    <p:panel header="Документы по заказу" toggleable="true" closeSpeed="0" collapsed="false"
                              toggleSpeed="0" style="margin-bottom:20px;width: 1000px" >
                         <h:panelGrid cellspacing="5" columns="4">
                             <p:outputLabel value="Точность оформления сертификата"/>
-                            <p:inputText/>
+                            <p:inputText value="#{createSaleOrderFlow.order.certifRegAccuracy}"/>
                             <p:outputLabel value="Стандарт на сертификат"/>
-                            <p:inputText/>
+                            <p:inputText value="#{createSaleOrderFlow.order.certifStandard}"/>
                         </h:panelGrid>
                         <p:fieldset legend="Количество копий с вагоном" style="margin-bottom: 15px">
                             <h:panelGrid cellspacing="5" columns="6">
                                 <p:outputLabel value="Сертификат качества"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifQuality}"/>
                                 <p:outputLabel value="Упаковочный лист"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.packingList}"/>
                                 <p:outputLabel value="Повагонный лист"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.wagonList}"/>
                                 <p:outputLabel value="Сертификат происхождения"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifOrigin}"/>
                                 <p:outputLabel value="Сертификат нерадиактивности"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifNonRadioactive}"/>
                                 <p:outputLabel value="Сертификат формы EUR1"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifEUR1}"/>
                                 <p:outputLabel value="Сводный сертификат качества"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifQualityConsolidated}"/>
                             </h:panelGrid> 
                         </p:fieldset>
                         <p:fieldset legend="Количество копий почтой">
                             <h:panelGrid cellspacing="5" columns="2">
                                 <p:outputLabel value="Адрес"/>
-                                <p:inputText size="70"/>
+                                <p:inputText size="102" value="#{createSaleOrderFlow.order.mailAddress}" />
                             </h:panelGrid>
                             <h:panelGrid cellspacing="5" columns="6">                                
                                 <p:outputLabel value="ЖД накладная"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.rwBill}"/>
                                 <p:outputLabel value="Сертификат качества"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifQualityA}"/>
                                 <p:outputLabel value="Упаковочный лист"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.packingListA}"/>
                                 <p:outputLabel value="Повагонный лист"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.wagonListA}"/>
                                 <p:outputLabel value="Сертификат происхождения"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifOriginA}"/>
                                 <p:outputLabel value="Сертификат нерадиактивности"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifNonRadioactiveA}"/>
                                 <p:outputLabel value="Сертификат формы EUR1"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifEUR1A}"/>
                                 <p:outputLabel value="Периодичность"/>
-                                <p:inputText/>
+                                <p:inputText value="#{createSaleOrderFlow.order.periodicity}"/>
                                 <p:outputLabel value="Тип почты"/>
-                                <p:inputText/>
+                                <p:inputText value="#{createSaleOrderFlow.order.mailType}"/>
                             </h:panelGrid> 
                         </p:fieldset>
+                    </p:panel>
+                    <p:panel header="Толерансы и маркировка" toggleable="true" closeSpeed="0" collapsed="false"
+                             toggleSpeed="0" style="margin-bottom:20px;width: 1000px" >
+                        <p:fieldset legend="Толерансы" style="margin-bottom: 15px">
+                            <h:panelGrid cellspacing="5" cellpadding="0" columns="12">
+                                <p:outputLabel value="%, +/-"/>
+                                <p:inputNumber maxValue="100" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.tolPercentP}"/>
+                                <p:outputLabel value="/"/>
+                                <p:inputNumber maxValue="100" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.tolPercentM}"/>
+                                <p:outputLabel value="Основная ЕИ, +/-"/>
+                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.tolUOM1P}"/>
+                                <p:outputLabel value="/"/>
+                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.tolUOM1M}"/>
+                                <p:outputLabel value="Вторичная ЕИ, +/-"/>
+                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.tolUOM2P}"/>
+                                <p:outputLabel value="/"/>
+                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.tolUOM2M}"/>
+                                <p:outputLabel value="Допуск по длине ЕИ, мм +/-"/>
+                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.tolLengthP}"/>
+                                <p:outputLabel value="/"/>
+                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.tolLengthM}"/>
+                            </h:panelGrid>
+                        </p:fieldset>
+                        <p:fieldset legend="Маркировка">
+                            <h:panelGrid cellspacing="5" cellpadding="0" columns="12">
+                                <p:outputLabel value="Маркировка водостойкой краской"/>
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </p:panel>
+                    <p:panel header="Продажа и транспортировка" toggleable="true" closeSpeed="0" collapsed="false"
+                             toggleSpeed="0" style="margin-bottom:20px;width: 1000px" >
 
                     </p:panel>
 
+
                     <h:panelGrid cellspacing="10" columns="3">
                         <p:commandButton value="Выход" action="goHome" immediate="true"/>
-                        <p:commandButton value="Дальше" action="AdditionalHeaderInfo"/>
+                        <p:commandButton value="Дальше" action="Attachments"/>
                     </h:panelGrid>
                 </h:form>
             </ui:define>

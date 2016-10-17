@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <p:steps style="width: 1200px" activeIndex="2" styleClass="custom" readonly="false" >
+                        <p:menuitem value="Основные данные" action="Order" />
+                        <p:menuitem value="Дополнительные данные" action="AdditionalHeaderInfo"/>
+                        <p:menuitem value="Аттачменты" />
+                        <p:menuitem value="Строки заказа" />
+                        <p:menuitem value="Подтверждение" />
+                    </p:steps>
+                </h:form>
+                <h:form>
+                    <p:panel header="Сертификат и другие документы" toggleable="true" closeSpeed="0" collapsed="false"
+                             toggleSpeed="0" style="margin-bottom:20px;width: 1000px" >
+                        <h:panelGrid cellspacing="5" columns="4">
+                            <p:outputLabel value="Точность оформления сертификата"/>
+                            <p:inputText/>
+                            <p:outputLabel value="Стандарт на сертификат"/>
+                            <p:inputText/>
+                        </h:panelGrid>
+                        <p:fieldset legend="Количество копий с вагоном" style="margin-bottom: 15px">
+                            <h:panelGrid cellspacing="5" columns="6">
+                                <p:outputLabel value="Сертификат качества"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:outputLabel value="Упаковочный лист"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:outputLabel value="Повагонный лист"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:outputLabel value="Сертификат происхождения"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:outputLabel value="Сертификат нерадиактивности"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:outputLabel value="Сертификат формы EUR1"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:outputLabel value="Сводный сертификат качества"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                            </h:panelGrid> 
+                        </p:fieldset>
+                        <p:fieldset legend="Количество копий почтой">
+                            <h:panelGrid cellspacing="5" columns="2">
+                                <p:outputLabel value="Адрес"/>
+                                <p:inputText size="70"/>
+                            </h:panelGrid>
+                            <h:panelGrid cellspacing="5" columns="6">                                
+                                <p:outputLabel value="ЖД накладная"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:outputLabel value="Сертификат качества"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:outputLabel value="Упаковочный лист"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:outputLabel value="Повагонный лист"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:outputLabel value="Сертификат происхождения"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:outputLabel value="Сертификат нерадиактивности"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:outputLabel value="Сертификат формы EUR1"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
+                                <p:outputLabel value="Периодичность"/>
+                                <p:inputText/>
+                                <p:outputLabel value="Тип почты"/>
+                                <p:inputText/>
+                            </h:panelGrid> 
+                        </p:fieldset>
+
+                    </p:panel>
+
+                    <h:panelGrid cellspacing="10" columns="3">
+                        <p:commandButton value="Выход" action="goHome" immediate="true"/>
+                        <p:commandButton value="Дальше" action="OrderLines"/>
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
