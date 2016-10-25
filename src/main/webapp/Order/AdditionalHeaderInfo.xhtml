@@ -13,22 +13,37 @@
                 <h:form>
                     <p:steps style="width: 1200px" activeIndex="1" styleClass="custom" readonly="false" >
                         <p:menuitem value="Основные данные" action="Order" />
-                        <p:menuitem value="Дополнительные данные" action="AdditionalHeaderInfo"/>
+                        <p:menuitem value="Доп.сведения" action="AdditionalHeaderInfo" />
                         <p:menuitem value="Аттачменты" />
                         <p:menuitem value="Строки заказа" />
                         <p:menuitem value="Подтверждение" />
                     </p:steps>
                 </h:form>
                 <h:form>
+                    <p:panel header="Запреты" toggleable="true" closeSpeed="0" collapsed="false"
+                             toggleSpeed="0" style="margin-bottom:20px;width: 1000px" >
+                        <h:panelGrid cellspacing="5" cellpadding="5" columns="4">
+                            <p:outputLabel value="Запрет на производство"/>
+                            <p:inputSwitch value="#{createSaleOrderFlow.order.banOnManufacturing}"/>
+                            <p:outputLabel value="Запрет на отгрузку"/>
+                            <p:inputSwitch value="#{createSaleOrderFlow.order.banOnShipping}"/>
+                        </h:panelGrid>
+                    </p:panel>    
                     <p:panel header="Документы по заказу" toggleable="true" closeSpeed="0" collapsed="false"
                              toggleSpeed="0" style="margin-bottom:20px;width: 1000px" >
                         <h:panelGrid cellspacing="5" columns="4">
                             <p:outputLabel value="Точность оформления сертификата"/>
-                            <p:inputText value="#{createSaleOrderFlow.order.certifRegAccuracy}"/>
+                            <p:autoComplete size="20" var="m" value="#{createSaleOrderFlow.order.certifRegAccuracy}" 
+                                            completeMethod="#{certRegAccuracyLOV.completeItem}" itemValue="#{m}" 
+                                            itemLabel="#{createSaleOrderFlow.regAccuracy.getTranslateObject(m, sessionActions.language).getDescription()}"
+                                            forceSelection="true" dropdown="true"/>
                             <p:outputLabel value="Стандарт на сертификат"/>
-                            <p:inputText value="#{createSaleOrderFlow.order.certifStandard}"/>
+                            <p:autoComplete size="25" var="m" value="#{createSaleOrderFlow.order.certifStandard}" 
+                                            completeMethod="#{standCertLOV.completeItem}" itemValue="#{m}" 
+                                            itemLabel="#{createSaleOrderFlow.certTypes.getTranslateObject(m, sessionActions.language).getDescription()}"
+                                            forceSelection="true" dropdown="true"/>
                         </h:panelGrid>
-                        <p:fieldset legend="Количество копий с вагоном" style="margin-bottom: 15px">
+                        <p:fieldset legend="Количество копий с вагоном" style="margin-bottom: 15px;margin-top: 15px">
                             <h:panelGrid cellspacing="5" columns="6">
                                 <p:outputLabel value="Сертификат качества"/>
                                 <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifQuality}"/>
@@ -49,7 +64,7 @@
                         <p:fieldset legend="Количество копий почтой">
                             <h:panelGrid cellspacing="5" columns="2">
                                 <p:outputLabel value="Адрес"/>
-                                <p:inputText size="102" value="#{createSaleOrderFlow.order.mailAddress}" />
+                                <p:inputText size="102" maxlength="250" value="#{createSaleOrderFlow.order.mailAddress}" />
                             </h:panelGrid>
                             <h:panelGrid cellspacing="5" columns="6">                                
                                 <p:outputLabel value="ЖД накладная"/>
@@ -67,9 +82,15 @@
                                 <p:outputLabel value="Сертификат формы EUR1"/>
                                 <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifEUR1A}"/>
                                 <p:outputLabel value="Периодичность"/>
-                                <p:inputText value="#{createSaleOrderFlow.order.periodicity}"/>
+                                <p:autoComplete size="10" var="m" value="#{createSaleOrderFlow.order.periodicity}" 
+                                                completeMethod="#{docSendIntervalLOV.completeItem}" itemValue="#{m}" 
+                                                itemLabel="#{createSaleOrderFlow.docSendInterval.getTranslateObject(m, sessionActions.language).getDescription()}"
+                                                forceSelection="true" dropdown="true"/>
                                 <p:outputLabel value="Тип почты"/>
-                                <p:inputText value="#{createSaleOrderFlow.order.mailType}"/>
+                                <p:autoComplete size="15" var="m" value="#{createSaleOrderFlow.order.mailType}" 
+                                                completeMethod="#{postTypeLOV.completeItem}" itemValue="#{m}" 
+                                                itemLabel="#{createSaleOrderFlow.postType.getTranslateObject(m, sessionActions.language).getDescription()}"
+                                                forceSelection="true" dropdown="true"/>
                             </h:panelGrid> 
                         </p:fieldset>
                     </p:panel>
@@ -96,14 +117,105 @@
                             </h:panelGrid>
                         </p:fieldset>
                         <p:fieldset legend="Маркировка">
-                            <h:panelGrid cellspacing="5" cellpadding="0" columns="12">
+                            <h:panelGrid cellspacing="5" cellpadding="0" columns="2">
                                 <p:outputLabel value="Маркировка водостойкой краской"/>
+                                <p:autoComplete size="100" var="m" value="#{createSaleOrderFlow.order.markWPaint}" 
+                                                completeMethod="#{markWPaintLOV.completeItem}" itemValue="#{m}" 
+                                                itemLabel="#{createSaleOrderFlow.markWPaint.getTranslateObject(m, sessionActions.language).getDescription()}"
+                                                forceSelection="true" dropdown="true"/>
+                                <p:outputLabel value="Клеймовка"/>
+                                <p:autoComplete size="100" var="m" value="#{createSaleOrderFlow.order.mark}" 
+                                                completeMethod="#{stampKindLOV.completeItem}" itemValue="#{m}" 
+                                                itemLabel="#{createSaleOrderFlow.stampKind.getTranslateObject(m, sessionActions.language).getDescription()}"
+                                                forceSelection="true" dropdown="true"/>
+                            </h:panelGrid>
+                            <h:panelGrid cellspacing="5" cellpadding="0" columns="4">
+                                <p:outputLabel value="Дополнительная маркировка"/>
+                                <p:inputText size="60" maxlength="255" value="#{createSaleOrderFlow.order.markAdditional}"/>
+                                <p:outputLabel value="Цветная маркировка"/>
+                                <p:inputText value="#{createSaleOrderFlow.order.markColor}"/>
+                            </h:panelGrid>
+                            <h:panelGrid cellspacing="5" cellpadding="0" columns="4">
+
                             </h:panelGrid>
                         </p:fieldset>
                     </p:panel>
                     <p:panel header="Продажа и транспортировка" toggleable="true" closeSpeed="0" collapsed="false"
                              toggleSpeed="0" style="margin-bottom:20px;width: 1000px" >
+                        <h:panelGrid cellspacing="5" cellpadding="0" columns="2">
+                            <p:outputLabel value="Страна назначения"/>
+                            <p:autoComplete value="#{createSaleOrderFlow.order.destCountry}" maxResults="20" size="40"
+                                            completeMethod="#{countryConverter.completeItem}"
+                                            var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" itemValue="#{m}" 
+                                            converter="#{countryConverter}" 
+                                            forceSelection="true"/>
+                            <p:outputLabel value="Графы ЖД накладной для особых отметок"/>
+                            <p:inputText size="100" maxlength="255" value="#{createSaleOrderFlow.order.notes}"/>
+                        </h:panelGrid>
+                        <p:fieldset legend="Станции погранпереходов" style="margin-bottom: 15px;margin-top: 15px">
+                            <h:panelGrid cellspacing="5" cellpadding="0" columns="6">
+                                <p:outputLabel value="ЖД станция 1"/>
+                                <p:autoComplete value="#{createSaleOrderFlow.order.rws1}" maxResults="20"
+                                                completeMethod="#{stationConverter.completeItem}"
+                                                var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
+                                                itemValue="#{m}" converter="#{stationConverter}" 
+                                                forceSelection="true" size="20">
+                                    <p:column>
+                                        #{m.rws_code}-#{m.getTranslateObject(sessionActions.language).getName()}
+                                    </p:column>    
+                                </p:autoComplete>
+                                <p:outputLabel value="ЖД станция 2"/>
+                                <p:autoComplete value="#{createSaleOrderFlow.order.rws2}" maxResults="20"
+                                                completeMethod="#{stationConverter.completeItem}"
+                                                var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
+                                                itemValue="#{m}" converter="#{stationConverter}" 
+                                                forceSelection="true" size="20">
+                                    <p:column>
+                                        #{m.rws_code}-#{m.getTranslateObject(sessionActions.language).getName()}
+                                    </p:column>    
+                                </p:autoComplete>
+                                <p:outputLabel value="ЖД станция 3"/>
+                                <p:autoComplete value="#{createSaleOrderFlow.order.rws3}" maxResults="20"
+                                                completeMethod="#{stationConverter.completeItem}"
+                                                var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
+                                                itemValue="#{m}" converter="#{stationConverter}" 
+                                                forceSelection="true" size="20">
+                                    <p:column>
+                                        #{m.rws_code}-#{m.getTranslateObject(sessionActions.language).getName()}
+                                    </p:column>    
+                                </p:autoComplete>
+                                <p:outputLabel value="ЖД станция 4"/>
+                                <p:autoComplete value="#{createSaleOrderFlow.order.rws4}" maxResults="20"
+                                                completeMethod="#{stationConverter.completeItem}"
+                                                var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
+                                                itemValue="#{m}" converter="#{stationConverter}" 
+                                                forceSelection="true" size="20">
+                                    <p:column>
+                                        #{m.rws_code}-#{m.getTranslateObject(sessionActions.language).getName()}
+                                    </p:column>    
+                                </p:autoComplete>  
+                            </h:panelGrid>
+                        </p:fieldset>
 
+                        <h:panelGrid cellspacing="5" cellpadding="0" columns="6">
+                            <p:outputLabel value="ЖД тариф"/>
+                            <p:inputNumber maxValue="99999999.00" minValue="0.00" size="7" inputStyle="text-align:right" value="#{createSaleOrderFlow.order.rwTariff}"/>
+                            <p:outputLabel value="Перевалка"/>
+                            <p:inputNumber maxValue="99999999.00" minValue="0.00" size="7" inputStyle="text-align:right" value="#{createSaleOrderFlow.order.transhipment}"/>
+                            <p:outputLabel value="Дата подтверждения продажи"/>
+                            <p:calendar value="#{createSaleOrderFlow.order.confirmSellingDate}" showOn="button" 
+                                        pattern="dd.MM.yyyy" locale="#{sessionActions.language.toLowerCase()}" size="7"/>
+                            <p:outputLabel value="Крайняя дата FCR"/>
+                            <p:calendar value="#{createSaleOrderFlow.order.lastFCRDate}" showOn="button" 
+                                        pattern="dd.MM.yyyy" locale="#{sessionActions.language.toLowerCase()}" size="7"/>
+                            <p:outputLabel value="Крайняя дата коносамента"/>
+                            <p:calendar value="#{createSaleOrderFlow.order.lastKNSDate}" showOn="button" 
+                                        pattern="dd.MM.yyyy" locale="#{sessionActions.language.toLowerCase()}" size="7"/>
+                            <p:outputLabel value="Крайняя дата отгрузки"/>
+                            <p:calendar value="#{createSaleOrderFlow.order.lastRWBDate}" showOn="button" 
+                                        pattern="dd.MM.yyyy" locale="#{sessionActions.language.toLowerCase()}" size="7"/>
+
+                        </h:panelGrid>
                     </p:panel>
 
 

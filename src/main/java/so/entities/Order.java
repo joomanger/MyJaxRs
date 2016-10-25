@@ -99,6 +99,10 @@ public class Order implements Serializable {
     @NotNull(message = "ДАТА ЗАПРОСА: обязательно для заполнения")
     @Column(name = "request_date")
     private Date requestDate;
+    @Column(name="ban_on_manuf")
+    private Boolean banOnManufacturing;
+    @Column(name="ban_on_shp")
+    private Boolean banOnShipping;
 
     //Документы по заказу
     @Column(table = "zakaz_docs", name = "certif_reg_accuracy")
@@ -673,4 +677,20 @@ public class Order implements Serializable {
         this.confirmSellingDate = confirmSellingDate;
     }
 
+    public Boolean getBanOnManufacturing() {
+        return banOnManufacturing;
+    }
+
+    public void setBanOnManufacturing(Boolean banOnManufacturing) {
+        this.banOnManufacturing = banOnManufacturing;
+    }
+
+    public Boolean getBanOnShipping() {
+        return banOnShipping;
+    }
+
+    public void setBanOnShipping(Boolean banOnShipping) {
+        this.banOnShipping = banOnShipping;
+    }
+    
 }

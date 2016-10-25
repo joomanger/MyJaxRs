@@ -229,6 +229,15 @@ insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextv
 insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Покупатель','','RU',currval('lookupitem_sq'));
 insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Buyer','','US',currval('lookupitem_sq'));
 insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Покупець','','UA',currval('lookupitem_sq'));
-
+--Yes/No
+insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(nextval('lookup_sq'),true,'YES_NO','YES_NO',true);
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'Y',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Да','','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Yes','','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Да','','UA',currval('lookupitem_sq'));
+insert into lookupitem(lookupitem_id,activestatus,valuez,lookup_id) values(nextval('lookupitem_sq'),true,'N',currval('lookup_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Нет','','RU',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'No','','US',currval('lookupitem_sq'));
+insert into lookupitemtl(lookupitemtl_id,meaning,description,language,lookupitem_id) values(nextval('lookupitemtl_sq'),'Ні','','UA',currval('lookupitem_sq'));
 
 
