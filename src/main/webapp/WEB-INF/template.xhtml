@@ -94,6 +94,7 @@
                                 <p:submenu label="Заказы" >
                                     <p:menuitem action="Order" outcome="Order" value="Создать заказ"/>
                                     <p:menuitem action="/client/saleorders/orders" value="Заказы"/>
+                                    <p:menuitem action="/client/test/upload" value="UPLOAD"/>
                                 </p:submenu>
                                 <c:forEach var="role" items="#{userCBean.findUserByUserName(request.remoteUser).roles}">
                                     <c:forEach var="menu" items="#{role.menus}">
@@ -119,9 +120,11 @@
                     </ui:insert>
                 </div>
                 <div id="content" class="left_content" style="position: absolute">
-                    <ui:insert id="qqq" name="content">Content</ui:insert>
+                    <ui:insert id="qqq" name="content">
+                    </ui:insert>
                 </div>
             </div>
         </div>
+
     </h:body>
 </html>

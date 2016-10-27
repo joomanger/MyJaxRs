@@ -88,4 +88,6 @@ public class CreateSaleOrderFlow implements Serializable {
         return postType;
     }
 
+    
+
 }
