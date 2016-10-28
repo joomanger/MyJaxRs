@@ -31,7 +31,7 @@ public class FindLookupSession implements Serializable {
         this.lookup_id = lookup_id;
     }
 
-    public void handleFileUpload(FileUploadEvent event) {
+    public void handleFileUpload(FileUploadEvent event) throws IOException {
         System.out.println("Into handleFileUpload");
         UploadedFile file = event.getFile();
 
@@ -46,11 +46,11 @@ public class FindLookupSession implements Serializable {
                 out.write(bytes, 0, read);
             }
             out.flush();
+            FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
         } catch (IOException ex) {
-            System.out.println(ex);
+            throw ex;
         }
-        FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-        FacesContext.getCurrentInstance().addMessage(null, message);
 
     }
 

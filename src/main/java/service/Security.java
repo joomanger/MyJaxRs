@@ -44,7 +44,7 @@ public class Security implements Serializable {
         try {
 
             if (!sc.getViewsMap().containsValue(req.getPathInfo().replace(".xhtml", "")) && !sc.getCurrentUser().getUsername().equals("admin")) {
-                log.log(Level.SEVERE, "For user [{0}] access denied into {1}", new Object[]{sc.getCurrentUser().getUsername(), req.getPathInfo()});
+                //log.log(Level.SEVERE, "For user [{0}] access denied into {1}", new Object[]{sc.getCurrentUser().getUsername(), req.getPathInfo()});
                 throw new AccessDeniedException(req.getPathInfo());
             }
             return ic.proceed();

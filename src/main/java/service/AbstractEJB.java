@@ -31,11 +31,6 @@ public abstract class AbstractEJB<T> {
 
     protected abstract EntityManager getEntityManager();
 
-    /**
-     *
-     * @param entity
-     * @return
-     */
     public String validateMyEntity(T entity) {
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(entity);
         StringBuilder sb = new StringBuilder();
@@ -60,7 +55,8 @@ public abstract class AbstractEJB<T> {
                 return SUCCESSFUL;
             }
         } catch (Exception ex) {
-            return ERROR + " " + ex.getMessage();
+            //return ERROR + " " + ex.getMessage();
+            throw ex;
         }
     }
 
@@ -74,7 +70,8 @@ public abstract class AbstractEJB<T> {
                 return SUCCESSFUL;
             }
         } catch (Exception ex) {
-            return ERROR + " " + ex.getMessage();
+            //return ERROR + " " + ex.getMessage();
+            throw ex;
         }
     }
 
@@ -83,7 +80,8 @@ public abstract class AbstractEJB<T> {
             getEntityManager().remove(getEntityManager().merge(entity));
             return SUCCESSFUL;
         } catch (Exception ex) {
-            return ERROR + " " + ex.getMessage();
+            //return ERROR + " " + ex.getMessage();
+            throw ex;
         }
     }
 
@@ -127,15 +125,14 @@ public abstract class AbstractEJB<T> {
         try {
             if (status != null) {
                 if (status.equals(SUCCESSFUL)) {
-                    //FacesContext.getCurrentInstance()
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, success_msg, null));
                 } else {
-                    //FacesContext.getCurrentInstance().
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, status, null));
                 }
             }
         } catch (NullPointerException ex) {
             System.out.println("FacesContext is null");
+            throw ex;
         }
     }
 
