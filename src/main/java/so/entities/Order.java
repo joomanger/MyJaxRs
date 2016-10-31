@@ -6,13 +6,19 @@ import customer.entities.Country;
 import customer.entities.Customer;
 import customer.entities.RWAddress;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.SecondaryTable;
 import javax.persistence.SecondaryTables;
 import javax.persistence.SequenceGenerator;
@@ -21,6 +27,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.eclipse.persistence.annotations.PrivateOwned;
 import payment.entities.PaymentTerm;
 import rw.entities.RWStation;
 import sys.entities.SysUser;
@@ -99,9 +106,9 @@ public class Order implements Serializable {
     @NotNull(message = "ДАТА ЗАПРОСА: обязательно для заполнения")
     @Column(name = "request_date")
     private Date requestDate;
-    @Column(name="ban_on_manuf")
+    @Column(name = "ban_on_manuf")
     private Boolean banOnManufacturing;
-    @Column(name="ban_on_shp")
+    @Column(name = "ban_on_shp")
     private Boolean banOnShipping;
 
     //Документы по заказу
@@ -204,6 +211,12 @@ public class Order implements Serializable {
     @Temporal(TemporalType.DATE)
     @Column(table = "zakaz_sell_transp", name = "confirm_selling_date")
     private Date confirmSellingDate;
+
+    //Attachments
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "order", fetch = FetchType.LAZY)
+    @PrivateOwned
+    @OrderBy("lineNumber asc")
+    private List<Attachment> attachments = new ArrayList<>();
 
     public Long getHeader_id() {
         return header_id;
@@ -692,5 +705,26 @@ public class Order implements Serializable {
     public void setBanOnShipping(Boolean banOnShipping) {
         this.banOnShipping = banOnShipping;
     }
-    
+
+    public void addAttachment(Attachment li) {
+        addAttachment(li, true);
+    }
+
+    public void addAttachment(Attachment li, boolean add) {
+        if (li != null) {
+            getAttachments().add(li);
+            if (add) {
+                li.setOrder(this, false);
+            }
+        }
+    }
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
+
 }

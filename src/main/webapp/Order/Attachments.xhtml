@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -19,62 +20,51 @@
                         <p:menuitem value="Подтверждение" />
                     </p:steps>
                 </h:form>
-                <h:form>
-                    <p:panel header="Сертификат и другие документы" toggleable="true" closeSpeed="0" collapsed="false"
-                             toggleSpeed="0" style="margin-bottom:20px;width: 1000px" >
-                        <h:panelGrid cellspacing="5" columns="4">
-                            <p:outputLabel value="Точность оформления сертификата"/>
-                            <p:inputText/>
-                            <p:outputLabel value="Стандарт на сертификат"/>
-                            <p:inputText/>
+                <h:form prependId="false">
+                    <p:fieldset legend="Новое дополнение">
+                        <h:panelGrid id="newAtt" cellspacing="5" cellpadding="5" columns="2">
+                            <p:outputLabel value="Категория"/>
+                            <p:autoComplete  size="35" value="#{createSaleOrderFlow.attachment.categoryName}" 
+                                             required="true"
+                                             completeMethod="#{attachCategoryLOV.completeItem}" 
+                                             forceSelection="true" dropdown="true" />
+                            <p:outputLabel value="Текст"/>
+                            <p:inputTextarea autoResize="false" cols="80" rows="10" value="#{createSaleOrderFlow.attachment.categoryText}" maxlength="2000"/>
+                            <p:outputLabel value="Файл"/>
+                            <p:panelGrid columns="1">
+                                <p:outputLabel id="uploadStatus" value="Статус: #{createSaleOrderFlow.uploadStatus}"/>    
+                                <p:fileUpload  fileUploadListener="#{createSaleOrderFlow.handleFileUpload}"  
+                                               mode="advanced" dragDropSupport="false" 
+                                               disabled="#{createSaleOrderFlow.uploadStatus==null?false:true}"
+                                               update="@this mainMSG uploadStatus" sizeLimit="5242880" fileLimit="1"  
+                                               cancelLabel="Отмена" 
+                                               uploadLabel="Загрузить" 
+                                               label="Выбрать"
+                                               invalidSizeMessage="Размер файла превышает 5MB"
+                                               fileLimitMessage="Превышен лимит загрузки файлов"/>
+                            </p:panelGrid>
                         </h:panelGrid>
-                        <p:fieldset legend="Количество копий с вагоном" style="margin-bottom: 15px">
-                            <h:panelGrid cellspacing="5" columns="6">
-                                <p:outputLabel value="Сертификат качества"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
-                                <p:outputLabel value="Упаковочный лист"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
-                                <p:outputLabel value="Повагонный лист"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
-                                <p:outputLabel value="Сертификат происхождения"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
-                                <p:outputLabel value="Сертификат нерадиактивности"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
-                                <p:outputLabel value="Сертификат формы EUR1"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
-                                <p:outputLabel value="Сводный сертификат качества"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
-                            </h:panelGrid> 
-                        </p:fieldset>
-                        <p:fieldset legend="Количество копий почтой">
-                            <h:panelGrid cellspacing="5" columns="2">
-                                <p:outputLabel value="Адрес"/>
-                                <p:inputText size="70"/>
-                            </h:panelGrid>
-                            <h:panelGrid cellspacing="5" columns="6">                                
-                                <p:outputLabel value="ЖД накладная"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
-                                <p:outputLabel value="Сертификат качества"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
-                                <p:outputLabel value="Упаковочный лист"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
-                                <p:outputLabel value="Повагонный лист"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
-                                <p:outputLabel value="Сертификат происхождения"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
-                                <p:outputLabel value="Сертификат нерадиактивности"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
-                                <p:outputLabel value="Сертификат формы EUR1"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center"/>
-                                <p:outputLabel value="Периодичность"/>
-                                <p:inputText/>
-                                <p:outputLabel value="Тип почты"/>
-                                <p:inputText/>
-                            </h:panelGrid> 
-                        </p:fieldset>
-
-                    </p:panel>
-
+                        <p:commandButton value="Добавить" actionListener="#{orderCBean.addNewAttachment()}" update="newAtt dTable"/>
+                    </p:fieldset> 
+                    <p:dataTable id="dTable" var="ord" value="#{createSaleOrderFlow.order.attachments}" 
+                                 selection="#{createSaleOrderFlow.selectedAttachments}" 
+                                 rowSelectMode="checkbox" scrollable="true" reflow="true" rows="20" 
+                                 paginator="true"  rowKey="#{ord}" 
+                                 style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" >
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        <p:column headerText="Категория" style="width: 250px">
+                            <p:outputLabel value="#{ord.categoryName}" />
+                        </p:column>
+                        <p:column headerText="Текст" >
+                            <p:inputTextarea value="#{ord.categoryText}" cols="80" autoResize="true" readonly="true" />
+                        </p:column>
+                        <p:column headerText="Файл" style="width: 250px">
+                            <p:outputLabel value="#{ord.fileName}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton value="Удалить"/>
+                        </f:facet>
+                    </p:dataTable>
                     <h:panelGrid cellspacing="10" columns="3">
                         <p:commandButton value="Выход" action="goHome" immediate="true"/>
                         <p:commandButton value="Дальше" action="OrderLines"/>

@@ -11,9 +11,14 @@
             <ui:define name="content">
                 <h:form prependId="false">
                     <p:panel header="UPLOAD">
-                        <p:fileUpload  fileUploadListener="#{findLookupSession.handleFileUpload}"  mode="advanced" dragDropSupport="false"
-                                       update="messages" sizeLimit="5242880" fileLimit="1"  cancelLabel="Отмена" uploadLabel="Загрузить" label="Выбрать"/>
-                        <p:growl id="messages" showDetail="true" />
+                        <p:fileUpload  fileUploadListener="#{findLookupSession.handleFileUpload}"  
+                                       mode="advanced" dragDropSupport="false"
+                                       update="messages" sizeLimit="5242880" fileLimit="1"  
+                                       cancelLabel="Отмена" 
+                                       uploadLabel="Загрузить" 
+                                       label="Выбрать"/>
+                        
+                        
                     </p:panel>
                 </h:form>    
             </ui:define>

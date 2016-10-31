@@ -102,4 +102,8 @@
         <exception-type>service.AccessDeniedException</exception-type>
         <location>/faces/index.xhtml?message=Access denied</location>
     </error-page>
+    <error-page>
+        <exception-type>javax.faces.FacesException</exception-type>
+        <location>/faces/index.xhtml</location>
+    </error-page>
 </web-app>
