@@ -14,8 +14,8 @@
                     <p:steps style="width: 1200px" activeIndex="1" styleClass="custom" readonly="false" >
                         <p:menuitem value="Основные данные" action="Order" />
                         <p:menuitem value="Доп.сведения" action="AdditionalHeaderInfo" />
-                        <p:menuitem value="Аттачменты" />
-                        <p:menuitem value="Строки заказа" />
+                        <p:menuitem value="Аттачменты" action="Attachments"/>
+                        <p:menuitem value="Строки заказа" action="OrderLines" />
                         <p:menuitem value="Подтверждение" />
                     </p:steps>
                 </h:form>
@@ -24,9 +24,9 @@
                              toggleSpeed="0" style="margin-bottom:20px;width: 1000px" >
                         <h:panelGrid cellspacing="5" cellpadding="5" columns="4">
                             <p:outputLabel value="Запрет на производство"/>
-                            <p:inputSwitch value="#{createSaleOrderFlow.order.banOnManufacturing}"/>
+                            <p:inputSwitch value="#{createSaleOrderFlow.order.banOnManufacturing}" offLabel="Нет" onLabel="Да"/>
                             <p:outputLabel value="Запрет на отгрузку"/>
-                            <p:inputSwitch value="#{createSaleOrderFlow.order.banOnShipping}"/>
+                            <p:inputSwitch value="#{createSaleOrderFlow.order.banOnShipping}" offLabel="Нет" onLabel="Да"/>
                         </h:panelGrid>
                     </p:panel>    
                     <p:panel header="Документы по заказу" toggleable="true" closeSpeed="0" collapsed="false"

@@ -15,23 +15,52 @@
                     <p:steps style="width: 1200px" activeIndex="2" styleClass="custom" readonly="false" >
                         <p:menuitem value="Основные данные" action="Order" />
                         <p:menuitem value="Доп.сведения" action="AdditionalHeaderInfo"/>
-                        <p:menuitem value="Аттачменты" />
-                        <p:menuitem value="Строки заказа" />
+                        <p:menuitem value="Аттачменты" action="Attachments"/>
+                        <p:menuitem value="Строки заказа" action="OrderLines" />
                         <p:menuitem value="Подтверждение" />
                     </p:steps>
                 </h:form>
                 <h:form prependId="false">
-                    <p:fieldset legend="Новое дополнение">
-                        <h:panelGrid id="newAtt" cellspacing="5" cellpadding="5" columns="2">
+                    <p:dataTable id="dTable" var="ord" value="#{createSaleOrderFlow.order.attachments}" 
+                                 selection="#{createSaleOrderFlow.selectedAttachments}" 
+                                 rowSelectMode="checkbox" scrollable="true" reflow="true" rows="20" 
+                                 paginator="true"  rowKey="#{ord}"  editable="true" editMode="cell"
+                                 style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" >
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        <p:column headerText="Категория" style="width: 250px">
+                            <p:outputLabel value="#{ord.categoryName}" />
+                        </p:column>
+                        <p:column headerText="Текст" >
+                            <p:inputTextarea value="#{ord.categoryText}" cols="80" autoResize="true" />
+                        </p:column>
+                        <p:column headerText="Файл" style="width: 250px">
+                            <p:outputLabel value="#{ord.fileName}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton value="Удалить" process="dTable"  
+                                             oncomplete="PF('delCategories').show()"/>
+                            <p:commandButton  process="dTable" update="newAtt" value="Добавить" 
+                                              oncomplete="PF('addCategory').show()" style="margin-left: 10px">
+                            </p:commandButton>
+                        </f:facet>
+                    </p:dataTable>
+                    <h:panelGrid cellspacing="10" columns="3">
+                        <p:commandButton value="Выход" action="goHome" immediate="true"/>
+                        <p:commandButton value="Дальше" action="OrderLines"/>
+                    </h:panelGrid>
+                </h:form>
+                <h:form prependId="false"> 
+                    <p:dialog header="Добавить категорию" widgetVar="addCategory" modal="true" showEffect="fade"
+                              resizable="false" width="740">
+                        <h:panelGrid id="newAtt" columns="2">
                             <p:outputLabel value="Категория"/>
                             <p:autoComplete  size="35" value="#{createSaleOrderFlow.attachment.categoryName}" 
-                                             required="true"
                                              completeMethod="#{attachCategoryLOV.completeItem}" 
                                              forceSelection="true" dropdown="true" />
                             <p:outputLabel value="Текст"/>
                             <p:inputTextarea autoResize="false" cols="80" rows="10" value="#{createSaleOrderFlow.attachment.categoryText}" maxlength="2000"/>
                             <p:outputLabel value="Файл"/>
-                            <p:panelGrid columns="1">
+                            <h:panelGrid columns="1">
                                 <p:outputLabel id="uploadStatus" value="Статус: #{createSaleOrderFlow.uploadStatus}"/>    
                                 <p:fileUpload  fileUploadListener="#{createSaleOrderFlow.handleFileUpload}"  
                                                mode="advanced" dragDropSupport="false" 
@@ -42,33 +71,22 @@
                                                label="Выбрать"
                                                invalidSizeMessage="Размер файла превышает 5MB"
                                                fileLimitMessage="Превышен лимит загрузки файлов"/>
-                            </p:panelGrid>
+                            </h:panelGrid>
                         </h:panelGrid>
-                        <p:commandButton value="Добавить" actionListener="#{orderCBean.addNewAttachment()}" update="newAtt dTable"/>
-                    </p:fieldset> 
-                    <p:dataTable id="dTable" var="ord" value="#{createSaleOrderFlow.order.attachments}" 
-                                 selection="#{createSaleOrderFlow.selectedAttachments}" 
-                                 rowSelectMode="checkbox" scrollable="true" reflow="true" rows="20" 
-                                 paginator="true"  rowKey="#{ord}" 
-                                 style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" >
-                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column headerText="Категория" style="width: 250px">
-                            <p:outputLabel value="#{ord.categoryName}" />
-                        </p:column>
-                        <p:column headerText="Текст" >
-                            <p:inputTextarea value="#{ord.categoryText}" cols="80" autoResize="true" readonly="true" />
-                        </p:column>
-                        <p:column headerText="Файл" style="width: 250px">
-                            <p:outputLabel value="#{ord.fileName}"/>
-                        </p:column>
-                        <f:facet name="footer">
-                            <p:commandButton value="Удалить"/>
-                        </f:facet>
-                    </p:dataTable>
-                    <h:panelGrid cellspacing="10" columns="3">
-                        <p:commandButton value="Выход" action="goHome" immediate="true"/>
-                        <p:commandButton value="Дальше" action="OrderLines"/>
-                    </h:panelGrid>
+                        <p:outputPanel style="text-align: center;margin: 15px;">
+                            <p:commandButton oncomplete="PF('addCategory').hide()" immediate="true" value='Отмена' style="margin-right: 15px"/>
+                            <p:commandButton value="Добавить" actionListener="#{orderCBean.addNewAttachment()}" update="dTable" oncomplete="PF('addCategory').hide()"  />
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+                <h:form prependId="false"> 
+                    <p:dialog header="Вы уверены удалить выбранные элементы?" widgetVar="delCategories" modal="true" showEffect="fade"
+                              resizable="false" width="500">
+                        <p:outputPanel style="text-align: center">
+                            <p:commandButton oncomplete="PF('delCategories').hide()" immediate="true" value='Нет' style="margin-right: 15px"/>
+                            <p:commandButton value="Да" actionListener="#{orderCBean.deleteSelectedAttachment()}" update="dTable" oncomplete="PF('delCategories').hide()"  />
+                        </p:outputPanel>
+                    </p:dialog>
                 </h:form>
             </ui:define>
         </ui:composition>

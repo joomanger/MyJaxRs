@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -23,6 +24,7 @@ public class Attachment implements Serializable {
     @ManyToOne
     @JoinColumn(name = "header_id")
     private Order order;
+    @NotNull(message = "КАТЕГОРИЯ обязательна для заполнения")
     @Column(name = "category_name", length = 50)
     private String categoryName;
     @Column(name = "category_text", length = 2000)
