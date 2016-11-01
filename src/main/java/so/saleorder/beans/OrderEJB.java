@@ -57,5 +57,9 @@ public class OrderEJB extends AbstractEJB<Order> {
     public void deleteSelectedAttachment() {
         orderFlow.getOrder().getAttachments().removeAll(orderFlow.getSelectedAttachments());
     }
+    
+    public void createOrder(){
+        create(orderFlow.getOrder());
+    }
 
 }

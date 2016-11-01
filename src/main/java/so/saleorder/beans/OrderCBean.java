@@ -23,8 +23,13 @@ public class OrderCBean {
     public void addNewAttachment() {
         ejb.addNewAttachment();
     }
+
     public void deleteSelectedAttachment() {
         ejb.deleteSelectedAttachment();
+    }
+
+    public void createOrder() {
+        ejb.createOrder();
     }
 
 }

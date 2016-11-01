@@ -47,6 +47,7 @@
                     <h:panelGrid cellspacing="10" columns="3">
                         <p:commandButton value="Выход" action="goHome" immediate="true"/>
                         <p:commandButton value="Дальше" action="OrderLines"/>
+                        <p:commandButton value="Создать заказ" actionListener="#{orderCBean.createOrder()}" action="goHome" immediate="true"/>
                     </h:panelGrid>
                 </h:form>
                 <h:form prependId="false"> 
