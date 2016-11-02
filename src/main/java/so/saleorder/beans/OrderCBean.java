@@ -3,6 +3,8 @@ package so.saleorder.beans;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import so.entities.Attachment;
+import so.saleorder.flows.CreateSaleOrderFlow;
 
 /**
  *
@@ -13,23 +15,40 @@ import javax.inject.Named;
 public class OrderCBean {
 
     @Inject
-    private OrderEJB ejb;
+    private OrderEJB orderEJB;
+    @Inject
+    private AttachmentEJB attachEJB;
+    @Inject
+    private CreateSaleOrderFlow orderFlow;
 
     /*После выбора нового Заказчика обнуляются все зависимые поля*/
     public void clearFieldsHeader() {
-        ejb.clearFieldsHeader();
+        orderFlow.getOrder().setShp_customer(null);
+        orderFlow.getOrder().setShp_address(null);
+        orderFlow.getOrder().setShp_rwaddress(null);
+        orderFlow.getOrder().setInv_customer(null);
+        orderFlow.getOrder().setInv_address(null);
+        orderFlow.getOrder().setContract(null);
     }
 
     public void addNewAttachment() {
-        ejb.addNewAttachment();
+        Attachment a=orderFlow.getAttachment();
+        String result = attachEJB.validateMyEntity(a);
+        if (result.equals(attachEJB.ERROR)) {
+            attachEJB.sendMessage(result, null);
+        } else {
+            orderEJB.addNewAttachment(a);
+            orderFlow.setAttachment(new Attachment());
+            orderFlow.setUploadStatus(null);
+        }
     }
 
     public void deleteSelectedAttachment() {
-        ejb.deleteSelectedAttachment();
+        orderEJB.deleteSelectedAttachment(orderFlow.getSelectedAttachments());
     }
 
     public void createOrder() {
-        ejb.createOrder();
+        orderEJB.createOrder();
     }
 
 }

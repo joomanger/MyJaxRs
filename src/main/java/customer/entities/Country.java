@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -20,6 +21,7 @@ public class Country implements Serializable {
 
     @Id
     @Size(min = 2, max = 2, message = "Значение КОД должно быть 2-буквенным")
+    @Column(length = 2)
     private String country_id;
 
     @Size(min = 0, max = 3, message = "Значение EU-код должно быть не более 3-х символов")

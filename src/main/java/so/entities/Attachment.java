@@ -2,7 +2,9 @@ package so.entities;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -22,7 +24,9 @@ public class Attachment implements Serializable {
     @GeneratedValue(generator = "attachment_sq")
     private Long attachment_id;
     @ManyToOne
-    @JoinColumn(name = "header_id")
+    @JoinColumn(name = "header_id", foreignKey = @ForeignKey(name="attachment_zakaz_fk", value =ConstraintMode.CONSTRAINT,
+            foreignKeyDefinition = "FOREIGN KEY (header_id) REFERENCES public.zakaz(header_id) MATCH SIMPLE\n" +
+"      ON UPDATE CASCADE ON DELETE CASCADE"))
     private Order order;
     @NotNull(message = "КАТЕГОРИЯ обязательна для заполнения")
     @Column(name = "category_name", length = 50)
@@ -31,8 +35,6 @@ public class Attachment implements Serializable {
     private String categoryText;
     @Column(name = "file_name", length = 25)
     private String fileName;
-    @Column(name = "line_number")
-    private Integer lineNumber;
 
     public void setOrder(Order order) {
         setOrder(order, true);
@@ -79,14 +81,6 @@ public class Attachment implements Serializable {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
-    }
-
-    public Integer getLineNumber() {
-        return lineNumber;
-    }
-
-    public void setLineNumber(Integer lineNumber) {
-        this.lineNumber = lineNumber;
     }
 
 }

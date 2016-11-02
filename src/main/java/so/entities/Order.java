@@ -11,8 +11,10 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -39,9 +41,15 @@ import sys.entities.SysUser;
 @Entity
 @Table(name = "zakaz")
 @SecondaryTables({
-    @SecondaryTable(name = "zakaz_docs"),
-    @SecondaryTable(name = "zakaz_tol_mark"),
-    @SecondaryTable(name = "zakaz_sell_transp")
+    @SecondaryTable(name = "zakaz_docs", foreignKey = @ForeignKey(name = "zakaz_zakaz_docs_fk", value = ConstraintMode.CONSTRAINT,
+            foreignKeyDefinition = "FOREIGN KEY (header_id) REFERENCES public.zakaz(header_id) MATCH SIMPLE\n"
+            + "      ON UPDATE CASCADE ON DELETE CASCADE")),
+    @SecondaryTable(name = "zakaz_tol_mark", foreignKey = @ForeignKey(name = "zakaz_zakaz_tol_mark_fk", value = ConstraintMode.CONSTRAINT,
+            foreignKeyDefinition = "FOREIGN KEY (header_id) REFERENCES public.zakaz(header_id) MATCH SIMPLE\n"
+            + "      ON UPDATE CASCADE ON DELETE CASCADE")),
+    @SecondaryTable(name = "zakaz_sell_transp", foreignKey = @ForeignKey(name = "zakaz_zakaz_sell_transp_fk", value = ConstraintMode.CONSTRAINT,
+            foreignKeyDefinition = "FOREIGN KEY (header_id) REFERENCES public.zakaz(header_id) MATCH SIMPLE\n"
+            + "      ON UPDATE CASCADE ON DELETE CASCADE"))
 })
 public class Order implements Serializable {
 
@@ -51,50 +59,52 @@ public class Order implements Serializable {
     private Long header_id;
 
     @OneToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Customer customer;
 
     @OneToOne
-    @JoinColumn(name = "shp_customer_id")
+    @JoinColumn(name = "shp_customer_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Customer shp_customer;
 
     @OneToOne
-    @JoinColumn(name = "shp_address_id")
+    @JoinColumn(name = "shp_address_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Address shp_address;
 
     @OneToOne
-    @JoinColumn(name = "shp_rwaddress_id")
+    @JoinColumn(name = "shp_rwaddress_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private RWAddress shp_rwaddress;
 
     @OneToOne
-    @JoinColumn(name = "inv_customer_id")
+    @JoinColumn(name = "inv_customer_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Customer inv_customer;
 
     @OneToOne
-    @JoinColumn(name = "inv_address_id")
+    @JoinColumn(name = "inv_address_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Address inv_address;
 
     @OneToOne
-    @JoinColumn(name = "contract_id")
+    @JoinColumn(name = "contract_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Contract contract;
 
     @OneToOne
-    @JoinColumn(name = "payment_term_id")
+    @JoinColumn(name = "payment_term_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private PaymentTerm paymentTerm;
 
     @Size(min = 3, max = 3, message = "ВАЛЮТА: длина три символа")
+    @Column(length = 3)
     private String currency;
 
-    @Column(name = "fob_code")
+    @Column(name = "fob_code", length = 60)
     private String fob;
 
-    @Column(name = "freight_term_code")
+    @Column(name = "freight_term_code", length = 10)
     private String freightTerm;
 
+    @Column(length = 15)
     private String cust_po_number;
 
     @OneToOne
-    @JoinColumn(name = "trader_user_id")
+    @JoinColumn(name = "trader_user_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private SysUser traderUser;
 
     @Temporal(TemporalType.DATE)
@@ -112,9 +122,9 @@ public class Order implements Serializable {
     private Boolean banOnShipping;
 
     //Документы по заказу
-    @Column(table = "zakaz_docs", name = "certif_reg_accuracy")
+    @Column(table = "zakaz_docs", name = "certif_reg_accuracy", length = 10)
     private String certifRegAccuracy;
-    @Column(table = "zakaz_docs", name = "certif_standard")
+    @Column(table = "zakaz_docs", name = "certif_standard", length = 50)
     private String certifStandard;
     @Column(table = "zakaz_docs", name = "certif_quality")
     private Integer certifQuality;
@@ -144,11 +154,11 @@ public class Order implements Serializable {
     private Integer certifOriginA;
     @Column(table = "zakaz_docs", name = "certif_non_radioactive_a")
     private Integer certifNonRadioactiveA;
-    @Column(table = "zakaz_docs", name = "periodicity")
+    @Column(table = "zakaz_docs", name = "periodicity", length = 10)
     private String periodicity;
     @Column(table = "zakaz_docs", name = "certif_eur1_a")
     private Integer certifEUR1A;
-    @Column(table = "zakaz_docs", name = "mail_type")
+    @Column(table = "zakaz_docs", name = "mail_type", length = 10)
     private String mailType;
 
     //Толерансы, Маркировка
@@ -179,21 +189,21 @@ public class Order implements Serializable {
 
     //Продажа,Транспортировка
     @OneToOne
-    @JoinColumn(table = "zakaz_sell_transp", name = "dest_country")
+    @JoinColumn(table = "zakaz_sell_transp", name = "dest_country", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Country destCountry;
     @Column(table = "zakaz_sell_transp", name = "rw_special_notes")
     private String notes;
     @OneToOne
-    @JoinColumn(table = "zakaz_sell_transp", name = "rws_code_1")
+    @JoinColumn(table = "zakaz_sell_transp", name = "rws_code_1", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private RWStation rws1;
     @OneToOne
-    @JoinColumn(table = "zakaz_sell_transp", name = "rws_code_2")
+    @JoinColumn(table = "zakaz_sell_transp", name = "rws_code_2", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private RWStation rws2;
     @OneToOne
-    @JoinColumn(table = "zakaz_sell_transp", name = "rws_code_3")
+    @JoinColumn(table = "zakaz_sell_transp", name = "rws_code_3", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private RWStation rws3;
     @OneToOne
-    @JoinColumn(table = "zakaz_sell_transp", name = "rws_code_4")
+    @JoinColumn(table = "zakaz_sell_transp", name = "rws_code_4", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private RWStation rws4;
     @Temporal(TemporalType.DATE)
     @Column(table = "zakaz_sell_transp", name = "last_fcr_date")
@@ -215,7 +225,7 @@ public class Order implements Serializable {
     //Attachments
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "order", fetch = FetchType.LAZY)
     @PrivateOwned
-    @OrderBy("lineNumber asc")
+    @OrderBy("categoryName asc")
     private List<Attachment> attachments = new ArrayList<>();
 
     public Long getHeader_id() {

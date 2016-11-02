@@ -1,13 +1,12 @@
 package so.saleorder.beans;
 
+import java.util.List;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import service.AbstractEJB;
 import so.entities.Attachment;
 import so.entities.Order;
-import so.saleorder.flows.CreateSaleOrderFlow;
 
 /**
  *
@@ -16,10 +15,7 @@ import so.saleorder.flows.CreateSaleOrderFlow;
 @Stateless
 public class OrderEJB extends AbstractEJB<Order> {
 
-    @Inject
-    private CreateSaleOrderFlow orderFlow;
-    @Inject
-    private AttachmentEJB attachEJB;
+    private Order order;
 
     @PersistenceContext(unitName = "myjaxrs")
     private EntityManager em;
@@ -33,33 +29,24 @@ public class OrderEJB extends AbstractEJB<Order> {
         return em;
     }
 
-    /*После выбора нового Заказчика обнуляются все зависимые поля*/
-    public void clearFieldsHeader() {
-        orderFlow.getOrder().setShp_customer(null);
-        orderFlow.getOrder().setShp_address(null);
-        orderFlow.getOrder().setShp_rwaddress(null);
-        orderFlow.getOrder().setInv_customer(null);
-        orderFlow.getOrder().setInv_address(null);
-        orderFlow.getOrder().setContract(null);
+    public Order getOrder() {
+        return order;
     }
 
-    public void addNewAttachment() {
-        String result = attachEJB.validateMyEntity(orderFlow.getAttachment());
-        if (result.equals(attachEJB.ERROR)) {
-            attachEJB.sendMessage(result, null);
-        } else {
-            orderFlow.getOrder().getAttachments().add(orderFlow.getAttachment());
-            orderFlow.setAttachment(new Attachment());
-            orderFlow.setUploadStatus(null);
-        }
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
-    public void deleteSelectedAttachment() {
-        orderFlow.getOrder().getAttachments().removeAll(orderFlow.getSelectedAttachments());
+    public void addNewAttachment(Attachment attachment) {
+        order.addAttachment(attachment);
     }
-    
-    public void createOrder(){
-        create(orderFlow.getOrder());
+
+    public void deleteSelectedAttachment(List<Attachment> attachments) {
+        order.getAttachments().removeAll(attachments);
+    }
+
+    public void createOrder() {
+        super.create(order);
     }
 
 }

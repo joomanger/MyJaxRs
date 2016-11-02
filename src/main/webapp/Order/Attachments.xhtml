@@ -16,7 +16,7 @@
                         <p:menuitem value="Основные данные" action="Order" />
                         <p:menuitem value="Доп.сведения" action="AdditionalHeaderInfo"/>
                         <p:menuitem value="Аттачменты" action="Attachments"/>
-                        <p:menuitem value="Строки заказа" action="OrderLines" />
+                        <p:menuitem value="Строки заказа" action="Lines" />
                         <p:menuitem value="Подтверждение" />
                     </p:steps>
                 </h:form>
@@ -46,7 +46,7 @@
                     </p:dataTable>
                     <h:panelGrid cellspacing="10" columns="3">
                         <p:commandButton value="Выход" action="goHome" immediate="true"/>
-                        <p:commandButton value="Дальше" action="OrderLines"/>
+                        <p:commandButton value="Дальше" action="Lines"/>
                         <p:commandButton value="Создать заказ" actionListener="#{orderCBean.createOrder()}" action="goHome" immediate="true"/>
                     </h:panelGrid>
                 </h:form>

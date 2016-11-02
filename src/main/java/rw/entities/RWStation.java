@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -20,6 +21,7 @@ import org.eclipse.persistence.annotations.PrivateOwned;
 @Entity
 public class RWStation implements Serializable {
     @Id
+    @Column(length = 10)
     private String rws_code;
     private Long location_id_orc;
     @OneToOne
