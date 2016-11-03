@@ -227,6 +227,11 @@ public class Order implements Serializable {
     @PrivateOwned
     @OrderBy("categoryName asc")
     private List<Attachment> attachments = new ArrayList<>();
+    //Attachments
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "order", fetch = FetchType.LAZY)
+    @PrivateOwned
+    @OrderBy("lineNumber asc")
+    private List<OrderLine> lines = new ArrayList<>();
 
     public Long getHeader_id() {
         return header_id;
@@ -735,6 +740,27 @@ public class Order implements Serializable {
 
     public void setAttachments(List<Attachment> attachments) {
         this.attachments = attachments;
+    }
+
+    public List<OrderLine> getLines() {
+        return lines;
+    }
+
+    public void setLines(List<OrderLine> lines) {
+        this.lines = lines;
+    }
+
+    public void addLine(OrderLine line) {
+        addLine(line, true);
+    }
+
+    public void addLine(OrderLine line, boolean add) {
+        if (line != null) {
+            getLines().add(line);
+            if (add) {
+                line.setOrder(this, false);
+            }
+        }
     }
 
 }
