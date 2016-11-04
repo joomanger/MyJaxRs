@@ -1,8 +1,11 @@
 package so.saleorder.beans;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
+import service.AbstractEJB;
+import service.MessageSender;
 import so.entities.Attachment;
 import so.saleorder.flows.CreateSaleOrderFlow;
 
@@ -32,10 +35,10 @@ public class OrderCBean {
     }
 
     public void addNewAttachment() {
-        Attachment a=orderFlow.getAttachment();
+        Attachment a = orderFlow.getAttachment();
         String result = attachEJB.validateMyEntity(a);
-        if (result.equals(attachEJB.ERROR)) {
-            attachEJB.sendMessage(result, null);
+        if (result.equals(AbstractEJB.ERROR)) {
+            MessageSender.sendFacesContextMessage(FacesMessage.SEVERITY_ERROR, result);
         } else {
             orderEJB.addNewAttachment(a);
             orderFlow.setAttachment(new Attachment());

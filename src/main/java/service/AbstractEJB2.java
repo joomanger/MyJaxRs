@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.validation.ConstraintViolation;
@@ -15,18 +14,18 @@ import javax.validation.Validator;
  * @author savin
  * @param <T>
  */
-public abstract class AbstractEJB<T> {
+public abstract class AbstractEJB2<T> {
 
     public static final String SUCCESSFUL = "Successful";
     public static final String ERROR = "Error";
+
+    private final Class<T> entityClass;
 
     @Inject
     @MyValidator
     private Validator validator;
 
-    private final Class<T> entityClass;
-
-    public AbstractEJB(Class<T> entityClass) {
+    public AbstractEJB2(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
@@ -46,60 +45,61 @@ public abstract class AbstractEJB<T> {
         return SUCCESSFUL;
     }
 
-    public String create(T entity) {
-        try {
-            String result = validateMyEntity(entity);
-            if (!result.equals(SUCCESSFUL)) {
-                return result;
-            } else {
+    public void create(T entity) {
+        String result = validateMyEntity(entity);
+        if (result.equals(AbstractEJB2.SUCCESSFUL)) {
+            try {
                 getEntityManager().persist(entity);
-                return SUCCESSFUL;
+                MessageSender.sendFacesContextMessage(FacesMessage.SEVERITY_INFO, "Объект создан успешно");
+                //FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, outcome);
+            } catch (Exception ex) {
+                //Выдать в лог ошибку
+                throw ex;
             }
-        } catch (Exception ex) {
-            //return ERROR + " " + ex.getMessage();
-            throw ex;
+        } else {
+            MessageSender.sendFacesContextMessage(FacesMessage.SEVERITY_ERROR, result);
         }
+//        getEntityManager().persist(entity);
     }
 
-    public String edit(T entity) {
-        try {
-            String result = validateMyEntity(entity);
-            if (!result.equals(SUCCESSFUL)) {
-                return result;
-            } else {
+    public void edit(T entity) {
+        String result = validateMyEntity(entity);
+        if (result.equals(AbstractEJB2.SUCCESSFUL)) {
+            try {
                 getEntityManager().merge(entity);
-                return SUCCESSFUL;
+                MessageSender.sendFacesContextMessage(FacesMessage.SEVERITY_INFO, "Объект изменен успешно");
+                //FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, outcome);
+            } catch (Exception ex) {
+                //Выдать в лог ошибку
+                throw ex; 
             }
-        } catch (Exception ex) {
-            //return ERROR + " " + ex.getMessage();
-            throw ex;
+        } else {
+            MessageSender.sendFacesContextMessage(FacesMessage.SEVERITY_ERROR, result);
         }
+//        getEntityManager().merge(entity);
     }
 
-    public String remove(T entity) {
+    public void remove(T entity) {
         try {
             getEntityManager().remove(getEntityManager().merge(entity));
-            return SUCCESSFUL;
+            MessageSender.sendFacesContextMessage(FacesMessage.SEVERITY_INFO, "Объект удален успешно");
         } catch (Exception ex) {
-            //return ERROR + " " + ex.getMessage();
+            //Выдать в лог ошибку
             throw ex;
         }
+//        getEntityManager().remove(getEntityManager().merge(entity));
+
     }
 
     public T find(Object id) {
         if (id != null) {
             return getEntityManager().find(entityClass, id);
-        } else {
-            return null;
         }
+        return null;
     }
 
     public List<T> findAll() {
         javax.persistence.criteria.CriteriaQuery cq;
-//
-//        if (getEntityManager() == null) {
-//            System.out.println("EMA NULL");
-//        }
         cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery(cq).getResultList();
@@ -120,21 +120,6 @@ public abstract class AbstractEJB<T> {
         cq.select(getEntityManager().getCriteriaBuilder().count(rt));
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
-    }
-
-    public void sendMessage(String status, String success_msg) {
-        try {
-            if (status != null) {
-                if (status.equals(SUCCESSFUL)) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, success_msg, null));
-                } else {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, status, null));
-                }
-            }
-        } catch (NullPointerException ex) {
-            System.out.println("FacesContext is null");
-            throw ex;
-        }
     }
 
 }

@@ -1,9 +1,6 @@
 package service;
 
 import java.util.List;
-import javax.inject.Inject;
-import lookup.beans.LookupCBean;
-import lookup.entities.LookupItemTL;
 
 /**
  *
@@ -11,11 +8,11 @@ import lookup.entities.LookupItemTL;
  * @param <T>
  */
 public abstract class AbstractClientBean<T> {
-
-    @Inject
-    private LookupCBean client;
-    @Inject
-    private SessionActions sa;
+//
+//    @Inject
+//    private LookupCBean client;
+//    @Inject
+//    private SessionActions sa;
 
     protected abstract AbstractEJB<T> getEJB();
 
@@ -76,8 +73,7 @@ public abstract class AbstractClientBean<T> {
         }
     }
 
-    public LookupItemTL getLookupItemTL(String lookupName, String value) {
-        return client.findByName(lookupName).getTranslateObject(value, sa.getLanguage());
-    }
-
+//    public LookupItemTL getLookupItemTL(String lookupName, String value) {
+//        return client.findByName(lookupName).getTranslateObject(value, sa.getLanguage());
+//    }
 }

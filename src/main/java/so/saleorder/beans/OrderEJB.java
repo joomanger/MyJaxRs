@@ -4,7 +4,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import service.AbstractEJB;
+import service.AbstractEJB2;
 import so.entities.Attachment;
 import so.entities.Order;
 
@@ -13,7 +13,7 @@ import so.entities.Order;
  * @author savin
  */
 @Stateless
-public class OrderEJB extends AbstractEJB<Order> {
+public class OrderEJB extends AbstractEJB2<Order> {
 
     private Order order;
 
