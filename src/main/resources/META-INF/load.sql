@@ -33,8 +33,8 @@ INSERT INTO configurationline values(9,2,4,4);
 INSERT INTO configurationline values(10,2,5,5);
 insert into saleorder values(1,'customer',1000,null,null);
 
-insert into users(user_id, username, fullName, password) values(1,'admin','Админчик','SBNJTRN+FjG7owHVrKtue7eqdM4RhdRWVl71HXN2d7I=');
-insert into users(user_id, username, fullName, password) values(2,'user','Юзерок','BPiZbadjt6lpsQKO4wB1aerzpjVIbdqyEdUSyFud+Ps=');
+insert into users(user_id, username, fullName, password,trader) values(1,'admin','Админчик','SBNJTRN+FjG7owHVrKtue7eqdM4RhdRWVl71HXN2d7I=',false);
+insert into users(user_id, username, fullName, password,trader) values(2,'user','Юзерок','BPiZbadjt6lpsQKO4wB1aerzpjVIbdqyEdUSyFud+Ps=',false);
 insert into groups(group_id, groupname,description) values(1,'users','Все пользователи системы');
 insert into users_groups values(1,1);
 insert into users_groups values(2,1);

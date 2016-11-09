@@ -24,72 +24,72 @@
                              toggleSpeed="0" style="margin-bottom:20px;width: 1000px" >
                         <h:panelGrid cellspacing="5" cellpadding="5" columns="4">
                             <p:outputLabel value="Запрет на производство"/>
-                            <p:inputSwitch value="#{createSaleOrderFlow.order.banOnManufacturing}" offLabel="Нет" onLabel="Да"/>
+                            <p:inputSwitch value="#{createOrderFlow.order.banOnManufacturing}" offLabel="Нет" onLabel="Да"/>
                             <p:outputLabel value="Запрет на отгрузку"/>
-                            <p:inputSwitch value="#{createSaleOrderFlow.order.banOnShipping}" offLabel="Нет" onLabel="Да"/>
+                            <p:inputSwitch value="#{createOrderFlow.order.banOnShipping}" offLabel="Нет" onLabel="Да"/>
                         </h:panelGrid>
                     </p:panel>    
                     <p:panel header="Документы по заказу" toggleable="true" closeSpeed="0" collapsed="false"
                              toggleSpeed="0" style="margin-bottom:20px;width: 1000px" >
                         <h:panelGrid cellspacing="5" columns="4">
                             <p:outputLabel value="Точность оформления сертификата"/>
-                            <p:autoComplete size="20" var="m" value="#{createSaleOrderFlow.order.certifRegAccuracy}" 
+                            <p:autoComplete size="20" var="m" value="#{createOrderFlow.order.certifRegAccuracy}" 
                                             completeMethod="#{certRegAccuracyLOV.completeItem}" itemValue="#{m}" 
-                                            itemLabel="#{createSaleOrderFlow.regAccuracy.getTranslateObject(m, sessionActions.language).getDescription()}"
+                                            itemLabel="#{createOrderFlow.regAccuracy.getTranslateObject(m, sessionActions.language).getDescription()}"
                                             forceSelection="true" dropdown="true"/>
                             <p:outputLabel value="Стандарт на сертификат"/>
-                            <p:autoComplete size="25" var="m" value="#{createSaleOrderFlow.order.certifStandard}" 
+                            <p:autoComplete size="25" var="m" value="#{createOrderFlow.order.certifStandard}" 
                                             completeMethod="#{standCertLOV.completeItem}" itemValue="#{m}" 
-                                            itemLabel="#{createSaleOrderFlow.certTypes.getTranslateObject(m, sessionActions.language).getDescription()}"
+                                            itemLabel="#{createOrderFlow.certTypes.getTranslateObject(m, sessionActions.language).getDescription()}"
                                             forceSelection="true" dropdown="true"/>
                         </h:panelGrid>
                         <p:fieldset legend="Количество копий с вагоном" style="margin-bottom: 15px;margin-top: 15px">
                             <h:panelGrid cellspacing="5" columns="6">
                                 <p:outputLabel value="Сертификат качества"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifQuality}"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.certifQuality}"/>
                                 <p:outputLabel value="Упаковочный лист"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.packingList}"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.packingList}"/>
                                 <p:outputLabel value="Повагонный лист"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.wagonList}"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.wagonList}"/>
                                 <p:outputLabel value="Сертификат происхождения"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifOrigin}"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.certifOrigin}"/>
                                 <p:outputLabel value="Сертификат нерадиактивности"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifNonRadioactive}"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.certifNonRadioactive}"/>
                                 <p:outputLabel value="Сертификат формы EUR1"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifEUR1}"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.certifEUR1}"/>
                                 <p:outputLabel value="Сводный сертификат качества"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifQualityConsolidated}"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.certifQualityConsolidated}"/>
                             </h:panelGrid> 
                         </p:fieldset>
                         <p:fieldset legend="Количество копий почтой">
                             <h:panelGrid cellspacing="5" columns="2">
                                 <p:outputLabel value="Адрес"/>
-                                <p:inputText size="102" maxlength="250" value="#{createSaleOrderFlow.order.mailAddress}" />
+                                <p:inputText size="102" maxlength="250" value="#{createOrderFlow.order.mailAddress}" />
                             </h:panelGrid>
                             <h:panelGrid cellspacing="5" columns="6">                                
                                 <p:outputLabel value="ЖД накладная"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.rwBill}"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.rwBill}"/>
                                 <p:outputLabel value="Сертификат качества"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifQualityA}"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.certifQualityA}"/>
                                 <p:outputLabel value="Упаковочный лист"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.packingListA}"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.packingListA}"/>
                                 <p:outputLabel value="Повагонный лист"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.wagonListA}"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.wagonListA}"/>
                                 <p:outputLabel value="Сертификат происхождения"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifOriginA}"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.certifOriginA}"/>
                                 <p:outputLabel value="Сертификат нерадиактивности"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifNonRadioactiveA}"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.certifNonRadioactiveA}"/>
                                 <p:outputLabel value="Сертификат формы EUR1"/>
-                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.certifEUR1A}"/>
+                                <p:inputNumber maxValue="10" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.certifEUR1A}"/>
                                 <p:outputLabel value="Периодичность"/>
-                                <p:autoComplete size="10" var="m" value="#{createSaleOrderFlow.order.periodicity}" 
+                                <p:autoComplete size="10" var="m" value="#{createOrderFlow.order.periodicity}" 
                                                 completeMethod="#{docSendIntervalLOV.completeItem}" itemValue="#{m}" 
-                                                itemLabel="#{createSaleOrderFlow.docSendInterval.getTranslateObject(m, sessionActions.language).getDescription()}"
+                                                itemLabel="#{createOrderFlow.docSendInterval.getTranslateObject(m, sessionActions.language).getDescription()}"
                                                 forceSelection="true" dropdown="true"/>
                                 <p:outputLabel value="Тип почты"/>
-                                <p:autoComplete size="15" var="m" value="#{createSaleOrderFlow.order.mailType}" 
+                                <p:autoComplete size="15" var="m" value="#{createOrderFlow.order.mailType}" 
                                                 completeMethod="#{postTypeLOV.completeItem}" itemValue="#{m}" 
-                                                itemLabel="#{createSaleOrderFlow.postType.getTranslateObject(m, sessionActions.language).getDescription()}"
+                                                itemLabel="#{createOrderFlow.postType.getTranslateObject(m, sessionActions.language).getDescription()}"
                                                 forceSelection="true" dropdown="true"/>
                             </h:panelGrid> 
                         </p:fieldset>
@@ -99,41 +99,41 @@
                         <p:fieldset legend="Толерансы" style="margin-bottom: 15px">
                             <h:panelGrid cellspacing="5" cellpadding="0" columns="12">
                                 <p:outputLabel value="%, +/-"/>
-                                <p:inputNumber maxValue="100" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.tolPercentP}"/>
+                                <p:inputNumber maxValue="100" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.tolPercentP}"/>
                                 <p:outputLabel value="/"/>
-                                <p:inputNumber maxValue="100" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.tolPercentM}"/>
+                                <p:inputNumber maxValue="100" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.tolPercentM}"/>
                                 <p:outputLabel value="Основная ЕИ, +/-"/>
-                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.tolUOM1P}"/>
+                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.tolUOM1P}"/>
                                 <p:outputLabel value="/"/>
-                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.tolUOM1M}"/>
+                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.tolUOM1M}"/>
                                 <p:outputLabel value="Вторичная ЕИ, +/-"/>
-                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.tolUOM2P}"/>
+                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.tolUOM2P}"/>
                                 <p:outputLabel value="/"/>
-                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.tolUOM2M}"/>
+                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.tolUOM2M}"/>
                                 <p:outputLabel value="Допуск по длине ЕИ, мм +/-"/>
-                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.tolLengthP}"/>
+                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.tolLengthP}"/>
                                 <p:outputLabel value="/"/>
-                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createSaleOrderFlow.order.tolLengthM}"/>
+                                <p:inputNumber maxValue="9999" minValue="0" size="1" inputStyle="text-align:center" value="#{createOrderFlow.order.tolLengthM}"/>
                             </h:panelGrid>
                         </p:fieldset>
                         <p:fieldset legend="Маркировка">
                             <h:panelGrid cellspacing="5" cellpadding="0" columns="2">
                                 <p:outputLabel value="Маркировка водостойкой краской"/>
-                                <p:autoComplete size="100" var="m" value="#{createSaleOrderFlow.order.markWPaint}" 
+                                <p:autoComplete size="100" var="m" value="#{createOrderFlow.order.markWPaint}" 
                                                 completeMethod="#{markWPaintLOV.completeItem}" itemValue="#{m}" 
-                                                itemLabel="#{createSaleOrderFlow.markWPaint.getTranslateObject(m, sessionActions.language).getDescription()}"
+                                                itemLabel="#{createOrderFlow.markWPaint.getTranslateObject(m, sessionActions.language).getDescription()}"
                                                 forceSelection="true" dropdown="true"/>
                                 <p:outputLabel value="Клеймовка"/>
-                                <p:autoComplete size="100" var="m" value="#{createSaleOrderFlow.order.mark}" 
+                                <p:autoComplete size="100" var="m" value="#{createOrderFlow.order.mark}" 
                                                 completeMethod="#{stampKindLOV.completeItem}" itemValue="#{m}" 
-                                                itemLabel="#{createSaleOrderFlow.stampKind.getTranslateObject(m, sessionActions.language).getDescription()}"
+                                                itemLabel="#{createOrderFlow.stampKind.getTranslateObject(m, sessionActions.language).getDescription()}"
                                                 forceSelection="true" dropdown="true"/>
                             </h:panelGrid>
                             <h:panelGrid cellspacing="5" cellpadding="0" columns="4">
                                 <p:outputLabel value="Дополнительная маркировка"/>
-                                <p:inputText size="60" maxlength="255" value="#{createSaleOrderFlow.order.markAdditional}"/>
+                                <p:inputText size="60" maxlength="255" value="#{createOrderFlow.order.markAdditional}"/>
                                 <p:outputLabel value="Цветная маркировка"/>
-                                <p:inputText value="#{createSaleOrderFlow.order.markColor}"/>
+                                <p:inputText value="#{createOrderFlow.order.markColor}"/>
                             </h:panelGrid>
                             <h:panelGrid cellspacing="5" cellpadding="0" columns="4">
 
@@ -144,18 +144,18 @@
                              toggleSpeed="0" style="margin-bottom:20px;width: 1000px" >
                         <h:panelGrid cellspacing="5" cellpadding="0" columns="2">
                             <p:outputLabel value="Страна назначения"/>
-                            <p:autoComplete value="#{createSaleOrderFlow.order.destCountry}" maxResults="20" size="40"
+                            <p:autoComplete value="#{createOrderFlow.order.destCountry}" maxResults="20" size="40"
                                             completeMethod="#{countryConverter.completeItem}"
                                             var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" itemValue="#{m}" 
                                             converter="#{countryConverter}" 
                                             forceSelection="true"/>
                             <p:outputLabel value="Графы ЖД накладной для особых отметок"/>
-                            <p:inputText size="100" maxlength="255" value="#{createSaleOrderFlow.order.notes}"/>
+                            <p:inputText size="100" maxlength="255" value="#{createOrderFlow.order.notes}"/>
                         </h:panelGrid>
                         <p:fieldset legend="Станции погранпереходов" style="margin-bottom: 15px;margin-top: 15px">
                             <h:panelGrid cellspacing="5" cellpadding="0" columns="6">
                                 <p:outputLabel value="ЖД станция 1"/>
-                                <p:autoComplete value="#{createSaleOrderFlow.order.rws1}" maxResults="20"
+                                <p:autoComplete value="#{createOrderFlow.order.rws1}" maxResults="20"
                                                 completeMethod="#{stationConverter.completeItem}"
                                                 var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
                                                 itemValue="#{m}" converter="#{stationConverter}" 
@@ -165,7 +165,7 @@
                                     </p:column>    
                                 </p:autoComplete>
                                 <p:outputLabel value="ЖД станция 2"/>
-                                <p:autoComplete value="#{createSaleOrderFlow.order.rws2}" maxResults="20"
+                                <p:autoComplete value="#{createOrderFlow.order.rws2}" maxResults="20"
                                                 completeMethod="#{stationConverter.completeItem}"
                                                 var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
                                                 itemValue="#{m}" converter="#{stationConverter}" 
@@ -175,7 +175,7 @@
                                     </p:column>    
                                 </p:autoComplete>
                                 <p:outputLabel value="ЖД станция 3"/>
-                                <p:autoComplete value="#{createSaleOrderFlow.order.rws3}" maxResults="20"
+                                <p:autoComplete value="#{createOrderFlow.order.rws3}" maxResults="20"
                                                 completeMethod="#{stationConverter.completeItem}"
                                                 var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
                                                 itemValue="#{m}" converter="#{stationConverter}" 
@@ -185,7 +185,7 @@
                                     </p:column>    
                                 </p:autoComplete>
                                 <p:outputLabel value="ЖД станция 4"/>
-                                <p:autoComplete value="#{createSaleOrderFlow.order.rws4}" maxResults="20"
+                                <p:autoComplete value="#{createOrderFlow.order.rws4}" maxResults="20"
                                                 completeMethod="#{stationConverter.completeItem}"
                                                 var="m" itemLabel="#{m.getTranslateObject(sessionActions.language).getName()}" 
                                                 itemValue="#{m}" converter="#{stationConverter}" 
@@ -199,20 +199,20 @@
 
                         <h:panelGrid cellspacing="5" cellpadding="0" columns="6">
                             <p:outputLabel value="ЖД тариф"/>
-                            <p:inputNumber maxValue="99999999.00" minValue="0.00" size="7" inputStyle="text-align:right" value="#{createSaleOrderFlow.order.rwTariff}"/>
+                            <p:inputNumber maxValue="99999999.00" minValue="0.00" size="7" inputStyle="text-align:right" value="#{createOrderFlow.order.rwTariff}"/>
                             <p:outputLabel value="Перевалка"/>
-                            <p:inputNumber maxValue="99999999.00" minValue="0.00" size="7" inputStyle="text-align:right" value="#{createSaleOrderFlow.order.transhipment}"/>
+                            <p:inputNumber maxValue="99999999.00" minValue="0.00" size="7" inputStyle="text-align:right" value="#{createOrderFlow.order.transhipment}"/>
                             <p:outputLabel value="Дата подтверждения продажи"/>
-                            <p:calendar value="#{createSaleOrderFlow.order.confirmSellingDate}" showOn="button" 
+                            <p:calendar value="#{createOrderFlow.order.confirmSellingDate}" showOn="button" 
                                         pattern="dd.MM.yyyy" locale="#{sessionActions.language.toLowerCase()}" size="7"/>
                             <p:outputLabel value="Крайняя дата FCR"/>
-                            <p:calendar value="#{createSaleOrderFlow.order.lastFCRDate}" showOn="button" 
+                            <p:calendar value="#{createOrderFlow.order.lastFCRDate}" showOn="button" 
                                         pattern="dd.MM.yyyy" locale="#{sessionActions.language.toLowerCase()}" size="7"/>
                             <p:outputLabel value="Крайняя дата коносамента"/>
-                            <p:calendar value="#{createSaleOrderFlow.order.lastKNSDate}" showOn="button" 
+                            <p:calendar value="#{createOrderFlow.order.lastKNSDate}" showOn="button" 
                                         pattern="dd.MM.yyyy" locale="#{sessionActions.language.toLowerCase()}" size="7"/>
                             <p:outputLabel value="Крайняя дата отгрузки"/>
-                            <p:calendar value="#{createSaleOrderFlow.order.lastRWBDate}" showOn="button" 
+                            <p:calendar value="#{createOrderFlow.order.lastRWBDate}" showOn="button" 
                                         pattern="dd.MM.yyyy" locale="#{sessionActions.language.toLowerCase()}" size="7"/>
 
                         </h:panelGrid>

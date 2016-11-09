@@ -6,7 +6,7 @@ package service;
  */
 public class AccessDeniedException extends Exception {
 
-    private String message;
+    private final String message;
 
     public AccessDeniedException(String message) {
         this.message = message;

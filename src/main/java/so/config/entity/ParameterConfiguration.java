@@ -14,6 +14,8 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  *
@@ -43,9 +45,9 @@ public class ParameterConfiguration implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "parameter_id")
     private List<ParameterConfigurationValues> values;
-       
+
     private Short size;
-    
+
     private Boolean multiple;
 
     public Long getParameter_id() {
@@ -110,7 +112,6 @@ public class ParameterConfiguration implements Serializable {
 //        }
 //
 //    }
-
     public Short getSize() {
         return size;
     }
@@ -118,9 +119,9 @@ public class ParameterConfiguration implements Serializable {
     public void setSize(Short size) {
         this.size = size;
     }
-    
+
     public String getLattribute() {
-        return 'l'+attribute;
+        return 'l' + attribute;
     }
 
     public Boolean getMultiple() {
@@ -130,5 +131,28 @@ public class ParameterConfiguration implements Serializable {
     public void setMultiple(Boolean multiple) {
         this.multiple = multiple;
     }
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ParameterConfiguration)) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+
+        ParameterConfiguration rhs = (ParameterConfiguration) obj;
+        return new EqualsBuilder().
+                // if deriving: appendSuper(super.equals(obj)).
+                append(attribute, rhs.attribute).
+                isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 31). // two randomly chosen prime numbers
+                append(attribute).
+                toHashCode();
+    }
+
 }

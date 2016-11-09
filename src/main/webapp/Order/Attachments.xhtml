@@ -21,8 +21,8 @@
                     </p:steps>
                 </h:form>
                 <h:form prependId="false">
-                    <p:dataTable id="dTable" var="ord" value="#{createSaleOrderFlow.order.attachments}" 
-                                 selection="#{createSaleOrderFlow.selectedAttachments}" 
+                    <p:dataTable id="dTable" var="ord" value="#{createOrderFlow.order.attachments}" 
+                                 selection="#{createOrderFlow.selectedAttachments}" 
                                  rowSelectMode="checkbox" scrollable="true" reflow="true" rows="20" 
                                  paginator="true"  rowKey="#{ord}"  editable="true" editMode="cell"
                                  style="width: 1200px;margin-top:20px" rowsPerPageTemplate="20,40,100" >
@@ -55,17 +55,17 @@
                               resizable="false" width="740">
                         <h:panelGrid id="newAtt" columns="2">
                             <p:outputLabel value="Категория"/>
-                            <p:autoComplete  size="35" value="#{createSaleOrderFlow.attachment.categoryName}" 
+                            <p:autoComplete  size="35" value="#{createOrderFlow.attachment.categoryName}" 
                                              completeMethod="#{attachCategoryLOV.completeItem}" 
                                              forceSelection="true" dropdown="true" />
                             <p:outputLabel value="Текст"/>
-                            <p:inputTextarea autoResize="false" cols="80" rows="10" value="#{createSaleOrderFlow.attachment.categoryText}" maxlength="2000"/>
+                            <p:inputTextarea autoResize="false" cols="80" rows="10" value="#{createOrderFlow.attachment.categoryText}" maxlength="2000"/>
                             <p:outputLabel value="Файл"/>
                             <h:panelGrid columns="1">
-                                <p:outputLabel id="uploadStatus" value="Статус: #{createSaleOrderFlow.uploadStatus}"/>    
-                                <p:fileUpload  fileUploadListener="#{createSaleOrderFlow.handleFileUpload}"  
+                                <p:outputLabel id="uploadStatus" value="Статус: #{createOrderFlow.uploadStatus}"/>    
+                                <p:fileUpload  fileUploadListener="#{orderCBean.handleFileUpload}"  
                                                mode="advanced" dragDropSupport="false" 
-                                               disabled="#{createSaleOrderFlow.uploadStatus==null?false:true}"
+                                               disabled="#{createOrderFlow.uploadStatus==null?false:true}"
                                                update="@this mainMSG uploadStatus" sizeLimit="5242880" fileLimit="1"  
                                                cancelLabel="Отмена" 
                                                uploadLabel="Загрузить" 

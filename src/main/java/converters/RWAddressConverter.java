@@ -13,6 +13,7 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import service.SessionActions;
+import so.saleorder.flows.CreateOrderFlow;
 import so.saleorder.flows.CreateSaleOrderFlow;
 
 /**
@@ -28,7 +29,7 @@ public class RWAddressConverter implements Converter {
     @Inject
     private SessionActions sa;
     @Inject
-    private CreateSaleOrderFlow of;
+    private CreateOrderFlow of;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {

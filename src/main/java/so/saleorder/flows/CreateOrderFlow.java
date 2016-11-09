@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.flow.FlowScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import lookup.beans.LookupCBean;
 import lookup.entities.Lookup;
 import so.entities.Attachment;
@@ -17,9 +19,9 @@ import so.saleorder.beans.SaleOrderCBean;
  *
  * @author savin
  */
-//@Named
-//@FlowScoped("Order")
-public class CreateSaleOrderFlow implements Serializable {
+@Named
+@FlowScoped("Order")
+public class CreateOrderFlow implements Serializable {
     
     @Inject
     private SaleOrderCBean sob;
@@ -120,5 +122,7 @@ public class CreateSaleOrderFlow implements Serializable {
     public void setSelectedAttachments(List<Attachment> selectedAttachments) {
         this.selectedAttachments = selectedAttachments;
     }
+    
+    
     
 }

@@ -7,15 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import javax.faces.flow.FlowScoped;
-import javax.inject.Named;
 
 /**
  *
  * @author savin
  */
-@Named
-@FlowScoped("Order")
+//@Named
+//@FlowScoped("Order")
 public class CreateSaleOrderLineFlow implements Serializable {
 
     private short line_num = 0;

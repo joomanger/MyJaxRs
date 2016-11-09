@@ -174,7 +174,6 @@ public class OpenSaleOrderView implements Serializable {
                 }
             }
 
-//            Collections.sort(cl);
             for (ConfigurationLine l : cl) {
                 set.add(l.getParameter().getAttribute());
             }
@@ -208,14 +207,6 @@ public class OpenSaleOrderView implements Serializable {
         this.disableSave = disableSave;
     }
 
-//    public void saveLines() {
-//        for (int a : linesForSave) {
-//            SaleOrderLine sl = order_lines.get(a);
-//            sl.setConfig_ver_num(getLastConfigVersion(sl.getItem().getId()));
-//            slb.edit(sl, "Строка " + sl.getLine_num() + " сохранена успешно");
-//        }
-//        linesForSave.clear();
-//    }
     public List<String> getSelectedItems() {
         return selectedItems;
     }
@@ -224,37 +215,6 @@ public class OpenSaleOrderView implements Serializable {
         this.selectedItems = selectedItems;
     }
 
-//    public void test(String attr) {
-//        if (selectedItems == null) {
-//            paramMap.remove(attr);
-//        } else {
-//            Set<String> st = new HashSet<>();
-//            for (String s : selectedItems) {
-//                st.add(s);
-//            }
-//            paramMap.put(attr, st);
-//        }
-//    }
-//
-//    public Map<String, Set<String>> getParamMap() {
-//        return paramMap;
-//    }
-//
-//    public void setParamMap(Map<String, Set<String>> paramMap) {
-//        this.paramMap = paramMap;
-//    }
-//    public void addLine() {
-//        SaleOrderLine line = new SaleOrderLine();
-//        line.setHeader_id(sessionBean.getId());
-//        line.setItem(getItem());
-//        Short next_num = sob.getMaxLineNum(sessionBean.getId());
-//        next_num++;
-//        line.setLine_num(next_num);
-//        line.setConfig_ver_num(getLastConfigVersion());
-//        slb.create(line, "Строка успешно добавлена");
-//        updateListLines();
-//        setParameters(getAllLinesAttributes());
-//    }
     public boolean isEditableCell(Long item_id, String attribute) {
         if (editableCells.containsKey(item_id + attribute)) {
             return editableCells.get(item_id + attribute);

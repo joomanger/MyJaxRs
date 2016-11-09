@@ -27,7 +27,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.eclipse.persistence.annotations.PrivateOwned;
 import payment.entities.PaymentTerm;
@@ -108,12 +107,12 @@ public class Order implements Serializable {
     private SysUser traderUser;
 
     @Temporal(TemporalType.DATE)
-    @NotNull(message = "ДАТА ЗАКАЗА: обязательно для заполнения")
+    //@NotNull(message = "ДАТА ЗАКАЗА: обязательно для заполнения")
     @Column(name = "order_date")
     private Date orderDate;
 
     @Temporal(TemporalType.DATE)
-    @NotNull(message = "ДАТА ЗАПРОСА: обязательно для заполнения")
+    //@NotNull(message = "ДАТА ЗАПРОСА: обязательно для заполнения")
     @Column(name = "request_date")
     private Date requestDate;
     @Column(name = "ban_on_manuf")

@@ -20,17 +20,17 @@
                     
                     <h:panelGrid columns="4" cellpadding="7" cellspacing="7">
                         <p:outputLabel value="Номер заказа" />
-                        <p:outputLabel id="orderNumber" value="#{createSaleOrderFlow.order.header_id}" />
+                        <p:outputLabel id="orderNumber" value="#{createOrderFlow.order.header_id}" />
                         <p:outputLabel/>
                         <p:outputLabel/>
                         <p:outputLabel value="Дата заказа" style="text-align: right"/>
-                        <p:calendar value="#{createSaleOrderFlow.order.orderDate}" showOn="button" 
+                        <p:calendar value="#{createOrderFlow.order.orderDate}" showOn="button" 
                                     pattern="dd.MM.yyyy" locale="#{sessionActions.language.toLowerCase()}" size="7"/>
                         <p:outputLabel value="Дата запроса"/>
-                        <p:calendar value="#{createSaleOrderFlow.order.requestDate}" showOn="button" 
+                        <p:calendar value="#{createOrderFlow.order.requestDate}" showOn="button" 
                                     pattern="dd.MM.yyyy" locale="#{sessionActions.language.toLowerCase()}" size="7"/>
                         <p:outputLabel value="Заказчик"/>
-                        <p:autoComplete value="#{createSaleOrderFlow.order.customer}" maxResults="20"
+                        <p:autoComplete value="#{createOrderFlow.order.customer}" maxResults="20"
                                         completeMethod="#{customerConverter.completeItem}"
                                         var="m" itemLabel="#{m.name}" size="70"
                                         itemValue="#{m}" converter="#{customerConverter}" 
@@ -39,34 +39,34 @@
                         </p:autoComplete>    
 
                         <p:outputLabel value="Трейдер ИСД"/>
-                        <p:autoComplete value="#{createSaleOrderFlow.order.traderUser}" maxResults="20"
+                        <p:autoComplete value="#{createOrderFlow.order.traderUser}" maxResults="20"
                                         completeMethod="#{userConverter.completeTrader}" 
                                         var="m" itemLabel="#{m.fullName}" size="20"
                                         itemValue="#{m}" converter="#{userConverter}" 
                                         forceSelection="true" dropdown="true"/>
 
                         <p:outputLabel value="Номер PO клиента" />
-                        <p:inputText  value="#{createSaleOrderFlow.order.cust_po_number}" maxlength="12" size="10" style="text-align: right "/>
+                        <p:inputText  value="#{createOrderFlow.order.cust_po_number}" maxlength="12" size="10" style="text-align: right "/>
 
                         <p:outputLabel value="Автор"/>
                         <p:outputLabel value="#{sessionActions.currentUser.fullName}"/>
 
                         <p:outputLabel value="Грузополучатель"/>
-                        <p:autoComplete id="shp" value="#{createSaleOrderFlow.order.shp_customer}" maxResults="20"
+                        <p:autoComplete id="shp" value="#{createOrderFlow.order.shp_customer}" maxResults="20"
                                         completeMethod="#{customerConverter.completeSHP}"
                                         var="m" itemLabel="#{m.name}" size="70"
                                         itemValue="#{m}" converter="#{customerConverter}" 
                                         forceSelection="true" dropdown="true">
-                            <p:ajax event="itemSelect" listener="#{createSaleOrderFlow.order.setShp_address(null)}" update="ashp rwshp"/>
+                            <p:ajax event="itemSelect" listener="#{createOrderFlow.order.setShp_address(null)}" update="ashp rwshp"/>
                         </p:autoComplete>    
 
                         <p:outputLabel value="Валюта"/>
-                        <p:autoComplete  size="5" value="#{createSaleOrderFlow.order.currency}" 
+                        <p:autoComplete  size="5" value="#{createOrderFlow.order.currency}" 
                                          completeMethod="#{currencyLOV.completeItem}" 
                                          forceSelection="true" dropdown="true" />
 
                         <p:outputLabel value="Адрес грузополучателя"/>
-                        <p:autoComplete id="ashp" value="#{createSaleOrderFlow.order.shp_address}" 
+                        <p:autoComplete id="ashp" value="#{createOrderFlow.order.shp_address}" 
                                         maxResults="20"
                                         completeMethod="#{addressConverter.completeAddressSHP}" size="70"
                                         var="m" 
@@ -89,18 +89,18 @@
                             <p:column headerText="Улица">
                                 #{m.fullAddress}
                             </p:column>
-                            <p:ajax event="itemSelect" listener="#{createSaleOrderFlow.order.setShp_rwaddress(null)}" update="rwshp"/>
+                            <p:ajax event="itemSelect" listener="#{createOrderFlow.order.setShp_rwaddress(null)}" update="rwshp"/>
                         </p:autoComplete> 
 
                         <p:outputLabel value="Пункт поставки"/>
-                        <p:autoComplete size="30" value="#{createSaleOrderFlow.order.fob}" 
+                        <p:autoComplete size="30" value="#{createOrderFlow.order.fob}" 
                                         completeMethod="#{fobLOV.completeItem}" var="m" maxResults="20"
                                         forceSelection="true" itemValue="#{m}" 
                                         itemLabel="#{m}"
                                         dropdown="true"/>
 
                         <p:outputLabel value="ЖД реквизиты"/>
-                        <p:autoComplete id="rwshp" value="#{createSaleOrderFlow.order.shp_rwaddress}" 
+                        <p:autoComplete id="rwshp" value="#{createOrderFlow.order.shp_rwaddress}" 
                                         maxResults="20"
                                         completeMethod="#{RWAddressConverter.completeRWAddress}" size="70"
                                         var="m" 
@@ -120,30 +120,30 @@
                         </p:autoComplete>
 
                         <p:outputLabel value="Условие поставки"/>
-                        <p:autoComplete size="10" value="#{createSaleOrderFlow.order.freightTerm}" 
+                        <p:autoComplete size="10" value="#{createOrderFlow.order.freightTerm}" 
                                         completeMethod="#{freightTermLOV.completeItem}" var="m" maxResults="20"
                                         forceSelection="true" itemValue="#{m}" 
                                         itemLabel="#{m}"
                                         dropdown="true"/>
 
                         <p:outputLabel value="Контрактодержатель"/>
-                        <p:autoComplete id="inv" value="#{createSaleOrderFlow.order.inv_customer}" maxResults="20"
+                        <p:autoComplete id="inv" value="#{createOrderFlow.order.inv_customer}" maxResults="20"
                                         completeMethod="#{customerConverter.completeINV}"
                                         var="m" itemLabel="#{m.name}" size="70"
                                         itemValue="#{m}" converter="#{customerConverter}" 
                                         forceSelection="true" dropdown="true">
-                            <p:ajax event="itemSelect" listener="#{createSaleOrderFlow.order.setInv_address(null)}" update="ainv cntr"/>
+                            <p:ajax event="itemSelect" listener="#{createOrderFlow.order.setInv_address(null)}" update="ainv cntr"/>
                         </p:autoComplete> 
 
                         <p:outputLabel value="Условие платежа"/>
-                        <p:autoComplete value="#{createSaleOrderFlow.order.paymentTerm}" maxResults="20"
+                        <p:autoComplete value="#{createOrderFlow.order.paymentTerm}" maxResults="20"
                                         completeMethod="#{paymentTermConverter.completeItem}" 
                                         var="m" itemLabel="#{m.condition}" size="70"
                                         itemValue="#{m}" converter="#{paymentTermConverter}" 
                                         forceSelection="true" dropdown="true"/>
 
                         <p:outputLabel value="Адрес контрактодержателя"/>
-                        <p:autoComplete id="ainv" value="#{createSaleOrderFlow.order.inv_address}" 
+                        <p:autoComplete id="ainv" value="#{createOrderFlow.order.inv_address}" 
                                         maxResults="20"
                                         completeMethod="#{addressConverter.completeAddressINV}" size="70"
                                         var="m" 
@@ -169,7 +169,7 @@
                         </p:autoComplete>   
 
                         <p:outputLabel value="Контракт"/>
-                        <p:autoComplete id="cntr" value="#{createSaleOrderFlow.order.contract}" maxResults="20"
+                        <p:autoComplete id="cntr" value="#{createOrderFlow.order.contract}" maxResults="20"
                                         completeMethod="#{contractConverter.completeItemByINV}" 
                                         var="m" itemLabel="#{m.contractNumber}" size="20"
                                         itemValue="#{m}" converter="#{contractConverter}" 

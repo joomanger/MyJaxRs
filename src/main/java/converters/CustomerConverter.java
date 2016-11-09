@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import so.saleorder.flows.CreateSaleOrderFlow;
+import so.saleorder.flows.CreateOrderFlow;
 
 /**
  *
@@ -25,7 +25,7 @@ public class CustomerConverter implements Converter {
     @Inject
     private CustomerCBean client;
     @Inject
-    private CreateSaleOrderFlow of;
+    private CreateOrderFlow of;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
