@@ -77,8 +77,6 @@ public class OrderEJB extends AbstractEJB2<Order> {
                 out.write(bytes, 0, read);
             }
             out.flush();
-//            orderFlow.setUploadStatus(event.getFile().getFileName() + " загружен успешно");
-//            orderFlow.getAttachment().setFileName(filename);
             MessageSender.sendFacesContextMessage(FacesMessage.SEVERITY_INFO, event.getFile().getFileName() + " загружен успешно");
         } catch (IOException ex) {
             throw ex;

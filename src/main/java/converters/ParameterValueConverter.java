@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import so.config.beans.ParameterCBean;
 import so.config.beans.ParameterValuesCBean;
-import so.saleorder.beans.OpenSaleOrderView;
+import so.saleorder.flows.CreateOrderLineFlow;
 
 /**
  *
@@ -30,7 +30,7 @@ public class ParameterValueConverter implements Converter {
     private ParameterCBean pcb;
 
     @Inject
-    private OpenSaleOrderView vb;
+    private CreateOrderLineFlow vb;
 
     private Long parameter_id;
 
@@ -78,7 +78,7 @@ public class ParameterValueConverter implements Converter {
 
     public List<ParameterConfigurationValues> completeValue(String query) {
 
-        List<ParameterConfigurationValues> allItems = pcb.getValues(vb.getHeader_id());
+        List<ParameterConfigurationValues> allItems = pcb.getValues(vb.getParameter_id());
         List<ParameterConfigurationValues> filteredItems = new ArrayList<>();
 
         for (ParameterConfigurationValues item : allItems) {
@@ -91,7 +91,7 @@ public class ParameterValueConverter implements Converter {
     }
 
     public List<String> completeValue2(String query) {
-        List<ParameterConfigurationValues> allItems = pcb.getValues(vb.getHeader_id());
+        List<ParameterConfigurationValues> allItems = pcb.getValues(vb.getParameter_id());
         List<String> filteredItems = new ArrayList<>();
 
         for (ParameterConfigurationValues item : allItems) {

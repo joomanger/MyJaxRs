@@ -14,7 +14,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import service.SessionActions;
 import so.saleorder.flows.CreateOrderFlow;
-import so.saleorder.flows.CreateSaleOrderFlow;
 
 /**
  *

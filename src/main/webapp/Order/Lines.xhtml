@@ -71,7 +71,16 @@
                                 <c:choose>
                                     <c:when test="#{attrs.parameterType=='TABLE'}">
                                         <p:cellEditor rendered="#{orderCBean.isEditableCell(ord.item.item_id,attrs.attribute)}">
-                                            <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}"/></f:facet>
+
+                                            <f:facet name="output">
+                                                <c:if test="#{attrs.multiple}"> 
+                                                    <p:outputLabel value="#{ord.aggregateValues(ord[attrs.lattribute])}"/>
+                                                </c:if>   
+                                                <c:if test="#{!attrs.multiple}">
+                                                    <p:outputLabel value="#{ord[attrs.attribute]}"/>
+                                                </c:if>
+                                            </f:facet>
+
                                             <f:facet name="input">
                                                 <c:if test="#{attrs.multiple}"> 
                                                     <p:autoComplete  value="#{ord[attrs.lattribute]}" 
@@ -80,9 +89,9 @@
                                                                      maxResults="10"
                                                                      forceSelection="true"
                                                                      >
-                                                        <p:ajax event="keypress"  listener="#{openSaleOrderView.setHeader_id(attrs.parameter_id)}" />
-                                                        <p:ajax event="itemSelect"/>
-                                                        <p:ajax event="itemUnselect"/>
+                                                        <p:ajax event="keypress"  listener="#{createOrderLineFlow.setParameter_id(attrs.parameter_id)}" />
+                                                        <!--                                                        <p:ajax event="itemSelect"/>
+                                                                                                                <p:ajax event="itemUnselect"/>-->
                                                     </p:autoComplete>
                                                 </c:if>   
                                                 <c:if test="#{!attrs.multiple}"> 
@@ -91,7 +100,7 @@
                                                                      maxResults="10"
                                                                      forceSelection="true"
                                                                      >
-                                                        <p:ajax event="keypress"  listener="#{openSaleOrderView.setHeader_id(attrs.parameter_id)}" />
+                                                        <p:ajax event="keypress"  listener="#{createOrderLineFlow.setParameter_id(attrs.parameter_id)}" />
                                                     </p:autoComplete>
                                                 </c:if>
                                             </f:facet>

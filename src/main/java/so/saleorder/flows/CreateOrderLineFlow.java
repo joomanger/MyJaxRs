@@ -26,6 +26,7 @@ public class CreateOrderLineFlow implements Serializable {
     private List<OrderLine> selectedLines = new ArrayList<>();
     private Set<ParameterConfiguration> parameters;
     private Map<Long, List<ConfigurationLine>> editableCells = new HashMap<>();
+    private Long parameter_id;
     
     private short lineNumber;
 
@@ -76,5 +77,14 @@ public class CreateOrderLineFlow implements Serializable {
     public void setEditableCells(Map<Long, List<ConfigurationLine>> editableCells) {
         this.editableCells = editableCells;
     }
+
+    public Long getParameter_id() {
+        return parameter_id;
+    }
+
+    public void setParameter_id(Long parameter_id) {
+        this.parameter_id = parameter_id;
+    }
+    
     
 }
