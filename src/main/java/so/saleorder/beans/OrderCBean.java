@@ -2,6 +2,7 @@ package so.saleorder.beans;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import javax.enterprise.context.RequestScoped;
@@ -117,10 +118,11 @@ public class OrderCBean {
 
     private Set<ParameterConfiguration> getAllConfigParameters() {
         Set<Long> items = new HashSet<>();
-        Set<ParameterConfiguration> p = new HashSet<>();
+        Set<ParameterConfiguration> p = new LinkedHashSet<>();
         for (OrderLine line : orderFlow.getOrder().getLines()) {
             long item_id = line.getItem().getItem_id();
             if (!items.contains(item_id)) {
+                System.out.println("putting to Map<item_id,List<ConfigurationLine>>");
                 items.add(item_id);
                 Configuration config = configClient.getItem(item_id, configClient.getLastVersion(item_id));
                 if (config != null) {

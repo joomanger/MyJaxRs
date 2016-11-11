@@ -85,6 +85,5 @@ public class CreateOrderLineFlow implements Serializable {
     public void setParameter_id(Long parameter_id) {
         this.parameter_id = parameter_id;
     }
-    
-    
+
 }

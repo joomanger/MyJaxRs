@@ -26,22 +26,31 @@
                                  rowKey="#{ord}" editable="true" scrollable="true" rows="20" 
                                  paginator="true" var="ord" value="#{createOrderLineFlow.lines}" 
                                  selection="#{createOrderLineFlow.selectedLines}" 
-                                 style="width: 1500px;margin-top:20px;" rowsPerPageTemplate="20,40,100" lazy="true"  
-                                 >
+                                 style="width: 1000px;margin-top:20px;" rowsPerPageTemplate="20,40,100" lazy="true">
                         <f:facet name="header">
                             <p:outputLabel value="Новая позиция: "/>
                             <p:autoComplete id="item" value="#{createOrderLineFlow.item}" completeMethod="#{itemConverter.completeItem}" 
-                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" dropdown="true" style="margin-right: 40px"/>
+                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" 
+                                            dropdown="true" style="margin-right: 40px"/>
                             <p:commandButton id="btnSendParam" value="Добавить" actionListener="#{orderCBean.addLine()}" update="dLines mainMSG"/>
                         </f:facet>
+                        <p:column style="width:10px">
+                            <p:rowToggler />
+                        </p:column>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:column  style="width:12px; text-align: center">
                             <h:outputText value="#{ord.lineNumber}" />
                         </p:column>
+                        <p:column headerText="LOT" style="width:30px; text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{ord.lot}" /></f:facet>
+                                <f:facet name="input"><p:inputText maxlength="3"  value="#{ord.lot}" /></f:facet>
+                            </p:cellEditor>
+                        </p:column>
                         <p:column headerText="Item" style="width:100px;text-align: center">
                             <h:outputText value="#{ord.item.name}" />
                         </p:column>
-                        <p:column headerText="Quantity" style="width:80px; text-align: right">
+                        <p:column headerText="Quantity" style="width:60px; text-align: right">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{ord.quantity}" /></f:facet>
                                 <f:facet name="input"><p:inputText  value="#{ord.quantity}" /></f:facet>
@@ -50,7 +59,7 @@
                         <p:column headerText="UOM" style="width:30px;text-align: center">
                             <h:outputText value="#{ord.item.uom1}" />
                         </p:column>
-                        <p:column headerText="Quantity2" style="width:80px; text-align: right">
+                        <p:column headerText="Quantity2" style="width:60px; text-align: right">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{ord.quantity2}" /></f:facet>
                                 <f:facet name="input"><p:inputText  value="#{ord.quantity2}" /></f:facet>
@@ -66,68 +75,74 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <c:forEach items="#{createOrderLineFlow.parameters}" var="attrs">
-                            <p:column headerText="#{attrs.columnName}" style="width: #{attrs.size}px; text-align: #{attrs.parameterType=='TABLE'?'Center':'Right'}">
-                                <c:choose>
-                                    <c:when test="#{attrs.parameterType=='TABLE'}">
-                                        <p:cellEditor rendered="#{orderCBean.isEditableCell(ord.item.item_id,attrs.attribute)}">
+                        <p:rowExpansion>
+                            <p:panel style="margin-bottom: 20px" > 
+                                <p:dataTable tabindex="1" value="#{ord}" editable="true" editMode="cell" scrollable="true" style="margin: 5px">
+                                    <c:forEach items="#{createOrderLineFlow.parameters}" var="attrs">
+                                        <p:column headerText="#{attrs.columnName}" style="width: #{attrs.size}px; text-align: #{attrs.parameterType=='TABLE'?'Center':'Right'}">
+                                            <c:choose>
+                                                <c:when test="#{attrs.parameterType=='TABLE'}">
+                                                    <p:cellEditor rendered="#{orderCBean.isEditableCell(ord.item.item_id,attrs.attribute)}">
+                                                        <f:facet name="output">
+                                                            <c:if test="#{attrs.multiple}"> 
+                                                                <p:outputLabel value="#{ord.aggregateValues(ord[attrs.lattribute])}"/>
+                                                            </c:if>   
+                                                            <c:if test="#{!attrs.multiple}">
+                                                                <p:outputLabel value="#{ord[attrs.attribute]}"/>
+                                                            </c:if>
+                                                        </f:facet>
 
-                                            <f:facet name="output">
-                                                <c:if test="#{attrs.multiple}"> 
-                                                    <p:outputLabel value="#{ord.aggregateValues(ord[attrs.lattribute])}"/>
-                                                </c:if>   
-                                                <c:if test="#{!attrs.multiple}">
-                                                    <p:outputLabel value="#{ord[attrs.attribute]}"/>
-                                                </c:if>
-                                            </f:facet>
-
-                                            <f:facet name="input">
-                                                <c:if test="#{attrs.multiple}"> 
-                                                    <p:autoComplete  value="#{ord[attrs.lattribute]}" 
-                                                                     completeMethod="#{parameterValueConverter.completeValue2}" 
-                                                                     multiple="true" 
-                                                                     maxResults="10"
-                                                                     forceSelection="true"
-                                                                     >
-                                                        <p:ajax event="keypress"  listener="#{createOrderLineFlow.setParameter_id(attrs.parameter_id)}" />
-                                                        <!--                                                        <p:ajax event="itemSelect"/>
-                                                                                                                <p:ajax event="itemUnselect"/>-->
-                                                    </p:autoComplete>
-                                                </c:if>   
-                                                <c:if test="#{!attrs.multiple}"> 
-                                                    <p:autoComplete  value="#{ord[attrs.attribute]}" 
-                                                                     completeMethod="#{parameterValueConverter.completeValue2}" 
-                                                                     maxResults="10"
-                                                                     forceSelection="true"
-                                                                     >
-                                                        <p:ajax event="keypress"  listener="#{createOrderLineFlow.setParameter_id(attrs.parameter_id)}" />
-                                                    </p:autoComplete>
-                                                </c:if>
-                                            </f:facet>
-                                        </p:cellEditor>
-                                    </c:when>
-                                    <c:when test="#{attrs.parameterType=='DOUBLE'}">
-                                        <p:cellEditor rendered="#{orderCBean.isEditableCell(ord.item.item_id,attrs.attribute)}">
-                                            <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}"/></f:facet>
-                                            <f:facet name="input"><p:inputNumber  required="true" value="#{ord[attrs.attribute]}" /></f:facet>
-                                        </p:cellEditor>
-                                    </c:when>
-                                    <c:when test="#{attrs.parameterType=='INTEGER'}">
-                                        <p:cellEditor rendered="#{orderCBean.isEditableCell(ord.item.item_id,attrs.attribute)}">
-                                            <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" /></f:facet>
-                                            <f:facet name="input"><p:inputNumber required="true" value="#{ord[attrs.attribute]}" /></f:facet>
-                                        </p:cellEditor>
-                                    </c:when>
-                                    <c:when test="#{attrs.parameterType=='STRING'}">
-                                        <p:cellEditor rendered="#{orderCBean.isEditableCell(ord.item.item_id,attrs.attribute)}">
-                                            <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" /></f:facet>
-                                            <f:facet name="input"><p:inputText value="#{ord[attrs.attribute]}" /></f:facet>
-                                        </p:cellEditor>
-                                    </c:when>
-                                    <c:otherwise/>
-                                </c:choose>
-                            </p:column>
-                        </c:forEach>
+                                                        <f:facet name="input">
+                                                            <c:if test="#{attrs.multiple}"> 
+                                                                <p:autoComplete  value="#{ord[attrs.lattribute]}" 
+                                                                                 completeMethod="#{parameterValueConverter.completeValue2}" 
+                                                                                 multiple="true" 
+                                                                                 maxResults="10"
+                                                                                 forceSelection="true"
+                                                                                 >
+                                                                    <p:ajax event="keypress"  listener="#{createOrderLineFlow.setParameter_id(attrs.parameter_id)}" />
+                                                                    <!--                                                        <p:ajax event="itemSelect"/>
+                                                                                                                            <p:ajax event="itemUnselect"/>-->
+                                                                </p:autoComplete>
+                                                            </c:if>   
+                                                            <c:if test="#{!attrs.multiple}"> 
+                                                                <p:autoComplete  value="#{ord[attrs.attribute]}" 
+                                                                                 completeMethod="#{parameterValueConverter.completeValue2}" 
+                                                                                 maxResults="10"
+                                                                                 forceSelection="true"
+                                                                                 >
+                                                                    <p:ajax event="keypress"  listener="#{createOrderLineFlow.setParameter_id(attrs.parameter_id)}" />
+                                                                </p:autoComplete>
+                                                            </c:if>
+                                                        </f:facet>
+                                                    </p:cellEditor>
+                                                </c:when>
+                                                <c:when test="#{attrs.parameterType=='DOUBLE'}">
+                                                    <p:cellEditor rendered="#{orderCBean.isEditableCell(ord.item.item_id,attrs.attribute)}">
+                                                        <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}"/></f:facet>
+                                                        <f:facet name="input"><p:inputNumber  value="#{ord[attrs.attribute]}" /></f:facet>
+                                                    </p:cellEditor>
+                                                </c:when>
+                                                <c:when test="#{attrs.parameterType=='INTEGER'}">
+                                                    <p:cellEditor rendered="#{orderCBean.isEditableCell(ord.item.item_id,attrs.attribute)}">
+                                                        <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" /></f:facet>
+                                                        <f:facet name="input"><p:inputNumber decimalPlaces="0"  value="#{ord[attrs.attribute]}" /></f:facet>
+                                                    </p:cellEditor>
+                                                </c:when>
+                                                <c:when test="#{attrs.parameterType=='STRING'}">
+                                                    <p:cellEditor rendered="#{orderCBean.isEditableCell(ord.item.item_id,attrs.attribute)}">
+                                                        <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" /></f:facet>
+                                                        <f:facet name="input"><p:inputText value="#{ord[attrs.attribute]}" /></f:facet>
+                                                    </p:cellEditor>
+                                                </c:when>
+                                                <c:otherwise/>
+                                            </c:choose>
+                                        </p:column>
+                                            
+                                    </c:forEach>
+                                </p:dataTable>
+                            </p:panel>
+                        </p:rowExpansion>
                         <f:facet name="footer" >
                             <p:commandButton process="dLines" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()"/>
                         </f:facet>
