@@ -10,50 +10,53 @@
         <ui:composition template="./../../WEB-INF/template.xhtml">
             <ui:define name="content">
                 <h:form id="paramHeader" prependId="false">
+                    <p:focus for="item"/>
                     <p:fieldset legend="Новая конфигурация" style="width: 150px; margin-bottom: 10px"> 
                         <h:panelGrid id="yyy" columns="2" cellpadding="5">
                             <p:outputLabel value="Позиция"/>
-                            <p:autoComplete required="true"  class="inputTextAC" value="#{newConfigView.configuration.item}" completeMethod="#{itemConverter.completeItem}"
-                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" >
+                            <p:autoComplete id="item" required="true" requiredMessage="Позиция обязательна для заполнения" size="30" value="#{newConfigView.entity.item}" completeMethod="#{itemConverter.completeItem}"
+                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" dropdown="true">
                             </p:autoComplete>
                             <p:outputLabel value="Описание"/>
-                            <p:inputText value="#{newConfigView.configuration.description}" />
-                            <p:commandButton id="btnBack" value="Back" action="configs" immediate="true"/>
+                            <p:inputText value="#{newConfigView.entity.description}" size="50" maxlength="255" />
                             <p:commandButton id="btnSend" style="display: none" />
                         </h:panelGrid>
+
+                        <p:dataTable id="dTable" var="ord" value="#{newConfigView.entity.lines}" selection="#{newConfigView.selectedEntityLines}" 
+                                     rowSelectMode="checkbox" editMode="cell" editable="true" 
+                                     scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.line_num}" 
+                                     style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                            <f:facet name="header">
+                                <p:outputLabel value="Список параметров"/>
+                            </f:facet>
+
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                            <p:column headerText="п/п" style="width:52px; text-align: center">
+                                <h:outputText value="#{ord.line_num}" />
+                            </p:column>
+                            <p:column headerText="Параметр" style="width:100%;text-align: center">
+                                <p:cellEditor>
+                                    <f:facet name="output"><p:outputLabel value="#{ord.parameter.name}" /></f:facet>
+                                    <f:facet name="input">
+                                        <p:autoComplete  required="true"  
+                                                         value="#{ord.parameter}" size="30"
+                                                         completeMethod="#{parameterConverter.completeParameter}"
+                                                         var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{parameterConverter}" forceSelection="true" >
+                                        </p:autoComplete>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <f:facet name="footer" >
+                                <p:autoComplete value="#{newConfigView.paramConfig}" completeMethod="#{parameterConverter.completeParameter}"
+                                                var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{parameterConverter}" maxResults="20"
+                                                forceSelection="true" dropdown="true"/>
+                                <p:commandButton value="Добавить" actionListener="#{configCBean.addParameter}" update="dTable" style="margin-left: 10px" />
+                                <p:commandButton value="Удалить"  actionListener="#{configCBean.deleteItems}" style="margin-left: 10px"  update="dTable" />
+                                <p:commandButton value="Сохранить" action="#{configCBean.addItemTable}" onclick="document.getElementById('btnSend').click()" immediate="true" style="margin-left: 40px" update="mainMSG"/>
+                            </f:facet>
+                        </p:dataTable>
+                        <p:commandButton value="Назад" action="configs" immediate="true" style="margin-top: 15px"/>
                     </p:fieldset>  
-                    <h1 style="width: 330px;">Список значений</h1>
-                    <p:dataTable id="dTable" var="ord" value="#{newConfigView.lines}" selection="#{newConfigView.selectedLines}" 
-                                 rowSelectMode="checkbox" editMode="cell" editable="true" 
-                                 scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.line_num}" 
-                                 style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
-                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                        <p:column headerText="Line" style="width:52px; text-align: center" sortBy="#{ord.line_num}">
-                            <h:outputText value="#{ord.line_num}" />
-                        </p:column>
-                        <p:column headerText="Item" style="width:100%;text-align: center">
-                            <p:autoComplete  required="true"  
-                                             value="#{ord.parameter}" 
-                                             completeMethod="#{parameterConverter.completeParameter}"
-                                             var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{parameterConverter}" forceSelection="true" >
-                            </p:autoComplete>
-                        </p:column>
-                        <f:facet name="footer" >
-                            <p:autoComplete id="addTextItem"  onkeypress="if (event.keyCode === 13) {
-                                        document.getElementsByid('btnAdd').click();
-                                    }"
-                                            value="#{newConfigView.paramConfig}" completeMethod="#{parameterConverter.completeParameter}"
-                                            var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{parameterConverter}" forceSelection="true" >
-                                <p:ajax event="itemSelect">
-                                    <p:focus for="btnAdd"/>
-                                </p:ajax>
-                            </p:autoComplete>
-                            <p:focus for="addTextItem"/>
-                            <p:commandButton id="btnAdd" value="Добавить" actionListener="#{configCBean.addParameter}" update="dTable" />
-                            <p:commandButton value="Удалить"  actionListener="#{configCBean.deleteItems}" style="margin-left: 10px"  update="dTable" />
-                            <p:commandButton value="Сохранить" action="#{configCBean.addItemTable}" onclick="document.getElementById('btnSend').click()" immediate="true" style="margin-left: 40px" update="mainMSG"/>
-                        </f:facet>
-                    </p:dataTable>
                 </h:form>
             </ui:define>
         </ui:composition>

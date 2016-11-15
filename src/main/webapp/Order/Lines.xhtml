@@ -26,7 +26,8 @@
                                  rowKey="#{ord}" editable="true" scrollable="true" rows="20" 
                                  paginator="true" var="ord" value="#{createOrderLineFlow.lines}" 
                                  selection="#{createOrderLineFlow.selectedLines}" 
-                                 style="width: 1000px;margin-top:20px;" rowsPerPageTemplate="20,40,100" lazy="true">
+                                 style="width: 1200px;margin-top:20px;" rowsPerPageTemplate="20,40,100" lazy="true">
+                        <p:ajax event="cellEdit"  />
                         <f:facet name="header">
                             <p:outputLabel value="Новая позиция: "/>
                             <p:autoComplete id="item" value="#{createOrderLineFlow.item}" completeMethod="#{itemConverter.completeItem}" 
@@ -39,21 +40,21 @@
                         </p:column>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:column  style="width:12px; text-align: center">
-                            <h:outputText value="#{ord.lineNumber}" />
+                            <p:outputLabel value="#{ord.lineNumber}" />
                         </p:column>
                         <p:column headerText="LOT" style="width:30px; text-align: center">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{ord.lot}" /></f:facet>
-                                <f:facet name="input"><p:inputText maxlength="3"  value="#{ord.lot}" /></f:facet>
+                                <f:facet name="input"><p:inputText tabindex="1" maxlength="3"  value="#{ord.lot}" /></f:facet>
                             </p:cellEditor>
                         </p:column>
-                        <p:column headerText="Item" style="width:100px;text-align: center">
-                            <h:outputText value="#{ord.item.name}" />
+                        <p:column  headerText="Item" style="width:100px;text-align: center">
+                            <p:outputLabel tabindex="2" value="#{ord.item.name}" />
                         </p:column>
                         <p:column headerText="Quantity" style="width:60px; text-align: right">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{ord.quantity}" /></f:facet>
-                                <f:facet name="input"><p:inputText  value="#{ord.quantity}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{ord.quantity}" /></f:facet>
                             </p:cellEditor>
                         </p:column>
                         <p:column headerText="UOM" style="width:30px;text-align: center">
@@ -71,24 +72,24 @@
                         <p:column headerText="Price" style="width:60px; text-align: right"> 
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{ord.price}" /></f:facet>
-                                <f:facet name="input"><p:inputText id="priceInput" value="#{ord.price}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputNumber  maxValue="99999999.00" minValue="0.00"
+                                                    size="5" inputStyle="text-align:right"
+                                                    value="#{ord.price}"/>
+                                </f:facet>
                             </p:cellEditor>
                         </p:column>
-
-                        <p:rowExpansion>
-                            <p:panel style="margin-bottom: 20px" > 
-                                <p:dataTable tabindex="1" value="#{ord}" editable="true" editMode="cell" scrollable="true" style="margin: 5px">
-                                    <c:forEach items="#{createOrderLineFlow.parameters}" var="attrs">
-                                        <p:column headerText="#{attrs.columnName}" style="width: #{attrs.size}px; text-align: #{attrs.parameterType=='TABLE'?'Center':'Right'}">
+                        <c:forEach items="#{createOrderLineFlow.parameters}" var="attrs">
+                                        <p:column  headerText="#{attrs.columnName}" style="width: #{attrs.size}px; text-align: #{attrs.parameterType=='TABLE'?'Center':'Right'}">
                                             <c:choose>
                                                 <c:when test="#{attrs.parameterType=='TABLE'}">
                                                     <p:cellEditor rendered="#{orderCBean.isEditableCell(ord.item.item_id,attrs.attribute)}">
                                                         <f:facet name="output">
                                                             <c:if test="#{attrs.multiple}"> 
-                                                                <p:outputLabel value="#{ord.aggregateValues(ord[attrs.lattribute])}"/>
+                                                                <h:outputText  value="#{ord.aggregateValues(ord[attrs.lattribute])}"/>
                                                             </c:if>   
                                                             <c:if test="#{!attrs.multiple}">
-                                                                <p:outputLabel value="#{ord[attrs.attribute]}"/>
+                                                                <h:outputText  value="#{ord[attrs.attribute]}"/>
                                                             </c:if>
                                                         </f:facet>
 
@@ -101,8 +102,6 @@
                                                                                  forceSelection="true"
                                                                                  >
                                                                     <p:ajax event="keypress"  listener="#{createOrderLineFlow.setParameter_id(attrs.parameter_id)}" />
-                                                                    <!--                                                        <p:ajax event="itemSelect"/>
-                                                                                                                            <p:ajax event="itemUnselect"/>-->
                                                                 </p:autoComplete>
                                                             </c:if>   
                                                             <c:if test="#{!attrs.multiple}"> 
@@ -110,6 +109,7 @@
                                                                                  completeMethod="#{parameterValueConverter.completeValue2}" 
                                                                                  maxResults="10"
                                                                                  forceSelection="true"
+
                                                                                  >
                                                                     <p:ajax event="keypress"  listener="#{createOrderLineFlow.setParameter_id(attrs.parameter_id)}" />
                                                                 </p:autoComplete>
@@ -119,27 +119,30 @@
                                                 </c:when>
                                                 <c:when test="#{attrs.parameterType=='DOUBLE'}">
                                                     <p:cellEditor rendered="#{orderCBean.isEditableCell(ord.item.item_id,attrs.attribute)}">
-                                                        <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}"/></f:facet>
-                                                        <f:facet name="input"><p:inputNumber  value="#{ord[attrs.attribute]}" /></f:facet>
+                                                        <f:facet name="output"><h:outputText  value="#{ord[attrs.attribute]}"/></f:facet>
+                                                        <f:facet name="input"><p:inputNumber  value="#{ord[attrs.attribute]}"  /></f:facet>
                                                     </p:cellEditor>
                                                 </c:when>
                                                 <c:when test="#{attrs.parameterType=='INTEGER'}">
                                                     <p:cellEditor rendered="#{orderCBean.isEditableCell(ord.item.item_id,attrs.attribute)}">
-                                                        <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" /></f:facet>
-                                                        <f:facet name="input"><p:inputNumber decimalPlaces="0"  value="#{ord[attrs.attribute]}" /></f:facet>
+                                                        <f:facet name="output"><h:outputText  value="#{ord[attrs.attribute]}" /></f:facet>
+                                                        <f:facet name="input"><p:inputNumber  decimalPlaces="0"  value="#{ord[attrs.attribute]}" /></f:facet>
                                                     </p:cellEditor>
                                                 </c:when>
                                                 <c:when test="#{attrs.parameterType=='STRING'}">
                                                     <p:cellEditor rendered="#{orderCBean.isEditableCell(ord.item.item_id,attrs.attribute)}">
-                                                        <f:facet name="output"><p:outputLabel value="#{ord[attrs.attribute]}" /></f:facet>
-                                                        <f:facet name="input"><p:inputText value="#{ord[attrs.attribute]}" /></f:facet>
+                                                        <f:facet name="output"><h:outputText  value="#{ord[attrs.attribute]}" /></f:facet>
+                                                        <f:facet name="input"><p:inputText  value="#{ord[attrs.attribute]}" /></f:facet>
                                                     </p:cellEditor>
                                                 </c:when>
-                                                <c:otherwise/>
                                             </c:choose>
                                         </p:column>
-                                            
                                     </c:forEach>
+
+                        <p:rowExpansion>
+                            <p:panel style="margin-bottom: 20px" > 
+                                <p:dataTable value="#{ord}" editable="true" editMode="cell" style="margin: 5px">
+                                    
                                 </p:dataTable>
                             </p:panel>
                         </p:rowExpansion>

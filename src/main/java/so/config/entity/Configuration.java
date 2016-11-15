@@ -2,9 +2,13 @@ package so.config.entity;
 
 import item.entities.Item;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -16,15 +20,14 @@ import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.validation.constraints.NotNull;
+import org.eclipse.persistence.annotations.PrivateOwned;
 
 /**
  *
  * @author savin
  */
 @Entity
-@XmlRootElement
 @Table(uniqueConstraints
         = @UniqueConstraint(columnNames = {"item_id", "config_ver_num"}))
 @NamedQueries({
@@ -41,13 +44,14 @@ public class Configuration implements Serializable {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "item_id")
+    @JoinColumn(name = "item_id",foreignKey = @ForeignKey(value=ConstraintMode.NO_CONSTRAINT))
+    @NotNull(message = "Позиция обязательна для заполнения")
     private Item item;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    @JoinColumn(name = "header_id")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "configuration", fetch = FetchType.LAZY)
+    @PrivateOwned
     @OrderBy("line_num asc")
-    private List<ConfigurationLine> lines;
+    private List<ConfigurationLine> lines=new ArrayList<>();
 
     private Integer config_ver_num;
 
@@ -67,7 +71,6 @@ public class Configuration implements Serializable {
         this.description = description;
     }
 
-    @XmlTransient
     public List<ConfigurationLine> getLines() {
         return lines;
     }
@@ -90,6 +93,19 @@ public class Configuration implements Serializable {
 
     public void setConfig_ver_num(Integer config_ver_num) {
         this.config_ver_num = config_ver_num;
+    }
+    
+    public void addLine(ConfigurationLine line) {
+        addLine(line, true);
+    }
+
+    public void addLine(ConfigurationLine line, boolean add) {
+        if (line != null) {
+            getLines().add(line);
+            if (add) {
+                line.setConfiguration(this, false);
+            }
+        }
     }
 
 }

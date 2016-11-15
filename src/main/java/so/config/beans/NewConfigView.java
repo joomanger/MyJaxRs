@@ -3,11 +3,10 @@ package so.config.beans;
 import so.config.entity.Configuration;
 import so.config.entity.ConfigurationLine;
 import so.config.entity.ParameterConfiguration;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import service.AbstractView;
 import service.Secure;
 
 /**
@@ -17,17 +16,21 @@ import service.Secure;
 @Named
 @ViewScoped
 @Secure
-public class NewConfigView implements Serializable {
+public class NewConfigView extends AbstractView<Configuration> {
 
-    private Configuration configuration = new Configuration();
-    private boolean disabledCB = false;
-
-    private List<ConfigurationLine> selectedLines = new ArrayList<>();
-    private List<ConfigurationLine> lines = new ArrayList<>();
+    private final Configuration entity = new Configuration();
+    private boolean disabledCB;
     private ConfigurationLine line;
-    private Boolean showLines = false;
+    private boolean showLines;
     private int line_num = 0;
     private ParameterConfiguration paramConfig;
+
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
+    @PostConstruct
+    @Override
+    protected void init() {
+        super.setEntity(entity);
+    }
 
     public int getLine_num() {
         return line_num;
@@ -35,14 +38,6 @@ public class NewConfigView implements Serializable {
 
     public void setLine_num(int line_num) {
         this.line_num = line_num;
-    }
-
-    public Configuration getConfiguration() {
-        return configuration;
-    }
-
-    public void setConfiguration(Configuration configuration) {
-        this.configuration = configuration;
     }
 
     public boolean isDisabledCB() {
@@ -53,28 +48,12 @@ public class NewConfigView implements Serializable {
         this.disabledCB = disabledCB;
     }
 
-    public List<ConfigurationLine> getSelectedLines() {
-        return selectedLines;
-    }
-
-    public void setSelectedLines(List<ConfigurationLine> selectedLines) {
-        this.selectedLines = selectedLines;
-    }
-
-    public Boolean getShowLines() {
+    public boolean getShowLines() {
         return showLines;
     }
 
-    public void setShowLines(Boolean showLines) {
+    public void setShowLines(boolean showLines) {
         this.showLines = showLines;
-    }
-
-    public List<ConfigurationLine> getLines() {
-        return lines;
-    }
-
-    public void setLines(List<ConfigurationLine> lines) {
-        this.lines = lines;
     }
 
     public ConfigurationLine getLine() {
@@ -93,7 +72,6 @@ public class NewConfigView implements Serializable {
 //        }
 //        selectedLines.clear();
 //    }
-
     public ParameterConfiguration getParamConfig() {
         return paramConfig;
     }
@@ -113,7 +91,6 @@ public class NewConfigView implements Serializable {
 //        }
 //
 //    }
-
     public void addHeader() {
         setDisabledCB(true);
         setShowLines(true);

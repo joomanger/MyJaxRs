@@ -1,7 +1,9 @@
 package so.config.entity;
 
 import java.io.Serializable;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -11,21 +13,20 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author savin
  */
 @Entity
-@XmlRootElement
-@Table(uniqueConstraints
+@Table(name = "configuration_line", uniqueConstraints
         = @UniqueConstraint(columnNames = {"parameter_id", "header_id"}))
 @NamedQueries({
-    @NamedQuery(name = ConfigurationLine.FIND_BY_HEADER_ID, query = "select t from ConfigurationLine t where t.header_id=:p_header_id order by t.line_num"),
-    @NamedQuery(name = ConfigurationLine.MAX_LINE_NUM_BY_HEADER_ID, query = "select max(t.line_num) from ConfigurationLine t where t.header_id=:p_header_id")}
+    @NamedQuery(name = ConfigurationLine.FIND_BY_HEADER_ID, query = "select t from ConfigurationLine t where t.configuration.header_id=:p_header_id order by t.line_num"),
+    @NamedQuery(name = ConfigurationLine.MAX_LINE_NUM_BY_HEADER_ID, query = "select max(t.line_num) from ConfigurationLine t where t.configuration.header_id=:p_header_id")}
 )
-public class ConfigurationLine implements Serializable{
+public class ConfigurationLine implements Serializable {
 
     public static final String FIND_BY_HEADER_ID = "BHI";
     public static final String MAX_LINE_NUM_BY_HEADER_ID = "MBHI";
@@ -35,9 +36,15 @@ public class ConfigurationLine implements Serializable{
     private Long line_id;
     private Integer line_num;
     @ManyToOne
-    @JoinColumn(name = "parameter_id")
+    @JoinColumn(name = "parameter_id", foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    @NotNull(message = "Параметр обязателен для заполнения")
     private ParameterConfiguration parameter;
-    private Long header_id;
+
+    @ManyToOne
+    @JoinColumn(name = "header_id", foreignKey = @ForeignKey(name = "conf_confline_fk", value = ConstraintMode.CONSTRAINT,
+            foreignKeyDefinition = "FOREIGN KEY (header_id) REFERENCES public.configuration(header_id) MATCH SIMPLE\n"
+            + "      ON UPDATE CASCADE ON DELETE CASCADE"))
+    private Configuration configuration;
 
     public Long getLine_id() {
         return line_id;
@@ -63,14 +70,19 @@ public class ConfigurationLine implements Serializable{
         this.parameter = parameter;
     }
 
-    public Long getHeader_id() {
-        return header_id;
+    public Configuration getConfiguration() {
+        return configuration;
     }
 
-    public void setHeader_id(Long header_id) {
-        this.header_id = header_id;
+    public void setConfiguration(Configuration configuration) {
+        setConfiguration(configuration, true);
     }
 
-    
+    public void setConfiguration(Configuration configuration, boolean set) {
+        this.configuration = configuration;
+        if (configuration != null && set) {
+            configuration.addLine(this, false);
+        }
+    }
 
 }

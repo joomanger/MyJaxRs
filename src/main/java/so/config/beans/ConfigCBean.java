@@ -15,7 +15,7 @@ import so.config.entity.ConfigurationLine;
  */
 @Named
 @RequestScoped
-public class ConfigCBean implements Serializable{
+public class ConfigCBean implements Serializable {
 
     @Inject
     private NewConfigView newView;
@@ -42,11 +42,11 @@ public class ConfigCBean implements Serializable{
     public Configuration getItem(Long p_item_id, Integer p_ver_num) {
         return configEJB.getConfig(p_item_id, p_ver_num);
     }
-    
+
     public List<Configuration> getItems() {
         return configEJB.findAll();
     }
-    
+
     public List<ConfigurationLine> getLines() {
         return configEJB.getValues(findSession.getConfig_id());
     }
@@ -54,28 +54,25 @@ public class ConfigCBean implements Serializable{
     public List<ConfigurationLine> getLines(Long p_config_id) {
         return configEJB.getValues(p_config_id);
     }
-    
+
     public Integer getMaxLineNum() {
         return configEJB.getMaxLineNum(findSession.getConfig_id());
     }
-    
+
     public Integer getMaxLineNum(Long p_config_id) {
         return configEJB.getMaxLineNum(p_config_id);
     }
-   
+
     public String addItemTable() {
-        Configuration config = newView.getConfiguration();
+        Configuration config = newView.getEntity();
         config.setConfig_ver_num(getLastVersion() + 1);
-        config.setLines(newView.getLines());
-        // Response t = super.editItem(config, "Конфигурация сохранена успешно");
         String status = configEJB.edit(config);
         configEJB.sendMessage(status, "Конфигурация сохранена успешно");
         return "configs";
     }
 
     public Integer getLastVersion() {
-        Integer version = configEJB.getLastVersion(newView.getConfiguration().getItem().getItem_id());
-        //getTarget().path("/version/{item_id}").resolveTemplate("item_id", newView.getConfiguration().getItem().getId()).request().get(Integer.class);
+        Integer version = configEJB.getLastVersion(newView.getEntity().getItem().getItem_id());
         if (version == null) {
             return 0;
         } else {
@@ -86,7 +83,6 @@ public class ConfigCBean implements Serializable{
     public Integer getLastVersion(Long p_item_id) {
         if (p_item_id != null) {
             Integer version = configEJB.getLastVersion(p_item_id);
-            //getTarget().path("/version/{item_id}").resolveTemplate("item_id", p_item_id).request().get(Integer.class);
             if (version == null) {
                 return 0;
             } else {
@@ -98,7 +94,6 @@ public class ConfigCBean implements Serializable{
     }
 
     //FindConfigView methods:
-   
     public void deleteConfigs() {
         for (Configuration c : fcv.getSelectedConfigs()) {
             String status = configEJB.remove(c);
@@ -107,51 +102,51 @@ public class ConfigCBean implements Serializable{
         }
         fcv.getSelectedConfigs().clear();
         fcv.getConfigs().clear();
-        fcv.getConfigs().addAll(getItems() );
+        fcv.getConfigs().addAll(getItems());
     }
 
     //NewConfigView methods:
-   
     public void addParameter() {
-        if (!newView.getParamConfig().getName().isEmpty()) {
+        if (newView.getParamConfig() != null) {
             int l = newView.getLine_num();
             l++;
             newView.setLine_num(l);
             ConfigurationLine line = new ConfigurationLine();
             line.setLine_num(l);
             line.setParameter(newView.getParamConfig());
-            newView.getLines().add(line);
+            newView.getEntity().addLine(line);
             newView.setParamConfig(null);
         }
     }
-   
+
     public void deleteItems() {
-        for (ConfigurationLine c : newView.getSelectedLines()) {
-            newView.getLines().remove(c);
+        for (Object c : newView.getSelectedEntityLines()) {
+            if (c instanceof ConfigurationLine) {
+                newView.getEntity().getLines().remove((ConfigurationLine) c);
+            }
         }
-        newView.getSelectedLines().clear();
+        newView.getSelectedEntityLines().clear();
     }
 
     //OpenConfigView methods:
-   
     public void addItemOCV() {
         ConfigurationLine line = new ConfigurationLine();
         line.setParameter(openView.getParamConfig());
         int l = openView.getLastLineNum();
         openView.setLastLineNum(l);
         line.setLine_num(++l);
-        line.setHeader_id(openView.getConfiguration().getHeader_id());
+        //line.setHeader_id(openView.getConfiguration().getHeader_id());
         openView.getLines().add(line);
         openView.setParamConfig(null);
     }
-   
+
     public void deleteItemsOCV() {
         for (ConfigurationLine line : openView.getSelectedLines()) {
             openView.getLines().remove(line);
         }
         openView.getSelectedLines().clear();
     }
-   
+
     public String newVersionOCV() {
         Configuration c = openView.getConfiguration();
         c.setHeader_id(null);
@@ -159,15 +154,15 @@ public class ConfigCBean implements Serializable{
         List<ConfigurationLine> newLines = new ArrayList<>();
         for (ConfigurationLine l : openView.getLines()) {
             l.setLine_id(null);
-            l.setHeader_id(null);
+            //  l.setHeader_id(null);
             newLines.add(l);
         }
         c.setLines(newLines);
-        String status = configEJB.create(c);//addItem(c, "Новая версия конфигуации сохранена");
+        String status = configEJB.create(c);
         configEJB.sendMessage(status, "Новая версия конфигуации сохранена");
         return "configs";
     }
-    
+
     public void currVersionOCV() {
         Configuration c = openView.getConfiguration();
         c.setLines(openView.getLines());
@@ -182,6 +177,5 @@ public class ConfigCBean implements Serializable{
         openView.getLines().addAll(getLines());
 
     }
-   
 
 }

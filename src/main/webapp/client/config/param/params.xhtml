@@ -13,7 +13,7 @@
                     <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.parameter_id}" 
                                  var="ord" value="#{findParameterView.params}" editable="true" reflow="true" 
                                  selection="#{findParameterView.paramsDelete}" rows="20" paginator="true" 
-                                 style="width: 600px;" rowsPerPageTemplate="20,40,100" lazy="true">
+                                 style="width: 700px;" rowsPerPageTemplate="20,40,100" lazy="true">
                         <f:facet name="header">
                             Список параметров
                         </f:facet>
@@ -21,7 +21,7 @@
                         <p:column headerText="Name">
                             <h:commandLink action="openParameter" value="#{ord.name}" onclick="document.getElementById('setHeaderId').value =#{ord.parameter_id}"/>
                         </p:column>
-                        <p:column headerText="Column Name" style="width:200px;text-align: center">
+                        <p:column headerText="Column Name" style="width:150px;text-align: center">
                             <p:outputLabel value="#{ord.columnName}" />
                         </p:column>
                         <p:column headerText="Type" style="width:65px;text-align: center">
