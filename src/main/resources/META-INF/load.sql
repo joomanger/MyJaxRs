@@ -5,52 +5,6 @@ INSERT INTO ITEM(item_id,name, description,uom1,uom2) VALUES (3,'ШВЕЛЛЕР'
 INSERT INTO ITEM(item_id,name, description,uom1,uom2) VALUES (4,'БАЛКА', 'БАЛКА ДВУТАВРОВАЯ','Тн',null);
 INSERT INTO ITEM(item_id,name, description,uom1,uom2) VALUES (5,'КАТАНКА', 'КАТАНКА ИЗ УГЛЕРОДИСТОЙ СТАЛИ ОБЫКНОВЕННОГО КАЧЕСТВА','Тн',null);
 
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE1','T,mm',false,'Толщина, мм', 1,35);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE2','W,mm',false,'Ширина, мм', 1,35);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE3','L,mm',false,'Длина, мм', 1,35);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE4','Range T,mm',false,'Диапазон толщин, мм', 2,60);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE5','Range W,mm',false,'Диапазон ширин, мм', 2,60);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE6','Range L,mm',false,'Диапазон длин, мм', 2,60);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE7','Состояние поставки',true,'Состояние поставки', 3,300);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE8','Виды испытаний',true,'Виды испытаний', 3,300);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE9','УЗК',false,'УЗК', 3,60);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE10','Марка',true,'Марка', 3,300);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE11','НТД на сталь',true,'НТД на сталь', 3,300);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE12','НТД на прод',true,'НТД на продукцию', 3,300);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE13','Категория стали',true,'Категория стали', 3,300);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE14','Серт.общ-во',true,'Сертификационное общество', 3,300);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE15','Сп-б.опр.веса',false,'Способ определения веса', 3,60);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE16','Зак.кол.тонн',false,'Заказываемое кол-во, тн', 1,35);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE17','Вес ед.поз',false,'Вес единицы позиции', 1,35);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE18','Стан',false,'Прокатный стан', 3,60);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE19','Допуск L+/-',false,'Допуск по длине(+/-)', 2,35);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE20','Допуск H+/-',false,'Допуск по толщине(+/-)', 2,35);
-INSERT INTO parameterconfiguration values(nextval('parameterconfiguration_sq'),'ATTRIBUTE21','Допуск W+/-',false,'Допуск по ширине(+/-)', 2,35);
-
-
-insert into parameterconfigurationvalues values(1,1,'Марка 1',4);
-insert into parameterconfigurationvalues values(2,2,'Марка 2',4);
-insert into parameterconfigurationvalues values(3,3,'Марка 3',4);
-insert into parameterconfigurationvalues values(4,4,'Марка 4',4);
-insert into parameterconfigurationvalues values(5,5,'Марка 5',4);
-insert into parameterconfigurationvalues values(6,1,'Стан 1',5);
-insert into parameterconfigurationvalues values(7,2,'Стан 2',5);
-insert into parameterconfigurationvalues values(8,3,'Стан 3',5);
-insert into parameterconfigurationvalues values(9,4,'Стан 4',5);
-insert into parameterconfigurationvalues values(10,5,'Стан 5',5);
-INSERT INTO CONFIGURATION values(1,1,'AUTOLOAD',1);
-INSERT INTO CONFIGURATION values(2,1,'AUTOLOAD',2);
-INSERT INTO configuration_line values(1,1,1,1);
-INSERT INTO configuration_line values(2,1,2,2);
-INSERT INTO configuration_line values(3,1,3,3);
-INSERT INTO configuration_line values(4,1,4,4);
-INSERT INTO configuration_line values(5,1,5,5);
-INSERT INTO configuration_line values(6,2,1,1);
-INSERT INTO configuration_line values(7,2,2,2);
-INSERT INTO configuration_line values(8,2,3,3);
-INSERT INTO configuration_line values(9,2,4,4);
-INSERT INTO configuration_line values(10,2,5,5);
-insert into saleorder values(1,'customer',1000,null,null);
 
 insert into users(user_id, username, fullName, password,trader) values(1,'admin','Админчик','SBNJTRN+FjG7owHVrKtue7eqdM4RhdRWVl71HXN2d7I=',false);
 insert into users(user_id, username, fullName, password,trader) values(2,'user','Юзерок','BPiZbadjt6lpsQKO4wB1aerzpjVIbdqyEdUSyFud+Ps=',false);
@@ -152,12 +106,6 @@ insert into roles_menus values(1,1);
 
 insert into users_roles values(1,1);
 insert into users_roles values(2,2);
-
---Заполним лукапы
---Заполнение перенесено в скрипт pg_to_orcl.sql
---insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(nextval('lookup_sq'),true,'Пункты поставки','FOB',true);
---Заполнение перенесено в скрипт pg_to_orcl.sql
---insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(nextval('lookup_sq'),true,'Условия доставки','FREIGHT TERMS',true);
 
 --UOM
 insert into lookup(lookup_id, activestatus, description, name,systemlookup) values(nextval('lookup_sq'),true,'Единицы измерения','UOM',true);

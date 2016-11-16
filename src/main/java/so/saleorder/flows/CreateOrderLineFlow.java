@@ -3,13 +3,11 @@ package so.saleorder.flows;
 import item.entities.Item;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Named;
-import so.config.entity.ConfigurationLine;
 import so.config.entity.ParameterConfiguration;
 import so.entities.OrderLine;
 
@@ -25,9 +23,11 @@ public class CreateOrderLineFlow implements Serializable {
     private List<OrderLine> lines = new ArrayList<>();
     private List<OrderLine> selectedLines = new ArrayList<>();
     private Set<ParameterConfiguration> parameters;
-    private Map<Long, List<ConfigurationLine>> editableCells = new HashMap<>();
+    //private Map<Long, List<ConfigurationLine>> editableCells = new HashMap<>();
+    private Set<String> editableCells = new HashSet<>();
+    private Set<Long> newItems = new HashSet<>();
     private Long parameter_id;
-    
+
     private short lineNumber;
 
     public Item getItem() {
@@ -70,13 +70,22 @@ public class CreateOrderLineFlow implements Serializable {
         this.parameters = parameters;
     }
 
-    public Map<Long, List<ConfigurationLine>> getEditableCells() {
+//    public Map<Long, List<ConfigurationLine>> getEditableCells() {
+//        return editableCells;
+//    }
+//
+//    public void setEditableCells(Map<Long, List<ConfigurationLine>> editableCells) {
+//        this.editableCells = editableCells;
+//    }
+
+    public Set<String> getEditableCells() {
         return editableCells;
     }
 
-    public void setEditableCells(Map<Long, List<ConfigurationLine>> editableCells) {
+    public void setEditableCells(Set<String> editableCells) {
         this.editableCells = editableCells;
     }
+    
 
     public Long getParameter_id() {
         return parameter_id;
@@ -85,5 +94,14 @@ public class CreateOrderLineFlow implements Serializable {
     public void setParameter_id(Long parameter_id) {
         this.parameter_id = parameter_id;
     }
+
+    public Set<Long> getNewItems() {
+        return newItems;
+    }
+
+    public void setNewItems(Set<Long> newItems) {
+        this.newItems = newItems;
+    }
+
 
 }

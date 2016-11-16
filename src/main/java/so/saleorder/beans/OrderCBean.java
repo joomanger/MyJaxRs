@@ -3,7 +3,6 @@ package so.saleorder.beans;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -39,6 +38,7 @@ public class OrderCBean {
     private CreateOrderLineFlow lineFlow;
     @Inject
     private ConfigCBean configClient;
+
 
     /*После выбора нового Заказчика обнуляются все зависимые поля*/
     public void clearFieldsHeader() {
@@ -93,25 +93,28 @@ public class OrderCBean {
         line.setConfig_ver_num(configClient.getLastVersion(lineFlow.getItem().getItem_id()));
         orderFlow.getOrder().addLine(line);
         lineFlow.getLines().add(line);
-        updateConfigColumns();
+        //Если добавляется позиция, которая раннее не добавлялалсь, то обновим сетку параметров
+        if (!lineFlow.getNewItems().contains(lineFlow.getItem().getItem_id())) {
+            lineFlow.getNewItems().add(lineFlow.getItem().getItem_id());
+            updateConfigColumns();
+        }
+
     }
 
     public void deleteLines() {
         lineFlow.getLines().removeAll(lineFlow.getSelectedLines());
         orderFlow.getOrder().getLines().removeAll(lineFlow.getSelectedLines());
+        for (OrderLine i : lineFlow.getSelectedLines()) {
+            if (lineFlow.getNewItems().contains(i.getItem().getItem_id())) {
+                lineFlow.getNewItems().remove(i.getItem().getItem_id());
+            }
+        }
         updateConfigColumns();
     }
 
     public boolean isEditableCell(Long item_id, String attribute) {
-        if (lineFlow.getEditableCells().containsKey(item_id)) {
-            List<ConfigurationLine> cl = lineFlow.getEditableCells().get(item_id);
-            if (cl != null) {
-                for (ConfigurationLine l : cl) {
-                    if (attribute.equals(l.getParameter().getAttribute())) {
-                        return true;
-                    }
-                }
-            }
+        if (lineFlow.getEditableCells().contains(item_id + attribute)) {
+            return true;
         }
         return false;
     }
@@ -125,14 +128,16 @@ public class OrderCBean {
                 items.add(item_id);
                 Configuration config = configClient.getItem(item_id, configClient.getLastVersion(item_id));
                 if (config != null) {
-                    lineFlow.getEditableCells().put(item_id, config.getLines());
+                    //lineFlow.getEditableCells().put(item_id, config.getLines());
+                    for (ConfigurationLine cl : config.getLines()) {
+                        lineFlow.getEditableCells().add(item_id + cl.getParameter().getAttribute().toLowerCase());
+                    }
+
                     for (ConfigurationLine configLine : config.getLines()) {
                         ParameterConfiguration pc = configLine.getParameter();
                         pc.setAttribute(pc.getAttribute().toLowerCase());
                         p.add(pc);
                     }
-                } else {
-                    lineFlow.getEditableCells().put(item_id, null);
                 }
             }
         }
