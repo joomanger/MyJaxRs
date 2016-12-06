@@ -56,22 +56,22 @@ public class OrderCBean {
         if (result.equals(AbstractEJB.ERROR)) {
             MessageSender.sendFacesContextMessage(FacesMessage.SEVERITY_ERROR, result);
         } else {
-            orderEJB.addNewAttachment(a);
+            orderEJB.addNewAttachment(orderFlow.getOrder(),a);
             orderFlow.setAttachment(new Attachment());
             orderFlow.setUploadStatus(null);
         }
     }
 
     public void deleteSelectedAttachment() {
-        orderEJB.deleteSelectedAttachment(orderFlow.getSelectedAttachments());
+        orderEJB.deleteSelectedAttachment(orderFlow.getOrder(),orderFlow.getSelectedAttachments());
     }
 
     public void createOrder() {
-        orderEJB.createOrder();
+        orderEJB.createOrder(orderFlow.getOrder());
     }
 
     public void handleFileUpload(FileUploadEvent event) throws IOException {
-        String filename = orderEJB.handleFileUpload(event);
+        String filename = orderEJB.handleFileUpload(orderFlow.getOrder(),event);
         orderFlow.getAttachment().setFileName(filename);
         if (!filename.isEmpty()) {
             orderFlow.setUploadStatus(filename + " загружен успешно");

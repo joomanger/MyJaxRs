@@ -25,7 +25,7 @@ import so.entities.Order;
 @Stateless
 public class OrderEJB extends AbstractEJB2<Order> {
 
-    private Order order;
+    //private Order order;
 
     @PersistenceContext(unitName = "myjaxrs")
     private EntityManager em;
@@ -39,27 +39,27 @@ public class OrderEJB extends AbstractEJB2<Order> {
         return em;
     }
 
-    public Order getOrder() {
-        return order;
-    }
+//    public Order getOrder() {
+//        return order;
+//    }
+//
+//    public void setOrder(Order order) {
+//        this.order = order;
+//    }
 
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public void addNewAttachment(Attachment attachment) {
+    public void addNewAttachment(Order order,Attachment attachment) {
         order.addAttachment(attachment);
     }
 
-    public void deleteSelectedAttachment(List<Attachment> attachments) {
+    public void deleteSelectedAttachment(Order order,List<Attachment> attachments) {
         order.getAttachments().removeAll(attachments);
     }
 
-    public void createOrder() {
+    public void createOrder(Order order) {
         super.create(order);
     }
     
-    public String handleFileUpload(FileUploadEvent event) throws IOException {
+    public String handleFileUpload(Order order,FileUploadEvent event) throws IOException {
         UploadedFile file = event.getFile();
         String upload_dir = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("UPLOAD_DIR");
         String filename = file.getFileName();

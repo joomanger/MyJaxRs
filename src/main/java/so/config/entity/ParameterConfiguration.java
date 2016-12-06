@@ -47,6 +47,7 @@ public class ParameterConfiguration implements Serializable {
     private List<ParameterConfigurationValues> values;
 
     private Short size;
+    private Short fieldSize;
 
     private Boolean multiple;
 
@@ -99,19 +100,6 @@ public class ParameterConfiguration implements Serializable {
         this.attribute = attribute;
     }
 
-//    @Override
-//    public int compareTo(ParameterConfiguration p_parameter) {
-//        Byte a = Byte.parseByte(this.getAttribute().toLowerCase().replace("attribute", ""));
-//        Byte b = Byte.parseByte(p_parameter.getAttribute().toLowerCase().replace("attribute", ""));
-//        if (a > b) {
-//            return 1;
-//        } else if (a == b) {
-//            return 0;
-//        } else {
-//            return -1;
-//        }
-//
-//    }
     public Short getSize() {
         return size;
     }
@@ -132,6 +120,14 @@ public class ParameterConfiguration implements Serializable {
         this.multiple = multiple;
     }
 
+    public Short getFieldSize() {
+        return fieldSize;
+    }
+
+    public void setFieldSize(Short fieldSize) {
+        this.fieldSize = fieldSize;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof ParameterConfiguration)) {
@@ -143,14 +139,13 @@ public class ParameterConfiguration implements Serializable {
 
         ParameterConfiguration rhs = (ParameterConfiguration) obj;
         return new EqualsBuilder().
-                // if deriving: appendSuper(super.equals(obj)).
                 append(attribute, rhs.attribute).
                 isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 31). // two randomly chosen prime numbers
+        return new HashCodeBuilder(17, 31). 
                 append(attribute).
                 toHashCode();
     }

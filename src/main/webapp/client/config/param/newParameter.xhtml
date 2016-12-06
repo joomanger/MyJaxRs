@@ -27,6 +27,8 @@
                                             forceSelection="true" disabled="#{newParameterView.disabledCB}"/>
                             <p:outputLabel value="Ширина, px"/>
                             <p:inputText id="size" maxlength="3" required="true" value="#{newParameterView.paramConfig.size}" disabled="#{newParameterView.disabledCB}" style="width: 25px;text-align: center" />
+                            <p:outputLabel value="Ширина поля"/>
+                            <p:inputText id="fsize" maxlength="3" required="true" value="#{newParameterView.paramConfig.fieldSize}" disabled="#{newParameterView.disabledCB}" style="width: 25px;text-align: center" />
                             <p:outputLabel value="Multiple"/>
                             <p:selectBooleanCheckbox value="#{newParameterView.paramConfig.multiple}" />
                         </h:panelGrid>

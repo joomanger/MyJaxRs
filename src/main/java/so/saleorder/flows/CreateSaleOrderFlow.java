@@ -10,7 +10,6 @@ import lookup.beans.LookupCBean;
 import lookup.entities.Lookup;
 import so.entities.Attachment;
 import so.entities.Order;
-import so.saleorder.beans.OrderEJB;
 import so.saleorder.beans.SaleOrderCBean;
 
 /**
@@ -23,8 +22,8 @@ public class CreateSaleOrderFlow implements Serializable {
     
     @Inject
     private SaleOrderCBean sob;
-    @Inject
-    private OrderEJB orderEJB;
+//    @Inject
+//    private OrderEJB orderEJB;
     @Inject
     private LookupCBean clientLookup;
 
@@ -45,7 +44,7 @@ public class CreateSaleOrderFlow implements Serializable {
     @PostConstruct
     private void init() {
         order = new Order();
-        orderEJB.setOrder(order);
+        //orderEJB.setOrder(order);
         attachment = new Attachment();
         order.setHeader_id(sob.getNewOrderNumber());
         order.setOrderDate(Calendar.getInstance().getTime());
