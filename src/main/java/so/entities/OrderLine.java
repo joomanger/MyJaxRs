@@ -24,6 +24,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import payment.entities.PaymentTerm;
+import service.IAttributes;
 
 /**
  *
@@ -39,7 +40,7 @@ import payment.entities.PaymentTerm;
             foreignKeyDefinition = "FOREIGN KEY (line_id) REFERENCES public.zakaz_line(line_id) MATCH SIMPLE\n"
             + "      ON UPDATE CASCADE ON DELETE CASCADE"))
 })
-public class OrderLine implements Serializable {
+public class OrderLine implements IAttributes,Serializable {
 
     @Id
     @SequenceGenerator(name = "zakaz_line_sq", initialValue = 1, allocationSize = 1)
@@ -285,9 +286,9 @@ public class OrderLine implements Serializable {
     private List<String> lattribute39;
     @Transient
     private List<String> lattribute40;
-    
+
     @Transient
-    private StringBuilder attr = new StringBuilder();
+    private final StringBuilder attr = new StringBuilder();
 
     public void setOrder(Order order) {
         setOrder(order, true);
@@ -520,328 +521,407 @@ public class OrderLine implements Serializable {
         this.config_ver_num = config_ver_num;
     }
 
+    @Override
     public String getAttribute1() {
         return attribute1;
     }
 
+    @Override
     public void setAttribute1(String attribute1) {
         this.attribute1 = attribute1;
     }
 
+    @Override
     public String getAttribute2() {
         return attribute2;
     }
 
+    @Override
     public void setAttribute2(String attribute2) {
         this.attribute2 = attribute2;
     }
 
+    @Override
     public String getAttribute3() {
         return attribute3;
     }
 
+    @Override
     public void setAttribute3(String attribute3) {
         this.attribute3 = attribute3;
     }
 
+    @Override
     public String getAttribute4() {
         return attribute4;
     }
 
+    @Override
     public void setAttribute4(String attribute4) {
         this.attribute4 = attribute4;
     }
 
+    @Override
     public String getAttribute5() {
         return attribute5;
     }
 
+    @Override
     public void setAttribute5(String attribute5) {
         this.attribute5 = attribute5;
     }
 
+    @Override
     public String getAttribute6() {
         return attribute6;
     }
 
+    @Override
     public void setAttribute6(String attribute6) {
         this.attribute6 = attribute6;
     }
 
+    @Override
     public String getAttribute7() {
         return attribute7;
     }
 
+    @Override
     public void setAttribute7(String attribute7) {
         this.attribute7 = attribute7;
     }
 
+    @Override
     public String getAttribute8() {
         return attribute8;
     }
 
+    @Override
     public void setAttribute8(String attribute8) {
         this.attribute8 = attribute8;
     }
 
+    @Override
     public String getAttribute9() {
         return attribute9;
     }
 
+    @Override
     public void setAttribute9(String attribute9) {
         this.attribute9 = attribute9;
     }
 
+    @Override
     public String getAttribute10() {
         return attribute10;
     }
 
+    @Override
     public void setAttribute10(String attribute10) {
         this.attribute10 = attribute10;
     }
 
+    @Override
     public String getAttribute11() {
         return attribute11;
     }
 
+    @Override
     public void setAttribute11(String attribute11) {
         this.attribute11 = attribute11;
     }
 
+    @Override
     public String getAttribute12() {
         return attribute12;
     }
 
+    @Override
     public void setAttribute12(String attribute12) {
         this.attribute12 = attribute12;
     }
 
+    @Override
     public String getAttribute13() {
         return attribute13;
     }
 
+    @Override
     public void setAttribute13(String attribute13) {
         this.attribute13 = attribute13;
     }
 
+    @Override
     public String getAttribute14() {
         return attribute14;
     }
 
+    @Override
     public void setAttribute14(String attribute14) {
         this.attribute14 = attribute14;
     }
 
+    @Override
     public String getAttribute15() {
         return attribute15;
     }
 
+    @Override
     public void setAttribute15(String attribute15) {
         this.attribute15 = attribute15;
     }
 
+    @Override
     public String getAttribute16() {
         return attribute16;
     }
 
+    @Override
     public void setAttribute16(String attribute16) {
         this.attribute16 = attribute16;
     }
 
+    @Override
     public String getAttribute17() {
         return attribute17;
     }
 
+    @Override
     public void setAttribute17(String attribute17) {
         this.attribute17 = attribute17;
     }
 
+    @Override
     public String getAttribute18() {
         return attribute18;
     }
 
+    @Override
     public void setAttribute18(String attribute18) {
         this.attribute18 = attribute18;
     }
 
+    @Override
     public String getAttribute19() {
         return attribute19;
     }
 
+    @Override
     public void setAttribute19(String attribute19) {
         this.attribute19 = attribute19;
     }
 
+    @Override
     public String getAttribute20() {
         return attribute20;
     }
 
+    @Override
     public void setAttribute20(String attribute20) {
         this.attribute20 = attribute20;
     }
 
+    @Override
     public String getAttribute21() {
         return attribute21;
     }
 
+    @Override
     public void setAttribute21(String attribute21) {
         this.attribute21 = attribute21;
     }
 
+    @Override
     public String getAttribute22() {
         return attribute22;
     }
 
+    @Override
     public void setAttribute22(String attribute22) {
         this.attribute22 = attribute22;
     }
 
+    @Override
     public String getAttribute23() {
         return attribute23;
     }
 
+    @Override
     public void setAttribute23(String attribute23) {
         this.attribute23 = attribute23;
     }
 
+    @Override
     public String getAttribute24() {
         return attribute24;
     }
 
+    @Override
     public void setAttribute24(String attribute24) {
         this.attribute24 = attribute24;
     }
 
+    @Override
     public String getAttribute25() {
         return attribute25;
     }
 
+    @Override
     public void setAttribute25(String attribute25) {
         this.attribute25 = attribute25;
     }
 
+    @Override
     public String getAttribute26() {
         return attribute26;
     }
 
+    @Override
     public void setAttribute26(String attribute26) {
         this.attribute26 = attribute26;
     }
 
+    @Override
     public String getAttribute27() {
         return attribute27;
     }
 
+    @Override
     public void setAttribute27(String attribute27) {
         this.attribute27 = attribute27;
     }
 
+    @Override
     public String getAttribute28() {
         return attribute28;
     }
 
+    @Override
     public void setAttribute28(String attribute28) {
         this.attribute28 = attribute28;
     }
 
+    @Override
     public String getAttribute29() {
         return attribute29;
     }
 
+    @Override
     public void setAttribute29(String attribute29) {
         this.attribute29 = attribute29;
     }
 
+    @Override
     public String getAttribute30() {
         return attribute30;
     }
 
+    @Override
     public void setAttribute30(String attribute30) {
         this.attribute30 = attribute30;
     }
 
+    @Override
     public String getAttribute31() {
         return attribute31;
     }
 
+    @Override
     public void setAttribute31(String attribute31) {
         this.attribute31 = attribute31;
     }
 
+    @Override
     public String getAttribute32() {
         return attribute32;
     }
 
+    @Override
     public void setAttribute32(String attribute32) {
         this.attribute32 = attribute32;
     }
 
+    @Override
     public String getAttribute33() {
         return attribute33;
     }
 
+    @Override
     public void setAttribute33(String attribute33) {
         this.attribute33 = attribute33;
     }
 
+    @Override
     public String getAttribute34() {
         return attribute34;
     }
 
+    @Override
     public void setAttribute34(String attribute34) {
         this.attribute34 = attribute34;
     }
 
+    @Override
     public String getAttribute35() {
         return attribute35;
     }
 
+    @Override
     public void setAttribute35(String attribute35) {
         this.attribute35 = attribute35;
     }
 
+    @Override
     public String getAttribute36() {
         return attribute36;
     }
 
+    @Override
     public void setAttribute36(String attribute36) {
         this.attribute36 = attribute36;
     }
 
+    @Override
     public String getAttribute37() {
         return attribute37;
     }
 
+    @Override
     public void setAttribute37(String attribute37) {
         this.attribute37 = attribute37;
     }
 
+    @Override
     public String getAttribute38() {
         return attribute38;
     }
 
+    @Override
     public void setAttribute38(String attribute38) {
         this.attribute38 = attribute38;
     }
 
+    @Override
     public String getAttribute39() {
         return attribute39;
     }
 
+    @Override
     public void setAttribute39(String attribute39) {
         this.attribute39 = attribute39;
     }
 
+    @Override
     public String getAttribute40() {
         return attribute40;
     }
 
+    @Override
     public void setAttribute40(String attribute40) {
         this.attribute40 = attribute40;
     }
- 
- /*-----------------LAttributes------------------------*/
 
+    /*-----------------LAttributes------------------------*/
 //    public List<String> getLattribute1() {
 //        return getLattribute(attribute1);
 //    }
@@ -1201,7 +1281,6 @@ public class OrderLine implements Serializable {
 //        setAttribute40(setLattribute(lattribute40));
 //        this.lattribute40 = lattribute40;
 //    }
-
     public List<String> getLattribute1() {
         return lattribute1;
     }
@@ -1561,8 +1640,6 @@ public class OrderLine implements Serializable {
         setAttribute40(aggregateValues(lattribute40));
         this.lattribute40 = lattribute40;
     }
-    
-    
 
     //////////////////////////////////
 //    private List<String> getLattribute(String attribute) {
@@ -1586,7 +1663,7 @@ public class OrderLine implements Serializable {
                 attr.append(";");
             }
         }
-        
+
         return attr.toString();
     }
 

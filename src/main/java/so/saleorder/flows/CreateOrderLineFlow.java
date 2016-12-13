@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Named;
+import org.primefaces.event.CellEditEvent;
 import so.config.entity.ParameterConfiguration;
 import so.entities.OrderLine;
 
@@ -77,7 +78,6 @@ public class CreateOrderLineFlow implements Serializable {
 //    public void setEditableCells(Map<Long, List<ConfigurationLine>> editableCells) {
 //        this.editableCells = editableCells;
 //    }
-
     public Set<String> getEditableCells() {
         return editableCells;
     }
@@ -85,7 +85,6 @@ public class CreateOrderLineFlow implements Serializable {
     public void setEditableCells(Set<String> editableCells) {
         this.editableCells = editableCells;
     }
-    
 
     public Long getParameter_id() {
         return parameter_id;
@@ -103,5 +102,9 @@ public class CreateOrderLineFlow implements Serializable {
         this.newItems = newItems;
     }
 
+    public void onCellEdit(CellEditEvent event) {
+        OrderLine line=lines.get(event.getRowIndex());
+        line.setLot("L"+event.getRowIndex());
+    }
 
 }
