@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.faces.flow.FlowScoped;
 import javax.inject.Named;
 import org.primefaces.event.CellEditEvent;
+import so.config.entity.NumericRule;
 import so.config.entity.ParameterConfiguration;
 import so.entities.OrderLine;
 
@@ -104,7 +105,9 @@ public class CreateOrderLineFlow implements Serializable {
 
     public void onCellEdit(CellEditEvent event) {
         OrderLine line=lines.get(event.getRowIndex());
-        line.setLot("L"+event.getRowIndex());
+        //line.setLot("L"+event.getRowIndex());
+        NumericRule r=new NumericRule(line, "attribute1+attribute2+attribute3", "attribute4");
+        r.calculation();
     }
 
 }
