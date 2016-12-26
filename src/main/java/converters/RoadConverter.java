@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import rw.beans.RoadCBean;
-import rw.entities.RWRoad;
+import beans.rw.RoadCBean;
+import entities.rw.RWRoad;
 
 /**
  *

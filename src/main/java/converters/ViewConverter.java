@@ -10,8 +10,8 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.inject.Inject;
 import javax.inject.Named;
-import sys.beans.ViewEJB;
-import sys.entities.View;
+import beans.sys.ViewEJB;
+import entities.sys.View;
 
 /**
  *

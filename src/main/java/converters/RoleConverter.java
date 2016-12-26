@@ -10,8 +10,8 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.inject.Inject;
 import javax.inject.Named;
-import sys.beans.RoleEJB;
-import sys.entities.SysRole;
+import beans.sys.RoleEJB;
+import entities.sys.SysRole;
 
 /**
  *

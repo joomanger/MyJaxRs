@@ -1,7 +1,7 @@
 package converters;
 
-import so.config.beans.FindParameterSession;
-import so.config.entity.ParameterConfiguration;
+import beans.so.config.FindParameterSession;
+import entities.so.config.ParameterConfiguration;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -12,7 +12,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.inject.Inject;
 import javax.inject.Named;
-import so.config.beans.ParameterCBean;
+import beans.so.config.ParameterCBean;
 
 /**
  *

@@ -1,7 +1,7 @@
 package converters;
 
-import item.beans.ItemCBean;
-import item.entities.Item;
+import beans.item.ItemCBean;
+import entities.item.Item;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

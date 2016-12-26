@@ -1,7 +1,7 @@
 package converters;
 
-import customer.beans.CountryCBean;
-import customer.entities.Country;
+import beans.customer.CountryCBean;
+import entities.customer.Country;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

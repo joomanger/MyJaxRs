@@ -1,6 +1,6 @@
 package converters;
 
-import so.config.entity.ParameterConfigurationValues;
+import entities.so.config.ParameterConfigurationValues;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -11,9 +11,9 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.inject.Inject;
 import javax.inject.Named;
-import so.config.beans.ParameterCBean;
-import so.config.beans.ParameterValuesCBean;
-import so.saleorder.flows.CreateOrderLineFlow;
+import beans.so.config.ParameterCBean;
+import beans.so.config.ParameterValuesCBean;
+import flows.so.saleorder.CreateOrderLineFlow;
 
 /**
  *

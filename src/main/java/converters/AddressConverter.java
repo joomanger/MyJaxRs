@@ -1,7 +1,7 @@
 package converters;
 
-import customer.beans.AddressEJB;
-import customer.entities.Address;
+import beans.customer.AddressEJB;
+import entities.customer.Address;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -13,7 +13,7 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import service.SessionActions;
-import so.saleorder.flows.CreateOrderFlow;
+import flows.so.saleorder.CreateOrderFlow;
 
 /**
  *

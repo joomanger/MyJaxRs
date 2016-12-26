@@ -1,5 +1,10 @@
 package sys.beans;
 
+import beans.sys.MenuItemCBean;
+import beans.sys.FindMenuSession;
+import beans.sys.ViewCBean;
+import beans.sys.OpenMenuView;
+import beans.sys.MenuCBean;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -14,9 +19,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import sys.entities.Menu;
-import sys.entities.MenuItem;
-import sys.entities.View;
+import entities.sys.Menu;
+import entities.sys.MenuItem;
+import entities.sys.View;
 
 /**
  *

@@ -1,12 +1,12 @@
 package lovs;
 
-import customer.beans.FindCustomerSession;
+import beans.customer.FindCustomerSession;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import lookup.beans.LookupCBean;
+import beans.lookup.LookupCBean;
 
 /**
  *

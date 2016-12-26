@@ -100,6 +100,7 @@
                                 </p:submenu> 
                                 <p:submenu label="Заказы" >
                                     <p:menuitem action="Order" outcome="Order" value="Создать заказ"/>
+                                    <p:menuitem action="/client/rules/newRule" value="Создать правило"/>
                                     <p:menuitem action="/client/saleorders/orders" value="Заказы"/>
                                 </p:submenu>
                                 <c:forEach var="role" items="#{userCBean.findUserByUserName(request.remoteUser).roles}">

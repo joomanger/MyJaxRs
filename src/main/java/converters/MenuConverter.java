@@ -10,8 +10,8 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.inject.Inject;
 import javax.inject.Named;
-import sys.beans.MenuEJB;
-import sys.entities.Menu;
+import beans.sys.MenuEJB;
+import entities.sys.Menu;
 
 /**
  *

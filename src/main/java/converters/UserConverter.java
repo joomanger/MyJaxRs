@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import sys.beans.UserCBean;
-import sys.entities.SysUser;
+import beans.sys.UserCBean;
+import entities.sys.SysUser;
 
 /**
  *

@@ -1,7 +1,7 @@
 package ws.so;
 
-import so.entities.SaleOrder;
-import so.entities.SaleOrderLine;
+import entities.so.SaleOrder;
+import entities.so.SaleOrderLine;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -11,8 +11,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.Provider;
-import so.saleorder.beans.FindSaleOrderBackingBean;
-import so.saleorder.beans.OpenSaleOrderView;
+import beans.so.saleorder.FindSaleOrderBackingBean;
+import beans.so.saleorder.OpenSaleOrderView;
 import service.RestProviderWR;
 
 /**

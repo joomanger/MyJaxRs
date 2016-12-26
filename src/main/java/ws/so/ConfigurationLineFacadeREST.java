@@ -1,6 +1,6 @@
 package ws.so;
 
-import so.config.entity.ConfigurationLine;
+import entities.so.config.ConfigurationLine;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

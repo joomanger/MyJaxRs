@@ -1,7 +1,7 @@
 package converters;
 
-import customer.beans.CustomerCBean;
-import customer.entities.Customer;
+import beans.customer.CustomerCBean;
+import entities.customer.Customer;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import so.saleorder.flows.CreateOrderFlow;
+import flows.so.saleorder.CreateOrderFlow;
 
 /**
  *

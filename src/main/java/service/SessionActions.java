@@ -11,13 +11,13 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
-import lookup.beans.LookupEJB;
-import lookup.entities.Lookup;
-import lookup.entities.LookupItem;
-import sys.beans.UserCBean;
-import sys.beans.ViewEJB;
-import sys.entities.SysUser;
-import sys.entities.View;
+import beans.lookup.LookupEJB;
+import entities.lookup.Lookup;
+import entities.lookup.LookupItem;
+import beans.sys.UserCBean;
+import beans.sys.ViewEJB;
+import entities.sys.SysUser;
+import entities.sys.View;
 
 /**
  *

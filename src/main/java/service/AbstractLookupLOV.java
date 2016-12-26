@@ -3,9 +3,9 @@ package service;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import lookup.beans.LookupCBean;
-import lookup.entities.Lookup;
-import lookup.entities.LookupItem;
+import beans.lookup.LookupCBean;
+import entities.lookup.Lookup;
+import entities.lookup.LookupItem;
 
 /**
  *

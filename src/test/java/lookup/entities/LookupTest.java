@@ -1,11 +1,13 @@
 package lookup.entities;
 
+import entities.lookup.LookupItem;
+import entities.lookup.Lookup;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import lookup.beans.LookupEJB;
+import beans.lookup.LookupEJB;
 import org.jglue.cdiunit.CdiRunner;
 import org.jglue.cdiunit.InRequestScope;
 import org.junit.After;

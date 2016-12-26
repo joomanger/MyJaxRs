@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import rw.beans.RWStationCBean;
-import rw.entities.RWStation;
+import beans.rw.RWStationCBean;
+import entities.rw.RWStation;
 import service.SessionActions;
 
 /**

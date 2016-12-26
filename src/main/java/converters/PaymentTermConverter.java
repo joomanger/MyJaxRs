@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import payment.beans.PaymentCBean;
-import payment.entities.PaymentTerm;
+import beans.payment.PaymentCBean;
+import entities.payment.PaymentTerm;
 
 /**
  *

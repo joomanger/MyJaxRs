@@ -1,6 +1,6 @@
 package ws.so;
 
-import so.entities.SaleOrderLine;
+import entities.so.SaleOrderLine;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -8,7 +8,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.Provider;
-import so.saleorderline.beans.SaleOrderLineBackingBean;
+import beans.so.saleorderline.SaleOrderLineBackingBean;
 import service.RestProviderWR;
 
 /**
