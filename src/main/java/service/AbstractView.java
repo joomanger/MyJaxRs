@@ -17,7 +17,7 @@ public abstract class AbstractView<T> implements Serializable {
     private T entity;
     private List<Integer> linesForSave = new ArrayList<>();
     private List<Object> selectedEntityLines = new ArrayList<>();
-
+    
     protected abstract void init();
 
     public List<T> getEntities() {

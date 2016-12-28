@@ -1,7 +1,9 @@
 package service;
 
+import java.util.Calendar;
 import java.util.List;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 /**
  *
@@ -9,6 +11,9 @@ import javax.faces.context.FacesContext;
  * @param <T>
  */
 public abstract class AbstractClientBean2<T> {
+
+    @Inject
+    private SessionActions sa;
 
     protected abstract AbstractEJB2<T> getEJB();
 
@@ -27,12 +32,22 @@ public abstract class AbstractClientBean2<T> {
     }
 
     public void createEntity(String outcome) {
+        if (getNewView().getEntity() instanceof WhoIS) {
+            WhoIS whoIS = (WhoIS) getNewView().getEntity();
+            whoIS.setCreatedBy(sa.getCurrentUser().getUser_id());
+            whoIS.setCreationDate(Calendar.getInstance().getTime());
+        }
         getEJB().create(getNewView().getEntity());
         FacesContext.getCurrentInstance().getApplication().
                 getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, outcome);
     }
 
     public void changeEntity() {
+        if (getNewView().getEntity() instanceof WhoIS) {
+            WhoIS whoIS = (WhoIS) getNewView().getEntity();
+            whoIS.setLastUpdatedBy(sa.getCurrentUser().getUser_id());
+            whoIS.setLastUpdateDate(Calendar.getInstance().getTime());
+        }
         getEJB().edit(getOpenView().getEntity());
     }
 

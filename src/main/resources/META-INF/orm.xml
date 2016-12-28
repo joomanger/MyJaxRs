@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://www.eclipse.org/eclipselink/xsds/persistence/orm http://www.eclipse.org/eclipselink/xsds/eclipselink_orm_2_1.xsd"
     version="2.1">
     <sql-result-set-mapping name="LookupItemVLMapping">
-        <constructor-result target-class="lookup.entities.LookupItem">
+        <constructor-result target-class="entities.lookup.LookupItem">
             <column name="lookupitem_id"/>
             <column name="activestatus"/>
             <column name="valuez"/>
@@ -14,7 +14,7 @@
         </constructor-result>
     </sql-result-set-mapping>
     <sql-result-set-mapping name="RWStationVLMapping">
-        <constructor-result target-class="rw.entities.RWStationVL">
+        <constructor-result target-class="entities.rw.RWStationVL">
             <column name="rws_code" class="java.lang.String"/>
             <column name="rws_name" class="java.lang.String"/>
             <column name="rwr_name" class="java.lang.String"/>
