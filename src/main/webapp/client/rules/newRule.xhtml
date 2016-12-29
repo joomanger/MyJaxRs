@@ -50,7 +50,7 @@
                     </p:fieldset>
                     <p:dialog header="Новая формула" widgetVar="createFormula" modal="true" 
                               resizable="false" width="700">
-                        <p:panelGrid columns="2"> 
+                        <h:panelGrid columns="2"> 
                             <p:selectOneListbox id="param" filter="true" filterMatchMode="contains" 
                                                 ondblclick="document.getElementById('formulaText').value += document.getElementById('param_input').value" >
                                 <f:selectItems value="#{ruleCBean.getCacheConfigItems(newRuleView.entity.item.item_id)}" 
@@ -59,7 +59,7 @@
                             </p:selectOneListbox>
 
                             <p:inputTextarea id="formulaText" rows="15" cols="60" />
-                        </p:panelGrid>
+                        </h:panelGrid>
                     </p:dialog>
                 </h:form>
             </ui:define>
