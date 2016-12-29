@@ -14,13 +14,15 @@
                     <p:fieldset legend="Новое правило" style="width: 150px; margin-bottom: 10px"> 
                         <h:panelGrid id="yyy" columns="2" cellpadding="5" >
                             <p:outputLabel value="Название"/>
-                            <p:inputText id="name" value="#{newRuleView.entity.name}" required="true" requiredMessage="Название обязательно для заполнения" size="50" maxlength="150" />
+                            <p:inputText id="name" value="#{newRuleView.entity.name}" required="true" 
+                                         requiredMessage="Название обязательно для заполнения" size="50" maxlength="150" />
                             <p:outputLabel value="Позиция"/>
                             <p:autoComplete id="item" required="true" requiredMessage="Позиция обязательна для заполнения" size="30" 
                                             value="#{newRuleView.entity.item}" completeMethod="#{itemConverter.completeItem}"
                                             var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" 
                                             dropdown="true">
-                                <p:ajax event="itemSelect" listener="#{ruleCBean.setCacheConfigItems(newRuleView.entity.item.item_id)}" update="dTable:newFormula basic" />
+                                <p:ajax event="itemSelect" listener="#{ruleCBean.setCacheConfigItems(newRuleView.entity.item.item_id)}" 
+                                        update="dTable:newFormula param" />
                             </p:autoComplete>
                             <p:outputLabel value="Активное"/>
                             <p:inputSwitch value="#{newRuleView.entity.activeStatus}"/>
@@ -38,8 +40,8 @@
                                 <h:outputText value="#{ord.line_number}"/>
                             </p:column>
                             <f:facet name="footer">
-                                <p:commandButton id="newFormula" immediate="true" process="dTable" oncomplete="PF('createFormula').show()" value="Создать формулу"
-                                                 disabled="#{newRuleView.entity.item==null?true:false}"/>
+                                <p:commandButton id="newFormula" immediate="true" process="dTable" oncomplete="PF('createFormula').show()"
+                                                 value="Создать формулу" disabled="#{newRuleView.entity.item==null?true:false}"/>
                             </f:facet>
                         </p:dataTable>
                         <p:commandButton value="Назад" action="rules" immediate="true" style="margin-top: 15px"/>
@@ -49,13 +51,14 @@
                     <p:dialog header="Новая формула" widgetVar="createFormula" modal="true" 
                               resizable="false" width="700">
                         <p:panelGrid columns="2"> 
-                            <p:selectOneListbox id="basic" filter="true" filterMatchMode="contains" ondblclick="document.getElementById('asd').value += document.getElementById('basic_input').value" >
+                            <p:selectOneListbox id="param" filter="true" filterMatchMode="contains" 
+                                                ondblclick="document.getElementById('formulaText').value += document.getElementById('param_input').value" >
                                 <f:selectItems value="#{ruleCBean.getCacheConfigItems(newRuleView.entity.item.item_id)}" 
                                                var="v" itemLabel="#{v.parameter.name}" 
                                                itemValue="#{v.parameter.name}[#{v.parameter.attribute.replaceAll('ATTRIBUTE', '')}]" />
                             </p:selectOneListbox>
 
-                            <p:inputTextarea rows="15" cols="60" id="asd"/>
+                            <p:inputTextarea id="formulaText" rows="15" cols="60" />
                         </p:panelGrid>
                     </p:dialog>
                 </h:form>

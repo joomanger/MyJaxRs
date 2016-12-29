@@ -17,6 +17,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import service.WhoIS;
 
 /**
  *
@@ -25,7 +26,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "rule_lines", uniqueConstraints
         = @UniqueConstraint(columnNames = {"header_id,line_number"}))
-public class RuleLine implements Serializable {
+public class RuleLine implements Serializable,WhoIS {
 
     @Id
     @SequenceGenerator(name = "rule_line_sq", initialValue = 1, allocationSize = 1)
@@ -113,34 +114,42 @@ public class RuleLine implements Serializable {
         this.resultCondition = resultCondition;
     }
 
+    @Override
     public Date getCreationDate() {
         return creationDate;
     }
 
+    @Override
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 
+    @Override
     public Long getCreatedBy() {
         return createdBy;
     }
 
+    @Override
     public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
     }
 
+    @Override
     public Date getLastUpdateDate() {
         return lastUpdateDate;
     }
 
+    @Override
     public void setLastUpdateDate(Date lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
     }
 
+    @Override
     public Long getLastUpdatedBy() {
         return lastUpdatedBy;
     }
 
+    @Override
     public void setLastUpdatedBy(Long lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
     }
