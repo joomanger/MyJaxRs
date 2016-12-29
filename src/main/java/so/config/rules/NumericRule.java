@@ -3,6 +3,7 @@ package so.config.rules;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.script.ScriptException;
 import service.IAttributes;
 
@@ -27,6 +28,29 @@ public class NumericRule implements IRule {
         this.attributeResult = attributeResult;
     }
 
+    public void test() {
+        StringBuilder s = new StringBuilder();
+        StringBuilder s2 = new StringBuilder();
+
+        String formula = "((12-5)*Толщина, мм[1]+Ширина, мм[5])/Длина, мм[12]*(400*10000000)+(1+2-9999)";
+        Pattern pp = Pattern.compile("(\\+|\\-|\\/|\\*|\\(|\\)|\\%)|[\\[\\d\\]]+");
+        Pattern pp2 = Pattern.compile("[\\[][\\d]+[\\]]");
+        Matcher mm = pp.matcher(formula);
+
+        while (mm.find()) {
+            Matcher mm2 = pp2.matcher(mm.group());
+            if (mm2.matches()) {
+                s2.append("attribute");
+                s2.append(mm.group().replaceAll("[\\[]|[\\]]", ""));
+                s.append(s2);
+                s2.delete(0, s2.length());
+            } else {
+                s.append(mm.group());
+            }
+        }
+        System.out.println("FORMULA: " + s.toString());
+    }
+
     @Override
     public void calculation() {
         try {
@@ -38,12 +62,12 @@ public class NumericRule implements IRule {
                 methodName.append(mm.group().substring(0, 1).toUpperCase());
                 methodName.append(mm.group().substring(1));
                 Method m = attributes.getClass().getMethod(methodName.toString(), (Class<?>[]) null);
-                try{
+                try {
                     mm.appendReplacement(result, m.invoke(attributes, (Object[]) null).toString());
-                }catch(java.lang.NullPointerException ex){
+                } catch (java.lang.NullPointerException ex) {
                     mm.appendReplacement(result, "0");
                 }
-                
+
                 methodName.delete(0, methodName.length());
             }
             mm.appendTail(result);
