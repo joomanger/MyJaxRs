@@ -42,6 +42,10 @@ public class ConfigCBean implements Serializable {
     public Configuration getItem(Long p_item_id, Integer p_ver_num) {
         return configEJB.getConfig(p_item_id, p_ver_num);
     }
+    /*get the Actual Configuration*/
+    public Configuration getItem(Long p_item_id) {
+        return configEJB.getConfig(p_item_id, getLastVersion(p_item_id));
+    }
 
     public List<Configuration> getItems() {
         return configEJB.findAll();

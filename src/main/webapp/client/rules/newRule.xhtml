@@ -10,17 +10,20 @@
         <ui:composition template="./../../WEB-INF/template.xhtml">
             <ui:define name="content">
                 <h:form id="paramHeader" prependId="false">
-                    <p:focus for="item"/>
+                    <p:focus for="name"/>
                     <p:fieldset legend="Новое правило" style="width: 150px; margin-bottom: 10px"> 
-                        <h:panelGrid id="yyy" columns="2" cellpadding="5">
+                        <h:panelGrid id="yyy" columns="2" cellpadding="5" >
                             <p:outputLabel value="Название"/>
-                            <p:inputText value="#{newRuleView.entity.name}" required="true" requiredMessage="Название обязательно для заполнения" size="50" maxlength="150" />
+                            <p:inputText id="name" value="#{newRuleView.entity.name}" required="true" requiredMessage="Название обязательно для заполнения" size="50" maxlength="150" />
                             <p:outputLabel value="Позиция"/>
                             <p:autoComplete id="item" required="true" requiredMessage="Позиция обязательна для заполнения" size="30" 
                                             value="#{newRuleView.entity.item}" completeMethod="#{itemConverter.completeItem}"
                                             var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" 
                                             dropdown="true">
+                                <p:ajax event="itemSelect" listener="#{ruleCBean.setCacheConfigItems(newRuleView.entity.item.item_id)}" update="dTable:newFormula basic" />
                             </p:autoComplete>
+                            <p:outputLabel value="Активное"/>
+                            <p:inputSwitch value="#{newRuleView.entity.activeStatus}"/>
                         </h:panelGrid>
 
                         <p:dataTable id="dTable" var="ord" value="#{newRuleView.entity.lines}" selection="#{newRuleView.selectedEntityLines}" 
@@ -30,19 +33,31 @@
                             <f:facet name="header">
                                 <p:outputLabel value="Список параметров"/>
                             </f:facet>
-
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                             <p:column headerText="п/п" style="width:52px; text-align: center">
-                                <h:outputText value="#{ord.line_number}" />
+                                <h:outputText value="#{ord.line_number}"/>
                             </p:column>
                             <f:facet name="footer">
-                                <p:commandButton value="Создать формулу" action="rules" />
+                                <p:commandButton id="newFormula" immediate="true" process="dTable" oncomplete="PF('createFormula').show()" value="Создать формулу"
+                                                 disabled="#{newRuleView.entity.item==null?true:false}"/>
                             </f:facet>
                         </p:dataTable>
                         <p:commandButton value="Назад" action="rules" immediate="true" style="margin-top: 15px"/>
                         <p:commandButton value="Создать" action="#{ruleCBean.createEntity('rules')}"  
-                                         style="margin-left: 40px"/>
-                    </p:fieldset>  
+                                         style="margin-left: 40px" />
+                    </p:fieldset>
+                    <p:dialog header="Новая формула" widgetVar="createFormula" modal="true" 
+                              resizable="false" width="700">
+                        <p:panelGrid columns="2"> 
+                            <p:selectOneListbox id="basic" filter="true" filterMatchMode="contains" ondblclick="document.getElementById('asd').value += document.getElementById('basic_input').value" >
+                                <f:selectItems value="#{ruleCBean.getCacheConfigItems(newRuleView.entity.item.item_id)}" 
+                                               var="v" itemLabel="#{v.parameter.name}" 
+                                               itemValue="#{v.parameter.name}[#{v.parameter.attribute.replaceAll('ATTRIBUTE', '')}]" />
+                            </p:selectOneListbox>
+
+                            <p:inputTextarea rows="15" cols="60" id="asd"/>
+                        </p:panelGrid>
+                    </p:dialog>
                 </h:form>
             </ui:define>
         </ui:composition>

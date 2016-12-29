@@ -13,7 +13,9 @@ import service.AbstractView;
 @Named
 @ViewScoped
 public class NewRuleView extends AbstractView<Rule> {
-
+    
+    
+    
     @PostConstruct
     @Override
     protected void init() {

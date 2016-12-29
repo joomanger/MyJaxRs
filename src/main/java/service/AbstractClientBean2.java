@@ -52,8 +52,12 @@ public abstract class AbstractClientBean2<T> {
     }
 
     public void deleteSelectedEntities() {
-        for (T entity : getFindView().getSelectedEntities()) {
+        getFindView().getSelectedEntities().stream().map((entity) -> {
             getEJB().remove(entity);
-        }
+            return entity;
+        }).forEach((entity) -> {
+            getFindView().getEntities().remove(entity);
+        });
+        
     }
 }

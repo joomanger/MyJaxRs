@@ -47,7 +47,7 @@ public class Rule implements Serializable,WhoIS {
     @OrderBy("line_number asc")
     private List<RuleLine> lines = new ArrayList<>();
     
-    private Boolean activeStatus;
+    private Boolean activeStatus=true;
 
     /*WHO*/
     @Temporal(TemporalType.TIMESTAMP)
