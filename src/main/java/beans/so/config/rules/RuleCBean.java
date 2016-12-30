@@ -3,6 +3,7 @@ package beans.so.config.rules;
 import beans.so.config.ConfigCBean;
 import entities.so.config.ConfigurationLine;
 import entities.so.config.rules.Rule;
+import entities.so.config.rules.RuleLine;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,8 @@ import javax.inject.Named;
 import service.AbstractClientBean2;
 import service.AbstractEJB2;
 import service.AbstractView;
+import service.SessionActions;
+import service.WhoIS;
 
 /**
  *
@@ -25,6 +28,8 @@ public class RuleCBean extends AbstractClientBean2<Rule> {
     private RuleEJB ejb;
     @Inject
     private ConfigCBean configClient;
+    @Inject
+    private SessionActions sa;
     @Inject
     private NewRuleView newView;
     @Inject
@@ -71,6 +76,22 @@ public class RuleCBean extends AbstractClientBean2<Rule> {
             return cacheConfigItems.get(item_id);
         }
         return null;
+    }
+
+    public void addFormulaLine(IRuleView view) {
+        RuleLine rl = new RuleLine();
+        if(view.getFormula().isEmpty()){
+            throw new RuntimeException("Формула не указана. Введите формулу!");
+        }
+        rl.setFormula(view.getFormula());
+        short s = view.getNpp();
+        view.setNpp(++s);
+        rl.setLine_number(view.getNpp());
+        if (rl instanceof WhoIS) {
+            sa.createWHO(rl);
+        }
+        ((Rule) view.getEntity()).addLine(rl);
+        view.setFormula(null);
     }
 
 }

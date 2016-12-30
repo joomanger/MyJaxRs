@@ -18,6 +18,7 @@ import beans.sys.UserCBean;
 import beans.sys.ViewEJB;
 import entities.sys.SysUser;
 import entities.sys.View;
+import java.util.Calendar;
 
 /**
  *
@@ -37,10 +38,11 @@ public class SessionActions implements Serializable {
     private ViewEJB ejb;
 
     private SysUser user;
-    
-    private String language="RU";
+
+    private String language = "RU";
 
     private final Map<String, String> viewsMap = new HashMap<>();
+
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     private void init() {
@@ -82,7 +84,7 @@ public class SessionActions implements Serializable {
     public void setLanguage(String language) {
         this.language = language;
     }
-    
+
     public List<String> getSystemLanguages() {
         Lookup langs = lookupEJB.findByName("LANGUAGES");
         List<String> res = new ArrayList<>(langs.getLookupItems().size());
@@ -92,5 +94,16 @@ public class SessionActions implements Serializable {
         return res;
     }
 
+    public void createWHO(WhoIS whoIS) {
+        whoIS.setCreatedBy(getCurrentUser().getUser_id());
+        whoIS.setCreationDate(Calendar.getInstance().getTime());
+        whoIS.setLastUpdatedBy(getCurrentUser().getUser_id());
+        whoIS.setLastUpdateDate(Calendar.getInstance().getTime());
+    }
+
+    public void updateWHO(WhoIS whoIS) {
+        whoIS.setLastUpdatedBy(getCurrentUser().getUser_id());
+        whoIS.setLastUpdateDate(Calendar.getInstance().getTime());
+    }
 
 }

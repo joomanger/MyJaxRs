@@ -85,4 +85,4 @@ public class ConfigurationLine implements Serializable {
         }
     }
 
-}
+ }

@@ -41,6 +41,7 @@ public class Rule implements Serializable,WhoIS {
     @GeneratedValue(generator = "rule_sq")
     private Long header_id;
     @Size(max = 150, message = "Максимальная длина названия 150 символов")
+    @Column(length = 150)
     private String name;
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "rule", fetch = FetchType.LAZY)
     @PrivateOwned
@@ -59,8 +60,10 @@ public class Rule implements Serializable,WhoIS {
     private Long createdBy;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_update_date")
+    @NotNull
     private Date lastUpdateDate;
     @Column(name = "last_updated_by")
+    @NotNull
     private Long lastUpdatedBy;
 
     @ManyToOne

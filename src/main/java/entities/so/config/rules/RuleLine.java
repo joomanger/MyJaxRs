@@ -26,7 +26,7 @@ import service.WhoIS;
 @Entity
 @Table(name = "rule_lines", uniqueConstraints
         = @UniqueConstraint(columnNames = {"header_id,line_number"}))
-public class RuleLine implements Serializable,WhoIS {
+public class RuleLine implements Serializable, WhoIS {
 
     @Id
     @SequenceGenerator(name = "rule_line_sq", initialValue = 1, allocationSize = 1)
@@ -35,11 +35,13 @@ public class RuleLine implements Serializable,WhoIS {
     private Short line_number;
     @NotNull
     @Size(max = 1500, message = "Максимальная длина формулы 1500 символов")
+    @Column(length = 1500)
     private String formula;
     @Column(name = "result_attribute")
-    @NotNull
+
+    //@NotNull
     private String resultAttribute;
-    @Column(name = "result_condition")
+    @Column(name = "result_condition", length = 150)
     @Size(max = 150, message = "Максимальная длина условия 150 символов")
     private String resultCondition;
 
@@ -157,6 +159,5 @@ public class RuleLine implements Serializable,WhoIS {
     public Rule getRule() {
         return rule;
     }
-    
-    
+
 }

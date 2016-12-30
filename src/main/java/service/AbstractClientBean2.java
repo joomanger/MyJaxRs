@@ -1,6 +1,5 @@
 package service;
 
-import java.util.Calendar;
 import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -33,9 +32,12 @@ public abstract class AbstractClientBean2<T> {
 
     public void createEntity(String outcome) {
         if (getNewView().getEntity() instanceof WhoIS) {
-            WhoIS whoIS = (WhoIS) getNewView().getEntity();
-            whoIS.setCreatedBy(sa.getCurrentUser().getUser_id());
-            whoIS.setCreationDate(Calendar.getInstance().getTime());
+//            WhoIS whoIS = (WhoIS) getNewView().getEntity();
+//            whoIS.setCreatedBy(sa.getCurrentUser().getUser_id());
+//            whoIS.setCreationDate(Calendar.getInstance().getTime());
+//            whoIS.setLastUpdatedBy(sa.getCurrentUser().getUser_id());
+//            whoIS.setLastUpdateDate(Calendar.getInstance().getTime());
+            sa.createWHO((WhoIS) getNewView().getEntity());
         }
         getEJB().create(getNewView().getEntity());
         FacesContext.getCurrentInstance().getApplication().
@@ -44,9 +46,10 @@ public abstract class AbstractClientBean2<T> {
 
     public void changeEntity() {
         if (getNewView().getEntity() instanceof WhoIS) {
-            WhoIS whoIS = (WhoIS) getNewView().getEntity();
-            whoIS.setLastUpdatedBy(sa.getCurrentUser().getUser_id());
-            whoIS.setLastUpdateDate(Calendar.getInstance().getTime());
+//            WhoIS whoIS = (WhoIS) getNewView().getEntity();
+//            whoIS.setLastUpdatedBy(sa.getCurrentUser().getUser_id());
+//            whoIS.setLastUpdateDate(Calendar.getInstance().getTime());
+            sa.createWHO((WhoIS) getNewView().getEntity());
         }
         getEJB().edit(getOpenView().getEntity());
     }
@@ -58,6 +61,6 @@ public abstract class AbstractClientBean2<T> {
         }).forEach((entity) -> {
             getFindView().getEntities().remove(entity);
         });
-        
+
     }
 }

@@ -40,6 +40,7 @@ public abstract class AbstractEJB2<T> {
                 ConstraintViolation<T> cv = iterator.next();
                 sb.append(cv.getMessage());
             }
+            System.out.println("ERORR!!!!!!!!!"+sb.toString());
             return sb.toString();
         }
         return SUCCESSFUL;

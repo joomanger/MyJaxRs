@@ -7,7 +7,7 @@ import javax.ejb.Singleton;
 
 /**
  *
- * @author savin
+ * @author savin ПЕРЕПИСАТЬ, НЕ НУЖЕН СИНГЛЕТОН!!!
  */
 @Singleton
 public class SessionConfig {
