@@ -9,10 +9,10 @@ import javax.faces.flow.FlowScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import beans.lookup.LookupCBean;
+import beans.so.saleorder.OrderCBean;
 import entities.lookup.Lookup;
 
 import entities.so.Order;
-import beans.so.saleorder.SaleOrderCBean;
 import entities.so.Attachment;
 
 /**
@@ -24,7 +24,7 @@ import entities.so.Attachment;
 public class CreateOrderFlow implements Serializable {
     
     @Inject
-    private SaleOrderCBean sob;
+    private OrderCBean sob;
 //    @Inject
 //    private OrderEJB orderEJB;
     @Inject
@@ -65,10 +65,6 @@ public class CreateOrderFlow implements Serializable {
     
     public void setOrder(Order order) {
         this.order = order;
-    }
-    
-    public SaleOrderCBean getSob() {
-        return sob;
     }
     
     public LookupCBean getClientLookup() {

@@ -27,7 +27,6 @@ import entities.so.Order;
 public class OrderEJB extends AbstractEJB2<Order> {
 
     //private Order order;
-
     @PersistenceContext(unitName = "myjaxrs")
     private EntityManager em;
 
@@ -40,6 +39,10 @@ public class OrderEJB extends AbstractEJB2<Order> {
         return em;
     }
 
+    public Long getNewOrderNumber() {
+        return (Long) em.createNativeQuery("select nextval('order_header_number_sq')").getSingleResult();
+    }
+
 //    public Order getOrder() {
 //        return order;
 //    }
@@ -47,20 +50,19 @@ public class OrderEJB extends AbstractEJB2<Order> {
 //    public void setOrder(Order order) {
 //        this.order = order;
 //    }
-
-    public void addNewAttachment(Order order,Attachment attachment) {
+    public void addNewAttachment(Order order, Attachment attachment) {
         order.addAttachment(attachment);
     }
 
-    public void deleteSelectedAttachment(Order order,List<Attachment> attachments) {
+    public void deleteSelectedAttachment(Order order, List<Attachment> attachments) {
         order.getAttachments().removeAll(attachments);
     }
 
     public void createOrder(Order order) {
         super.create(order);
     }
-    
-    public String handleFileUpload(Order order,FileUploadEvent event) throws IOException {
+
+    public String handleFileUpload(Order order, FileUploadEvent event) throws IOException {
         UploadedFile file = event.getFile();
         String upload_dir = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("UPLOAD_DIR");
         String filename = file.getFileName();
@@ -69,7 +71,7 @@ public class OrderEJB extends AbstractEJB2<Order> {
         if (!theDir.exists()) {
             theDir.mkdirs();
         }
-        
+
         try (InputStream in = file.getInputstream();
                 OutputStream out = new FileOutputStream(new File(folder + "//" + filename))) {
             int read;
@@ -82,9 +84,9 @@ public class OrderEJB extends AbstractEJB2<Order> {
         } catch (IOException ex) {
             throw ex;
         }
-        
+
         return filename;
-        
+
     }
 
 }

@@ -49,6 +49,10 @@ public class OrderCBean {
         orderFlow.getOrder().setInv_address(null);
         orderFlow.getOrder().setContract(null);
     }
+    
+    public Long getNewOrderNumber() {
+        return orderEJB.getNewOrderNumber();
+    }
 
     public void addNewAttachment() {
         Attachment a = orderFlow.getAttachment();
