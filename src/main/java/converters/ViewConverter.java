@@ -9,9 +9,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.inject.Inject;
-import javax.inject.Named;
 import beans.sys.ViewEJB;
 import entities.sys.View;
+import javax.inject.Named;
 
 /**
  *

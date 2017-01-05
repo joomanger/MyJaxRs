@@ -8,9 +8,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
-
         <ui:composition template="./../WEB-INF/template.xhtml">
-
             <ui:define name="content">
                 <h:form prependId="false">
                     <p:steps style="width: 1200px" activeIndex="3" styleClass="custom" readonly="false" >
@@ -94,16 +92,28 @@
                                                 <h:outputText  value="#{attrs.multiple?ord.aggregateValues(ord[attrs.lattribute]):ord[attrs.attribute]}"/>
                                             </f:facet>
                                             <f:facet name="input">
-                                                <p:autoComplete  value="#{attrs.multiple?ord[attrs.lattribute]:ord[attrs.attribute]}" 
-                                                                 completeMethod="#{parameterValueConverter.completeValue2}" 
-                                                                 multiple="#{attrs.multiple}" 
-                                                                 maxResults="30"
-                                                                 forceSelection="true" 
-                                                                 size="#{attrs.fieldSize}"
-                                                                 dropdown="#{attrs.multiple?false:true}" cache="true"
-                                                                 >
-                                                    <p:ajax event="focus"  listener="#{createOrderLineFlow.setParameter_id(attrs.parameter_id)}" />
-                                                </p:autoComplete>
+                                                <c:if test="#{attrs.multiple=='TRUE'}">
+                                                    <p:autoComplete  value="#{ord[attrs.lattribute]}" 
+                                                                     completeMethod="#{parameterValueConverter.completeValue2}" 
+                                                                     multiple="#{attrs.multiple}" 
+                                                                     maxResults="30"
+                                                                     forceSelection="true" 
+                                                                     size="#{attrs.fieldSize}"
+                                                                     dropdown="#{attrs.multiple?false:true}" cache="true">
+                                                        <p:ajax event="focus" listener="#{createOrderLineFlow.setParameter_id(attrs.parameter_id)}" />
+                                                    </p:autoComplete>
+                                                </c:if> 
+                                                <c:if test="#{attrs.multiple=='FALSE'}">
+                                                    <p:autoComplete  value="#{ord[attrs.attribute]}" 
+                                                                     completeMethod="#{parameterValueConverter.completeValue2}" 
+                                                                     multiple="#{attrs.multiple}" 
+                                                                     maxResults="30"
+                                                                     forceSelection="true" 
+                                                                     size="#{attrs.fieldSize}"
+                                                                     dropdown="#{attrs.multiple?false:true}" cache="true">
+                                                        <p:ajax event="focus" listener="#{createOrderLineFlow.setParameter_id(attrs.parameter_id)}" />
+                                                    </p:autoComplete>
+                                                </c:if>
                                             </f:facet>
                                         </p:cellEditor>
                                     </c:when>

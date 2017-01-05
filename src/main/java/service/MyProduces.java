@@ -5,7 +5,8 @@
  */
 package service;
 
-import javax.enterprise.context.ApplicationScoped;
+import java.io.Serializable;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,9 +19,8 @@ import javax.validation.ValidatorFactory;
  * @author savin
  */
 @SuppressWarnings("PMD.UnusedPrivateField")
-@ApplicationScoped
-public class MyProduces {
-
+@Dependent
+public class MyProduces implements Serializable{
     
     @Produces
     @PersistenceContext(unitName = "myjaxrs")

@@ -1,8 +1,6 @@
 package service;
 
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
@@ -21,8 +19,8 @@ public class Security implements Serializable {
     @Inject
     private SessionActions sc;
 
-    @Inject
-    private Logger log;
+//    @Inject
+//    private Logger log;
 
     @AroundInvoke
     public Object logMethod(InvocationContext ic) throws Exception {
@@ -30,7 +28,8 @@ public class Security implements Serializable {
 
         if (FacesContext.getCurrentInstance().getExternalContext().getInitParameter("logging").equals("true")) {
             String action = ic.getTarget().getClass().getSimpleName().replace("$Proxy$_$$_WeldSubclass", "") + "." + ic.getMethod().getName();
-            log.log(Level.INFO, "User [{0}] entered to {1}", new Object[]{sc.getCurrentUser().getUsername(), action});
+            System.out.println(action);
+           // log.log(Level.INFO, "User [{0}] entered to {1}", new Object[]{sc.getCurrentUser().getUsername(), action});
 //        }
 //        for (Annotation a : ic.getMethod().getDeclaredAnnotations()) {
 //            System.out.println("Annot annotationType.getName=" + a.annotationType().getName() + " getTypeName=" + a.annotationType().getTypeName() + " simpleName=" + a.annotationType().getSimpleName() + " canonicalName=" + a.annotationType().getCanonicalName());
@@ -50,7 +49,8 @@ public class Security implements Serializable {
             return ic.proceed();
         } finally {
             if (FacesContext.getCurrentInstance().getExternalContext().getInitParameter("logging").equals("true")) {
-                log.log(Level.INFO, "User [{0}] exiting from  {1}", new Object[]{sc.getCurrentUser().getUsername(), ic.getMethod().getName()});
+                System.out.println("Jopa");
+               // log.log(Level.INFO, "User [{0}] exiting from  {1}", new Object[]{sc.getCurrentUser().getUsername(), ic.getMethod().getName()});
 
             }
         }

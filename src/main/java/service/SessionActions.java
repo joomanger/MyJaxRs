@@ -28,8 +28,8 @@ import java.util.Calendar;
 @SessionScoped
 public class SessionActions implements Serializable {
 
-    @Inject
-    private SessionConfig sc;
+//    @Inject
+//    private SessionConfig sc;
     @Inject
     private LookupEJB lookupEJB;
     @Inject
@@ -46,7 +46,7 @@ public class SessionActions implements Serializable {
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     @PostConstruct
     private void init() {
-        user = client.findUserByUserName(sc.getSessionContext().getCallerPrincipal().getName());
+        user = client.findUserByUserName(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
         updateViewSecurity();
     }
 
@@ -57,7 +57,7 @@ public class SessionActions implements Serializable {
     public String logout() {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         session.invalidate();
-        return "/login.xhtml";
+        return "/index.xhtml";
     }
 
     public Map<String, String> getViewsMap() {

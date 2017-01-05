@@ -1,5 +1,6 @@
 package service;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -15,7 +16,7 @@ import javax.validation.Validator;
  * @author savin
  * @param <T>
  */
-public abstract class AbstractEJB<T> {
+public abstract class AbstractEJB<T> implements Serializable{
 
     public static final String SUCCESSFUL = "Successful";
     public static final String ERROR = "Error";

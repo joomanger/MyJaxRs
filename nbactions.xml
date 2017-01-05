@@ -12,7 +12,7 @@
             </goals>
             <properties>
                 <netbeans.deploy>true</netbeans.deploy>
-                <argLine>-Dconsole.encoding=UTF-8 -Dfile.encoding=UTF-8 -Djava.util.Arrays.useLegacyMergeSort=true</argLine>
+                <argLine>-Dconsole.encoding=UTF-8 -Dfile.encoding=UTF-8 -Djava.util.Arrays.useLegacyMergeSort=true -Djava.security.auth.login.config=%CATALINA_HOME%/conf/jaas.config</argLine>
                 <resourceEncoding>UTF-8</resourceEncoding>
                 
                 
