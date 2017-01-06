@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/MyJaxRs">
-    <Realm appName="MyJaxRs" 
-           className="org.apache.catalina.realm.JAASRealm" 
-           roleClassNames="jaas.RolePrincipal" 
-           userClassNames="jaas.UserPrincipal"/>
+  <Realm appName="MyJaxRs" className="org.apache.catalina.realm.JAASRealm" roleClassNames="jaas.RolePrincipal" userClassNames="jaas.UserPrincipal"/>
 </Context>

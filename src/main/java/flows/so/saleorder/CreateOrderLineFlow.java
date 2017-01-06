@@ -105,7 +105,7 @@ public class CreateOrderLineFlow implements Serializable {
 
     public void onCellEdit(CellEditEvent event) {
         OrderLine line=lines.get(event.getRowIndex());
-        NumericRule r=new NumericRule(line, "Number(attribute1+attribute2+attribute3).toFixed(3)", "attribute4");
+        NumericRule r=new NumericRule(line, "Number(attribute1+attribute2+attribute3).toFixed(3)*3", "attribute4");
         //NumericRule r=new NumericRule(line, "'attribute18'", "attribute4");
         r.calculation();
     }

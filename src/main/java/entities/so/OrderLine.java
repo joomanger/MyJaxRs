@@ -28,7 +28,11 @@ import service.IAttributes;
 
 /**
  *
- * @author savin
+ * @author savin 
+ * Строка заказа ыаыаываыва ываыаыва
+ * sdklfjsdjslj
+ * sdkjhksdhkjfhsdkjfhsk
+ * askldjasjkasjkasjkhasjk askdh asjk asjkdh asjkdh kasdh sdfsdfsdfsfsdf
  */
 @Entity
 @Table(name = "zakaz_line")

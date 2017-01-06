@@ -19,6 +19,7 @@
                         <p:menuitem value="Подтверждение" />
                     </p:steps>
                 </h:form>
+                <p:outputLabel value="Savin Alex "/>
                 <h:form prependId="false">
                     <p:hotkey bind="alt+z" update="dLines"/>
                     <p:dataTable id="dLines" editMode="cell" rowSelectMode="checkbox" 
@@ -34,7 +35,7 @@
                                             var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" 
                                             dropdown="true" style="margin-right: 40px"/>
                             <p:commandButton id="btnSendParam" value="Добавить" actionListener="#{orderCBean.addLine()}" update="dLines mainMSG"/>
-                            <p:commandButton value="Логика" update="dLines"/>
+                            <p:commandButton value="Логика" actionListener="#{createOrderLineFlow.onCellEdit(event)}" update="dLines"/>
                         </f:facet>
                         <p:column style="width:10px" >
                             <p:rowToggler />
