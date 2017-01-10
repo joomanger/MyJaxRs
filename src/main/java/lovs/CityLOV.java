@@ -13,7 +13,7 @@ import beans.lookup.LookupCBean;
  * @author savin
  */
 @Named
-@RequestScoped
+@RequestScoped 
 public class CityLOV {
 
     @Inject
