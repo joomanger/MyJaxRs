@@ -2,14 +2,13 @@
 <Context antiJARLocking="true" path="/MyJaxRs">
     <!--  <Realm appName="MyJaxRs" className="org.apache.catalina.realm.JAASRealm" roleClassNames="jaas.RolePrincipal" userClassNames="jaas.UserPrincipal"/>-->
  
-    <Realm className="org.apache.catalina.realm.DataSourceRealm"
-           dataSourceName="jdbc/postgres"
-           userTable="users" userNameCol="username" userCredCol="password"
-           userRoleTable="users_groups_v" roleNameCol="groupname" digest="MD5"/> 
-    <!--        className="org.apache.catalina.realm.JDBCRealm"
-    debug="99"
-    driverName="org.postgresql.Driver" 
-    connectionURL="jdbc:postgresql://localhost:5432/postgres"
-    connectionName="postgres"
-    ConnectionPassword="root"-->           
+    <!--    <Realm className="org.apache.catalina.realm.DataSourceRealm"
+    dataSourceName="jdbc/postgres"
+    userTable="users" userNameCol="username" userCredCol="password"
+    userRoleTable="users_groups_v" roleNameCol="groupname" digest="MD5"/> -->
+<!--    <Realm className="org.apache.catalina.realm.JAASRealm"
+               appName="AuthDemoApp"
+               userClassNames="jaas.UserPrincipal"
+               roleClassNames="jaas.RolePrincipal">
+    </Realm>   -->
 </Context>

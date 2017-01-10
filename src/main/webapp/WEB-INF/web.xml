@@ -77,7 +77,7 @@
     
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>secured</web-resource-name>
+            <web-resource-name>MyJaxRs</web-resource-name>
             <url-pattern>/faces/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
@@ -90,7 +90,7 @@
         
     <login-config>
         <auth-method>FORM</auth-method>
-<!--        <realm-name>secured</realm-name>-->
+        <realm-name>MyJaxRs</realm-name>
         <!--        <realm-name>userauth</realm-name>-->
         <form-login-config>
             <form-login-page>/faces/login.xhtml</form-login-page>
