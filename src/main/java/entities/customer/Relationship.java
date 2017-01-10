@@ -1,5 +1,6 @@
 package entities.customer;
 
+import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(uniqueConstraints
         = @UniqueConstraint(columnNames = {"customer_id", "related_customer_id"}))
-public class Relationship {
+public class Relationship implements Serializable {
 
     @Id
     @SequenceGenerator(name = "rls_sq", initialValue = 1, allocationSize = 1)
