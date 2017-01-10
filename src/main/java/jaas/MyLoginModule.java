@@ -1,9 +1,13 @@
 package jaas;
 
+import beans.sys.UserEJB;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import javax.inject.Inject;
+import javax.naming.InitialContext;
 import javax.security.auth.Subject;
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
@@ -18,6 +22,9 @@ import javax.security.auth.spi.LoginModule;
  * @author savin
  */
 public class MyLoginModule implements LoginModule {
+
+    @Inject
+    private UserEJB ejb;
 
     private CallbackHandler handler;
     private Subject subject;
@@ -65,9 +72,34 @@ public class MyLoginModule implements LoginModule {
                 // to be used later in commit() method.
                 // For this tutorial we hard coded the
                 // "admin" role
-                login = name;
-                userGroups = new ArrayList<String>();
-                userGroups.add("user");
+                try {
+                    if (ejb == null) {
+                        System.out.println("EJB IS NULL");
+
+                    } else {
+                        System.out.println(ejb);
+                        //SysUser user = ejb.findByUserName(name);
+                    }
+                    
+                    
+                    Properties p = new Properties();
+                    p.put("java.naming.factory.initial", "org.apache.openejb.client.LocalInitialContextFactory");
+                    InitialContext ctx = new InitialContext(p);
+                    UserEJB ejb2 = (UserEJB) ctx.lookup("UserEJB");
+                    if (ejb2 == null) {
+                        System.out.println("EJB2 IS NULL");
+
+                    }
+
+                    //System.out.println(user.getPassword());
+                    System.out.println("after getPass");
+                    login = name;
+                    userGroups = new ArrayList<String>();
+                    userGroups.add("user");
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                    throw new LoginException("Authentication failed");
+                }
                 return true;
             }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-<!--    <resource-ref>
+    <!--    <resource-ref>
         <res-ref-name>jdbc/postgres</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
     </resource-ref>-->
@@ -77,17 +77,20 @@
     
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>MyJaxRs</web-resource-name>
+            <web-resource-name>secured</web-resource-name>
             <url-pattern>/faces/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>user</role-name>
+            <role-name>users</role-name>
         </auth-constraint>
     </security-constraint>
+    <security-role>
+        <role-name>users</role-name>
+    </security-role>
         
     <login-config>
         <auth-method>FORM</auth-method>
-        <realm-name>MyJaxRs</realm-name>
+<!--        <realm-name>secured</realm-name>-->
         <!--        <realm-name>userauth</realm-name>-->
         <form-login-config>
             <form-login-page>/faces/login.xhtml</form-login-page>
