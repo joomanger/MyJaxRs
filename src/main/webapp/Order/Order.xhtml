@@ -19,6 +19,14 @@
                         <p:menuitem value="Подтверждение" />
                     </p:steps>
                 </h:form>
+                <script>window.onunload = function () {
+                        console.log('www=' + window.location.pathname);
+                        if (window.location.pathname.indexOf("/faces/Order/") > 0) {
+                            console.log('ORDER!!!!');
+                            window.location=window.location.pathname;
+                        }
+                        return 'Are you sure you want to leave?';
+                    };</script>
                 <p:outputLabel value="Oleksiy"/>
                 <h:form prependId="false">
                     <p:hotkey bind="alt+z" update="dLines"/>
