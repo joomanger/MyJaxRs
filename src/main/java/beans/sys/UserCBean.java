@@ -1,8 +1,5 @@
 package beans.sys;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -15,7 +12,7 @@ import entities.sys.SysUser;
 
 @Named
 @RequestScoped
-public class UserCBean extends AbstractClientBean<SysUser>{
+public class UserCBean extends AbstractClientBean<SysUser> {
 
     @Inject
     private UserEJB ejb;
@@ -47,7 +44,7 @@ public class UserCBean extends AbstractClientBean<SysUser>{
     protected AbstractView<SysUser> getNewView() {
         return nuv;
     }
-    
+
     public SysUser findUserById(Long p_id) {
         return ejb.find(p_id);
     }
@@ -63,11 +60,11 @@ public class UserCBean extends AbstractClientBean<SysUser>{
     public void deleteUsers() {
         String username = sc.getCurrentUser().getUsername();
         for (SysUser u : fuv.getSelectedEntities()) {
-            if (!u.getUsername().equals("admin")&&!u.getUsername().equals(username)) {
+            if (!u.getUsername().equals("admin") && !u.getUsername().equals(username)) {
                 //if (!u.getUsername().equals(username)) {
-                    String status = ejb.remove(u);
-                    ejb.sendMessage(status, "Пользователь " + u.getUsername() + " удален успешно");
-               // }
+                String status = ejb.remove(u);
+                ejb.sendMessage(status, "Пользователь " + u.getUsername() + " удален успешно");
+                // }
             }
         }
     }
@@ -105,7 +102,7 @@ public class UserCBean extends AbstractClientBean<SysUser>{
     }
 
     public String createNewUser() {
-        SysUser user=nuv.getEntity();
+        SysUser user = nuv.getEntity();
         user.setPassword(digestPassword(nuv.getNewPassword()));
         SysUser u = ejb.registerNewUser(user);
         String result = ejb.create(user);
@@ -120,14 +117,18 @@ public class UserCBean extends AbstractClientBean<SysUser>{
     }
 
     private String digestPassword(String p_password) {
-        try {
-            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-            byte bin[] = messageDigest.digest(p_password.getBytes());
-            return Base64.getEncoder().encodeToString(bin);
-        } catch (NoSuchAlgorithmException se) {
-            System.out.println("exception sys.beans.UserCBean.digestPassword() " + se.getMessage());
-            return null;
-        }
+        /*Данный подход работает для Glassfish*/
+//        try {
+//            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+//            byte bin[] = messageDigest.digest(p_password.getBytes());
+//            return Base64.getEncoder().encodeToString(bin);
+//        } catch (NoSuchAlgorithmException se) {
+//            System.out.println("exception sys.beans.UserCBean.digestPassword() " + se.getMessage());
+//            return null;
+//        }
+
+        /*Данный подход работает для Tomcat*/
+        return org.apache.commons.codec.digest.DigestUtils.sha256Hex(p_password);
     }
 
     public void changePassword() {

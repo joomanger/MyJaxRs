@@ -6,8 +6,8 @@ INSERT INTO ITEM(item_id,name, description,uom1,uom2) VALUES (4,'БАЛКА', '�
 INSERT INTO ITEM(item_id,name, description,uom1,uom2) VALUES (5,'КАТАНКА', 'КАТАНКА ИЗ УГЛЕРОДИСТОЙ СТАЛИ ОБЫКНОВЕННОГО КАЧЕСТВА','Тн',null);
 
 
-insert into users(user_id, username, fullName, password,trader) values(1,'admin','Админчик','SBNJTRN+FjG7owHVrKtue7eqdM4RhdRWVl71HXN2d7I=',false);
-insert into users(user_id, username, fullName, password,trader) values(2,'user','Юзерок','BPiZbadjt6lpsQKO4wB1aerzpjVIbdqyEdUSyFud+Ps=',false);
+insert into users(user_id, username, fullName, password,trader) values(1,'admin','Админчик','4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2',false);
+insert into users(user_id, username, fullName, password,trader) values(2,'user','Юзерок','04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb',false);
 insert into groups(group_id, groupname,description) values(1,'users','Все пользователи системы');
 insert into users_groups values(1,1);
 insert into users_groups values(2,1);

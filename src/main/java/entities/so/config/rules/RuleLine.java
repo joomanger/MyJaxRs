@@ -52,14 +52,14 @@ public class RuleLine implements Serializable, WhoIS {
     private Rule rule;
 
     /*WHO*/
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "creation_date")
     @NotNull
     private Date creationDate;
     @Column(name = "created_by")
     @NotNull
     private Long createdBy;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_update_date")
     private Date lastUpdateDate;
     @Column(name = "last_updated_by")
