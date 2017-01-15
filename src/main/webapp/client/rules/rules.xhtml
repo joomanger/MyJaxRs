@@ -42,7 +42,7 @@
                                 </p:column>
                             </p:dataTable>
                             <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
-                            <p:commandButton value="Yes" actionListener="#{ruleCBean.deleteSelectedEntities()}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
+                            <p:commandButton value="Yes" actionListener="#{ruleCBean.deleteSelectedEntities(findRuleView)}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
                         </p:outputPanel>
                     </p:dialog>
                 </h:form>

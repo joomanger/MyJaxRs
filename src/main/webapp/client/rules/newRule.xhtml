@@ -21,7 +21,7 @@
                                             value="#{newRuleView.entity.item}" completeMethod="#{itemConverter.completeItem}"
                                             var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" 
                                             dropdown="true">
-                                <p:ajax event="itemSelect" listener="#{ruleCBean.setCacheConfigItems(newRuleView.entity.item.item_id)}" 
+                                <p:ajax event="itemSelect" listener="#{newRuleView.setCacheConfigItems(newRuleView.entity.item.item_id)}" 
                                         update="dTable:newFormula param" />
                             </p:autoComplete>
                             <p:outputLabel value="Активное"/>
@@ -48,7 +48,7 @@
                             </f:facet>
                         </p:dataTable>
                         <p:commandButton value="Назад" action="rules" immediate="true" style="margin-top: 15px"/>
-                        <p:commandButton value="Создать" action="#{ruleCBean.createEntity('rules')}"  
+                        <p:commandButton value="Создать" action="#{ruleCBean.createEntity(newRuleView,'rules')}"  
                                          style="margin-left: 40px" />
                     </p:fieldset>
                 </h:form>
@@ -58,7 +58,7 @@
                         <h:panelGrid columns="2"> 
                             <p:selectOneListbox id="param" filter="true" filterMatchMode="contains" 
                                                 ondblclick="document.getElementById('formulaText').value += document.getElementById('param_input').value" >
-                                <f:selectItems value="#{ruleCBean.getCacheConfigItems(newRuleView.entity.item.item_id)}"
+                                <f:selectItems value="#{newRuleView.getCacheConfigItems(newRuleView.entity.item.item_id)}"
                                                var="v" itemLabel="#{v.parameter.name}" 
                                                itemValue="#{v.parameter.name}[#{v.parameter.attribute.replaceAll('ATTRIBUTE', '')}]" />
                             </p:selectOneListbox>

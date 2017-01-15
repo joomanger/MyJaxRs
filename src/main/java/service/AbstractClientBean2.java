@@ -16,11 +16,11 @@ public abstract class AbstractClientBean2<T> {
 
     protected abstract AbstractEJB2<T> getEJB();
 
-    protected abstract AbstractView<T> getOpenView();
-
-    protected abstract AbstractView<T> getFindView();
-
-    protected abstract AbstractView<T> getNewView();
+//    protected abstract AbstractView<T> getOpenView();
+//
+//    protected abstract AbstractView<T> getFindView();
+//
+//    protected abstract AbstractView<T> getNewView();
 
     public T find(Object p_id) {
         return getEJB().find(p_id);
@@ -30,36 +30,36 @@ public abstract class AbstractClientBean2<T> {
         return getEJB().findAll();
     }
 
-    public void createEntity(String outcome) {
-        if (getNewView().getEntity() instanceof WhoIS) {
+    public void createEntity(IView view,String outcome) {
+        if (view.getEntity() instanceof WhoIS) {
 //            WhoIS whoIS = (WhoIS) getNewView().getEntity();
 //            whoIS.setCreatedBy(sa.getCurrentUser().getUser_id());
 //            whoIS.setCreationDate(Calendar.getInstance().getTime());
 //            whoIS.setLastUpdatedBy(sa.getCurrentUser().getUser_id());
 //            whoIS.setLastUpdateDate(Calendar.getInstance().getTime());
-            sa.createWHO((WhoIS) getNewView().getEntity());
+            sa.createWHO((WhoIS) view.getEntity());
         }
-        getEJB().create(getNewView().getEntity());
+        getEJB().create((T)view.getEntity());
         FacesContext.getCurrentInstance().getApplication().
                 getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, outcome);
     }
 
-    public void changeEntity() {
-        if (getNewView().getEntity() instanceof WhoIS) {
+    public void changeEntity(IView view) {
+        if (view.getEntity() instanceof WhoIS) {
 //            WhoIS whoIS = (WhoIS) getNewView().getEntity();
 //            whoIS.setLastUpdatedBy(sa.getCurrentUser().getUser_id());
 //            whoIS.setLastUpdateDate(Calendar.getInstance().getTime());
-            sa.createWHO((WhoIS) getNewView().getEntity());
+            sa.createWHO((WhoIS) view.getEntity());
         }
-        getEJB().edit(getOpenView().getEntity());
+        getEJB().edit((T)view.getEntity());
     }
 
-    public void deleteSelectedEntities() {
-        getFindView().getSelectedEntities().stream().map((entity) -> {
-            getEJB().remove(entity);
+    public void deleteSelectedEntities(IView view) {
+        view.getSelectedEntities().stream().map((entity) -> {
+            getEJB().remove((T)entity);
             return entity;
         }).forEach((entity) -> {
-            getFindView().getEntities().remove(entity);
+            view.getEntities().remove(entity);
         });
 
     }
