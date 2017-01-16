@@ -20,7 +20,7 @@
                             <p:autoComplete id="item" required="true" requiredMessage="Позиция обязательна для заполнения" size="30" 
                                             value="#{newRuleView.entity.item}" completeMethod="#{itemConverter.completeItem}"
                                             var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" 
-                                            dropdown="true">
+                                            dropdown="true" disabled="#{newRuleView.isItemDisable}">
                                 <p:ajax event="itemSelect" listener="#{newRuleView.setCacheConfigItems(newRuleView.entity.item.item_id)}" 
                                         update="dTable:newFormula param" />
                             </p:autoComplete>
@@ -46,16 +46,16 @@
                                 <p:commandButton id="delFormula" immediate="true" process="dTable" oncomplete="PF('deleteDialog').show()"
                                                  value="Удалить"/>
                                 <p:commandButton id="newFormula" immediate="true" process="dTable" oncomplete="PF('createFormula').show()"
-                                                 value="Создать формулу" disabled="#{newRuleView.entity.item==null?true:false}"/>
+                                                 value="Создать формулу" disabled="#{newRuleView.isCreateFormula}"/>
                             </f:facet>
                         </p:dataTable>
                         <p:commandButton value="Назад" action="rules" immediate="true" style="margin-top: 15px"/>
                         <p:commandButton value="Создать" action="#{ruleCBean.createEntity(newRuleView,'rules')}"  
                                          style="margin-left: 40px" />
-                        <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                        <p:dialog header="Вы уверены?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
                             <p:outputPanel id="selectedParams" style="text-align: center">
-                                <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
-                                <p:commandButton value="Yes" actionListener="#{ruleCBean.deleteSelectedFormula(newRuleView)}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
+                                <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='Нет'/>
+                                <p:commandButton value="Удалить" actionListener="#{ruleCBean.deleteSelectedFormula(newRuleView)}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
                             </p:outputPanel>
                         </p:dialog>
                     </p:fieldset>
@@ -74,7 +74,7 @@
                         </h:panelGrid>
                         <p:commandButton value="Отмена"  immediate="true" oncomplete="PF('createFormula').hide()" style="margin-top: 15px"/>
                         <p:commandButton id="newFormula" value="Создать" onclick="document.getElementById('param_input').value = null" oncomplete="PF('createFormula').hide()" 
-                                         actionListener="#{ruleCBean.addFormulaLine(newRuleView)}" update="formulaText dTable"/>
+                                         actionListener="#{ruleCBean.addFormulaLine(newRuleView)}" update="formulaText dTable item"/>
                     </p:dialog>
                 </h:form>
             </ui:define>

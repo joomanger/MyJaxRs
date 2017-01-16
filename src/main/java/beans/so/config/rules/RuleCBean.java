@@ -49,6 +49,7 @@ public class RuleCBean extends AbstractClientBean2<Rule> {
                 }
                 ((Rule) view.getEntity()).addLine(rl);
                 view.setFormula(null);
+                view.setIsItemDisable(true);
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

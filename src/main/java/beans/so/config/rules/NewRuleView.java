@@ -10,7 +10,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import service.AbstractView;
 
 /**
  *
@@ -18,10 +17,10 @@ import service.AbstractView;
  */
 @Named
 @ViewScoped
-public class NewRuleView extends AbstractView<Rule> implements IRuleView<Rule> {
+public class NewRuleView extends AbstractRuleView<Rule> implements IRuleView<Rule> {
 
-    private String formula;
-    private short npp;
+//    private String formula;
+//    private short npp;
     @Inject
     private ConfigCBean configClient;
 
@@ -33,34 +32,37 @@ public class NewRuleView extends AbstractView<Rule> implements IRuleView<Rule> {
         super.setEntity(new Rule());
     }
 
-    @Override
-    public String getFormula() {
-        return formula;
-    }
-
-    @Override
-    public void setFormula(String formula) {
-        this.formula = formula;
-    }
-
-    @Override
-    public short getNpp() {
-        return npp;
-    }
-
-    @Override
-    public void setNpp(short npp) {
-        this.npp = npp;
-    }
+//    @Override
+//    public String getFormula() {
+//        return formula;
+//    }
+//
+//    @Override
+//    public void setFormula(String formula) {
+//        this.formula = formula;
+//    }
+//
+//    @Override
+//    public short getNpp() {
+//        return npp;
+//    }
+//
+//    @Override
+//    public void setNpp(short npp) {
+//        this.npp = npp;
+//    }
 
     public void setCacheConfigItems(Long item_id) {
-
+        this.setIsCreateFormula(false);
         if (!cacheConfigItems.containsKey(item_id) && item_id != null) {
             try {
                 cacheConfigItems.put(item_id, configClient.getItem(item_id).getLines());
+                
                 System.out.println("setCacheConfigItems " + item_id);
             } catch (NullPointerException ex) {
-                throw new RuntimeException("Не определена конфигурация для данной позиции!");
+                //throw new RuntimeException("Не определена конфигурация для данной позиции!");
+                this.setIsCreateFormula(true);
+                
             }
         }
     }

@@ -33,19 +33,14 @@
                             <p:selectBooleanCheckbox disabled="true" value="#{ord.activeStatus}" />
                         </p:column>
                         <f:facet name="footer" >
-                            <p:commandButton process="dTable" update="selectedParams" value="Delete"  oncomplete="PF('deleteDialog').show()" />
-                            <p:commandButton id="newBtn" value="New" action="newRule" immediate="true" style="margin-left: 15px"/>
+                            <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('deleteDialog').show()" />
+                            <p:commandButton id="newBtn" value="Создать" action="newRule" immediate="true" style="margin-left: 15px"/>
                         </f:facet>
                     </p:dataTable> 
-                    <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
+                    <p:dialog header="Вы уверены?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
                         <p:outputPanel id="selectedParams" style="text-align: center">
-                            <p:dataTable value="#{findRuleView.selectedEntities}" var="v">
-                                <p:column headerText="Наименование">
-                                    <h:outputText value="#{v.name}" style="text-align: left"/>
-                                </p:column>
-                            </p:dataTable>
-                            <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
-                            <p:commandButton value="Yes" actionListener="#{ruleCBean.deleteSelectedEntities(findRuleView)}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
+                            <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='Нет'/>
+                            <p:commandButton value="Удалить" actionListener="#{ruleCBean.deleteSelectedEntities(findRuleView)}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
                         </p:outputPanel>
                     </p:dialog>
                 </h:form>
