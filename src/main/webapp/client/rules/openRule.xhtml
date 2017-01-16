@@ -11,24 +11,22 @@
             <ui:define name="content">
                 <h:form id="paramHeader" prependId="false">
                     <p:focus for="name"/>
-                    <p:fieldset legend="Новое правило" style="width: 150px; margin-bottom: 10px"> 
+                    <p:fieldset legend="Правило" style="width: 150px; margin-bottom: 10px"> 
                         <h:panelGrid id="yyy" columns="2" cellpadding="5" >
                             <p:outputLabel value="Название"/>
-                            <p:inputText id="name" value="#{newRuleView.entity.name}" required="true" 
+                            <p:inputText id="name" value="#{openRuleView.entity.name}" required="true" 
                                          requiredMessage="Название обязательно для заполнения" size="50" maxlength="150" />
                             <p:outputLabel value="Позиция"/>
                             <p:autoComplete id="item" required="true" requiredMessage="Позиция обязательна для заполнения" size="30" 
-                                            value="#{newRuleView.entity.item}" completeMethod="#{itemConverter.completeItem}"
+                                            value="#{openRuleView.entity.item}" completeMethod="#{itemConverter.completeItem}"
                                             var="m" itemLabel="#{m.name}" itemValue="#{m}" converter="#{itemConverter}" forceSelection="true" 
                                             dropdown="true">
-                                <p:ajax event="itemSelect" listener="#{newRuleView.setCacheConfigItems(newRuleView.entity.item.item_id)}" 
-                                        update="dTable:newFormula param" />
                             </p:autoComplete>
                             <p:outputLabel value="Активное"/>
-                            <p:inputSwitch value="#{newRuleView.entity.activeStatus}"/>
+                            <p:inputSwitch value="#{openRuleView.entity.activeStatus}"/>
                         </h:panelGrid>
 
-                        <p:dataTable id="dTable" var="ord" value="#{newRuleView.entity.lines}" selection="#{newRuleView.selectedEntityLines}" 
+                        <p:dataTable id="dTable" var="ord" value="#{openRuleView.entity.lines}" selection="#{openRuleView.selectedEntityLines}" 
                                      rowSelectMode="checkbox" editMode="cell" editable="true" 
                                      scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.line_number}" 
                                      style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
@@ -46,16 +44,16 @@
                                 <p:commandButton id="delFormula" immediate="true" process="dTable" oncomplete="PF('deleteDialog').show()"
                                                  value="Удалить"/>
                                 <p:commandButton id="newFormula" immediate="true" process="dTable" oncomplete="PF('createFormula').show()"
-                                                 value="Создать формулу" disabled="#{newRuleView.entity.item==null?true:false}"/>
+                                                 value="Создать формулу" disabled="#{openRuleView.entity.item==null?true:false}"/>
                             </f:facet>
                         </p:dataTable>
                         <p:commandButton value="Назад" action="rules" immediate="true" style="margin-top: 15px"/>
-                        <p:commandButton value="Создать" action="#{ruleCBean.createEntity(newRuleView,'rules')}"  
+                        <p:commandButton value="Создать" action="#{ruleCBean.createEntity(openRuleView,'rules')}"  
                                          style="margin-left: 40px" />
                         <p:dialog header="Are you Sure?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
                             <p:outputPanel id="selectedParams" style="text-align: center">
                                 <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
-                                <p:commandButton value="Yes" actionListener="#{ruleCBean.deleteSelectedFormula(newRuleView)}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
+                                <p:commandButton value="Yes" actionListener="#{ruleCBean.deleteSelectedFormula(openRuleView)}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
                             </p:outputPanel>
                         </p:dialog>
                     </p:fieldset>
@@ -66,15 +64,15 @@
                         <h:panelGrid columns="2"> 
                             <p:selectOneListbox id="param" filter="true" filterMatchMode="contains" 
                                                 ondblclick="document.getElementById('formulaText').value += document.getElementById('param_input').value" >
-                                <f:selectItems value="#{newRuleView.getCacheConfigItems(newRuleView.entity.item.item_id)}"
+                                <f:selectItems 
                                                var="v" itemLabel="#{v.parameter.name}" 
                                                itemValue="#{v.parameter.name}[#{v.parameter.attribute.replaceAll('ATTRIBUTE', '')}]" />
                             </p:selectOneListbox>
-                            <p:inputTextarea id="formulaText" value="#{newRuleView.formula}" rows="15" cols="60"/>
+                            <p:inputTextarea id="formulaText" value="#{openRuleView.formula}" rows="15" cols="60"/>
                         </h:panelGrid>
                         <p:commandButton value="Отмена"  immediate="true" oncomplete="PF('createFormula').hide()" style="margin-top: 15px"/>
                         <p:commandButton id="newFormula" value="Создать" onclick="document.getElementById('param_input').value = null" oncomplete="PF('createFormula').hide()" 
-                                         actionListener="#{ruleCBean.addFormulaLine(newRuleView)}" update="formulaText dTable"/>
+                                         actionListener="#{ruleCBean.addFormulaLine(openRuleView)}" update="formulaText dTable"/>
                     </p:dialog>
                 </h:form>
             </ui:define>

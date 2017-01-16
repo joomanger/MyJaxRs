@@ -12,16 +12,19 @@
 
             <ui:define name="content">
                 <h:form prependId="false">
-                    <h:inputHidden id="setLookupId" value="#{findLookupSession.lookup_id}"/>
                     <p:dataTable rowSelectMode="checkbox"  id="dTable" rowKey="#{ord.header_id}" var="ord" value="#{findRuleView.entities}" 
                                  editable="true" reflow="true" selection="#{findRuleView.selectedEntities}" rows="20" paginator="true" style="width: 750px;"
                                  rowsPerPageTemplate="20,40,100" lazy="true">
                         <f:facet name="header">
-                            Стандартные справочники
+                            Правила конфигурации
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:column headerText="Наименование" style="width: 150px;text-align: left">
-                            <h:commandLink action="openRule" value="#{ord.name}"/>
+                            <h:commandLink action="#{ruleConversation.openView()}" value="#{ord.name}">
+                                <f:setPropertyActionListener 
+                                    target="#{ruleConversation.rule_id}" 
+                                    value="#{ord.header_id}" />
+                            </h:commandLink>
                         </p:column>
                         <p:column headerText="Позиция" style="width: 50px;text-align: center">
                             <p:outputLabel value="#{ord.item.name}" />

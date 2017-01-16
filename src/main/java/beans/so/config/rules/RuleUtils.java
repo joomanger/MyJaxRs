@@ -16,7 +16,7 @@ import service.IAttributes;
  *
  * @author savin
  */
-final class RuleUtils {
+public final class RuleUtils {
 
     private static final Pattern PATTERN_1 = compile("(\\+|\\=|\\-|\\/|\\*|\\(|\\)|\\%)|[\\[\\d\\]]+");
     private static final Pattern PATTERN_2 = compile("[\\[][\\d]+[\\]]");

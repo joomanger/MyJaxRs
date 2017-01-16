@@ -1,7 +1,9 @@
 package beans.so.config.rules;
 
 import entities.so.config.rules.Rule;
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import service.AbstractView;
 
@@ -13,9 +15,28 @@ import service.AbstractView;
 @ViewScoped
 public class OpenRuleView extends AbstractView<Rule> {
 
+    @Inject
+    private RuleCBean client;
+
+    @Inject
+    private RuleConversation rc;
+
+    private String formula;
+
+    @PostConstruct
     @Override
     protected void init() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("rc="+rc.getRule_id());
+        super.setEntity(client.find(rc.getRule_id()));
+        rc.endConversation();
+    }
+
+    public String getFormula() {
+        return formula;
+    }
+
+    public void setFormula(String formula) {
+        this.formula = formula;
     }
 
 }
