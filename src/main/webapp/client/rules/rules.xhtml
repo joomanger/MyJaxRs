@@ -20,11 +20,11 @@
                         </f:facet>
                         <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         <p:column headerText="Наименование" style="width: 150px;text-align: left">
-                            <h:commandLink action="#{ruleConversation.openView()}" value="#{ord.name}">
-                                <f:setPropertyActionListener 
-                                    target="#{ruleConversation.rule_id}" 
+                            <h:link outcome="openRule" value="#{ord.name}" includeViewParams="true">
+                                <f:param
+                                    name="foo" 
                                     value="#{ord.header_id}" />
-                            </h:commandLink>
+                            </h:link>
                         </p:column>
                         <p:column headerText="Позиция" style="width: 50px;text-align: center">
                             <p:outputLabel value="#{ord.item.name}" />

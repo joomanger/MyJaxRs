@@ -65,8 +65,8 @@
                             <p:selectOneListbox id="param" filter="true" filterMatchMode="contains" 
                                                 ondblclick="document.getElementById('formulaText').value += document.getElementById('param_input').value" >
                                 <f:selectItems 
-                                               var="v" itemLabel="#{v.parameter.name}" 
-                                               itemValue="#{v.parameter.name}[#{v.parameter.attribute.replaceAll('ATTRIBUTE', '')}]" />
+                                    var="v" itemLabel="#{v.parameter.name}" 
+                                    itemValue="#{v.parameter.name}[#{v.parameter.attribute.replaceAll('ATTRIBUTE', '')}]" />
                             </p:selectOneListbox>
                             <p:inputTextarea id="formulaText" value="#{openRuleView.formula}" rows="15" cols="60"/>
                         </h:panelGrid>
