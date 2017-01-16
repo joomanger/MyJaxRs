@@ -59,7 +59,6 @@ public class RuleCBean extends AbstractClientBean2<Rule> {
     }
 
     public void deleteSelectedFormula(IRuleView view) {
-        System.out.println("asasas");
         ((Rule) view.getEntity()).getLines().removeAll(view.getSelectedEntityLines());
     }
 

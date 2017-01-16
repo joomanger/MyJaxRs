@@ -17,7 +17,7 @@ import javax.inject.Named;
  */
 @Named
 @ViewScoped
-public class NewRuleView extends AbstractRuleView<Rule> implements IRuleView<Rule> {
+public class NewRuleView extends AbstractRuleView<Rule> {
 
     @Inject
     private ConfigCBean configClient;

@@ -18,8 +18,8 @@ import service.IAttributes;
  */
 public final class RuleUtils {
 
-    private static final Pattern PATTERN_1 = compile("(\\+|\\=|\\-|\\/|\\*|\\(|\\)|\\%)|[\\[\\d\\]]+");
-    private static final Pattern PATTERN_2 = compile("[\\[][\\d]+[\\]]");
+    private static final Pattern PATTERN_1 = compile("[=]|[+]|[-]|[*]|[/]|[(]|[)]|[\\d]|[\\w\\-\\,\\(\\)\\:]+[\\[\\d\\]]+");
+    private static final Pattern PATTERN_2 = compile("[\\w\\-\\,\\(\\)\\:]+([\\[\\d\\]]+)");
     private static final ScriptEngine ENGINE = new ScriptEngineManager().getEngineByName("JS");
 
     private RuleUtils() {
@@ -37,14 +37,28 @@ public final class RuleUtils {
         while (mm.find()) {
             Matcher mm2 = PATTERN_2.matcher(mm.group());
             if (mm2.matches()) {
+                //System.out.println(m2.group(1));
                 s2.append("attribute");
-                s2.append(mm.group().replaceAll("[\\[]|[\\]]", ""));
+                s2.append(mm2.group(1).replaceAll("[\\[]|[\\]]", ""));
                 s.append(s2);
                 s2.delete(0, s2.length());
             } else {
+                //System.out.println(m.group());
                 s.append(mm.group());
             }
         }
+        System.out.println(s.toString());
+//        while (mm.find()) {
+//            Matcher mm2 = PATTERN_2.matcher(mm.group());
+//            if (mm2.matches()) {
+//                s2.append("attribute");
+//                s2.append(mm.group().replaceAll("[\\[]|[\\]]", ""));
+//                s.append(s2);
+//                s2.delete(0, s2.length());
+//            } else {
+//                s.append(mm.group());
+//            }
+//        }
         //2. Определим тело формулы и атрибут-результат
         StringTokenizer st = new StringTokenizer(s.toString(), "=");
         String attributeResult = null;

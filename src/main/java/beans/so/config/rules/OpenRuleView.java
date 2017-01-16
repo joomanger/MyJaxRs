@@ -1,8 +1,13 @@
 package beans.so.config.rules;
 
+import beans.so.config.ConfigCBean;
+import entities.so.config.ConfigurationLine;
 import entities.so.config.rules.Rule;
+import entities.so.config.rules.RuleLine;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -15,55 +20,51 @@ import javax.inject.Named;
 @Named
 @ViewScoped
 public class OpenRuleView extends AbstractRuleView<Rule> {
-
+    
     @Inject
     private RuleCBean client;
     
-    @ManagedProperty("#{param.foo}")
-    private Long foo;
-
-    //private String formula;
-
-    private Long rule_id;
-
+    @Inject
+    private ConfigCBean configClient;
+    
+    private final Map<Long, List<ConfigurationLine>> cacheConfigItems = new HashMap<>();
+    private final Map<String, String> param = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+    
     @PostConstruct
     @Override
     protected void init() {
-        FacesContext.getCurrentInstance().
-        System.out.println("init OpenRuleView foo=" + foo);
-    }
-
-    public void init2() {
-        System.out.println("qwqwqw rule_id="+getRule_id() );
-        super.setEntity(client.find(getRule_id()));
-    }
-
-//    public String getFormula() {
-//        return formula;
-//    }
-//
-//    public void setFormula(String formula) {
-//        this.formula = formula;
-//    }
-
-    public Long getRule_id() {
-        return rule_id;
-    }
-
-    public void setRule_id(Long rule_id) {
-        System.out.println("rulik="+rule_id);
-        this.rule_id = rule_id;
-        super.setEntity(client.find(rule_id));
-    }
-
-    public Long getFoo() {
-        return foo;
-    }
-
-    public void setFoo(Long foo) {
-        this.foo = foo;
+        Rule r = client.find(Long.parseLong(param.get("header_id")));
+        short npp = 0;
+        for (RuleLine l : r.getLines()) {
+            if (npp < l.getLine_number()) {
+                npp = l.getLine_number();
+            }
+        }
+        setNpp(npp);
+        super.setEntity(r);
+        setCacheConfigItems(r.getItem().getItem_id());
     }
     
+    private void setCacheConfigItems(Long item_id) {
+        this.setIsCreateFormula(false);
+        if (!cacheConfigItems.containsKey(item_id) && item_id != null) {
+            try {
+                cacheConfigItems.put(item_id, configClient.getItem(item_id).getLines());
+                
+                System.out.println("setCacheConfigItems " + item_id);
+            } catch (NullPointerException ex) {
+                //throw new RuntimeException("Не определена конфигурация для данной позиции!");
+                this.setIsCreateFormula(true);
+                
+            }
+        }
+    }
     
-
+    public List<ConfigurationLine> getCacheConfigItems(Long item_id) {
+        if (item_id != null) {
+            return cacheConfigItems.get(item_id);
+        }
+        return null;
+    }
+    
 }
