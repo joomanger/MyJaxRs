@@ -18,8 +18,8 @@ import service.IAttributes;
  */
 public final class RuleUtils {
 
-    private static final Pattern PATTERN_1 = compile("[=]|[+]|[-]|[*]|[/]|[(]|[)]|[\\d]|[\\w\\-\\,\\(\\)\\:]+[\\[\\d\\]]+");
-    private static final Pattern PATTERN_2 = compile("[\\w\\-\\,\\(\\)\\:]+([\\[\\d\\]]+)");
+    private static final Pattern PATTERN_1 = compile("('(.+?)')");
+    private static final Pattern PATTERN_2 = compile("([\\.\\=\\-\\(\\)\\+\\*\\/\\d])|(\\[([0-9]+)\\])|(Number|toFixed)");
     private static final ScriptEngine ENGINE = new ScriptEngineManager().getEngineByName("JS");
 
     private RuleUtils() {
@@ -33,20 +33,25 @@ public final class RuleUtils {
         //1. Преобразуем исходную формулу в атрибут-формулу  
         StringBuilder s = new StringBuilder();
         StringBuilder s2 = new StringBuilder();
-        Matcher mm = PATTERN_1.matcher(formula);
+        
+        String ss = PATTERN_1.matcher(formula).replaceAll("");
+        Matcher mm = PATTERN_2.matcher(ss);
         while (mm.find()) {
-            Matcher mm2 = PATTERN_2.matcher(mm.group());
-            if (mm2.matches()) {
-                //System.out.println(m2.group(1));
+            ps.println(mm.group(1));
+            if (mm.group(1) != null) {
+                s.append(mm.group(1));
+            }
+            if (mm.group(2) != null) {
                 s2.append("attribute");
-                s2.append(mm2.group(1).replaceAll("[\\[]|[\\]]", ""));
+                s2.append(mm.group(2).replaceAll("[\\[]|[\\]]", ""));
                 s.append(s2);
                 s2.delete(0, s2.length());
-            } else {
-                //System.out.println(m.group());
-                s.append(mm.group());
+            }
+             if (mm.group(4) != null) {
+                s.append(mm.group(4));
             }
         }
+        
         System.out.println(s.toString());
 //        while (mm.find()) {
 //            Matcher mm2 = PATTERN_2.matcher(mm.group());
@@ -134,10 +139,10 @@ public final class RuleUtils {
         mm3.appendTail(result);
 
         ps.println("результат: " + ENGINE.eval(result.toString()));
-        if (ENGINE.eval(result.toString()) instanceof Number) {
+        //if (ENGINE.eval(result.toString()) instanceof Number) {
             ps.println("Формула " + formula + " проверку прошла успешно");
             return true;
-        }
-        return false;
+        //}
+        //return false;
     }
 }
