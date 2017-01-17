@@ -19,7 +19,7 @@ import service.IAttributes;
 public final class RuleUtils {
 
     private static final Pattern PATTERN_1 = compile("('(.+?)')");
-    private static final Pattern PATTERN_2 = compile("([\\.\\=\\-\\(\\)\\+\\*\\/\\d])|(\\[([0-9]+)\\])|(Number|toFixed)");
+    private static final Pattern PATTERN_2 = compile("([\\.\\=\\-\\(\\)\\+\\*\\/\\d])|(\\[([0-9]+)\\])|(Number|toFixed|Math|round)");
     private static final ScriptEngine ENGINE = new ScriptEngineManager().getEngineByName("JS");
 
     private RuleUtils() {
@@ -30,14 +30,13 @@ public final class RuleUtils {
         PrintStream ps = new PrintStream(out, true, encoding);
         ps.println("Формула: " + formula);
 
-        //1. Преобразуем исходную формулу в атрибут-формулу  
+        ps.println("1. Преобразуем исходную формулу в атрибут-формулу");
         StringBuilder s = new StringBuilder();
         StringBuilder s2 = new StringBuilder();
         
         String ss = PATTERN_1.matcher(formula).replaceAll("");
         Matcher mm = PATTERN_2.matcher(ss);
         while (mm.find()) {
-            ps.println(mm.group(1));
             if (mm.group(1) != null) {
                 s.append(mm.group(1));
             }
@@ -52,7 +51,7 @@ public final class RuleUtils {
             }
         }
         
-        System.out.println(s.toString());
+       ps.println("Атрибут-формула: "+s.toString());
 //        while (mm.find()) {
 //            Matcher mm2 = PATTERN_2.matcher(mm.group());
 //            if (mm2.matches()) {
@@ -64,7 +63,7 @@ public final class RuleUtils {
 //                s.append(mm.group());
 //            }
 //        }
-        //2. Определим тело формулы и атрибут-результат
+        ps.println("2. Определим тело формулы и атрибут-результат");
         StringTokenizer st = new StringTokenizer(s.toString(), "=");
         String attributeResult = null;
         String attributeFormula = null;
@@ -79,6 +78,8 @@ public final class RuleUtils {
                 case 2:
                     attributeFormula = st.nextToken();
                     break;
+                case 3:
+                    throw new RuntimeException("Ошибка в формуле!");
                 default:
                     st.nextToken();
                     break;
@@ -89,7 +90,7 @@ public final class RuleUtils {
             throw new RuntimeException("Ошибка в формуле!");
         }
 
-        //3. Проверим есть ли сеттер в строке заказа для атрибут-результата
+        ps.println("3. Проверим есть ли сеттер в строке заказа для атрибут-результата");
         StringBuilder methodName = new StringBuilder();
         //Сначала запишем значение
         methodName.append("set");
@@ -109,7 +110,7 @@ public final class RuleUtils {
             methodName.delete(0, methodName.length());
         }
 
-        //4. Проверим тело формулы и, если все ОК, значит можно фиксировать в БД
+        ps.println("4. Проверим тело формулы и, если все ОК, значит можно фиксировать в БД");
         //Запишем в атрибуты строки заказа 1 - если все сеттеры есть - БОМБА! 
         Pattern p = compile("(attribute)[0-9]+");
         Matcher mm3 = p.matcher(attributeFormula);

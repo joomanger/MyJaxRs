@@ -51,7 +51,7 @@ public class OpenRuleView extends AbstractRuleView<Rule> {
             try {
                 cacheConfigItems.put(item_id, configClient.getItem(item_id).getLines());
                 
-                System.out.println("setCacheConfigItems " + item_id);
+               System.out.println("setCacheConfigItems " + item_id);
             } catch (NullPointerException ex) {
                 //throw new RuntimeException("Не определена конфигурация для данной позиции!");
                 this.setIsCreateFormula(true);
