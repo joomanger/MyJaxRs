@@ -5,10 +5,10 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
     <body>
         <ui:composition template="./../../WEB-INF/template.xhtml">
             <ui:define name="content">
+
                 <h:form id="paramHeader" prependId="false">
                     <p:focus for="name"/>
                     <p:fieldset legend="Правило" style="width: 150px; margin-bottom: 10px"> 
@@ -67,7 +67,7 @@
                                                 ondblclick="document.getElementById('formulaText').value += document.getElementById('param_input').value" >
                                 <f:selectItems value="#{openRuleView.getCacheConfigItems(openRuleView.entity.item.item_id)}"
                                                var="v" itemLabel="#{v.parameter.name}" 
-                                               itemValue="'#{v.parameter.name}'[#{v.parameter.attribute.replaceAll('ATTRIBUTE', '')}]" />
+                                               itemValue="$#{v.parameter.name}$[#{v.parameter.attribute.replaceAll('ATTRIBUTE', '')}]" />
                             </p:selectOneListbox>
                             <p:inputTextarea id="formulaText" value="#{openRuleView.formula}" rows="15" cols="60"/>
                         </h:panelGrid>

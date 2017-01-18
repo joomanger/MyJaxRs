@@ -76,7 +76,7 @@
         <div>
             <div id="top" class="top">
                 <ui:insert name="top">
-                    <h:form>
+                    <h:form>  
                         <h1><h:link value="Управление заказами" outcome="/index.xhtml"/></h1>
                         Учетная запись: #{sessionActions.currentUser.fullName}; Язык: #{sessionActions.language}
                     </h:form>
@@ -85,11 +85,11 @@
             <div>
                 <div id="left">
                     <ui:insert name="left">
-                        <h:form>
-                            <p:menu toggleable="true">
+                        <h:form id="menuForm">
+                            <p:menu id="myMenu" toggleable="true">
                                 <p:menuitem oncomplete="PF('areYouSure').show()" value="Выход"/>
                                 <p:submenu label="Справочники">
-                                    <p:menuitem action="/client/item/items" value="Позиции" />
+                                    <p:menuitem class="asasa" action="/client/item/items" value="Позиции" />
                                     <p:menuitem action="/client/lookup/lookups" value="Стандартные справочники" />
                                     <p:menuitem action="/client/payments/payments" value="Условия платежа" />
                                     <p:menuitem action="/client/country/countries" value="Страны" />
@@ -98,7 +98,7 @@
                                     <p:menuitem action="/client/customer/customers" value="Заказчики" />
                                     <p:menuitem action="/client/contract/contracts" value="Контракты" />
                                 </p:submenu> 
-                                <p:submenu label="Заказы" >
+                                <p:submenu label="Заказы"  >
                                     <p:menuitem action="Order" outcome="Order" value="Создать заказ"/>
                                     <p:menuitem action="/client/rules/rules" value="Правила конфигурации"/>
                                     <p:menuitem action="/client/saleorders/orders" value="Заказы"/>

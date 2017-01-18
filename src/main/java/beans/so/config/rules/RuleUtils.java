@@ -18,8 +18,8 @@ import service.IAttributes;
  */
 public final class RuleUtils {
 
-    private static final Pattern PATTERN_1 = compile("('(.+?)')");
-    private static final Pattern PATTERN_2 = compile("([\\.\\=\\-\\(\\)\\+\\*\\/\\d])|(\\[([0-9]+)\\])|(Number|toFixed|Math|round)");
+    private static final Pattern PATTERN_1 = compile("(\\$(.+?)\\$)");
+    private static final Pattern PATTERN_2 = compile("([\\.\\=\\-\\(\\)\\+\\*\\/\\d\\:\\?])|(\\[([0-9]+)\\])|(Number|toFixed|Math|round)|('(.+?)')");
     private static final ScriptEngine ENGINE = new ScriptEngineManager().getEngineByName("JS");
 
     private RuleUtils() {
@@ -49,6 +49,9 @@ public final class RuleUtils {
              if (mm.group(4) != null) {
                 s.append(mm.group(4));
             }
+             if (mm.group(5) != null) {
+                s.append(mm.group(5));
+            }
         }
         
        ps.println("Атрибут-формула: "+s.toString());
@@ -64,7 +67,7 @@ public final class RuleUtils {
 //            }
 //        }
         ps.println("2. Определим тело формулы и атрибут-результат");
-        StringTokenizer st = new StringTokenizer(s.toString(), "=");
+        StringTokenizer st = new StringTokenizer(s.toString(), "\\#");
         String attributeResult = null;
         String attributeFormula = null;
         int i = 0;
@@ -78,13 +81,14 @@ public final class RuleUtils {
                 case 2:
                     attributeFormula = st.nextToken();
                     break;
-                case 3:
-                    throw new RuntimeException("Ошибка в формуле!");
+//                case 3:
+//                    throw new RuntimeException("Ошибка в формуле!");
                 default:
                     st.nextToken();
                     break;
             }
         }
+        
         if (attributeResult == null || attributeFormula
                 == null) {
             throw new RuntimeException("Ошибка в формуле!");
@@ -111,6 +115,7 @@ public final class RuleUtils {
         }
 
         ps.println("4. Проверим тело формулы и, если все ОК, значит можно фиксировать в БД");
+        ps.println("attributeFormula: "+attributeFormula);
         //Запишем в атрибуты строки заказа 1 - если все сеттеры есть - БОМБА! 
         Pattern p = compile("(attribute)[0-9]+");
         Matcher mm3 = p.matcher(attributeFormula);
@@ -138,6 +143,7 @@ public final class RuleUtils {
         }
 
         mm3.appendTail(result);
+        ps.println("expression for JS: "+result.toString());
 
         ps.println("результат: " + ENGINE.eval(result.toString()));
         //if (ENGINE.eval(result.toString()) instanceof Number) {
