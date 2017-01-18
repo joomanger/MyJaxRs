@@ -30,7 +30,7 @@
                         <p:dataTable id="dTable" var="ord" value="#{openRuleView.entity.lines}" selection="#{openRuleView.selectedEntityLines}" 
                                      rowSelectMode="checkbox" editMode="cell" editable="true" 
                                      scrollable="true" reflow="true" rows="20" paginator="true"  rowKey="#{ord.line_number}" 
-                                     style="width: 600px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
+                                     style="width: 900px;margin-top:20px" rowsPerPageTemplate="20,40,100" lazy="true">
                             <f:facet name="header">
                                 <p:outputLabel value="Формулы"/>
                             </f:facet>
@@ -38,14 +38,16 @@
                             <p:column headerText="п/п" style="width:52px; text-align: center">
                                 <h:outputText value="#{ord.line_number}"/>
                             </p:column>
-                            <p:column headerText="Формула" style="width:300px; text-align: left">
-                                <h:outputText value="#{ord.formula}"/>
+                            <p:column id="formulaLine" headerText="Формула" style="width:500px; text-align: left">
+                                <p:commandLink value="#{ord.formula}"  immediate="true" 
+                                               actionListener="#{openRuleView.setRuleLineForEditor(ord)}" process="dTable" 
+                                               oncomplete="PF('editFormula').show()" update="f2" />
                             </p:column>
                             <f:facet name="footer">
                                 <p:commandButton id="delFormula" immediate="true" process="dTable" oncomplete="PF('deleteDialog').show()"
                                                  value="Удалить"/>
                                 <p:commandButton id="newFormula" immediate="true" process="dTable" oncomplete="PF('createFormula').show()"
-                                                 value="Создать формулу" disabled="#{openRuleView.entity.item==null?true:false}"/>
+                                                 value="Создать формулу" disabled="#{openRuleView.entity.item==null?true:false}" style="margin-left: 40px" />
                             </f:facet>
                         </p:dataTable>
                         <p:commandButton value="Назад" action="rules" immediate="true" style="margin-top: 15px"/>
@@ -53,8 +55,9 @@
                                          style="margin-left: 40px" />
                         <p:dialog header="Вы уверены?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
                             <p:outputPanel id="selectedParams" style="text-align: center">
-                                <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='No'/>
-                                <p:commandButton value="Yes" actionListener="#{ruleCBean.deleteSelectedFormula(openRuleView)}" oncomplete="PF('deleteDialog').hide()" update="dTable" />
+                                <p:commandButton oncomplete="PF('deleteDialog').hide()" immediate="true" value='Отмена'/>
+                                <p:commandButton value="Удалить" actionListener="#{ruleCBean.deleteSelectedFormula(openRuleView)}" 
+                                                 oncomplete="PF('deleteDialog').hide()" update="dTable" style="margin-left: 15px" />
                             </p:outputPanel>
                         </p:dialog>
                     </p:fieldset>
@@ -72,8 +75,26 @@
                             <p:inputTextarea id="formulaText" value="#{openRuleView.formula}" rows="15" cols="60"/>
                         </h:panelGrid>
                         <p:commandButton value="Отмена"  immediate="true" oncomplete="PF('createFormula').hide()" style="margin-top: 15px"/>
-                        <p:commandButton id="newFormula" value="Создать" onclick="document.getElementById('param_input').value = null" oncomplete="PF('createFormula').hide()" 
-                                         actionListener="#{ruleCBean.addFormulaLine(openRuleView)}" update="formulaText dTable"/>
+                        <p:commandButton id="newFormula" value="Создать" onclick="document.getElementById('param_input').value = null" 
+                                         oncomplete="PF('createFormula').hide()" 
+                                         actionListener="#{ruleCBean.addFormulaLine(openRuleView)}" update="formulaText dTable" style="margin-left: 40px" />
+                    </p:dialog>
+                </h:form>
+                <h:form prependId="false">
+                    <p:dialog header="Редактор формулы" widgetVar="editFormula" modal="true" 
+                              resizable="false" width="700">
+                        <h:panelGrid id="f2" columns="2"> 
+                            <p:selectOneListbox id="param2" filter="true" filterMatchMode="contains"
+                                                ondblclick="document.getElementById('formulaText2').value += document.getElementById('param2_input').value" >
+                                <f:selectItems value="#{openRuleView.getCacheConfigItems(openRuleView.entity.item.item_id)}"
+                                               var="v" itemLabel="#{v.parameter.name}" 
+                                               itemValue="$#{v.parameter.name}$[#{v.parameter.attribute.replaceAll('ATTRIBUTE', '')}]" />
+                            </p:selectOneListbox>
+                            <p:inputTextarea id="formulaText2" value="#{openRuleView.formula}" rows="15" cols="60"/>
+                        </h:panelGrid>
+                        <p:commandButton value="Отмена"  immediate="true" oncomplete="PF('editFormula').hide()" style="margin-top: 15px"/>
+                        <p:commandButton id="editFormulaBtn" value="Обновить" onclick="document.getElementById('param2_input').value = null" oncomplete="PF('editFormula').hide()" 
+                                         actionListener="#{ruleCBean.editFormulaLine(openRuleView)}" update="formulaText2 dTable" style="margin-left: 40px" />
                     </p:dialog>
                 </h:form>
             </ui:define>

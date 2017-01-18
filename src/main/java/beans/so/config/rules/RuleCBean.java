@@ -57,6 +57,29 @@ public class RuleCBean extends AbstractClientBean2<Rule> {
             //Logger.getLogger(RuleCBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+     public void editFormulaLine(IRuleView view) {
+
+        try {
+            IAttributes attr = new OrderLine();
+            if (RuleUtils.checking(view.getFormula(), attr)) {
+                RuleLine rl = view.getEditedRuleLine();
+                if (view.getFormula().isEmpty()) {
+                    throw new RuntimeException("Формула не указана. Введите формулу!");
+                }
+                rl.setFormula(view.getFormula());
+                if (rl instanceof WhoIS) {
+                    sa.updateWHO(rl);
+                }
+                view.setFormula(null);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
+            //Logger.getLogger(RuleCBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
     public void deleteSelectedFormula(IRuleView view) {
         ((Rule) view.getEntity()).getLines().removeAll(view.getSelectedEntityLines());

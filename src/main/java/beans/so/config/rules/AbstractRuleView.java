@@ -1,5 +1,6 @@
 package beans.so.config.rules;
 
+import entities.so.config.rules.RuleLine;
 import service.AbstractView;
 
 /**
@@ -13,6 +14,7 @@ public abstract class AbstractRuleView<Rule> extends AbstractView<Rule> implemen
     private short npp;
     private boolean isCreateFormula = true;
     private boolean isItemDisable = false;
+    private RuleLine editedRuleLine;
 
     @Override
     public String getFormula() {
@@ -52,5 +54,21 @@ public abstract class AbstractRuleView<Rule> extends AbstractView<Rule> implemen
     @Override
     public void setIsItemDisable(boolean isItemDisable) {
         this.isItemDisable = isItemDisable;
+    }
+    
+    @Override
+    public RuleLine getEditedRuleLine() {
+        return editedRuleLine;
+    }
+    
+    @Override
+    public void setEditedRuleLine(RuleLine editedRuleLine) {
+        this.editedRuleLine = editedRuleLine;
+    }
+    
+    @Override
+    public void setRuleLineForEditor(RuleLine line) {
+        setFormula(line.getFormula());
+        setEditedRuleLine(line);
     }
 }

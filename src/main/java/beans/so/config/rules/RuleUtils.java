@@ -19,13 +19,13 @@ import service.IAttributes;
 public final class RuleUtils {
 
     private static final Pattern PATTERN_1 = compile("(\\$(.+?)\\$)");
-    private static final Pattern PATTERN_2 = compile("([\\.\\=\\-\\(\\)\\+\\*\\/\\d\\:\\?])|(\\[([0-9]+)\\])|(Number|toFixed|Math|round)|('(.+?)')");
+    private static final Pattern PATTERN_2 = compile("([\\|\\>\\<\\&\\#\\.\\=\\-\\(\\)\\+\\*\\/\\d\\:\\?])|(\\[([0-9]+)\\])|(Number|toFixed|Math|round)|('(.+?)')");
     private static final ScriptEngine ENGINE = new ScriptEngineManager().getEngineByName("JS");
 
     private RuleUtils() {
     }
 
-    public static boolean checking(String formula, IAttributes line) throws Exception {
+    public static boolean checking(String formula, IAttributes line) throws Exception{
         String encoding = getProperty("console.encoding", "utf-8");
         PrintStream ps = new PrintStream(out, true, encoding);
         ps.println("Формула: " + formula);
@@ -67,7 +67,7 @@ public final class RuleUtils {
 //            }
 //        }
         ps.println("2. Определим тело формулы и атрибут-результат");
-        StringTokenizer st = new StringTokenizer(s.toString(), "\\#");
+        StringTokenizer st = new StringTokenizer(s.toString(), "#");
         String attributeResult = null;
         String attributeFormula = null;
         int i = 0;
@@ -88,6 +88,9 @@ public final class RuleUtils {
                     break;
             }
         }
+        
+        ps.println("attributeResult="+attributeResult);
+        ps.println("attributeFormula="+attributeFormula);
         
         if (attributeResult == null || attributeFormula
                 == null) {
@@ -115,7 +118,6 @@ public final class RuleUtils {
         }
 
         ps.println("4. Проверим тело формулы и, если все ОК, значит можно фиксировать в БД");
-        ps.println("attributeFormula: "+attributeFormula);
         //Запишем в атрибуты строки заказа 1 - если все сеттеры есть - БОМБА! 
         Pattern p = compile("(attribute)[0-9]+");
         Matcher mm3 = p.matcher(attributeFormula);

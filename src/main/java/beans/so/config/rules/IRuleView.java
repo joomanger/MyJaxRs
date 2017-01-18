@@ -1,5 +1,6 @@
 package beans.so.config.rules;
 
+import entities.so.config.rules.RuleLine;
 import service.IView;
 
 /**
@@ -24,4 +25,10 @@ public interface IRuleView<T> extends IView<T> {
     boolean isIsItemDisable();
 
     void setIsItemDisable(boolean isItemDisable);
+
+    RuleLine getEditedRuleLine();
+
+    void setEditedRuleLine(RuleLine editedRuleLine);
+    
+    void setRuleLineForEditor(RuleLine line);
 }

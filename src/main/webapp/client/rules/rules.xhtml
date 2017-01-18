@@ -34,7 +34,7 @@
                         </p:column>
                         <f:facet name="footer" >
                             <p:commandButton process="dTable" update="selectedParams" value="Удалить"  oncomplete="PF('deleteDialog').show()" />
-                            <p:commandButton id="newBtn" value="Создать" action="newRule" immediate="true" style="margin-left: 15px"/>
+                            <p:commandButton id="newBtn" value="Создать" action="newRule" immediate="true" style="margin-left: 40px"/>
                         </f:facet>
                     </p:dataTable> 
                     <p:dialog header="Вы уверены?" widgetVar="deleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="400">
