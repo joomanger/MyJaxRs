@@ -21,7 +21,6 @@ public abstract class AbstractClientBean2<T> {
 //    protected abstract AbstractView<T> getFindView();
 //
 //    protected abstract AbstractView<T> getNewView();
-
     public T find(Object p_id) {
         return getEJB().find(p_id);
     }
@@ -30,7 +29,7 @@ public abstract class AbstractClientBean2<T> {
         return getEJB().findAll();
     }
 
-    public void createEntity(IView view,String outcome) {
+    public void createEntity(IView view, String outcome) {
         if (view.getEntity() instanceof WhoIS) {
 //            WhoIS whoIS = (WhoIS) getNewView().getEntity();
 //            whoIS.setCreatedBy(sa.getCurrentUser().getUser_id());
@@ -39,7 +38,7 @@ public abstract class AbstractClientBean2<T> {
 //            whoIS.setLastUpdateDate(Calendar.getInstance().getTime());
             sa.createWHO((WhoIS) view.getEntity());
         }
-        getEJB().create((T)view.getEntity());
+        getEJB().create((T) view.getEntity());
         FacesContext.getCurrentInstance().getApplication().
                 getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, outcome);
     }
@@ -51,12 +50,12 @@ public abstract class AbstractClientBean2<T> {
 //            whoIS.setLastUpdateDate(Calendar.getInstance().getTime());
             sa.createWHO((WhoIS) view.getEntity());
         }
-        getEJB().edit((T)view.getEntity());
+        getEJB().edit((T) view.getEntity());
     }
 
     public void deleteSelectedEntities(IView view) {
         view.getSelectedEntities().stream().map((entity) -> {
-            getEJB().remove((T)entity);
+            getEJB().remove((T) entity);
             return entity;
         }).forEach((entity) -> {
             view.getEntities().remove(entity);

@@ -37,13 +37,13 @@ public class RuleLine implements Serializable, WhoIS {
     @Size(max = 1500, message = "Максимальная длина формулы 1500 символов")
     @Column(length = 1500)
     private String formula;
-    @Column(name = "result_attribute")
-
-    //@NotNull
-    private String resultAttribute;
-    @Column(name = "result_condition", length = 150)
-    @Size(max = 150, message = "Максимальная длина условия 150 символов")
-    private String resultCondition;
+    @Column(name = "attribute_result",length = 11)
+    private String attributeResult;
+    @Column(name = "attribute_formula",length = 1500)
+    private String attributeFormula;
+//    @Column(name = "result_condition", length = 150)
+//    @Size(max = 150, message = "Максимальная длина условия 150 символов")
+//    private String resultCondition;
 
     @ManyToOne
     @JoinColumn(name = "header_id", foreignKey = @ForeignKey(name = "line_rule_fk", value = ConstraintMode.CONSTRAINT,
@@ -100,20 +100,20 @@ public class RuleLine implements Serializable, WhoIS {
         this.formula = formula;
     }
 
-    public String getResultAttribute() {
-        return resultAttribute;
+    public String getAttributeResult() {
+        return attributeResult;
     }
 
-    public void setResultAttribute(String resultAttribute) {
-        this.resultAttribute = resultAttribute;
+    public void setAttributeResult(String attributeResult) {
+        this.attributeResult = attributeResult;
     }
 
-    public String getResultCondition() {
-        return resultCondition;
+    public String getAttributeFormula() {
+        return attributeFormula;
     }
 
-    public void setResultCondition(String resultCondition) {
-        this.resultCondition = resultCondition;
+    public void setAttributeFormula(String attributeFormula) {
+        this.attributeFormula = attributeFormula;
     }
 
     @Override
